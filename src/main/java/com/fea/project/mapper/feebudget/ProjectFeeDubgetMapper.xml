@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.feebudget.ProjectFeeDubgetMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.feebudget.ProjectFeeDubgetModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="version" jdbcType="BIGINT" property="version" />
+        <result column="num" jdbcType="VARCHAR" property="num" />
+        <result column="amount" jdbcType="DECIMAL" property="amount" />
+        <result column="currency_id" jdbcType="BIGINT" property="currencyId" />
+        <result column="currency" jdbcType="VARCHAR" property="currency" />
+        <result column="type" jdbcType="BIGINT" property="type" />
+        <result column="step_id" jdbcType="BIGINT" property="stepId" />
+        <result column="stage" jdbcType="VARCHAR" property="stage" />
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
+        <result column="declares" jdbcType="VARCHAR" property="declares" />
+        <result column="check_status" jdbcType="INTEGER" property="checkStatus" />
+        <result column="check_title" jdbcType="VARCHAR" property="checkTitle" />
+        <result column="check_explain" jdbcType="VARCHAR" property="checkExplain" />
+        <result column="is_draft" jdbcType="INTEGER" property="isDraft" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_status" jdbcType="INTEGER" property="delStatus" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,parent_id,reg_id, org_id, project_id, name, version, num, amount, currency_id,currency, type, step_id,
+        stage, start_time, end_time, finish_time, declares, check_status, check_title, check_explain,
+        is_draft,create_id, create_by, create_time, update_id, update_by, update_time, del_status
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_fee_dubget
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_fee_dubget
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_fee_dubget
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetModel">
+        insert into t_project_fee_dubget (
+        <include refid="Base_Column_List" />
+        )
+        values (#{parentId,jdbcType=BIGINT},
+            #{regId,jdbcType=BIGINT},
+            #{orgId,jdbcType=BIGINT}, 
+            #{projectId,jdbcType=BIGINT}, 
+            #{name,jdbcType=VARCHAR}, 
+            #{version,jdbcType=BIGINT}, 
+            #{num,jdbcType=VARCHAR}, 
+            #{amount,jdbcType=DECIMAL},
+             #{currencyId,jdbcType=BIGINT},
+            #{currency,jdbcType=VARCHAR}, 
+            #{type,jdbcType=BIGINT},
+            #{stepId,jdbcType=BIGINT}, 
+            #{stage,jdbcType=VARCHAR}, 
+            #{startTime,jdbcType=TIMESTAMP}, 
+            #{endTime,jdbcType=TIMESTAMP}, 
+            #{finishTime,jdbcType=TIMESTAMP}, 
+            #{declares,jdbcType=VARCHAR},
+            #{checkStatus,jdbcType=INTEGER}, 
+            #{checkTitle,jdbcType=VARCHAR}, 
+            #{checkExplain,jdbcType=VARCHAR},
+            #{isDraft,jdbcType=INTEGER},
+            #{createId,jdbcType=BIGINT},
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{delStatus,jdbcType=INTEGER}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_fee_dubget (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.parentId,jdbcType=BIGINT},
+            #{item.regId,jdbcType=BIGINT}, 
+                #{item.orgId,jdbcType=BIGINT}, 
+                #{item.projectId,jdbcType=BIGINT}, 
+                #{item.name,jdbcType=VARCHAR}, 
+                #{item.version,jdbcType=BIGINT}, 
+                #{item.num,jdbcType=VARCHAR}, 
+                #{item.amount,jdbcType=DECIMAL},
+                #{item.currencyId,jdbcType=BIGINT},
+                #{item.currency,jdbcType=VARCHAR}, 
+                #{item.type,jdbcType=BIGINT},
+                #{item.stepId,jdbcType=BIGINT}, 
+                #{item.stage,jdbcType=VARCHAR}, 
+                #{item.startTime,jdbcType=TIMESTAMP}, 
+                #{item.endTime,jdbcType=TIMESTAMP}, 
+                #{item.finishTime,jdbcType=TIMESTAMP}, 
+                #{item.declares,jdbcType=VARCHAR},
+                #{item.checkStatus,jdbcType=INTEGER}, 
+                #{item.checkTitle,jdbcType=VARCHAR}, 
+                #{item.checkExplain,jdbcType=VARCHAR},
+                #{item.isDraft,jdbcType=INTEGER},
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}, 
+                #{item.delStatus,jdbcType=INTEGER}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetModel" resultMap="BaseResultMap">
+        select * from t_project_fee_dubget where 1 = 1 and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+
+        <if test="parentId != null">
+            and parent_id = #{parentId,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="version != null">
+            and version = #{version,jdbcType=BIGINT}
+        </if>
+        <if test="num != null">
+            and num = #{num,jdbcType=VARCHAR}
+        </if>
+        <if test="amount != null">
+            and amount = #{amount,jdbcType=DECIMAL}
+        </if>
+        <if test="currencyId != null">
+            and currency_id = #{currencyId,jdbcType=BIGINT}
+        </if>
+        <if test="currency != null">
+            and currency = #{currency,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            and type = #{type,jdbcType=BIGINT}
+        </if>
+        <if test="stepId != null">
+            and step_id = #{stepId,jdbcType=BIGINT}
+        </if>
+        <if test="stage != null">
+            and stage = #{stage,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="finishTime != null">
+            and finish_time = #{finishTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="declares != null">
+            and declares = #{declares,jdbcType=VARCHAR}
+        </if>
+        <if test="checkStatus != null">
+            and check_status = #{checkStatus,jdbcType=INTEGER}
+        </if>
+        <if test="checkTitle != null">
+            and check_title = #{checkTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="checkExplain != null">
+            and check_explain = #{checkExplain,jdbcType=VARCHAR}
+        </if>
+        <if test="isDraft != null">
+            and is_draft = #{isDraft,jdbcType=INTEGER}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delStatus != null">
+            and del_status = #{delStatus,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetModel">
+        insert into t_project_fee_dubget
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="num != null">
+                num,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="currencyId != null">
+                currency_id,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="stepId != null">
+                step_id,
+            </if>
+            <if test="stage != null">
+                stage,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="finishTime != null">
+                finish_time,
+            </if>
+            <if test="declares != null">
+                declares,
+            </if>
+            <if test="checkStatus != null">
+                check_status,
+            </if>
+            <if test="checkTitle != null">
+                check_title,
+            </if>
+            <if test="checkExplain != null">
+                check_explain,
+            </if>
+            <if test="isDraft != null">
+                is_draft,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="currencyId != null">
+                #{currencyId,jdbcType=BIGINT},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=BIGINT},
+            </if>
+            <if test="stepId != null">
+                #{stepId,jdbcType=BIGINT},
+            </if>
+            <if test="stage != null">
+                #{stage,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="declares != null">
+                #{declares,jdbcType=VARCHAR},
+            </if>
+            <if test="checkStatus != null">
+                #{checkStatus,jdbcType=INTEGER},
+            </if>
+            <if test="checkTitle != null">
+                #{checkTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="checkExplain != null">
+                #{checkExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="isDraft != null">
+                #{isDraft,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetModel">
+        update t_project_fee_dubget
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="num != null">
+                num = #{num,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="currencyId != null">
+                currency_id = #{currencyId,jdbcType=BIGINT},
+            </if>
+            <if test="currency != null">
+                currency = #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=BIGINT},
+            </if>
+            <if test="stepId != null">
+                step_id = #{stepId,jdbcType=BIGINT},
+            </if>
+            <if test="stage != null">
+                stage = #{stage,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="finishTime != null">
+                finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="declares != null">
+                declares = #{declares,jdbcType=VARCHAR},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus,jdbcType=INTEGER},
+            </if>
+            <if test="checkTitle != null">
+                check_title = #{checkTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="checkExplain != null">
+                check_explain = #{checkExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="isDraft != null">
+                is_draft = #{isDraft,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetModel">
+        update t_project_fee_dubget
+        set parent_id = #{parentId,jdbcType=BIGINT},
+            reg_id = #{regId,jdbcType=BIGINT},
+            org_id = #{orgId,jdbcType=BIGINT},
+            project_id = #{projectId,jdbcType=BIGINT},
+            name = #{name,jdbcType=VARCHAR},
+            version = #{version,jdbcType=BIGINT},
+            num = #{num,jdbcType=VARCHAR},
+            amount = #{amount,jdbcType=DECIMAL},
+            currency_id = #{currencyId,jdbcType=BIGINT},
+            currency = #{currency,jdbcType=VARCHAR},
+            type = #{type,jdbcType=BIGINT},
+            step_id = #{stepId,jdbcType=BIGINT},
+            stage = #{stage,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            declares = #{declares,jdbcType=VARCHAR},
+            check_status = #{checkStatus,jdbcType=INTEGER},
+            check_title = #{checkTitle,jdbcType=VARCHAR},
+            check_explain = #{checkExplain,jdbcType=VARCHAR},
+            is_draft = #{isDraft,jdbcType=INTEGER},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByFilterAndParams"
+            parameterType="com.fea.project.model.PageInfoQueryOrderAndFilterModel"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_project_fee_dubget
+        where 1 = 1
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model.parentId != null">
+            and parent_id = #{model.parentId,jdbcType=BIGINT}
+        </if>
+        <if test="model.regId != null">
+            and reg_id = #{model.regId,jdbcType=BIGINT}
+        </if>
+        <if test="model.orgId != null">
+            and org_id = #{model.orgId,jdbcType=BIGINT}
+        </if>
+        <if test="model.projectId != null">
+            and project_id = #{model.projectId,jdbcType=BIGINT}
+        </if>
+        <if test="model.name != null">
+            and name = #{model.name,jdbcType=VARCHAR}
+        </if>
+        <if test="model.version != null">
+            and version = #{model.version,jdbcType=BIGINT}
+        </if>
+        <if test="model.num != null">
+            and num = #{model.num,jdbcType=VARCHAR}
+        </if>
+        <if test="model.amount != null">
+            and amount = #{model.amount,jdbcType=DECIMAL}
+        </if>
+        <if test="model.currencyId != null">
+            and currency_id = #{model.currencyId,jdbcType=BIGINT}
+        </if>
+        <if test="model.currency != null">
+            and currency = #{model.currency,jdbcType=VARCHAR}
+        </if>
+        <if test="model.type != null">
+            and type = #{model.type,jdbcType=BIGINT}
+        </if>
+        <if test="model.stepId != null">
+            and step_id = #{model.stepId,jdbcType=BIGINT}
+        </if>
+        <if test="model.stage != null">
+            and stage = #{model.stage,jdbcType=VARCHAR}
+        </if>
+        <if test="model.startTime != null">
+            and start_time = #{model.startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.endTime != null">
+            and end_time = #{model.endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.finishTime != null">
+            and finish_time = #{model.finishTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.declares != null">
+            and declares = #{model.declares,jdbcType=VARCHAR}
+        </if>
+        <if test="model.checkStatus != null">
+            and check_status = #{model.checkStatus,jdbcType=INTEGER}
+        </if>
+        <if test="model.checkTitle != null">
+            and check_title = #{model.checkTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="model.checkExplain != null">
+            and check_explain = #{model.checkExplain,jdbcType=VARCHAR}
+        </if>
+        <if test="model.isDraft != null">
+            and is_draft = #{model.isDraft,jdbcType=INTEGER}
+        </if>
+        <if test="model.createId != null">
+            and create_id = #{model.createId,jdbcType=BIGINT}
+        </if>
+        <if test="model.createBy != null">
+            and create_by = #{model.createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="model.createTime != null">
+            and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.updateId != null">
+            and update_id = #{model.updateId,jdbcType=BIGINT}
+        </if>
+        <if test="model.updateBy != null">
+            and update_by = #{model.updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="model.updateTime != null">
+            and update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.delStatus != null">
+            and del_status = #{model.delStatus,jdbcType=INTEGER}
+        </if>
+        order by create_time desc
+    </select>
+    <update id="deleteProjectFeeDubget" parameterType="java.lang.Long">
+        update t_project_fee_dubget
+        set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByIds" parameterType="java.util.List">
+        update t_project_fee_dubget
+        set
+            check_status = ${@com.fea.project.enums.risk.IsCheckEnum@NOT_AUDIT.getCode()},
+            check_title = #{checkTitle,jdbcType=VARCHAR},
+            check_explain = #{checkExplain,jdbcType=VARCHAR}
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+</mapper>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.project.ProjectContactorMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.project.ProjectContactorModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="contactor_id" jdbcType="BIGINT" property="contactorId"/>
+        <result column="customer_id" jdbcType="BIGINT" property="customerId"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, project_id, contactor_id, customer_id, create_id, create_by, create_time, update_id,
+        update_by, update_time, del_status, remark
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_project_contactor
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_project_contactor
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_project_contactor
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.project.ProjectContactorModel">
+        insert into t_project_project_contactor (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{projectId,jdbcType=BIGINT},
+        #{contactorId,jdbcType=BIGINT},
+        #{customerId,jdbcType=BIGINT},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{remark,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_project_contactor (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.projectId,jdbcType=BIGINT},
+            #{item.contactorId,jdbcType=BIGINT},
+            #{item.customerId,jdbcType=BIGINT},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.remark,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.project.ProjectContactorModel"
+            resultMap="BaseResultMap">
+        select * from t_project_project_contactor where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="contactorId != null">
+            and contactor_id = #{contactorId,jdbcType=BIGINT}
+        </if>
+        <if test="customerId != null">
+            and customer_id = #{customerId,jdbcType=BIGINT}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="remark != null">
+            and remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.project.ProjectContactorModel">
+        insert into t_project_project_contactor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="contactorId != null">
+                contactor_id,
+            </if>
+            <if test="customerId != null">
+                customer_id,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="contactorId != null">
+                #{contactorId,jdbcType=BIGINT},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.project.ProjectContactorModel">
+        update t_project_project_contactor
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="contactorId != null">
+                contactor_id = #{contactorId,jdbcType=BIGINT},
+            </if>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.project.ProjectContactorModel">
+        update t_project_project_contactor
+        set project_id = #{projectId,jdbcType=BIGINT},
+            contactor_id = #{contactorId,jdbcType=BIGINT},
+            customer_id = #{customerId,jdbcType=BIGINT},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            remark = #{remark,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+
+    <resultMap id="BaseResultMapVo" type="com.fea.project.model.project.vo.ProjectContactorVo" extends="BaseResultMap"/>
+    <sql id="Base_Column_List_Vo">
+        id, project_id, contactor_id, customer_id, create_id, create_by, create_time, update_id,
+        update_by, update_time, del_status, remark
+    </sql>
+    <select id="selectByFilterAndOrderParams"
+            parameterType="com.fea.project.model.BasePageInfo"
+            resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_project_project_contactor
+        where 1 = 1
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getId() != null">
+                and id = #{model.id,jdbcType=BIGINT}
+            </if>
+            <if test="model.getProjectId() != null">
+                and project_id = #{model.projectId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getContactorId() != null">
+                and contactor_id = #{model.contactorId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCustomerId() != null">
+                and customer_id = #{model.customerId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCreateId() != null">
+                and create_id = #{model.createId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateId() != null">
+                and update_id = #{model.updateId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getRemark() != null">
+                and remark = #{model.remark,jdbcType=VARCHAR}
+            </if>
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('contactorId') != null">
+                and contactorId in
+                <foreach collection="filters.get('contactorId')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </if>
+        <if test="sortKey != null">
+            order by ${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by create_time desc
+        </if>
+    </select>
+
+    <update id="updateModelsByIds">
+        update t_project_project_contactor
+        <set>
+            <if test="model.projectId != null">
+                project_id = #{model.projectId,jdbcType=BIGINT},
+            </if>
+            <if test="model.contactorId != null">
+                contactor_id = #{model.contactorId,jdbcType=BIGINT},
+            </if>
+            <if test="model.customerId != null">
+                customer_id = #{model.customerId,jdbcType=BIGINT},
+            </if>
+            <if test="model.createId != null">
+                create_id = #{model.createId,jdbcType=BIGINT},
+            </if>
+            <if test="model.createBy != null">
+                create_by = #{model.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="model.createTime != null">
+                create_time = #{model.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="model.updateId != null">
+                update_id = #{model.updateId,jdbcType=BIGINT},
+            </if>
+            <if test="model.updateBy != null">
+                update_by = #{model.updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="model.updateTime != null">
+                update_time = #{model.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="model.delStatus != null">
+                del_status = #{model.delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="model.remark != null">
+                remark = #{model.remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+</mapper>

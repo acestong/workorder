@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.baseconfig.ProjectCodeRegChildMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.baseconfig.ProjectCodeRegChildModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="parent_project_code" jdbcType="VARCHAR" property="parentProjectCode"/>
+        <result column="child_project_code" jdbcType="VARCHAR" property="childProjectCode"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="child_short_name" jdbcType="VARCHAR" property="childShortName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, parent_project_code, child_project_code, reg_id, child_short_name
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_code_regchild
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_code_regchild
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_code_regchild
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.baseconfig.ProjectCodeRegChildModel">
+        insert into t_project_code_regchild (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{parentProjectCode,jdbcType=VARCHAR},
+        #{childProjectCode,jdbcType=VARCHAR},
+        #{regId,jdbcType=BIGINT},
+        #{childShortName,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_code_regchild (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.parentProjectCode,jdbcType=VARCHAR},
+            #{item.childProjectCode,jdbcType=VARCHAR},
+            #{item.regId,jdbcType=BIGINT},
+            #{item.childShortName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.baseconfig.ProjectCodeRegChildModel"
+            resultMap="BaseResultMap">
+        select * from t_project_code_regchild where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="parentProjectCode != null">
+            and parent_project_code = #{parentProjectCode,jdbcType=VARCHAR}
+        </if>
+        <if test="childProjectCode != null">
+            and child_project_code = #{childProjectCode,jdbcType=VARCHAR}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="childShortName != null">
+            and child_short_name = #{childShortName,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id"
+            parameterType="com.fea.project.model.baseconfig.ProjectCodeRegChildModel">
+        insert into t_project_code_regchild
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="parentProjectCode != null">
+                parent_project_code,
+            </if>
+            <if test="childProjectCode != null">
+                child_project_code,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="regId != null">
+                child_short_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="parentProjectCode != null">
+                #{parentProjectCode,jdbcType=VARCHAR},
+            </if>
+            <if test="childProjectCode != null">
+                #{childProjectCode,jdbcType=VARCHAR},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="childShortName != null">
+                #{childShortName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.baseconfig.ProjectCodeRegChildModel">
+        update t_project_code_regchild
+        <set>
+            <if test="parentProjectCode != null">
+                parent_project_code = #{parentProjectCode,jdbcType=VARCHAR},
+            </if>
+            <if test="childProjectCode != null">
+                child_project_code = #{childProjectCode,jdbcType=VARCHAR},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=VARCHAR},
+            </if>
+            <if test="childShortName != null">
+                child_short_name = #{childShortName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.baseconfig.ProjectCodeRegChildModel">
+        update t_project_code_regchild
+        set parent_project_code = #{parentProjectCode, jdbcType=VARCHAR},
+            child_project_code = #{childProjectCode, jdbcType=VARCHAR},
+            reg_id = #{regId,jdbcType=VARCHAR},
+            child_short_name = #{childShortName,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByParentCode" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_code_regchild
+        where parent_project_code = #{parentProjectCode, jdbcType=VARCHAR}
+        and reg_id = #{regId, jdbcType=BIGINT}
+    </select>
+
+</mapper>

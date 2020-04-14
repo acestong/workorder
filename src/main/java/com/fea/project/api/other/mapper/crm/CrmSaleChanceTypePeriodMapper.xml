@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.crm.CrmSaleChanceTypePeriodMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.crm.CrmSaleChanceTypePeriodModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="period_id" jdbcType="BIGINT" property="periodId"/>
+        <result column="period_name" jdbcType="VARCHAR" property="periodName"/>
+        <result column="sale_chance_type_id" jdbcType="BIGINT" property="saleChanceTypeId"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="org_id" jdbcType="BIGINT" property="orgId"/>
+        <result column="stop_time" jdbcType="DOUBLE" property="stopTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="update_user_id" jdbcType="BIGINT" property="updateUserId"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_state" jdbcType="INTEGER" property="delState"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, period_id, period_name, sale_chance_type_id, reg_id, description, org_id, stop_time,
+        update_user, update_user_id, update_time, del_state
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_crm_sale_chance_type_period
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.crm.CrmSaleChanceTypePeriodModel"
+            resultMap="BaseResultMap">
+        select * from t_crm_sale_chance_type_period where 1 = 1
+        <if test="periodId != null">
+            and period_id = #{periodId,jdbcType=BIGINT}
+        </if>
+        <if test="periodName != null">
+            and period_name = #{periodName,jdbcType=VARCHAR}
+        </if>
+        <if test="saleChanceTypeId != null">
+            and sale_chance_type_id = #{saleChanceTypeId,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="description != null">
+            and description = #{description,jdbcType=VARCHAR}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="stopTime != null">
+            and stop_time = #{stopTime,jdbcType=DOUBLE}
+        </if>
+        <if test="updateUser != null">
+            and update_user = #{updateUser,jdbcType=VARCHAR}
+        </if>
+        <if test="updateUserId != null">
+            and update_user_id = #{updateUserId,jdbcType=BIGINT}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        and del_state = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+</mapper>

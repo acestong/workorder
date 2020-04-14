@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.flow.ProjectFlowVerifyerMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.flow.ProjectFlowVerifyerModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="list_id" jdbcType="BIGINT" property="listId"/>
+        <result column="person_type" jdbcType="INTEGER" property="personType"/>
+        <result column="detail_str" jdbcType="VARCHAR" property="detailStr"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="verify_type" jdbcType="INTEGER" property="verifyType"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, list_id, person_type, detail_str, create_id, create_by, create_time, update_id, update_by,
+        update_time, del_status, parent_id, verify_type
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_flow_verifyer
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_flow_verifyer
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_flow_verifyer
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.flow.ProjectFlowVerifyerModel">
+        insert into t_project_flow_verifyer (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{listId,jdbcType=BIGINT},
+        #{personType,jdbcType=INTEGER},
+        #{detailStr,jdbcType=VARCHAR},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{parentId,jdbcType=BIGINT},
+        #{verifyType,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_flow_verifyer (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.listId,jdbcType=BIGINT},
+            #{item.personType,jdbcType=INTEGER},
+            #{item.detailStr,jdbcType=VARCHAR},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.parentId,jdbcType=BIGINT},
+            #{item.verifyType,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.flow.ProjectFlowVerifyerModel"
+            resultMap="BaseResultMap">
+        select * from t_project_flow_verifyer where 1 = 1
+        <if test="id != null">
+            and id = #{listId,jdbcType=BIGINT}
+        </if>
+        <if test="listId != null">
+            and list_id = #{listId,jdbcType=BIGINT}
+        </if>
+        <if test="personType != null">
+            and person_type = #{personType,jdbcType=INTEGER}
+        </if>
+        <if test="detailStr != null">
+            and detail_str = #{detailStr,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="parentId != null">
+            and parent_id = #{parentId,jdbcType=BIGINT}
+        </if>
+        <if test="verifyType != null">
+            and verify_type = #{verifyType,jdbcType=INTEGER}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.flow.ProjectFlowVerifyerModel">
+        insert into t_project_flow_verifyer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="listId != null">
+                list_id,
+            </if>
+            <if test="personType != null">
+                person_type,
+            </if>
+            <if test="detailStr != null">
+                detail_str,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="verifyType != null">
+                verify_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="listId != null">
+                #{listId,jdbcType=BIGINT},
+            </if>
+            <if test="personType != null">
+                #{personType,jdbcType=INTEGER},
+            </if>
+            <if test="detailStr != null">
+                #{detailStr,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="verifyType != null">
+                #{verifyType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.flow.ProjectFlowVerifyerModel">
+        update t_project_flow_verifyer
+        <set>
+            <if test="listId != null">
+                list_id = #{listId,jdbcType=BIGINT},
+            </if>
+            <if test="personType != null">
+                person_type = #{personType,jdbcType=INTEGER},
+            </if>
+            <if test="detailStr != null">
+                detail_str = #{detailStr,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="verifyType != null">
+                verify_type = #{verifyType,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.flow.ProjectFlowVerifyerModel">
+        update t_project_flow_verifyer
+        set list_id = #{listId,jdbcType=BIGINT},
+            person_type = #{personType,jdbcType=INTEGER},
+            detail_str = #{detailStr,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            parent_id = #{parentId,jdbcType=BIGINT},
+            verify_type = #{verifyType,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.model.flow.vo.ProjectFlowVerifyerVo" extends="BaseResultMap">
+
+    </resultMap>
+    <select id="selectListByFlowListId" resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_flow_verifyer
+        where list_id = #{listId,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <update id="updateModelDeleteByListIdAndCantDeleteList">
+        update t_project_flow_verifyer
+        set update_id = #{model.updateId,jdbcType=BIGINT},
+        update_by = #{model.updateBy,jdbcType=VARCHAR},
+        update_time = #{model.updateTime,jdbcType=TIMESTAMP},
+        del_status = #{model.delStatus,jdbcType=INTEGER}
+        where list_id in
+        <foreach collection="listIds" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        <if test="list.size() != 0">
+            and id not in
+            <foreach collection="list" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+
+</mapper>

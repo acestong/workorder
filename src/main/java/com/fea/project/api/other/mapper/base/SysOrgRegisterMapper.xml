@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.base.SysOrgRegisterMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.base.SysOrgRegisterModel">
+        <id column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID"/>
+        <result column="ORG_CODE" jdbcType="VARCHAR" property="ORGCODE"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="ORGNAME"/>
+        <result column="START_DATE" jdbcType="TIMESTAMP" property="STARTDATE"/>
+        <result column="STATE" jdbcType="INTEGER" property="STATE"/>
+        <result column="WX_STATE" jdbcType="INTEGER" property="WXSTATE"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="USEFUL_LIFE" jdbcType="INTEGER" property="USEFULLIFE"/>
+        <result column="REG_CODE" jdbcType="VARCHAR" property="REGCODE"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="DESCRIPTION"/>
+        <result column="EXPIRY_DATE" jdbcType="TIMESTAMP" property="EXPIRYDATE"/>
+        <result column="PORTAL" jdbcType="INTEGER" property="PORTAL"/>
+        <result column="DEFAULT_PASSWORD" jdbcType="VARCHAR" property="DEFAULTPASSWORD"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="DELSTATE"/>
+        <result column="STORAGE_BYTE" jdbcType="VARCHAR" property="STORAGEBYTE"/>
+        <result column="STORAGE_BYTE_USED" jdbcType="VARCHAR" property="STORAGEBYTEUSED"/>
+        <result column="alias_name" jdbcType="VARCHAR" property="aliasName"/>
+        <result column="SOURCE" jdbcType="INTEGER" property="SOURCE"/>
+        <result column="AUTH_CORP_ID" jdbcType="VARCHAR" property="AUTHCORPID"/>
+        <result column="unique_code" jdbcType="VARCHAR" property="uniqueCode"/>
+        <result column="agent_id" jdbcType="VARCHAR" property="agentId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ORG_ID, ORG_CODE, ORG_NAME, START_DATE, STATE, WX_STATE, CREATE_USER, CREATE_TIME, 
+        UPDATE_USER, UPDATE_TIME, USEFUL_LIFE, REG_CODE, DESCRIPTION, EXPIRY_DATE, PORTAL, 
+        DEFAULT_PASSWORD, DEL_STATE, STORAGE_BYTE, STORAGE_BYTE_USED, alias_name, SOURCE, 
+        AUTH_CORP_ID, unique_code, agent_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_sys_org_register
+        where REG_ID = #{REGID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.base.SysOrgRegisterModel"
+            resultMap="BaseResultMap">
+        select * from t_sys_org_register where 1 = 1
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGCODE != null">
+            and ORG_CODE = #{ORGCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="ORGNAME != null">
+            and ORG_NAME = #{ORGNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="STARTDATE != null">
+            and START_DATE = #{STARTDATE,jdbcType=TIMESTAMP}
+        </if>
+        <if test="STATE != null">
+            and STATE = #{STATE,jdbcType=INTEGER}
+        </if>
+        <if test="WXSTATE != null">
+            and WX_STATE = #{WXSTATE,jdbcType=INTEGER}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="USEFULLIFE != null">
+            and USEFUL_LIFE = #{USEFULLIFE,jdbcType=INTEGER}
+        </if>
+        <if test="REGCODE != null">
+            and REG_CODE = #{REGCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="DESCRIPTION != null">
+            and DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="EXPIRYDATE != null">
+            and EXPIRY_DATE = #{EXPIRYDATE,jdbcType=TIMESTAMP}
+        </if>
+        <if test="PORTAL != null">
+            and PORTAL = #{PORTAL,jdbcType=INTEGER}
+        </if>
+        <if test="DEFAULTPASSWORD != null">
+            and DEFAULT_PASSWORD = #{DEFAULTPASSWORD,jdbcType=VARCHAR}
+        </if>
+        <if test="DELSTATE != null">
+            and DEL_STATE = #{DELSTATE,jdbcType=INTEGER}
+        </if>
+        <if test="STORAGEBYTE != null">
+            and STORAGE_BYTE = #{STORAGEBYTE,jdbcType=VARCHAR}
+        </if>
+        <if test="STORAGEBYTEUSED != null">
+            and STORAGE_BYTE_USED = #{STORAGEBYTEUSED,jdbcType=VARCHAR}
+        </if>
+        <if test="aliasName != null">
+            and alias_name = #{aliasName,jdbcType=VARCHAR}
+        </if>
+        <if test="SOURCE != null">
+            and SOURCE = #{SOURCE,jdbcType=INTEGER}
+        </if>
+        <if test="AUTHCORPID != null">
+            and AUTH_CORP_ID = #{AUTHCORPID,jdbcType=VARCHAR}
+        </if>
+        <if test="uniqueCode != null">
+            and unique_code = #{uniqueCode,jdbcType=VARCHAR}
+        </if>
+        <if test="agentId != null">
+            and agent_id = #{agentId,jdbcType=VARCHAR}
+        </if>
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+</mapper>

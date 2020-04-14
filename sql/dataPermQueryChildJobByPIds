@@ -1,0 +1,25 @@
+CREATE DEFINER=`root`@`%` FUNCTION `dataPermQueryChildJobByPIds`(p_id VARCHAR(4000)) RETURNS varchar(4000) CHARSET utf8mb4
+    READS SQL DATA
+    SQL SECURITY INVOKER
+BEGIN
+#递归查询职位树   根据父节点查询下面的所有子节点
+DECLARE idTemp VARCHAR(4000);
+
+DECLARE idTempChd VARCHAR(4000);
+
+SET idTemp = '$';
+
+SET idTempChd = p_id;
+
+WHILE idTempChd is not NULL DO
+
+SET idTemp = CONCAT(idTemp,',',idTempChd);
+
+select group_concat(ID) INTO idTempChd from t_sys_job t
+WHERE FIND_IN_SET(PARENT_ID,idTempChd)>0;
+
+END WHILE;
+
+return idTemp;
+
+END

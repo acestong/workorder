@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.base.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.base.SysRoleModel">
+        <id column="ROLE_ID" jdbcType="BIGINT" property="ROLEID"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="PARENTID"/>
+        <result column="ROLE_CODE" jdbcType="VARCHAR" property="ROLECODE"/>
+        <result column="ROLE_NAME" jdbcType="VARCHAR" property="ROLENAME"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="DESCRIPTION"/>
+        <result column="STATE" jdbcType="INTEGER" property="STATE"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="LFT" jdbcType="INTEGER" property="LFT"/>
+        <result column="RGT" jdbcType="INTEGER" property="RGT"/>
+        <result column="PRIORITY" jdbcType="INTEGER" property="PRIORITY"/>
+        <result column="TOTAL" jdbcType="INTEGER" property="TOTAL"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="DELSTATE"/>
+        <result column="SOURCE" jdbcType="INTEGER" property="SOURCE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ROLE_ID, PARENT_ID, ROLE_CODE, ROLE_NAME, REG_ID, ORG_ID, DESCRIPTION, STATE, CREATE_USER,
+        CREATE_TIME, UPDATE_USER, UPDATE_TIME, LFT, RGT, PRIORITY, TOTAL, DEL_STATE, SOURCE
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_sys_role
+        where ROLE_ID = #{ROLEID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.base.SysRoleModel"
+            resultMap="BaseResultMap">
+        select * from t_sys_role where 1 = 1
+        <if test="ROLEID != null">
+            and ROLE_ID = #{ROLEID,jdbcType=BIGINT}
+        </if>
+        <if test="PARENTID != null">
+            and PARENT_ID = #{PARENTID,jdbcType=BIGINT}
+        </if>
+        <if test="ROLECODE != null">
+            and ROLE_CODE = #{ROLECODE,jdbcType=VARCHAR}
+        </if>
+        <if test="ROLENAME != null">
+            and ROLE_NAME = #{ROLENAME,jdbcType=VARCHAR}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="DESCRIPTION != null">
+            and DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="STATE != null">
+            and STATE = #{STATE,jdbcType=INTEGER}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="LFT != null">
+            and LFT = #{LFT,jdbcType=INTEGER}
+        </if>
+        <if test="RGT != null">
+            and RGT = #{RGT,jdbcType=INTEGER}
+        </if>
+        <if test="PRIORITY != null">
+            and PRIORITY = #{PRIORITY,jdbcType=INTEGER}
+        </if>
+        <if test="TOTAL != null">
+            and TOTAL = #{TOTAL,jdbcType=INTEGER}
+        </if>
+        <if test="SOURCE != null">
+            and SOURCE = #{SOURCE,jdbcType=INTEGER}
+        </if>
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByIds" parameterType="com.fea.project.api.other.model.base.SysRoleModel"
+            resultMap="BaseResultMap">
+        select * from t_sys_role where 1 = 1
+        and ROLE_ID in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

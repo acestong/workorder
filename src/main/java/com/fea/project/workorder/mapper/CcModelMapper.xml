@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.CcModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.CcModel">
+    <id column="cc_id" jdbcType="BIGINT" property="ccId" />
+    <result column="workorder_id" jdbcType="BIGINT" property="workorderId" />
+    <result column="cc_person_id" jdbcType="BIGINT" property="ccPersonId" />
+    <result column="cc_person_name" jdbcType="VARCHAR" property="ccPersonName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cc_id, workorder_id, cc_person_id,cc_person_name
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.CcModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_cc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_cc
+    where cc_id = #{ccId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByModel" parameterType="com.fea.project.workorder.model.CcModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_cc
+    where 1=1 
+    	<if test="ccId != null">
+        and cc_id = #{ccId,jdbcType=BIGINT}
+      </if>
+     <if test="workorderId != null">
+        and workorder_id = #{workorderId,jdbcType=BIGINT}
+      </if>
+      <if test="ccPersonId != null">
+        and cc_person_id = #{ccPersonId,jdbcType=BIGINT}
+      </if>
+      <if test="ccPersonName != null">
+        and cc_person_name = #{ccPersonName,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_cc
+    where cc_id = #{ccId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByBusinessId" parameterType="java.lang.Long">
+    delete from t_workorder_cc
+    where workorder_id = #{workorderId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.CcModelExample">
+    delete from t_workorder_cc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="ccId" parameterType="com.fea.project.workorder.model.CcModel">
+    insert into t_workorder_cc (cc_id, workorder_id, cc_person_id,cc_person_name
+      )
+    values (#{ccId,jdbcType=BIGINT}, #{workorderId,jdbcType=BIGINT}, #{ccPersonId,jdbcType=BIGINT}, #{ccPersonName,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  
+  <insert id="insertList" parameterType="java.util.List" keyProperty="ccId">
+    insert into t_workorder_cc (cc_id, workorder_id, cc_person_id,cc_person_name
+      )
+    values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.ccId,jdbcType=BIGINT},
+                 #{item.workorderId,jdbcType=BIGINT}, 
+                 #{item.ccPersonId,jdbcType=BIGINT}, 
+                 #{item.ccPersonName,jdbcType=VARCHAR}
+                )
+        </foreach>
+  </insert>
+  <insert id="insertSelective" keyProperty="ccId" parameterType="com.fea.project.workorder.model.CcModel">
+    insert into t_workorder_cc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ccId != null">
+        cc_id,
+      </if>
+      <if test="workorderId != null">
+        workorder_id,
+      </if>
+      <if test="ccPersonId != null">
+        cc_person_id,
+      </if>
+      <if test="ccPersonName != null">
+        cc_person_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ccId != null">
+        #{ccId,jdbcType=BIGINT},
+      </if>
+      <if test="workorderId != null">
+        #{workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="ccPersonId != null">
+        #{ccPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="ccPersonName != null">
+        #{ccPersonName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.CcModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_cc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_cc
+    <set>
+      <if test="record.ccId != null">
+        cc_id = #{record.ccId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workorderId != null">
+        workorder_id = #{record.workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ccPersonId != null">
+        cc_person_id = #{record.ccPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ccPersonName != null">
+        cc_person_name = #{record.ccPersonName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_cc
+    set cc_id = #{record.ccId,jdbcType=BIGINT},
+      workorder_id = #{record.workorderId,jdbcType=BIGINT},
+      cc_person_id = #{record.ccPersonId,jdbcType=BIGINT},
+      cc_person_name = #{record.ccPersonName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.CcModel">
+    update t_workorder_cc
+    <set>
+      <if test="workorderId != null">
+        workorder_id = #{workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="ccPersonId != null">
+        cc_person_id = #{ccPersonId,jdbcType=BIGINT},
+      </if>
+      <if test="ccPersonName != null">
+        cc_person_name = #{ccPersonName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cc_id = #{ccId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.CcModel">
+    update t_workorder_cc
+    set workorder_id = #{workorderId,jdbcType=BIGINT},
+      cc_person_id = #{ccPersonId,jdbcType=BIGINT},
+      cc_person_name = #{ccPersonName,jdbcType=VARCHAR}
+    where cc_id = #{ccId,jdbcType=BIGINT}
+  </update>
+  
+   <resultMap id="rm" type="com.fea.project.workorder.model.vo.PersonInfoModelVo">
+    <result column="cc_person_id" jdbcType="BIGINT" property="id" />
+    <result column="cc_person_name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  
+   <select id="selectCCPerson" parameterType="java.lang.Long" resultMap="rm">
+    select 
+    cc_person_id,cc_person_name
+    from t_workorder_cc
+    where workorder_id = #{workorderId,jdbcType=BIGINT}
+  </select>
+  
+</mapper>

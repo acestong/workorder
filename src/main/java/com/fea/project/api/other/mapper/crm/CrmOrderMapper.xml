@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.crm.CrmOrderMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.crm.CrmOrderModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="num" jdbcType="VARCHAR" property="num" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="sources" jdbcType="BIGINT" property="sources" />
+        <result column="money" jdbcType="DECIMAL" property="money" />
+        <result column="order_type" jdbcType="BIGINT" property="orderType" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="custom_id" jdbcType="BIGINT" property="customId" />
+        <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+        <result column="contract_id" jdbcType="BIGINT" property="contractId" />
+        <result column="plan_delivery" jdbcType="TIMESTAMP" property="planDelivery" />
+        <result column="consignee" jdbcType="VARCHAR" property="consignee" />
+        <result column="consignee_phone" jdbcType="VARCHAR" property="consigneePhone" />
+        <result column="consignee_place" jdbcType="VARCHAR" property="consigneePlace" />
+        <result column="consignee_email" jdbcType="VARCHAR" property="consigneeEmail" />
+        <result column="charge_sale_id" jdbcType="BIGINT" property="chargeSaleId" />
+        <result column="charge_sale" jdbcType="VARCHAR" property="chargeSale" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_status" jdbcType="INTEGER" property="delStatus" />
+        <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
+        <result column="is_discount" jdbcType="INTEGER" property="isDiscount" />
+        <result column="discount_method" jdbcType="BIGINT" property="discountMethod" />
+        <result column="discount_rate" jdbcType="DECIMAL" property="discountRate" />
+        <result column="discounted_money" jdbcType="DECIMAL" property="discountedMoney" />
+        <result column="product_remark" jdbcType="VARCHAR" property="productRemark" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="apply_title" jdbcType="VARCHAR" property="applyTitle" />
+        <result column="apply_user_id" jdbcType="BIGINT" property="applyUserId" />
+        <result column="apply_user_name" jdbcType="VARCHAR" property="applyUserName" />
+        <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+        <result column="apply_remark" jdbcType="VARCHAR" property="applyRemark" />
+        <result column="verify_status" jdbcType="INTEGER" property="verifyStatus" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        num, title, sources, money, order_type, status, custom_id, order_time, contract_id,
+        plan_delivery, consignee, consignee_phone, consignee_place, consignee_email, charge_sale_id,
+        charge_sale, remark, create_id, created_by, create_time, update_id, updated_by, update_time,
+        del_status, total_amount, is_discount, discount_method, discount_rate, discounted_money,
+        product_remark, project_id, apply_title, apply_user_id, apply_user_name, apply_time,
+        apply_remark, verify_status
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            o.id,
+            o.num,
+            o.title,
+            o.sources,
+            o.money,
+            o.order_type,
+            o.`status`,
+            o.custom_id,
+            o.order_time,
+            o.contract_id,
+            o.plan_delivery,
+            o.consignee,
+            o.consignee_phone,
+            o.consignee_place,
+            o.consignee_email,
+            o.charge_sale_id,
+            o.charge_sale,
+            o.verify_status,
+            o.apply_title,
+            o.apply_remark,
+            o.remark,
+            o.create_id,
+            o.created_by,
+            o.create_time,
+            o.update_id,
+            o.updated_by,
+            o.update_time,
+            o.del_status,
+            o.total_amount,
+            o.is_discount,
+            o.discount_method,
+            o.discount_rate,
+            o.discounted_money,
+            o.product_remark,
+            o.project_id,
+            oa.currency,
+            oa.state,
+            oa.quote_id
+        FROM
+            l2cplat_order.t_order AS o ,
+            l2cplat_order.t_order_add AS oa
+        WHERE
+            o.id = #{id,jdbcType=BIGINT} AND
+            o.id = oa.order_id
+    </select>
+
+
+</mapper>

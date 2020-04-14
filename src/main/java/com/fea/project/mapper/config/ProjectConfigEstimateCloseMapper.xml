@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.config.ProjectConfigEstimateCloseMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.config.ProjectConfigEstimateCloseModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="close_id" jdbcType="BIGINT" property="closeId"/>
+        <result column="quality_estimate_weight" jdbcType="DECIMAL" property="qualityEstimateWeight"/>
+        <result column="time_estimate_weight" jdbcType="DECIMAL" property="timeEstimateWeight"/>
+        <result column="price_estimate_weight" jdbcType="DECIMAL" property="priceEstimateWeight"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"/>
+        <result column="step_id" jdbcType="BIGINT" property="stepId"/>
+        <result column="step_weight" jdbcType="DECIMAL" property="stepWeight"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, project_id, close_id, quality_estimate_weight, time_estimate_weight, price_estimate_weight,
+        create_id, create_by, create_time, update_id, update_by, update_time, del_status, 
+        type_id, step_id, step_weight
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_config_estimate_close
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_config_estimate_close
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_config_estimate_close
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.config.ProjectConfigEstimateCloseModel">
+        insert into t_project_config_estimate_close (
+        <include refid="Base_Column_List"/>
+        )
+        values (#{id,jdbcType=BIGINT},
+        #{projectId,jdbcType=BIGINT},
+        #{closeId,jdbcType=BIGINT},
+        #{qualityEstimateWeight,jdbcType=DECIMAL},
+        #{timeEstimateWeight,jdbcType=DECIMAL},
+        #{priceEstimateWeight,jdbcType=DECIMAL},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{typeId,jdbcType=INTEGER},
+        #{stepId,jdbcType=BIGINT},
+        #{stepWeight,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_config_estimate_close (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.projectId,jdbcType=BIGINT},
+            #{item.closeId,jdbcType=BIGINT},
+            #{item.qualityEstimateWeight,jdbcType=DECIMAL},
+            #{item.timeEstimateWeight,jdbcType=DECIMAL},
+            #{item.priceEstimateWeight,jdbcType=DECIMAL},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.typeId,jdbcType=INTEGER},
+            #{item.stepId,jdbcType=BIGINT},
+            #{item.stepWeight,jdbcType=DECIMAL}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.config.ProjectConfigEstimateCloseModel"
+            resultMap="BaseResultMap">
+        select * from t_project_config_estimate_close where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="closeId != null">
+            and close_id = #{closeId,jdbcType=BIGINT}
+        </if>
+        <if test="qualityEstimateWeight != null">
+            and quality_estimate_weight = #{qualityEstimateWeight,jdbcType=DECIMAL}
+        </if>
+        <if test="timeEstimateWeight != null">
+            and time_estimate_weight = #{timeEstimateWeight,jdbcType=DECIMAL}
+        </if>
+        <if test="priceEstimateWeight != null">
+            and price_estimate_weight = #{priceEstimateWeight,jdbcType=DECIMAL}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="typeId != null">
+            and type_id = #{typeId,jdbcType=INTEGER}
+        </if>
+        <if test="stepId != null">
+            and step_id = #{stepId,jdbcType=BIGINT}
+        </if>
+        <if test="stepWeight != null">
+            and step_weight = #{stepWeight,jdbcType=DECIMAL}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id"
+            parameterType="com.fea.project.model.config.ProjectConfigEstimateCloseModel">
+        insert into t_project_config_estimate_close
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="closeId != null">
+                close_id,
+            </if>
+            <if test="qualityEstimateWeight != null">
+                quality_estimate_weight,
+            </if>
+            <if test="timeEstimateWeight != null">
+                time_estimate_weight,
+            </if>
+            <if test="priceEstimateWeight != null">
+                price_estimate_weight,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="stepId != null">
+                step_id,
+            </if>
+            <if test="stepWeight != null">
+                step_weight,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="closeId != null">
+                #{closeId,jdbcType=BIGINT},
+            </if>
+            <if test="qualityEstimateWeight != null">
+                #{qualityEstimateWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="timeEstimateWeight != null">
+                #{timeEstimateWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="priceEstimateWeight != null">
+                #{priceEstimateWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="stepId != null">
+                #{stepId,jdbcType=BIGINT},
+            </if>
+            <if test="stepWeight != null">
+                #{stepWeight,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.config.ProjectConfigEstimateCloseModel">
+        update t_project_config_estimate_close
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="closeId != null">
+                close_id = #{closeId,jdbcType=BIGINT},
+            </if>
+            <if test="qualityEstimateWeight != null">
+                quality_estimate_weight = #{qualityEstimateWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="timeEstimateWeight != null">
+                time_estimate_weight = #{timeEstimateWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="priceEstimateWeight != null">
+                price_estimate_weight = #{priceEstimateWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="stepId != null">
+                step_id = #{stepId,jdbcType=BIGINT},
+            </if>
+            <if test="stepWeight != null">
+                step_weight = #{stepWeight,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.config.ProjectConfigEstimateCloseModel">
+        update t_project_config_estimate_close
+        set project_id = #{projectId,jdbcType=BIGINT},
+            close_id = #{closeId,jdbcType=BIGINT},
+            quality_estimate_weight = #{qualityEstimateWeight,jdbcType=DECIMAL},
+            time_estimate_weight = #{timeEstimateWeight,jdbcType=DECIMAL},
+            price_estimate_weight = #{priceEstimateWeight,jdbcType=DECIMAL},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            type_id = #{typeId,jdbcType=INTEGER},
+            step_id = #{stepId,jdbcType=BIGINT},
+            step_weight = #{stepWeight,jdbcType=DECIMAL}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <delete id="deleteByCloseIdAndTypeId">
+        delete from t_project_config_estimate_close
+        where close_id = #{closeId,jdbcType=BIGINT}
+        and type_id = #{typeId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByCloseId">
+        delete from t_project_config_estimate_close
+        where close_id = #{closeId,jdbcType=BIGINT}
+    </delete>
+
+</mapper>

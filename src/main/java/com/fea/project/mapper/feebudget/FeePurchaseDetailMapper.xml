@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.feebudget.FeePurchaseDetailMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.feebudget.FeePurchaseDetailModel">
+        <id column="ID" jdbcType="BIGINT" property="ID" />
+        <result column="TALLY_ID" jdbcType="BIGINT" property="TALLYID" />
+        <result column="PARENT_ID" jdbcType="BIGINT" property="PARENTID" />
+        <result column="PARENT_TYPE" jdbcType="TINYINT" property="PARENTTYPE" />
+        <result column="HAPPEN_TIME" jdbcType="TIMESTAMP" property="HAPPENTIME" />
+        <result column="PRODUCT_ID" jdbcType="BIGINT" property="PRODUCTID" />
+        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="PRODUCTNAME" />
+        <result column="BASE_UNIT_ID" jdbcType="BIGINT" property="BASEUNITID" />
+        <result column="BASE_UNIT" jdbcType="VARCHAR" property="BASEUNIT" />
+        <result column="SPEC" jdbcType="VARCHAR" property="SPEC" />
+        <result column="PURCHASE_OBJECT_ID" jdbcType="BIGINT" property="PURCHASEOBJECTID" />
+        <result column="PRODUCT_UNIT_ID" jdbcType="BIGINT" property="PRODUCTUNITID" />
+        <result column="SUPPLIER_ID" jdbcType="BIGINT" property="SUPPLIERID" />
+        <result column="SUPPLIER" jdbcType="VARCHAR" property="SUPPLIER" />
+        <result column="BRAND" jdbcType="VARCHAR" property="BRAND" />
+        <result column="TAX_RATE" jdbcType="DOUBLE" property="TAXRATE" />
+        <result column="PURCHASE_TYPE" jdbcType="TINYINT" property="PURCHASETYPE" />
+        <result column="PRICE" jdbcType="DOUBLE" property="PRICE" />
+        <result column="NUMBER" jdbcType="DOUBLE" property="NUMBER" />
+        <result column="MONEY" jdbcType="DOUBLE" property="MONEY" />
+        <result column="ETA" jdbcType="TIMESTAMP" property="ETA" />
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="DESCRIPTION" />
+        <result column="FEE_BELONG_ID" jdbcType="VARCHAR" property="FEEBELONGID" />
+        <result column="CREATE_USER_ID" jdbcType="BIGINT" property="CREATEUSERID" />
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME" />
+        <result column="UPDATE_USER_ID" jdbcType="BIGINT" property="UPDATEUSERID" />
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME" />
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID" />
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID" />
+        <result column="DELSTATE" jdbcType="TINYINT" property="DELSTATE" />
+        <result column="CATE_ID" jdbcType="BIGINT" property="CATEID" />
+        <result column="CATE_NAME" jdbcType="VARCHAR" property="CATENAME" />
+        <result column="CATE_STR" jdbcType="VARCHAR" property="CATESTR" />
+        <result column="CUSTOMER_ID" jdbcType="BIGINT" property="CUSTOMERID" />
+        <result column="CUSTOMER_NAME" jdbcType="VARCHAR" property="CUSTOMERNAME" />
+        <result column="CONTACT_IDS" jdbcType="VARCHAR" property="CONTACTIDS" />
+        <result column="CONTACTS" jdbcType="VARCHAR" property="CONTACTS" />
+        <result column="BUSINESS_TYPE" jdbcType="TINYINT" property="BUSINESSTYPE" />
+        <result column="BUSINESS_ID" jdbcType="BIGINT" property="BUSINESSID" />
+        <result column="BUSINESS_NAME" jdbcType="VARCHAR" property="BUSINESSNAME" />
+        <result column="OWNER_TYPE" jdbcType="TINYINT" property="OWNERTYPE" />
+        <result column="HAS_TICKET" jdbcType="TINYINT" property="HASTICKET" />
+        <result column="TICKET_NUM" jdbcType="INTEGER" property="TICKETNUM" />
+        <result column="TICKET_REMARK" jdbcType="VARCHAR" property="TICKETREMARK" />
+        <result column="RELATION_ROUTINE_TYPE" jdbcType="TINYINT" property="RELATIONROUTINETYPE" />
+        <result column="RELATION_ROUTINE_ID" jdbcType="BIGINT" property="RELATIONROUTINEID" />
+        <result column="RELATION_ROUTINE_NAME" jdbcType="VARCHAR" property="RELATIONROUTINENAME" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        TALLY_ID, PARENT_ID, PARENT_TYPE, HAPPEN_TIME, PRODUCT_ID, PRODUCT_NAME, BASE_UNIT_ID, 
+        BASE_UNIT, SPEC, PURCHASE_OBJECT_ID, PRODUCT_UNIT_ID, SUPPLIER_ID, SUPPLIER, BRAND, 
+        TAX_RATE, PURCHASE_TYPE, PRICE, NUMBER, MONEY, ETA, DESCRIPTION, FEE_BELONG_ID, CREATE_USER_ID, 
+        CREATE_USER, CREATE_TIME, UPDATE_USER_ID, UPDATE_USER, UPDATE_TIME, REG_ID, ORG_ID, 
+        DELSTATE, CATE_ID, CATE_NAME, CATE_STR, CUSTOMER_ID, CUSTOMER_NAME, CONTACT_IDS, 
+        CONTACTS, BUSINESS_TYPE, BUSINESS_ID, BUSINESS_NAME, OWNER_TYPE, HAS_TICKET, TICKET_NUM, 
+        TICKET_REMARK, RELATION_ROUTINE_TYPE, RELATION_ROUTINE_ID, RELATION_ROUTINE_NAME
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_fin_fee_purchase_detail
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_fin_fee_purchase_detail
+        where ID = #{ID,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_fin_fee_purchase_detail
+        where ID in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="ID" parameterType="com.fea.project.model.feebudget.FeePurchaseDetailModel">
+        insert into t_fin_fee_purchase_detail (
+        <include refid="Base_Column_List" />
+        )
+        values (#{TALLYID,jdbcType=BIGINT}, 
+            #{PARENTID,jdbcType=BIGINT}, 
+            #{PARENTTYPE,jdbcType=TINYINT}, 
+            #{HAPPENTIME,jdbcType=TIMESTAMP}, 
+            #{PRODUCTID,jdbcType=BIGINT}, 
+            #{PRODUCTNAME,jdbcType=VARCHAR}, 
+            #{BASEUNITID,jdbcType=BIGINT}, 
+            #{BASEUNIT,jdbcType=VARCHAR}, 
+            #{SPEC,jdbcType=VARCHAR}, 
+            #{PURCHASEOBJECTID,jdbcType=BIGINT}, 
+            #{PRODUCTUNITID,jdbcType=BIGINT}, 
+            #{SUPPLIERID,jdbcType=BIGINT}, 
+            #{SUPPLIER,jdbcType=VARCHAR}, 
+            #{BRAND,jdbcType=VARCHAR}, 
+            #{TAXRATE,jdbcType=DOUBLE}, 
+            #{PURCHASETYPE,jdbcType=TINYINT}, 
+            #{PRICE,jdbcType=DOUBLE}, 
+            #{NUMBER,jdbcType=DOUBLE}, 
+            #{MONEY,jdbcType=DOUBLE}, 
+            #{ETA,jdbcType=TIMESTAMP}, 
+            #{DESCRIPTION,jdbcType=VARCHAR}, 
+            #{FEEBELONGID,jdbcType=VARCHAR}, 
+            #{CREATEUSERID,jdbcType=BIGINT}, 
+            #{CREATEUSER,jdbcType=VARCHAR}, 
+            #{CREATETIME,jdbcType=TIMESTAMP}, 
+            #{UPDATEUSERID,jdbcType=BIGINT}, 
+            #{UPDATEUSER,jdbcType=VARCHAR}, 
+            #{UPDATETIME,jdbcType=TIMESTAMP}, 
+            #{REGID,jdbcType=BIGINT}, 
+            #{ORGID,jdbcType=BIGINT}, 
+            #{DELSTATE,jdbcType=TINYINT}, 
+            #{CATEID,jdbcType=BIGINT}, 
+            #{CATENAME,jdbcType=VARCHAR}, 
+            #{CATESTR,jdbcType=VARCHAR}, 
+            #{CUSTOMERID,jdbcType=BIGINT}, 
+            #{CUSTOMERNAME,jdbcType=VARCHAR}, 
+            #{CONTACTIDS,jdbcType=VARCHAR}, 
+            #{CONTACTS,jdbcType=VARCHAR}, 
+            #{BUSINESSTYPE,jdbcType=TINYINT}, 
+            #{BUSINESSID,jdbcType=BIGINT}, 
+            #{BUSINESSNAME,jdbcType=VARCHAR}, 
+            #{OWNERTYPE,jdbcType=TINYINT}, 
+            #{HASTICKET,jdbcType=TINYINT}, 
+            #{TICKETNUM,jdbcType=INTEGER}, 
+            #{TICKETREMARK,jdbcType=VARCHAR}, 
+            #{RELATIONROUTINETYPE,jdbcType=TINYINT}, 
+            #{RELATIONROUTINEID,jdbcType=BIGINT}, 
+            #{RELATIONROUTINENAME,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_fin_fee_purchase_detail (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.TALLYID,jdbcType=BIGINT}, 
+                #{item.PARENTID,jdbcType=BIGINT}, 
+                #{item.PARENTTYPE,jdbcType=TINYINT}, 
+                #{item.HAPPENTIME,jdbcType=TIMESTAMP}, 
+                #{item.PRODUCTID,jdbcType=BIGINT}, 
+                #{item.PRODUCTNAME,jdbcType=VARCHAR}, 
+                #{item.BASEUNITID,jdbcType=BIGINT}, 
+                #{item.BASEUNIT,jdbcType=VARCHAR}, 
+                #{item.SPEC,jdbcType=VARCHAR}, 
+                #{item.PURCHASEOBJECTID,jdbcType=BIGINT}, 
+                #{item.PRODUCTUNITID,jdbcType=BIGINT}, 
+                #{item.SUPPLIERID,jdbcType=BIGINT}, 
+                #{item.SUPPLIER,jdbcType=VARCHAR}, 
+                #{item.BRAND,jdbcType=VARCHAR}, 
+                #{item.TAXRATE,jdbcType=DOUBLE}, 
+                #{item.PURCHASETYPE,jdbcType=TINYINT}, 
+                #{item.PRICE,jdbcType=DOUBLE}, 
+                #{item.NUMBER,jdbcType=DOUBLE}, 
+                #{item.MONEY,jdbcType=DOUBLE}, 
+                #{item.ETA,jdbcType=TIMESTAMP}, 
+                #{item.DESCRIPTION,jdbcType=VARCHAR}, 
+                #{item.FEEBELONGID,jdbcType=VARCHAR}, 
+                #{item.CREATEUSERID,jdbcType=BIGINT}, 
+                #{item.CREATEUSER,jdbcType=VARCHAR}, 
+                #{item.CREATETIME,jdbcType=TIMESTAMP}, 
+                #{item.UPDATEUSERID,jdbcType=BIGINT}, 
+                #{item.UPDATEUSER,jdbcType=VARCHAR}, 
+                #{item.UPDATETIME,jdbcType=TIMESTAMP}, 
+                #{item.REGID,jdbcType=BIGINT}, 
+                #{item.ORGID,jdbcType=BIGINT}, 
+                #{item.DELSTATE,jdbcType=TINYINT}, 
+                #{item.CATEID,jdbcType=BIGINT}, 
+                #{item.CATENAME,jdbcType=VARCHAR}, 
+                #{item.CATESTR,jdbcType=VARCHAR}, 
+                #{item.CUSTOMERID,jdbcType=BIGINT}, 
+                #{item.CUSTOMERNAME,jdbcType=VARCHAR}, 
+                #{item.CONTACTIDS,jdbcType=VARCHAR}, 
+                #{item.CONTACTS,jdbcType=VARCHAR}, 
+                #{item.BUSINESSTYPE,jdbcType=TINYINT}, 
+                #{item.BUSINESSID,jdbcType=BIGINT}, 
+                #{item.BUSINESSNAME,jdbcType=VARCHAR}, 
+                #{item.OWNERTYPE,jdbcType=TINYINT}, 
+                #{item.HASTICKET,jdbcType=TINYINT}, 
+                #{item.TICKETNUM,jdbcType=INTEGER}, 
+                #{item.TICKETREMARK,jdbcType=VARCHAR}, 
+                #{item.RELATIONROUTINETYPE,jdbcType=TINYINT}, 
+                #{item.RELATIONROUTINEID,jdbcType=BIGINT}, 
+                #{item.RELATIONROUTINENAME,jdbcType=VARCHAR}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.feebudget.FeePurchaseDetailModel" resultMap="BaseResultMap">
+        select * from t_fin_fee_purchase_detail where 1 = 1
+        <if test="TALLYID != null">
+            and TALLY_ID = #{TALLYID,jdbcType=BIGINT}
+        </if>
+        <if test="PARENTID != null">
+            and PARENT_ID = #{PARENTID,jdbcType=BIGINT}
+        </if>
+        <if test="PARENTTYPE != null">
+            and PARENT_TYPE = #{PARENTTYPE,jdbcType=TINYINT}
+        </if>
+        <if test="HAPPENTIME != null">
+            and HAPPEN_TIME = #{HAPPENTIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="PRODUCTID != null">
+            and PRODUCT_ID = #{PRODUCTID,jdbcType=BIGINT}
+        </if>
+        <if test="PRODUCTNAME != null">
+            and PRODUCT_NAME = #{PRODUCTNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="BASEUNITID != null">
+            and BASE_UNIT_ID = #{BASEUNITID,jdbcType=BIGINT}
+        </if>
+        <if test="BASEUNIT != null">
+            and BASE_UNIT = #{BASEUNIT,jdbcType=VARCHAR}
+        </if>
+        <if test="SPEC != null">
+            and SPEC = #{SPEC,jdbcType=VARCHAR}
+        </if>
+        <if test="PURCHASEOBJECTID != null">
+            and PURCHASE_OBJECT_ID = #{PURCHASEOBJECTID,jdbcType=BIGINT}
+        </if>
+        <if test="PRODUCTUNITID != null">
+            and PRODUCT_UNIT_ID = #{PRODUCTUNITID,jdbcType=BIGINT}
+        </if>
+        <if test="SUPPLIERID != null">
+            and SUPPLIER_ID = #{SUPPLIERID,jdbcType=BIGINT}
+        </if>
+        <if test="SUPPLIER != null">
+            and SUPPLIER = #{SUPPLIER,jdbcType=VARCHAR}
+        </if>
+        <if test="BRAND != null">
+            and BRAND = #{BRAND,jdbcType=VARCHAR}
+        </if>
+        <if test="TAXRATE != null">
+            and TAX_RATE = #{TAXRATE,jdbcType=DOUBLE}
+        </if>
+        <if test="PURCHASETYPE != null">
+            and PURCHASE_TYPE = #{PURCHASETYPE,jdbcType=TINYINT}
+        </if>
+        <if test="PRICE != null">
+            and PRICE = #{PRICE,jdbcType=DOUBLE}
+        </if>
+        <if test="NUMBER != null">
+            and NUMBER = #{NUMBER,jdbcType=DOUBLE}
+        </if>
+        <if test="MONEY != null">
+            and MONEY = #{MONEY,jdbcType=DOUBLE}
+        </if>
+        <if test="ETA != null">
+            and ETA = #{ETA,jdbcType=TIMESTAMP}
+        </if>
+        <if test="DESCRIPTION != null">
+            and DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="FEEBELONGID != null">
+            and FEE_BELONG_ID = #{FEEBELONGID,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATEUSERID != null">
+            and CREATE_USER_ID = #{CREATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSERID != null">
+            and UPDATE_USER_ID = #{UPDATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="DELSTATE != null">
+            and DELSTATE = #{DELSTATE,jdbcType=TINYINT}
+        </if>
+        <if test="CATEID != null">
+            and CATE_ID = #{CATEID,jdbcType=BIGINT}
+        </if>
+        <if test="CATENAME != null">
+            and CATE_NAME = #{CATENAME,jdbcType=VARCHAR}
+        </if>
+        <if test="CATESTR != null">
+            and CATE_STR = #{CATESTR,jdbcType=VARCHAR}
+        </if>
+        <if test="CUSTOMERID != null">
+            and CUSTOMER_ID = #{CUSTOMERID,jdbcType=BIGINT}
+        </if>
+        <if test="CUSTOMERNAME != null">
+            and CUSTOMER_NAME = #{CUSTOMERNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="CONTACTIDS != null">
+            and CONTACT_IDS = #{CONTACTIDS,jdbcType=VARCHAR}
+        </if>
+        <if test="CONTACTS != null">
+            and CONTACTS = #{CONTACTS,jdbcType=VARCHAR}
+        </if>
+        <if test="BUSINESSTYPE != null">
+            and BUSINESS_TYPE = #{BUSINESSTYPE,jdbcType=TINYINT}
+        </if>
+        <if test="BUSINESSID != null">
+            and BUSINESS_ID = #{BUSINESSID,jdbcType=BIGINT}
+        </if>
+        <if test="BUSINESSNAME != null">
+            and BUSINESS_NAME = #{BUSINESSNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="OWNERTYPE != null">
+            and OWNER_TYPE = #{OWNERTYPE,jdbcType=TINYINT}
+        </if>
+        <if test="HASTICKET != null">
+            and HAS_TICKET = #{HASTICKET,jdbcType=TINYINT}
+        </if>
+        <if test="TICKETNUM != null">
+            and TICKET_NUM = #{TICKETNUM,jdbcType=INTEGER}
+        </if>
+        <if test="TICKETREMARK != null">
+            and TICKET_REMARK = #{TICKETREMARK,jdbcType=VARCHAR}
+        </if>
+        <if test="RELATIONROUTINETYPE != null">
+            and RELATION_ROUTINE_TYPE = #{RELATIONROUTINETYPE,jdbcType=TINYINT}
+        </if>
+        <if test="RELATIONROUTINEID != null">
+            and RELATION_ROUTINE_ID = #{RELATIONROUTINEID,jdbcType=BIGINT}
+        </if>
+        <if test="RELATIONROUTINENAME != null">
+            and RELATION_ROUTINE_NAME = #{RELATIONROUTINENAME,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="ID" parameterType="com.fea.project.model.feebudget.FeePurchaseDetailModel">
+        insert into t_fin_fee_purchase_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="TALLYID != null">
+                TALLY_ID,
+            </if>
+            <if test="PARENTID != null">
+                PARENT_ID,
+            </if>
+            <if test="PARENTTYPE != null">
+                PARENT_TYPE,
+            </if>
+            <if test="HAPPENTIME != null">
+                HAPPEN_TIME,
+            </if>
+            <if test="PRODUCTID != null">
+                PRODUCT_ID,
+            </if>
+            <if test="PRODUCTNAME != null">
+                PRODUCT_NAME,
+            </if>
+            <if test="BASEUNITID != null">
+                BASE_UNIT_ID,
+            </if>
+            <if test="BASEUNIT != null">
+                BASE_UNIT,
+            </if>
+            <if test="SPEC != null">
+                SPEC,
+            </if>
+            <if test="PURCHASEOBJECTID != null">
+                PURCHASE_OBJECT_ID,
+            </if>
+            <if test="PRODUCTUNITID != null">
+                PRODUCT_UNIT_ID,
+            </if>
+            <if test="SUPPLIERID != null">
+                SUPPLIER_ID,
+            </if>
+            <if test="SUPPLIER != null">
+                SUPPLIER,
+            </if>
+            <if test="BRAND != null">
+                BRAND,
+            </if>
+            <if test="TAXRATE != null">
+                TAX_RATE,
+            </if>
+            <if test="PURCHASETYPE != null">
+                PURCHASE_TYPE,
+            </if>
+            <if test="PRICE != null">
+                PRICE,
+            </if>
+            <if test="NUMBER != null">
+                NUMBER,
+            </if>
+            <if test="MONEY != null">
+                MONEY,
+            </if>
+            <if test="ETA != null">
+                ETA,
+            </if>
+            <if test="DESCRIPTION != null">
+                DESCRIPTION,
+            </if>
+            <if test="FEEBELONGID != null">
+                FEE_BELONG_ID,
+            </if>
+            <if test="CREATEUSERID != null">
+                CREATE_USER_ID,
+            </if>
+            <if test="CREATEUSER != null">
+                CREATE_USER,
+            </if>
+            <if test="CREATETIME != null">
+                CREATE_TIME,
+            </if>
+            <if test="UPDATEUSERID != null">
+                UPDATE_USER_ID,
+            </if>
+            <if test="UPDATEUSER != null">
+                UPDATE_USER,
+            </if>
+            <if test="UPDATETIME != null">
+                UPDATE_TIME,
+            </if>
+            <if test="REGID != null">
+                REG_ID,
+            </if>
+            <if test="ORGID != null">
+                ORG_ID,
+            </if>
+            <if test="DELSTATE != null">
+                DELSTATE,
+            </if>
+            <if test="CATEID != null">
+                CATE_ID,
+            </if>
+            <if test="CATENAME != null">
+                CATE_NAME,
+            </if>
+            <if test="CATESTR != null">
+                CATE_STR,
+            </if>
+            <if test="CUSTOMERID != null">
+                CUSTOMER_ID,
+            </if>
+            <if test="CUSTOMERNAME != null">
+                CUSTOMER_NAME,
+            </if>
+            <if test="CONTACTIDS != null">
+                CONTACT_IDS,
+            </if>
+            <if test="CONTACTS != null">
+                CONTACTS,
+            </if>
+            <if test="BUSINESSTYPE != null">
+                BUSINESS_TYPE,
+            </if>
+            <if test="BUSINESSID != null">
+                BUSINESS_ID,
+            </if>
+            <if test="BUSINESSNAME != null">
+                BUSINESS_NAME,
+            </if>
+            <if test="OWNERTYPE != null">
+                OWNER_TYPE,
+            </if>
+            <if test="HASTICKET != null">
+                HAS_TICKET,
+            </if>
+            <if test="TICKETNUM != null">
+                TICKET_NUM,
+            </if>
+            <if test="TICKETREMARK != null">
+                TICKET_REMARK,
+            </if>
+            <if test="RELATIONROUTINETYPE != null">
+                RELATION_ROUTINE_TYPE,
+            </if>
+            <if test="RELATIONROUTINEID != null">
+                RELATION_ROUTINE_ID,
+            </if>
+            <if test="RELATIONROUTINENAME != null">
+                RELATION_ROUTINE_NAME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="TALLYID != null">
+                #{TALLYID,jdbcType=BIGINT},
+            </if>
+            <if test="PARENTID != null">
+                #{PARENTID,jdbcType=BIGINT},
+            </if>
+            <if test="PARENTTYPE != null">
+                #{PARENTTYPE,jdbcType=TINYINT},
+            </if>
+            <if test="HAPPENTIME != null">
+                #{HAPPENTIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="PRODUCTID != null">
+                #{PRODUCTID,jdbcType=BIGINT},
+            </if>
+            <if test="PRODUCTNAME != null">
+                #{PRODUCTNAME,jdbcType=VARCHAR},
+            </if>
+            <if test="BASEUNITID != null">
+                #{BASEUNITID,jdbcType=BIGINT},
+            </if>
+            <if test="BASEUNIT != null">
+                #{BASEUNIT,jdbcType=VARCHAR},
+            </if>
+            <if test="SPEC != null">
+                #{SPEC,jdbcType=VARCHAR},
+            </if>
+            <if test="PURCHASEOBJECTID != null">
+                #{PURCHASEOBJECTID,jdbcType=BIGINT},
+            </if>
+            <if test="PRODUCTUNITID != null">
+                #{PRODUCTUNITID,jdbcType=BIGINT},
+            </if>
+            <if test="SUPPLIERID != null">
+                #{SUPPLIERID,jdbcType=BIGINT},
+            </if>
+            <if test="SUPPLIER != null">
+                #{SUPPLIER,jdbcType=VARCHAR},
+            </if>
+            <if test="BRAND != null">
+                #{BRAND,jdbcType=VARCHAR},
+            </if>
+            <if test="TAXRATE != null">
+                #{TAXRATE,jdbcType=DOUBLE},
+            </if>
+            <if test="PURCHASETYPE != null">
+                #{PURCHASETYPE,jdbcType=TINYINT},
+            </if>
+            <if test="PRICE != null">
+                #{PRICE,jdbcType=DOUBLE},
+            </if>
+            <if test="NUMBER != null">
+                #{NUMBER,jdbcType=DOUBLE},
+            </if>
+            <if test="MONEY != null">
+                #{MONEY,jdbcType=DOUBLE},
+            </if>
+            <if test="ETA != null">
+                #{ETA,jdbcType=TIMESTAMP},
+            </if>
+            <if test="DESCRIPTION != null">
+                #{DESCRIPTION,jdbcType=VARCHAR},
+            </if>
+            <if test="FEEBELONGID != null">
+                #{FEEBELONGID,jdbcType=VARCHAR},
+            </if>
+            <if test="CREATEUSERID != null">
+                #{CREATEUSERID,jdbcType=BIGINT},
+            </if>
+            <if test="CREATEUSER != null">
+                #{CREATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="CREATETIME != null">
+                #{CREATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="UPDATEUSERID != null">
+                #{UPDATEUSERID,jdbcType=BIGINT},
+            </if>
+            <if test="UPDATEUSER != null">
+                #{UPDATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="UPDATETIME != null">
+                #{UPDATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="REGID != null">
+                #{REGID,jdbcType=BIGINT},
+            </if>
+            <if test="ORGID != null">
+                #{ORGID,jdbcType=BIGINT},
+            </if>
+            <if test="DELSTATE != null">
+                #{DELSTATE,jdbcType=TINYINT},
+            </if>
+            <if test="CATEID != null">
+                #{CATEID,jdbcType=BIGINT},
+            </if>
+            <if test="CATENAME != null">
+                #{CATENAME,jdbcType=VARCHAR},
+            </if>
+            <if test="CATESTR != null">
+                #{CATESTR,jdbcType=VARCHAR},
+            </if>
+            <if test="CUSTOMERID != null">
+                #{CUSTOMERID,jdbcType=BIGINT},
+            </if>
+            <if test="CUSTOMERNAME != null">
+                #{CUSTOMERNAME,jdbcType=VARCHAR},
+            </if>
+            <if test="CONTACTIDS != null">
+                #{CONTACTIDS,jdbcType=VARCHAR},
+            </if>
+            <if test="CONTACTS != null">
+                #{CONTACTS,jdbcType=VARCHAR},
+            </if>
+            <if test="BUSINESSTYPE != null">
+                #{BUSINESSTYPE,jdbcType=TINYINT},
+            </if>
+            <if test="BUSINESSID != null">
+                #{BUSINESSID,jdbcType=BIGINT},
+            </if>
+            <if test="BUSINESSNAME != null">
+                #{BUSINESSNAME,jdbcType=VARCHAR},
+            </if>
+            <if test="OWNERTYPE != null">
+                #{OWNERTYPE,jdbcType=TINYINT},
+            </if>
+            <if test="HASTICKET != null">
+                #{HASTICKET,jdbcType=TINYINT},
+            </if>
+            <if test="TICKETNUM != null">
+                #{TICKETNUM,jdbcType=INTEGER},
+            </if>
+            <if test="TICKETREMARK != null">
+                #{TICKETREMARK,jdbcType=VARCHAR},
+            </if>
+            <if test="RELATIONROUTINETYPE != null">
+                #{RELATIONROUTINETYPE,jdbcType=TINYINT},
+            </if>
+            <if test="RELATIONROUTINEID != null">
+                #{RELATIONROUTINEID,jdbcType=BIGINT},
+            </if>
+            <if test="RELATIONROUTINENAME != null">
+                #{RELATIONROUTINENAME,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.feebudget.FeePurchaseDetailModel">
+        update t_fin_fee_purchase_detail
+        <set>
+            <if test="TALLYID != null">
+                TALLY_ID = #{TALLYID,jdbcType=BIGINT},
+            </if>
+            <if test="PARENTID != null">
+                PARENT_ID = #{PARENTID,jdbcType=BIGINT},
+            </if>
+            <if test="PARENTTYPE != null">
+                PARENT_TYPE = #{PARENTTYPE,jdbcType=TINYINT},
+            </if>
+            <if test="HAPPENTIME != null">
+                HAPPEN_TIME = #{HAPPENTIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="PRODUCTID != null">
+                PRODUCT_ID = #{PRODUCTID,jdbcType=BIGINT},
+            </if>
+            <if test="PRODUCTNAME != null">
+                PRODUCT_NAME = #{PRODUCTNAME,jdbcType=VARCHAR},
+            </if>
+            <if test="BASEUNITID != null">
+                BASE_UNIT_ID = #{BASEUNITID,jdbcType=BIGINT},
+            </if>
+            <if test="BASEUNIT != null">
+                BASE_UNIT = #{BASEUNIT,jdbcType=VARCHAR},
+            </if>
+            <if test="SPEC != null">
+                SPEC = #{SPEC,jdbcType=VARCHAR},
+            </if>
+            <if test="PURCHASEOBJECTID != null">
+                PURCHASE_OBJECT_ID = #{PURCHASEOBJECTID,jdbcType=BIGINT},
+            </if>
+            <if test="PRODUCTUNITID != null">
+                PRODUCT_UNIT_ID = #{PRODUCTUNITID,jdbcType=BIGINT},
+            </if>
+            <if test="SUPPLIERID != null">
+                SUPPLIER_ID = #{SUPPLIERID,jdbcType=BIGINT},
+            </if>
+            <if test="SUPPLIER != null">
+                SUPPLIER = #{SUPPLIER,jdbcType=VARCHAR},
+            </if>
+            <if test="BRAND != null">
+                BRAND = #{BRAND,jdbcType=VARCHAR},
+            </if>
+            <if test="TAXRATE != null">
+                TAX_RATE = #{TAXRATE,jdbcType=DOUBLE},
+            </if>
+            <if test="PURCHASETYPE != null">
+                PURCHASE_TYPE = #{PURCHASETYPE,jdbcType=TINYINT},
+            </if>
+            <if test="PRICE != null">
+                PRICE = #{PRICE,jdbcType=DOUBLE},
+            </if>
+            <if test="NUMBER != null">
+                NUMBER = #{NUMBER,jdbcType=DOUBLE},
+            </if>
+            <if test="MONEY != null">
+                MONEY = #{MONEY,jdbcType=DOUBLE},
+            </if>
+            <if test="ETA != null">
+                ETA = #{ETA,jdbcType=TIMESTAMP},
+            </if>
+            <if test="DESCRIPTION != null">
+                DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR},
+            </if>
+            <if test="FEEBELONGID != null">
+                FEE_BELONG_ID = #{FEEBELONGID,jdbcType=VARCHAR},
+            </if>
+            <if test="CREATEUSERID != null">
+                CREATE_USER_ID = #{CREATEUSERID,jdbcType=BIGINT},
+            </if>
+            <if test="CREATEUSER != null">
+                CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="CREATETIME != null">
+                CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="UPDATEUSERID != null">
+                UPDATE_USER_ID = #{UPDATEUSERID,jdbcType=BIGINT},
+            </if>
+            <if test="UPDATEUSER != null">
+                UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="UPDATETIME != null">
+                UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="REGID != null">
+                REG_ID = #{REGID,jdbcType=BIGINT},
+            </if>
+            <if test="ORGID != null">
+                ORG_ID = #{ORGID,jdbcType=BIGINT},
+            </if>
+            <if test="DELSTATE != null">
+                DELSTATE = #{DELSTATE,jdbcType=TINYINT},
+            </if>
+            <if test="CATEID != null">
+                CATE_ID = #{CATEID,jdbcType=BIGINT},
+            </if>
+            <if test="CATENAME != null">
+                CATE_NAME = #{CATENAME,jdbcType=VARCHAR},
+            </if>
+            <if test="CATESTR != null">
+                CATE_STR = #{CATESTR,jdbcType=VARCHAR},
+            </if>
+            <if test="CUSTOMERID != null">
+                CUSTOMER_ID = #{CUSTOMERID,jdbcType=BIGINT},
+            </if>
+            <if test="CUSTOMERNAME != null">
+                CUSTOMER_NAME = #{CUSTOMERNAME,jdbcType=VARCHAR},
+            </if>
+            <if test="CONTACTIDS != null">
+                CONTACT_IDS = #{CONTACTIDS,jdbcType=VARCHAR},
+            </if>
+            <if test="CONTACTS != null">
+                CONTACTS = #{CONTACTS,jdbcType=VARCHAR},
+            </if>
+            <if test="BUSINESSTYPE != null">
+                BUSINESS_TYPE = #{BUSINESSTYPE,jdbcType=TINYINT},
+            </if>
+            <if test="BUSINESSID != null">
+                BUSINESS_ID = #{BUSINESSID,jdbcType=BIGINT},
+            </if>
+            <if test="BUSINESSNAME != null">
+                BUSINESS_NAME = #{BUSINESSNAME,jdbcType=VARCHAR},
+            </if>
+            <if test="OWNERTYPE != null">
+                OWNER_TYPE = #{OWNERTYPE,jdbcType=TINYINT},
+            </if>
+            <if test="HASTICKET != null">
+                HAS_TICKET = #{HASTICKET,jdbcType=TINYINT},
+            </if>
+            <if test="TICKETNUM != null">
+                TICKET_NUM = #{TICKETNUM,jdbcType=INTEGER},
+            </if>
+            <if test="TICKETREMARK != null">
+                TICKET_REMARK = #{TICKETREMARK,jdbcType=VARCHAR},
+            </if>
+            <if test="RELATIONROUTINETYPE != null">
+                RELATION_ROUTINE_TYPE = #{RELATIONROUTINETYPE,jdbcType=TINYINT},
+            </if>
+            <if test="RELATIONROUTINEID != null">
+                RELATION_ROUTINE_ID = #{RELATIONROUTINEID,jdbcType=BIGINT},
+            </if>
+            <if test="RELATIONROUTINENAME != null">
+                RELATION_ROUTINE_NAME = #{RELATIONROUTINENAME,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{ID,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.feebudget.FeePurchaseDetailModel">
+        update t_fin_fee_purchase_detail
+        set TALLY_ID = #{TALLYID,jdbcType=BIGINT},
+            PARENT_ID = #{PARENTID,jdbcType=BIGINT},
+            PARENT_TYPE = #{PARENTTYPE,jdbcType=TINYINT},
+            HAPPEN_TIME = #{HAPPENTIME,jdbcType=TIMESTAMP},
+            PRODUCT_ID = #{PRODUCTID,jdbcType=BIGINT},
+            PRODUCT_NAME = #{PRODUCTNAME,jdbcType=VARCHAR},
+            BASE_UNIT_ID = #{BASEUNITID,jdbcType=BIGINT},
+            BASE_UNIT = #{BASEUNIT,jdbcType=VARCHAR},
+            SPEC = #{SPEC,jdbcType=VARCHAR},
+            PURCHASE_OBJECT_ID = #{PURCHASEOBJECTID,jdbcType=BIGINT},
+            PRODUCT_UNIT_ID = #{PRODUCTUNITID,jdbcType=BIGINT},
+            SUPPLIER_ID = #{SUPPLIERID,jdbcType=BIGINT},
+            SUPPLIER = #{SUPPLIER,jdbcType=VARCHAR},
+            BRAND = #{BRAND,jdbcType=VARCHAR},
+            TAX_RATE = #{TAXRATE,jdbcType=DOUBLE},
+            PURCHASE_TYPE = #{PURCHASETYPE,jdbcType=TINYINT},
+            PRICE = #{PRICE,jdbcType=DOUBLE},
+            NUMBER = #{NUMBER,jdbcType=DOUBLE},
+            MONEY = #{MONEY,jdbcType=DOUBLE},
+            ETA = #{ETA,jdbcType=TIMESTAMP},
+            DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR},
+            FEE_BELONG_ID = #{FEEBELONGID,jdbcType=VARCHAR},
+            CREATE_USER_ID = #{CREATEUSERID,jdbcType=BIGINT},
+            CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR},
+            CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP},
+            UPDATE_USER_ID = #{UPDATEUSERID,jdbcType=BIGINT},
+            UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR},
+            UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP},
+            REG_ID = #{REGID,jdbcType=BIGINT},
+            ORG_ID = #{ORGID,jdbcType=BIGINT},
+            DELSTATE = #{DELSTATE,jdbcType=TINYINT},
+            CATE_ID = #{CATEID,jdbcType=BIGINT},
+            CATE_NAME = #{CATENAME,jdbcType=VARCHAR},
+            CATE_STR = #{CATESTR,jdbcType=VARCHAR},
+            CUSTOMER_ID = #{CUSTOMERID,jdbcType=BIGINT},
+            CUSTOMER_NAME = #{CUSTOMERNAME,jdbcType=VARCHAR},
+            CONTACT_IDS = #{CONTACTIDS,jdbcType=VARCHAR},
+            CONTACTS = #{CONTACTS,jdbcType=VARCHAR},
+            BUSINESS_TYPE = #{BUSINESSTYPE,jdbcType=TINYINT},
+            BUSINESS_ID = #{BUSINESSID,jdbcType=BIGINT},
+            BUSINESS_NAME = #{BUSINESSNAME,jdbcType=VARCHAR},
+            OWNER_TYPE = #{OWNERTYPE,jdbcType=TINYINT},
+            HAS_TICKET = #{HASTICKET,jdbcType=TINYINT},
+            TICKET_NUM = #{TICKETNUM,jdbcType=INTEGER},
+            TICKET_REMARK = #{TICKETREMARK,jdbcType=VARCHAR},
+            RELATION_ROUTINE_TYPE = #{RELATIONROUTINETYPE,jdbcType=TINYINT},
+            RELATION_ROUTINE_ID = #{RELATIONROUTINEID,jdbcType=BIGINT},
+            RELATION_ROUTINE_NAME = #{RELATIONROUTINENAME,jdbcType=VARCHAR}
+        where ID = #{ID,jdbcType=BIGINT}
+    </update>
+
+</mapper>

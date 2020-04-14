@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.PoolRuleModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.PoolRuleModel">
+    <id column="pool_rule_id" jdbcType="BIGINT" property="poolRuleId" />
+    <result column="workorder_pool_id" jdbcType="BIGINT" property="workorderPoolId" />
+    <result column="field_name" jdbcType="VARCHAR" property="fieldName" />
+    <result column="filter_rule" jdbcType="VARCHAR" property="filterRule" />
+    <result column="filter_value" jdbcType="VARCHAR" property="filterValue" />
+    <result column="Connector" jdbcType="VARCHAR" property="connector" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pool_rule_id, workorder_pool_id, field_name, filter_rule, filter_value, Connector
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.PoolRuleModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_pool_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_pool_rule
+    where pool_rule_id = #{poolRuleId,jdbcType=BIGINT}
+  </select>
+  <select id="selectListByPoolId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_pool_rule
+    where workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByModel" parameterType="com.fea.project.workorder.model.PoolRuleModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_pool_rule
+    where 1=1 
+       <if test="poolRuleId != null">
+       and pool_rule_id = #{poolRuleId,jdbcType=BIGINT}
+      </if>
+      <if test="workorderPoolId != null">
+        and workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT}
+      </if>
+      <if test="fieldName != null">
+        and field_name = #{fieldName,jdbcType=VARCHAR}
+      </if>
+      <if test="filterRule != null">
+        and filter_rule = #{filterRule,jdbcType=VARCHAR}
+      </if>
+      <if test="filterValue != null">
+        and filter_value = #{filterValue,jdbcType=VARCHAR}
+      </if>
+      <if test="connector != null">
+        and Connector = #{connector,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_pool_rule
+    where pool_rule_id = #{poolRuleId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.PoolRuleModelExample">
+    delete from t_workorder_pool_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="poolRuleId" parameterType="com.fea.project.workorder.model.PoolRuleModel">
+    insert into t_workorder_pool_rule (pool_rule_id, workorder_pool_id, field_name, 
+      filter_rule, filter_value, Connector
+      )
+    values (#{poolRuleId,jdbcType=BIGINT}, #{workorderPoolId,jdbcType=BIGINT}, #{fieldName,jdbcType=VARCHAR}, 
+      #{filterRule,jdbcType=VARCHAR}, #{filterValue,jdbcType=VARCHAR}, #{connector,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertByList" keyProperty="poolRuleId" >
+    insert into t_workorder_pool_rule (pool_rule_id, workorder_pool_id, field_name, 
+      filter_rule, filter_value, Connector
+      )
+    values 
+      <foreach collection="list" index="index" item="item" separator=",">
+            (
+				#{item.poolRuleId,jdbcType=BIGINT},
+				#{poolId,jdbcType=BIGINT}, 
+				#{item.fieldName,jdbcType=VARCHAR}, 
+				#{item.filterRule,jdbcType=VARCHAR}, 
+				#{item.filterValue,jdbcType=VARCHAR}, 
+				#{item.connector,jdbcType=VARCHAR}
+                )
+        </foreach>
+  </insert>
+  <insert id="insertSelective" keyProperty="poolRuleId"  parameterType="com.fea.project.workorder.model.PoolRuleModel">
+    insert into t_workorder_pool_rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="poolRuleId != null">
+        pool_rule_id,
+      </if>
+      <if test="workorderPoolId != null">
+        workorder_pool_id,
+      </if>
+      <if test="fieldName != null">
+        field_name,
+      </if>
+      <if test="filterRule != null">
+        filter_rule,
+      </if>
+      <if test="filterValue != null">
+        filter_value,
+      </if>
+      <if test="connector != null">
+        Connector,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="poolRuleId != null">
+        #{poolRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="workorderPoolId != null">
+        #{workorderPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="fieldName != null">
+        #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="filterRule != null">
+        #{filterRule,jdbcType=VARCHAR},
+      </if>
+      <if test="filterValue != null">
+        #{filterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="connector != null">
+        #{connector,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.PoolRuleModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_pool_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_pool_rule
+    <set>
+      <if test="record.poolRuleId != null">
+        pool_rule_id = #{record.poolRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workorderPoolId != null">
+        workorder_pool_id = #{record.workorderPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fieldName != null">
+        field_name = #{record.fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filterRule != null">
+        filter_rule = #{record.filterRule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filterValue != null">
+        filter_value = #{record.filterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connector != null">
+        Connector = #{record.connector,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_pool_rule
+    set pool_rule_id = #{record.poolRuleId,jdbcType=BIGINT},
+      workorder_pool_id = #{record.workorderPoolId,jdbcType=BIGINT},
+      field_name = #{record.fieldName,jdbcType=VARCHAR},
+      filter_rule = #{record.filterRule,jdbcType=VARCHAR},
+      filter_value = #{record.filterValue,jdbcType=VARCHAR},
+      Connector = #{record.connector,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.PoolRuleModel">
+    update t_workorder_pool_rule
+    <set>
+      <if test="workorderPoolId != null">
+        workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="fieldName != null">
+        field_name = #{fieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="filterRule != null">
+        filter_rule = #{filterRule,jdbcType=VARCHAR},
+      </if>
+      <if test="filterValue != null">
+        filter_value = #{filterValue,jdbcType=VARCHAR},
+      </if>
+      <if test="connector != null">
+        Connector = #{connector,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pool_rule_id = #{poolRuleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.PoolRuleModel">
+    update t_workorder_pool_rule
+    set workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT},
+      field_name = #{fieldName,jdbcType=VARCHAR},
+      filter_rule = #{filterRule,jdbcType=VARCHAR},
+      filter_value = #{filterValue,jdbcType=VARCHAR},
+      Connector = #{connector,jdbcType=VARCHAR}
+    where pool_rule_id = #{poolRuleId,jdbcType=BIGINT}
+  </update>
+</mapper>

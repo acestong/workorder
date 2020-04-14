@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.plan.PlanAssociationModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.plan.PlanAssociationModel">
+    <id column="plan_association_id" jdbcType="BIGINT" property="planAssociationId" />
+    <id column="plan_association_name" jdbcType="VARCHAR" property="planAssociationName" />
+    <result column="plan_step" jdbcType="BIGINT" property="planStep" />
+    <result column="plan_pority" jdbcType="BIGINT" property="planPority" />
+    <result column="plan_execution_status" jdbcType="BIGINT" property="planExecutionStatus" />
+    <result column="plan_relationship" jdbcType="BIGINT" property="planRelationship" />
+    <result column="plan_leader_id" jdbcType="BIGINT" property="planLeaderId" />
+    <result column="plan_team_id" jdbcType="BIGINT" property="planTeamId" />
+    <result column="plan_startTime" jdbcType="TIMESTAMP" property="planStarttime" />
+    <result column="plan_endTime" jdbcType="TIMESTAMP" property="planEndtime" />
+    <result column="plan_working_hour" jdbcType="BIGINT" property="planWorkingHour" />
+    <result column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" /> 
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap> 
+ 
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    plan_association_id,plan_association_name, plan_step, plan_pority, plan_execution_status, 
+    plan_relationship, plan_leader_id, plan_team_id, plan_startTime, plan_endTime, plan_working_hour, 
+    plan_id, create_id, create_by, create_time, update_id, update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.plan.PlanAssociationModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_plan_association
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_association
+    where plan_association_id = #{planAssociationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_plan_association
+    where plan_association_id = #{planAssociationId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByBusinessId" parameterType="java.lang.Long">
+    delete from t_project_plan_association
+    where plan_id = #{businessId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.plan.PlanAssociationModelExample">
+    delete from t_project_plan_association
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="planAssociationId" parameterType="com.fea.project.model.plan.PlanAssociationModel">
+    insert into t_project_plan_association (plan_association_id, plan_association_name,
+      plan_step, plan_pority, plan_execution_status, 
+      plan_relationship, plan_leader_id, plan_team_id, 
+      plan_startTime, plan_endTime, plan_working_hour, 
+      plan_id, create_id, create_by, 
+      create_time, update_id, update_by, 
+      update_time, del_status)
+    values (#{planAssociationId,jdbcType=BIGINT}, #{planAssociationName,jdbcType=VARCHAR}, 
+      #{planStep,jdbcType=BIGINT}, #{planPority,jdbcType=BIGINT}, #{planExecutionStatus,jdbcType=BIGINT}, 
+      #{planRelationship,jdbcType=BIGINT}, #{planLeaderId,jdbcType=BIGINT}, #{planTeamId,jdbcType=BIGINT}, 
+      #{planStarttime,jdbcType=TIMESTAMP}, #{planEndtime,jdbcType=TIMESTAMP}, #{planWorkingHour,jdbcType=BIGINT}, 
+      #{planId,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="planAssociationId" parameterType="com.fea.project.model.plan.PlanAssociationModel">
+    insert into t_project_plan_association
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planAssociationId != null">
+        plan_association_id,
+      </if>
+      <if test="planAssociationName != null">
+        plan_association_name,
+      </if>
+      
+      <if test="planStep != null">
+        plan_step,
+      </if>
+      <if test="planPority != null">
+        plan_pority,
+      </if>
+      <if test="planExecutionStatus != null">
+        plan_execution_status,
+      </if>
+      <if test="planRelationship != null">
+        plan_relationship,
+      </if>
+      <if test="planLeaderId != null">
+        plan_leader_id,
+      </if>
+      <if test="planTeamId != null">
+        plan_team_id,
+      </if>
+      <if test="planStarttime != null">
+        plan_startTime,
+      </if>
+      <if test="planEndtime != null">
+        plan_endTime,
+      </if>
+      <if test="planWorkingHour != null">
+        plan_working_hour,
+      </if>
+      <if test="planId != null">
+        plan_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planAssociationId != null">
+        #{planAssociationId,jdbcType=BIGINT},
+      </if>
+      <if test="planAssociationName != null">
+        #{planAssociationName,jdbcType=VARCHAR},
+      </if>
+      <if test="planStep != null">
+        #{planStep,jdbcType=BIGINT},
+      </if>
+      <if test="planPority != null">
+        #{planPority,jdbcType=BIGINT},
+      </if>
+      <if test="planExecutionStatus != null">
+        #{planExecutionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="planRelationship != null">
+        #{planRelationship,jdbcType=BIGINT},
+      </if>
+      <if test="planLeaderId != null">
+        #{planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="planTeamId != null">
+        #{planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="planStarttime != null">
+        #{planStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEndtime != null">
+        #{planEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planWorkingHour != null">
+        #{planWorkingHour,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.plan.PlanAssociationModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_plan_association
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_plan_association
+    <set>
+      <if test="record.planAssociationId != null">
+        plan_association_id = #{record.planAssociationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planAssociationName != null">
+        plan_association_Name = #{record.planAssociationName,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="record.planStep != null">
+        plan_step = #{record.planStep,jdbcType=BIGINT},
+      </if>
+      <if test="record.planPority != null">
+        plan_pority = #{record.planPority,jdbcType=BIGINT},
+      </if>
+      <if test="record.planExecutionStatus != null">
+        plan_execution_status = #{record.planExecutionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.planRelationship != null">
+        plan_relationship = #{record.planRelationship,jdbcType=BIGINT},
+      </if>
+      <if test="record.planLeaderId != null">
+        plan_leader_id = #{record.planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planTeamId != null">
+        plan_team_id = #{record.planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planStarttime != null">
+        plan_startTime = #{record.planStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planEndtime != null">
+        plan_endTime = #{record.planEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planWorkingHour != null">
+        plan_working_hour = #{record.planWorkingHour,jdbcType=BIGINT},
+      </if>
+      <if test="record.planId != null">
+        plan_id = #{record.planId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_plan_association
+    set plan_association_id = #{record.planAssociationId,jdbcType=BIGINT},
+    plan_association_name = #{record.planAssociationName,jdbcType=VARCHAR},
+      plan_step = #{record.planStep,jdbcType=BIGINT},
+      plan_pority = #{record.planPority,jdbcType=BIGINT},
+      plan_execution_status = #{record.planExecutionStatus,jdbcType=BIGINT},
+      plan_relationship = #{record.planRelationship,jdbcType=BIGINT},
+      plan_leader_id = #{record.planLeaderId,jdbcType=BIGINT},
+      plan_team_id = #{record.planTeamId,jdbcType=BIGINT},
+      plan_startTime = #{record.planStarttime,jdbcType=TIMESTAMP},
+      plan_endTime = #{record.planEndtime,jdbcType=TIMESTAMP},
+      plan_working_hour = #{record.planWorkingHour,jdbcType=BIGINT},
+      plan_id = #{record.planId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.plan.PlanAssociationModel">
+    update t_project_plan_association
+    <set>
+     <if test="planAssociationName != null">
+        plan_association_name = #{planAssociationName,jdbcType=VARCHAR},
+      </if>
+      <if test="planStep != null">
+        plan_step = #{planStep,jdbcType=BIGINT},
+      </if>
+      <if test="planPority != null">
+        plan_pority = #{planPority,jdbcType=BIGINT},
+      </if>
+      <if test="planExecutionStatus != null">
+        plan_execution_status = #{planExecutionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="planRelationship != null">
+        plan_relationship = #{planRelationship,jdbcType=BIGINT},
+      </if>
+      <if test="planLeaderId != null">
+        plan_leader_id = #{planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="planTeamId != null">
+        plan_team_id = #{planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="planStarttime != null">
+        plan_startTime = #{planStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEndtime != null">
+        plan_endTime = #{planEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planWorkingHour != null">
+        plan_working_hour = #{planWorkingHour,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        plan_id = #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where plan_association_id = #{planAssociationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.plan.PlanAssociationModel">
+    update t_project_plan_association
+      plan_association_name = #{planAssociationName,jdbcType=VARCHAR},
+      plan_step = #{planStep,jdbcType=BIGINT},
+      plan_pority = #{planPority,jdbcType=BIGINT},
+      plan_execution_status = #{planExecutionStatus,jdbcType=BIGINT},
+      plan_relationship = #{planRelationship,jdbcType=BIGINT},
+      plan_leader_id = #{planLeaderId,jdbcType=BIGINT},
+      plan_team_id = #{planTeamId,jdbcType=BIGINT},
+      plan_startTime = #{planStarttime,jdbcType=TIMESTAMP},
+      plan_endTime = #{planEndtime,jdbcType=TIMESTAMP},
+      plan_working_hour = #{planWorkingHour,jdbcType=BIGINT},
+      plan_id = #{planId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where plan_association_id = #{planAssociationId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithDelStatus" parameterType="com.fea.project.model.plan.PlanAssociationModel" resultMap="rm">
+   select
+    tppa.plan_association_id,tppa.plan_step,tppa.plan_leader_id,tppa.plan_team_id,tppa.plan_execution_status,tppa.plan_relationship,
+		tpt.`name` planTeamName ,tsu.REALNAME planLeaderName,tppa.del_status
+    from t_project_plan_association tppa
+		LEFT JOIN t_project_team tpt
+		ON
+		tpt.id = tppa.plan_team_id
+		LEFT JOIN l2cplat_ceshi.t_sys_user tsu
+		on
+		tsu.USER_ID = tppa.plan_leader_id
+    where tppa.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and tppa.plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  
+   <resultMap id="rm" type="com.fea.project.model.plan.vo.BusinessAssociationShowModelVo">
+    <id column="plan_association_id" jdbcType="BIGINT" property="planAssociationId" />
+    <result column="plan_association_name" jdbcType="VARCHAR" property="planAssociationName" />
+    <result column="plan_step" jdbcType="BIGINT" property="planStep" />
+    <result column="plan_leader_id" jdbcType="BIGINT" property="planLeaderId" />
+    <result column="planLeaderName" jdbcType="VARCHAR" property="leaderName" />
+    <result column="plan_team_id" jdbcType="BIGINT" property="planTeamId" />
+    <result column="planTeamName" jdbcType="BIGINT" property="teamName" />
+    <result column="plan_execution_status" jdbcType="BIGINT" property="planExecutionStatus" />
+    <result column="plan_relationship" jdbcType="BIGINT" property="planRelationship" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap> 
+  <select id="selectAll" parameterType="java.lang.Long" resultMap="rm">
+   select
+    tppa.plan_association_id,tppa.plan_step,tppa.plan_leader_id,tppa.plan_team_id,tppa.plan_execution_status,tppa.plan_relationship,
+		tpt.`name` planTeamName ,tsu.REALNAME planLeaderName,tppa.del_status
+    from t_project_plan_association tppa
+		LEFT JOIN t_project_team tpt
+		ON
+		tpt.id = tppa.plan_team_id
+		LEFT JOIN l2cplat_ceshi.t_sys_user tsu
+		on
+		tsu.USER_ID = tppa.plan_leader_id
+    where tppa.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and tppa.plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKeyWithDelStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_association
+    where plan_association_id = #{planAssociationId,jdbcType=BIGINT}  and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+  </select>
+  
+  <select id="selectAllByPlanIdWithDelStatus" parameterType="com.fea.project.model.plan.vo.PageInfoFromFrontModel" resultMap="rm">
+	select DISTINCT
+	tppa.*,
+	tpt.`name` planTeamName,
+	tsu.REALNAME planLeaderName 
+	from t_project_plan_association tppa
+	LEFT JOIN
+	t_project_team tpt
+	on tppa.plan_team_id = tpt.id 
+	LEFT JOIN
+	l2cplat_ceshi_wq.t_sys_user tsu 
+	on tppa.plan_leader_id = tsu.USER_ID
+	where tppa.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+	and (
+			tppa.plan_id = #{planId,jdbcType=BIGINT}
+	
+	<if test="planTransferId != null">
+		or	tppa.plan_id = #{planTransferId,jdbcType=BIGINT}
+	</if>
+	<if test="businessId">
+		or tppa.plan_id = #{businessId,jdbcType=BIGINT}
+	</if>
+			)
+	
+  </select>
+  
+   <update id="updateByPrimaryKeySelectiveWithDelStatus" parameterType="com.fea.project.model.plan.PlanAssociationModel">
+    update t_project_plan_association
+    set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}
+    where plan_association_id = #{planAssociationId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectAssociationInfoByPlanId" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.BusinessAssociationModelShowVo">
+	    SELECT
+		tppa.plan_association_id associationId,
+		tppa.plan_association_name assoxiationName,
+		tptc.plan_id planId,
+		tptc.plan_name planName ,
+		tppa.plan_step planStep ,
+		tptc.plan_leader_id planLeaderId,
+		tsu.REALNAME leaderName,
+		tptc.plan_team_id planTeamId,
+		tpt.`name` teamName,
+		tppa.plan_relationship relationshipStatus,
+		tppa.plan_execution_status executeStatus,
+		tppa.del_status delStatus
+		from t_project_plan_association tppa,t_project_plan_create tptc,l2cplat_ceshi_wq.t_sys_user tsu ,t_project_team tpt
+		where tppa.plan_id = tptc.plan_id 
+		and tsu.USER_ID = tptc.plan_leader_id 
+		and tpt.id =  tptc.plan_team_id
+		and tppa.plan_id = #{planId,jdbcType=BIGINT} 
+		and tppa.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+  </select>
+  
+  
+  
+   <update id="updateByList">
+   	update t_project_plan_association
+        	set plan_id = #{businessId,jdbcType=BIGINT}
+        	where plan_association_id in 
+        	 <foreach collection="list" open="(" close=")" separator="," index="index" item="item">
+        	 #{item,jdbcType=BIGINT}
+        	 </foreach>
+  </update>
+</mapper>

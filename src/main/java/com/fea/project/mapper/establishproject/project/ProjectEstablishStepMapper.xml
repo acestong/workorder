@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.establishproject.project.ProjectEstablishStepMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.establishproject.project.ProjectEstablishStepModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="establish_during" jdbcType="DECIMAL" property="establishDuring" />
+        <result column="leader" jdbcType="BIGINT" property="leader" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_status" jdbcType="INTEGER" property="delStatus" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="verify_status" jdbcType="INTEGER" property="verifyStatus" />
+        <result column="index" jdbcType="INTEGER" property="index" />
+        <result column="flow_state" jdbcType="INTEGER" property="flowState" />
+        <result column="flow_id" jdbcType="BIGINT" property="flowId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, start_time, end_time, establish_during, leader, content, remark,
+        create_id, create_by, create_time, update_id, update_by, update_time, del_status, project_id, verify_status,
+        `index`, flow_state, flow_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_establish_step
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_establish_step
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_establish_step
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.establishproject.project.ProjectEstablishStepModel">
+        insert into t_project_establish_step (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{name,jdbcType=VARCHAR},
+            #{startTime,jdbcType=TIMESTAMP},
+            #{endTime,jdbcType=TIMESTAMP}, 
+            #{establishDuring,jdbcType=DECIMAL}, 
+            #{leader,jdbcType=BIGINT}, 
+            #{content,jdbcType=VARCHAR}, 
+            #{remark,jdbcType=VARCHAR}, 
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{delStatus,jdbcType=INTEGER},
+            #{projectId,jdbcType=BIGINT},
+            #{verifyStatus,jdbcType=INTEGER},
+            #{verifyStatus,jdbcType=INTEGER},
+            #{verifyStatus,jdbcType=INTEGER},
+            #{verifyStatus,jdbcType=INTEGER},
+            #{index,jdbcType=INTEGER},
+            #{flowState,jdbcType=INTEGER},
+            #{flowId,jdbcType=BIGINT}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_establish_step (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.name,jdbcType=VARCHAR},
+                #{item.startTime,jdbcType=TIMESTAMP},
+                #{item.endTime,jdbcType=TIMESTAMP}, 
+                #{item.establishDuring,jdbcType=DECIMAL}, 
+                #{item.leader,jdbcType=BIGINT}, 
+                #{item.content,jdbcType=VARCHAR}, 
+                #{item.remark,jdbcType=VARCHAR}, 
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}, 
+                #{item.delStatus,jdbcType=INTEGER},
+                #{item.projectId,jdbcType=BIGINT},
+                #{item.verifyStatus,jdbcType=INTEGER},
+                #{item.index,jdbcType=INTEGER},
+                #{item.flowState,jdbcType=INTEGER},
+                #{item.flowId,jdbcType=BIGINT}
+                )
+        </foreach>
+    </insert>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.model.establishproject.vo.ProjectEstablishStepVo" extends="BaseResultMap" >
+        <association property="appendixModels" column="id" select="com.fea.project.dao.appendix.ProjectAppendixMapper.selectByBusinessId" />
+    </resultMap>
+    <select id="selectByModel" parameterType="com.fea.project.model.establishproject.project.ProjectEstablishStepModel" resultMap="BaseResultMap_vo">
+        select * from t_project_establish_step where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="establishDuring != null">
+            and establish_during = #{establishDuring,jdbcType=DECIMAL}
+        </if>
+        <if test="leader != null">
+            and leader = #{leader,jdbcType=BIGINT}
+        </if>
+        <if test="content != null">
+            and content = #{content,jdbcType=VARCHAR}
+        </if>
+        <if test="remark != null">
+            and remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="verifyStatus != null">
+            and verify_status = #{verifyStatus,jdbcType=INTEGER}
+        </if>
+        <if test="index != null">
+            and `index` = #{index,jdbcType=INTEGER}
+        </if>
+        <if test="flowState != null">
+            and flow_state = #{flowState,jdbcType=INTEGER}
+        </if>
+        <if test="flowId != null">
+            and flow_id = #{flowId,jdbcType=BIGINT}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        order by `index` asc
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.establishproject.project.ProjectEstablishStepModel">
+        insert into t_project_establish_step
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="establishDuring != null">
+                establish_during,
+            </if>
+            <if test="leader != null">
+                leader,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="verifyStatus != null">
+                verify_status,
+            </if>
+            <if test="index != null">
+                `index`,
+            </if>
+            <if test="flowState != null">
+                flow_state,
+            </if>
+            <if test="flowId != null">
+                flow_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="establishDuring != null">
+                #{establishDuring,jdbcType=DECIMAL},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="verifyStatus != null">
+                #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="index != null">
+                #{index,jdbcType=INTEGER},
+            </if>
+            <if test="flowState != null">
+                #{flowState,jdbcType=INTEGER},
+            </if>
+            <if test="flowId != null">
+                #{flowId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.establishproject.project.ProjectEstablishStepModel" keyProperty="id">
+        update t_project_establish_step
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="establishDuring != null">
+                establish_during = #{establishDuring,jdbcType=DECIMAL},
+            </if>
+            <if test="leader != null">
+                leader = #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="verifyStatus != null">
+                verify_status = #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="index != null">
+                `index` = #{index,jdbcType=INTEGER},
+            </if>
+            <if test="flowState != null">
+                flow_state = #{flowState,jdbcType=INTEGER},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.establishproject.project.ProjectEstablishStepModel">
+        update t_project_establish_step
+        set name = #{name,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            establish_during = #{establishDuring,jdbcType=DECIMAL},
+            leader = #{leader,jdbcType=BIGINT},
+            content = #{content,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            project_id = #{projectId,jdbcType=BIGINT},
+            verify_status = #{verifyStatus,jdbcType=INTEGER},
+            `index` = #{index,jdbcType=INTEGER},
+            flow_state = #{flowState,jdbcType=INTEGER},
+            flow_id = #{flowId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <select id="selectBeforeById" resultMap="BaseResultMap">
+        select t1.*
+        from t_project_establish_step t1
+        , (select project_id, `index` from t_project_establish_step where id = #{id, jdbcType=BIGINT}) t2
+        where t1.project_id = t2.project_id and t1.`index` &lt; t2.`index`
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_establish_step
+        where id in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectLeftNeedUpdate" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_establish_step
+        where project_id = (
+            select project_id
+            from t_project_establish_step
+            where id = #{id, jdbcType=BIGINT}
+        )
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and verify_status != ${@com.fea.project.enums.apply.ProjectApplyVerifyStatusEnum@TYPE_HAS_VERIFY.getValue()}
+        order by `index` asc
+    </select>
+
+    <resultMap id="BaseResultMap_projectEstablishVo" type="com.fea.project.model.establishproject.vo.ProjectEstablishVo" >
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="type" jdbcType="BIGINT" property="type"/>
+        <result column="priority" jdbcType="BIGINT" property="priority"/>
+        <result column="level" jdbcType="BIGINT" property="level"/>
+        <result column="risk_level" jdbcType="BIGINT" property="riskLevel"/>
+        <result column="resource" jdbcType="INTEGER" property="resource"/>
+        <result column="connect_id" jdbcType="BIGINT" property="connectId"/>
+        <result column="resource_describe" jdbcType="VARCHAR" property="resourceDescribe"/>
+        <result column="apply_depart" jdbcType="BIGINT" property="applyDepart"/>
+        <result column="plan_startTime" jdbcType="TIMESTAMP" property="planStartTime"/>
+        <result column="plan_endTime" jdbcType="TIMESTAMP" property="planEndTime"/>
+        <result column="duration" jdbcType="DECIMAL" property="duration"/>
+        <result column="leader" jdbcType="BIGINT" property="leader"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="content" jdbcType="BLOB" property="content"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="real_duration" jdbcType="DECIMAL" property="realDuration"/>
+        <result column="real_start_time" jdbcType="TIMESTAMP" property="realStartTime"/>
+        <result column="real_end_time" jdbcType="TIMESTAMP" property="realEndTime"/>
+        <result column="verify_status" jdbcType="INTEGER" property="verifyStatus"/>
+        <result column="establishment" jdbcType="INTEGER" property="establishment"/>
+        <result column="project_status" jdbcType="INTEGER" property="projectStatus"/>
+        <result column="action_status" jdbcType="INTEGER" property="actionStatus"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="applyer" jdbcType="BIGINT" property="applyer"/>
+        <result column="establish_leader" jdbcType="BIGINT" property="establishLeader"/>
+        <association property="partners" column="id"
+                     select="com.fea.project.dao.user.ProjectUserMapper.selectByProjectId"/>
+        <association property="establishPartners" column="id"
+                     select="com.fea.project.dao.establishproject.user.ProjectEstablishUserMapper.selectByProjectId"/>
+    </resultMap>
+    <sql id="project_vo_sql">
+        project.id, project.name, project.code, project.type, project.priority, project.level, project.risk_level, project.resource, project.connect_id, project.resource_describe,
+        project.apply_depart,project.plan_startTime, project.plan_endTime, project.duration, project.leader, project.remark, project.content, project.parent_id,
+        project.real_duration, project.real_start_time, project.real_end_time, project.verify_status, project.establishment, project.project_status, project.action_status, project.version
+    </sql>
+    <sql id="establish_vo_sql">
+        step.create_id, step.create_by, step.create_time, step.update_id, step.update_by, step.update_time,
+        step.del_status, step.applyer, step.establish_leader, step.reg_id
+    </sql>
+    <sql id="base_establish_vo_sql">
+        project_id, create_id, create_by, create_time, update_id, update_by, update_time,
+        del_status, applyer, establish_leader, reg_id
+    </sql>
+
+    <select id="selectModelByIdAndConditionModel" resultMap="BaseResultMap_projectEstablishVo">
+        select <include refid="project_vo_sql" />, <include refid="establish_vo_sql" />
+        from t_project_project project
+        inner join (
+        select <include refid="base_establish_vo_sql" />
+        from t_project_establish_project
+        where 1= 1
+        and id = #{id, jdbcType=BIGINT}
+        ) step
+        on project.id = step.project_id
+        where 1 = 1
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_TYPE.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_TYPE.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_FROM.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_FROM.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_ESTABLISH.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_ESTABLISH.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_APPLY_DEPARTMENT.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_APPLY_DEPARTMENT.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_LEVEL.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_LEVEL.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_RISK_LEVEL.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_RISK_LEVEL.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_AREA.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_AREA.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_RESOURCE.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_RESOURCE.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_BUDGET.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowEstablishProjectConditionTypeEnum@TYPE_PROJECT_BUDGET.getValue)}
+        </if>
+    </select>
+
+
+</mapper>

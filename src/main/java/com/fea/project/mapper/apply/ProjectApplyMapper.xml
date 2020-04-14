@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.apply.ProjectApplyMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.apply.ProjectApplyModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="apply_code" jdbcType="VARCHAR" property="applyCode"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="business_id" jdbcType="BIGINT" property="businessId"/>
+        <result column="business_code" jdbcType="VARCHAR" property="businessCode"/>
+        <result column="applyer_id" jdbcType="BIGINT" property="applyerId"/>
+        <result column="apply_depart" jdbcType="BIGINT" property="applyDepart"/>
+        <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime"/>
+        <result column="verify_status" jdbcType="INTEGER" property="verifyStatus"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="apply_type" jdbcType="INTEGER" property="applyType"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="stop_time" jdbcType="VARCHAR" property="stopTime"/>
+        <result column="business_flow_id" jdbcType="BIGINT" property="businessFlowId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, apply_code, name, business_id, business_code, applyer_id, apply_depart, apply_time,
+        verify_status, create_id, create_by, create_time, update_id, update_by, update_time, 
+        del_status, apply_type, project_id, stop_time, business_flow_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_apply
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_apply
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_apply
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.apply.ProjectApplyModel">
+        insert into t_project_apply (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{applyCode,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{businessId,jdbcType=BIGINT},
+        #{businessCode,jdbcType=VARCHAR},
+        #{applyerId,jdbcType=BIGINT},
+        #{applyDepart,jdbcType=BIGINT},
+        #{applyTime,jdbcType=TIMESTAMP},
+        #{verifyStatus,jdbcType=INTEGER},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{applyType,jdbcType=INTEGER},
+        #{projectId,jdbcType=BIGINT},
+        #{stopTime,jdbcType=VARCHAR},
+        #{businessFlowId,jdbcType=BIGINT}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_apply (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.applyCode,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.businessId,jdbcType=BIGINT},
+            #{item.businessCode,jdbcType=VARCHAR},
+            #{item.applyerId,jdbcType=BIGINT},
+            #{item.applyDepart,jdbcType=BIGINT},
+            #{item.applyTime,jdbcType=TIMESTAMP},
+            #{item.verifyStatus,jdbcType=INTEGER},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.applyType,jdbcType=INTEGER},
+            #{item.projectId,jdbcType=BIGINT},
+            #{item.stopTime,jdbcType=VARCHAR},
+            #{item.businessFlowId,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.apply.ProjectApplyModel" resultMap="BaseResultMap">
+        select * from t_project_apply where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="applyCode != null">
+            and apply_code = #{applyCode,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="businessId != null">
+            and business_id = #{businessId,jdbcType=BIGINT}
+        </if>
+        <if test="businessCode != null">
+            and business_code = #{businessCode,jdbcType=VARCHAR}
+        </if>
+        <if test="applyerId != null">
+            and applyer_id = #{applyerId,jdbcType=BIGINT}
+        </if>
+        <if test="applyDepart != null">
+            and apply_depart = #{applyDepart,jdbcType=BIGINT}
+        </if>
+        <if test="applyTime != null">
+            and apply_time = #{applyTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="verifyStatus != null">
+            and verify_status = #{verifyStatus,jdbcType=INTEGER}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="applyType != null">
+            and apply_type = #{applyType,jdbcType=INTEGER}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="stopTime != null">
+            and stop_time = #{stopTime,jdbcType=VARCHAR}
+        </if>
+        <if test="businessFlowId != null">
+            and business_flow_id = #{businessFlowId,jdbcType=BIGINT}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.apply.ProjectApplyModel">
+        insert into t_project_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="applyCode != null">
+                apply_code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="businessCode != null">
+                business_code,
+            </if>
+            <if test="applyerId != null">
+                applyer_id,
+            </if>
+            <if test="applyDepart != null">
+                apply_depart,
+            </if>
+            <if test="applyTime != null">
+                apply_time,
+            </if>
+            <if test="verifyStatus != null">
+                verify_status,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="applyType != null">
+                apply_type,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="stopTime != null">
+                stop_time,
+            </if>
+            <if test="businessFlowId != null">
+                business_flow_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="applyCode != null">
+                #{applyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="businessCode != null">
+                #{businessCode,jdbcType=VARCHAR},
+            </if>
+            <if test="applyerId != null">
+                #{applyerId,jdbcType=BIGINT},
+            </if>
+            <if test="applyDepart != null">
+                #{applyDepart,jdbcType=BIGINT},
+            </if>
+            <if test="applyTime != null">
+                #{applyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyStatus != null">
+                #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="applyType != null">
+                #{applyType,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="stopTime != null">
+                #{stopTime,jdbcType=VARCHAR},
+            </if>
+            <if test="businessFlowId != null">
+                #{businessFlowId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.apply.ProjectApplyModel">
+        update t_project_apply
+        <set>
+            <if test="applyCode != null">
+                apply_code = #{applyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="businessCode != null">
+                business_code = #{businessCode,jdbcType=VARCHAR},
+            </if>
+            <if test="applyerId != null">
+                applyer_id = #{applyerId,jdbcType=BIGINT},
+            </if>
+            <if test="applyDepart != null">
+                apply_depart = #{applyDepart,jdbcType=BIGINT},
+            </if>
+            <if test="applyTime != null">
+                apply_time = #{applyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyStatus != null">
+                verify_status = #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="applyType != null">
+                apply_type = #{applyType,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="stopTime != null">
+                stop_time = #{stopTime,jdbcType=VARCHAR},
+            </if>
+            <if test="businessFlowId != null">
+                business_flow_id = #{businessFlowId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.apply.ProjectApplyModel">
+        update t_project_apply
+        set apply_code = #{applyCode,jdbcType=VARCHAR},
+            name = #{name,jdbcType=VARCHAR},
+            business_id = #{businessId,jdbcType=BIGINT},
+            business_code = #{businessCode,jdbcType=VARCHAR},
+            applyer_id = #{applyerId,jdbcType=BIGINT},
+            apply_depart = #{applyDepart,jdbcType=BIGINT},
+            apply_time = #{applyTime,jdbcType=TIMESTAMP},
+            verify_status = #{verifyStatus,jdbcType=INTEGER},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            apply_type = #{applyType,jdbcType=INTEGER},
+            project_id = #{projectId,jdbcType=BIGINT},
+            stop_time = #{stopTime,jdbcType=VARCHAR},
+            business_flow_id = #{businessFlowId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <resultMap id="BaseResultMapVo" type="com.fea.project.model.apply.vo.ProjectApplyVo" extends="BaseResultMap"/>
+    <select id="selectByFilterAndOrderParams"
+            parameterType="com.fea.project.model.BasePageInfo"
+            resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_apply
+        where 1 = 1
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getId() != null">
+                and id = #{model.id,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyCode() != null">
+                and apply_code = #{model.applyCode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getName() != null">
+                and name = #{model.name,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getBusinessId() != null">
+                and business_id = #{model.businessId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getBusinessCode() != null">
+                and business_code = #{model.businessCode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getApplyerId() != null and model.getCreateId() != null and model.getIds() != null">
+                and (applyer_id = #{model.applyerId,jdbcType=BIGINT}
+                    or create_id = #{model.createId,jdbcType=BIGINT}
+                    <if test="model.getIds().size() != 0">
+                        or id in
+                        <foreach collection="model.getIds()" open="(" close=")" item="item" separator=",">
+                            #{item}
+                        </foreach>
+                    </if>
+                    )
+            </if>
+            <if test="model.getApplyerId() != null and model.getCreateId() == null">
+                and applyer_id = #{model.applyerId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyerId() == null and model.getCreateId() != null">
+                and create_id = #{model.createId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyDepart() != null">
+                and apply_depart = #{model.applyDepart,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyTime() != null">
+                and apply_time = #{model.applyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getVerifyStatus() != null">
+                and verify_status = #{model.verifyStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateId() != null">
+                and update_id = #{model.updateId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getApplyType() != null">
+                and apply_type = #{model.applyType,jdbcType=INTEGER}
+            </if>
+            <if test="model.getProjectId() != null">
+                and project_id = #{model.projectId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getStopTime() != null">
+                and stop_time = #{model.stopTime,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getBusinessFlowId() != null">
+                and business_flow_id = #{model.businessFlowId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getStartTime() != null">
+                and apply_time >= #{model.startTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getEndTime() != null">
+                and apply_time &lt;= #{model.endTime, jdbcType=TIMESTAMP}
+            </if>
+        </if>
+        <if test="keywords != null">
+            and ((apply_code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (business_code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (create_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('applyType') != null and filters.get('applyType').size() > 0">
+                and apply_type in
+                <foreach collection="filters.get('applyType')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('verifyStatus') != null and filters.get('verifyStatus').size() > 0">
+                and verify_status in
+                <foreach collection="filters.get('verifyStatus')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </if>
+        <if test="sortKey != null">
+            order by ${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by create_time desc
+        </if>
+    </select>
+
+    <select id="selectOne" resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_apply
+        where id = #{id, jdbcType=BIGINT}
+    </select>
+
+    <select id="selectApplysByUserIdAndNumber" resultMap="BaseResultMapVo">
+        select <include refid="Base_Column_List" /> from t_project_apply
+        where id in (
+        select distinct apply_id from t_project_apply_flow_info
+        where id in (
+        select apply_flow_id
+        from t_project_apply_flow_verify
+        where verifyer_id = #{userId, jdbcType=BIGINT}))
+        <if test="sortKey != null">
+            order by ${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by create_time desc
+        </if>
+        limit #{pageNum, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectRunningFlowByProjectIdAndApplyType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_apply
+        where apply_type = #{applyType,jdbcType=INTEGER}
+        and project_id = #{projectId,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and stop_time is null
+    </select>
+
+    <update id="updateVerifyStatusById">
+        update t_project_apply
+        set verify_status = #{verifyStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateVerifyStatusByBusinessIdAndVerifyStatus">
+        update t_project_apply
+        set verify_status = #{newStatus,jdbcType=INTEGER}
+        where business_id = #{businessId,jdbcType=BIGINT}
+        and verify_status = #{oldStatus,jdbcType=INTEGER}
+    </update>
+
+    <select id="selecNeedVerifytByFilterAndOrderParams"
+            parameterType="com.fea.project.model.BasePageInfo"
+            resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_apply
+        where 1 = 1
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and id in (
+            select distinct apply_id
+            from t_project_apply_flow_info where id in (
+            select distinct apply_flow_id
+            from t_project_apply_flow_verify where verifyer_id = #{model.verifyerId,jdbcType=BIGINT})
+            and verify_status = ${@com.fea.project.enums.apply.ProjectApplyVerifyStatusEnum@TYPE_VERIFYING.getValue()}
+        )
+        <if test="model != null">
+            <if test="model.getId() != null">
+                and id = #{model.id,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyCode() != null">
+                and apply_code = #{model.applyCode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getName() != null">
+                and name = #{model.name,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getBusinessId() != null">
+                and business_id = #{model.businessId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getBusinessCode() != null">
+                and business_code = #{model.businessCode,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getApplyerId() != null and model.getCreateId() != null and model.getIds() != null">
+                and (applyer_id = #{model.applyerId,jdbcType=BIGINT}
+                or create_id = #{model.createId,jdbcType=BIGINT}
+                <if test="model.getIds().size() != 0">
+                    or id in
+                    <foreach collection="model.getIds()" open="(" close=")" item="item" separator=",">
+                        #{item}
+                    </foreach>
+                </if>
+                )
+            </if>
+            <if test="model.getApplyerId() != null and model.getCreateId() == null">
+                and applyer_id = #{model.applyerId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyerId() == null and model.getCreateId() != null">
+                and create_id = #{model.createId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyDepart() != null">
+                and apply_depart = #{model.applyDepart,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyTime() != null">
+                and apply_time = #{model.applyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getVerifyStatus() != null">
+                and verify_status = #{model.verifyStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateId() != null">
+                and update_id = #{model.updateId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getApplyType() != null">
+                and apply_type = #{model.applyType,jdbcType=INTEGER}
+            </if>
+            <if test="model.getProjectId() != null">
+                and project_id = #{model.projectId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getStopTime() != null">
+                and stop_time = #{model.stopTime,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getBusinessFlowId() != null">
+                and business_flow_id = #{model.businessFlowId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getStartTime() != null">
+                and apply_time >= #{model.startTime, jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getEndTime() != null">
+                and apply_time &lt;= #{model.endTime, jdbcType=TIMESTAMP}
+            </if>
+        </if>
+        <if test="keywords != null">
+            and ((apply_code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (business_code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (create_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('applyType') != null and filters.get('applyType').size() > 0">
+                and apply_type in
+                <foreach collection="filters.get('applyType')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('verifyStatus') != null and filters.get('verifyStatus').size() > 0">
+                and verify_status in
+                <foreach collection="filters.get('verifyStatus')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </if>
+        <if test="sortKey != null">
+            order by ${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by create_time desc
+        </if>
+    </select>
+
+    <select id="selectByBusinessIdAndApplyTypes" resultMap="BaseResultMapVo">
+        select <include refid="Base_Column_List" />
+        from t_project_apply
+        where business_id = #{businessId, jdbcType=INTEGER}
+        and apply_type in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        order by apply_time desc
+        limit 1
+    </select>
+
+</mapper>

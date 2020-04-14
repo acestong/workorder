@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.feebudget.ProjectFeeDubgetParentMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.feebudget.ProjectFeeDubgetParentModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="version" jdbcType="BIGINT" property="version" />
+        <result column="is_draft" jdbcType="INTEGER" property="isDraft" />
+        <result column="verifyer_status" jdbcType="INTEGER" property="verifyerStatus" />
+        <result column="check_title" jdbcType="VARCHAR" property="checkTitle" />
+        <result column="check_content" jdbcType="VARCHAR" property="checkContent" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_status" jdbcType="INTEGER" property="delStatus" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,project_id, name,version, is_draft, verifyer_status,
+        check_title, check_content, create_id, create_by,
+        create_time, update_id, update_by, update_time, del_status
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_fee_budget_parent
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_fee_budget_parent
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_fee_budget_parent
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetParentModel">
+        insert into t_project_fee_budget_parent (
+        <include refid="Base_Column_List" />
+        )
+        values (#{projectId,jdbcType=BIGINT},
+            #{name,jdbcType=VARCHAR},
+            #{version,jdbcType=BIGINT}, 
+            #{isDraft,jdbcType=INTEGER},
+            #{verifyerStatus,jdbcType=INTEGER},
+            #{checkTitle,jdbcType=VARCHAR}, 
+            #{checkContent,jdbcType=VARCHAR}, 
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{delStatus,jdbcType=INTEGER}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_fee_budget_parent (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.projectId,jdbcType=BIGINT},
+                #{item.name,jdbcType=VARCHAR},
+                #{item.version,jdbcType=BIGINT}, 
+                #{item.isDraft,jdbcType=INTEGER},
+                #{item.verifyerStatus,jdbcType=INTEGER},
+                #{item.checkTitle,jdbcType=VARCHAR}, 
+                #{item.checkContent,jdbcType=VARCHAR}, 
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}, 
+                #{item.delStatus,jdbcType=INTEGER}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetParentModel" resultMap="BaseResultMap">
+        select * from t_project_fee_budget_parent where 1 = 1
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="version != null">
+            and version = #{version,jdbcType=BIGINT}
+        </if>
+        <if test="isDraft != null">
+            and is_draft = #{isDraft,jdbcType=INTEGER}
+        </if>
+        <if test="verifyerStatus != null">
+            and verifyer_status = #{verifyerStatus,jdbcType=INTEGER}
+        </if>
+        <if test="checkTitle != null">
+            and check_title = #{checkTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="checkContent != null">
+            and check_content = #{checkContent,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delStatus != null">
+            and del_status = #{delStatus,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetParentModel">
+        insert into t_project_fee_budget_parent
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="isDraft != null">
+                is_draft,
+            </if>
+            <if test="verifyerStatus != null">
+                verifyer_status,
+            </if>
+            <if test="checkTitle != null">
+                check_title,
+            </if>
+            <if test="checkContent != null">
+                check_content,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isDraft != null">
+                #{isDraft,jdbcType=INTEGER},
+            </if>
+            <if test="verifyerStatus != null">
+                #{verifyerStatus,jdbcType=INTEGER},
+            </if>
+            <if test="checkTitle != null">
+                #{checkTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="checkContent != null">
+                #{checkContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetParentModel">
+        update t_project_fee_budget_parent
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="isDraft != null">
+                is_draft = #{isDraft,jdbcType=INTEGER},
+            </if>
+            <if test="verifyerStatus != null">
+                verifyer_status = #{verifyerStatus,jdbcType=INTEGER},
+            </if>
+            <if test="checkTitle != null">
+                check_title = #{checkTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="checkContent != null">
+                check_content = #{checkContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.feebudget.ProjectFeeDubgetParentModel">
+        update t_project_fee_budget_parent
+        set project_id = #{projectId,jdbcType=BIGINT},
+            name = #{name,jdbcType=VARCHAR},
+            version = #{version,jdbcType=BIGINT},
+            is_draft = #{isDraft,jdbcType=INTEGER},
+            verifyer_status = #{verifyerStatus,jdbcType=INTEGER},
+            check_title = #{checkTitle,jdbcType=VARCHAR},
+            check_content = #{checkContent,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectNotDraft"  resultMap="BaseResultMap">
+        select *
+        from t_project_fee_budget_parent
+        where project_id = #{projectId,jdbcType=BIGINT} and is_draft = #{isDraft,jdbcType=INTEGER}
+    </select>
+    <select id="selectDraft"  resultMap="BaseResultMap">
+        select *
+        from t_project_fee_budget_parent
+        where project_id = #{projectId,jdbcType=BIGINT}
+        and is_draft = #{isDraft,jdbcType=INTEGER}
+        and verifyer_status = #{verifyerStatus,jdbcType=INTEGER}
+    </select>
+    <update id="updateDraftStatusById">
+        update t_project_fee_budget_parent
+        set is_draft = #{isDraft,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateCheckStatusById">
+        update t_project_fee_budget_parent
+        set verifyer_status = #{verifyerStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByModelIds" parameterType="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_project_fee_budget_parent
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
+</mapper>

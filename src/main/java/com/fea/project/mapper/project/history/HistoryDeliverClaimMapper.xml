@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.project.history.HistoryDeliverClaimMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.project.history.HistoryDeliverClaimModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="time" jdbcType="TIMESTAMP" property="time" />
+        <result column="leader" jdbcType="BIGINT" property="leader" />
+        <result column="deliver_claim" jdbcType="VARCHAR" property="deliverClaim" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_status" jdbcType="INTEGER" property="delStatus" />
+        <result column="deliver" jdbcType="BIGINT" property="deliver" />
+        <result column="deliver_status" jdbcType="INTEGER" property="deliverStatus" />
+        <result column="deliver_time" jdbcType="TIMESTAMP" property="deliverTime" />
+        <result column="verifyer" jdbcType="BIGINT" property="verifyer" />
+        <result column="verifyer_status" jdbcType="INTEGER" property="verifyerStatus" />
+        <result column="verifyer_time" jdbcType="TIMESTAMP" property="verifyerTime" />
+        <result column="original_id" jdbcType="BIGINT" property="originalId" />
+        <result column="history_id" jdbcType="BIGINT" property="historyId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, time, leader, deliver_claim, remark, project_id, create_id, create_by, create_time,
+        update_id, update_by, update_time, del_status, deliver, deliver_status, deliver_time, 
+        verifyer, verifyer_status, verifyer_time, original_id, history_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_history_deliver_claim
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_history_deliver_claim
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_history_deliver_claim
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.project.history.HistoryDeliverClaimModel">
+        insert into t_project_history_deliver_claim (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{name,jdbcType=VARCHAR},
+            #{time,jdbcType=TIMESTAMP},
+            #{leader,jdbcType=BIGINT}, 
+            #{deliverClaim,jdbcType=VARCHAR}, 
+            #{remark,jdbcType=VARCHAR}, 
+            #{projectId,jdbcType=BIGINT}, 
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{delStatus,jdbcType=INTEGER}, 
+            #{deliver,jdbcType=BIGINT}, 
+            #{deliverStatus,jdbcType=INTEGER}, 
+            #{deliverTime,jdbcType=TIMESTAMP}, 
+            #{verifyer,jdbcType=BIGINT}, 
+            #{verifyerStatus,jdbcType=INTEGER}, 
+            #{verifyerTime,jdbcType=TIMESTAMP}, 
+            #{originalId,jdbcType=BIGINT}, 
+            #{historyId,jdbcType=BIGINT}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_history_deliver_claim (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.id,jdbcType=BIGINTP},
+                #{item.name,jdbcType=VARCHAR},
+                #{item.time,jdbcType=TIMESTAMP},
+                #{item.leader,jdbcType=BIGINT}, 
+                #{item.deliverClaim,jdbcType=VARCHAR}, 
+                #{item.remark,jdbcType=VARCHAR}, 
+                #{item.projectId,jdbcType=BIGINT}, 
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}, 
+                #{item.delStatus,jdbcType=INTEGER}, 
+                #{item.deliver,jdbcType=BIGINT}, 
+                #{item.deliverStatus,jdbcType=INTEGER}, 
+                #{item.deliverTime,jdbcType=TIMESTAMP}, 
+                #{item.verifyer,jdbcType=BIGINT}, 
+                #{item.verifyerStatus,jdbcType=INTEGER}, 
+                #{item.verifyerTime,jdbcType=TIMESTAMP}, 
+                #{item.originalId,jdbcType=BIGINT}, 
+                #{item.historyId,jdbcType=BIGINT}
+                )
+        </foreach>
+    </insert>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.model.project.history.vo.HistoryDeliverClaimVo" extends="BaseResultMap" />
+    <select id="selectByModel" parameterType="com.fea.project.model.project.history.HistoryDeliverClaimModel" resultMap="BaseResultMap">
+        select * from t_project_history_deliver_claim where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="time != null">
+            and time = #{time,jdbcType=TIMESTAMP}
+        </if>
+        <if test="leader != null">
+            and leader = #{leader,jdbcType=BIGINT}
+        </if>
+        <if test="deliverClaim != null">
+            and deliver_claim = #{deliverClaim,jdbcType=VARCHAR}
+        </if>
+        <if test="remark != null">
+            and remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="deliver != null">
+            and deliver = #{deliver,jdbcType=BIGINT}
+        </if>
+        <if test="deliverStatus != null">
+            and deliver_status = #{deliverStatus,jdbcType=INTEGER}
+        </if>
+        <if test="deliverTime != null">
+            and deliver_time = #{deliverTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="verifyer != null">
+            and verifyer = #{verifyer,jdbcType=BIGINT}
+        </if>
+        <if test="verifyerStatus != null">
+            and verifyer_status = #{verifyerStatus,jdbcType=INTEGER}
+        </if>
+        <if test="verifyerTime != null">
+            and verifyer_time = #{verifyerTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="originalId != null">
+            and original_id = #{originalId,jdbcType=BIGINT}
+        </if>
+        <if test="historyId != null">
+            and history_id = #{historyId,jdbcType=BIGINT}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.project.history.HistoryDeliverClaimModel">
+        insert into t_project_history_deliver_claim
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="leader != null">
+                leader,
+            </if>
+            <if test="deliverClaim != null">
+                deliver_claim,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="deliver != null">
+                deliver,
+            </if>
+            <if test="deliverStatus != null">
+                deliver_status,
+            </if>
+            <if test="deliverTime != null">
+                deliver_time,
+            </if>
+            <if test="verifyer != null">
+                verifyer,
+            </if>
+            <if test="verifyerStatus != null">
+                verifyer_status,
+            </if>
+            <if test="verifyerTime != null">
+                verifyer_time,
+            </if>
+            <if test="originalId != null">
+                original_id,
+            </if>
+            <if test="historyId != null">
+                history_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="deliverClaim != null">
+                #{deliverClaim,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deliver != null">
+                #{deliver,jdbcType=BIGINT},
+            </if>
+            <if test="deliverStatus != null">
+                #{deliverStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deliverTime != null">
+                #{deliverTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyer != null">
+                #{verifyer,jdbcType=BIGINT},
+            </if>
+            <if test="verifyerStatus != null">
+                #{verifyerStatus,jdbcType=INTEGER},
+            </if>
+            <if test="verifyerTime != null">
+                #{verifyerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="originalId != null">
+                #{originalId,jdbcType=BIGINT},
+            </if>
+            <if test="historyId != null">
+                #{historyId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.project.history.HistoryDeliverClaimModel">
+        update t_project_history_deliver_claim
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leader != null">
+                leader = #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="deliverClaim != null">
+                deliver_claim = #{deliverClaim,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deliver != null">
+                deliver = #{deliver,jdbcType=BIGINT},
+            </if>
+            <if test="deliverStatus != null">
+                deliver_status = #{deliverStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deliverTime != null">
+                deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyer != null">
+                verifyer = #{verifyer,jdbcType=BIGINT},
+            </if>
+            <if test="verifyerStatus != null">
+                verifyer_status = #{verifyerStatus,jdbcType=INTEGER},
+            </if>
+            <if test="verifyerTime != null">
+                verifyer_time = #{verifyerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="originalId != null">
+                original_id = #{originalId,jdbcType=BIGINT},
+            </if>
+            <if test="historyId != null">
+                history_id = #{historyId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.project.history.HistoryDeliverClaimModel">
+        update t_project_history_deliver_claim
+        set name = #{name,jdbcType=VARCHAR},
+            time = #{time,jdbcType=TIMESTAMP},
+            leader = #{leader,jdbcType=BIGINT},
+            deliver_claim = #{deliverClaim,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            project_id = #{projectId,jdbcType=BIGINT},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            deliver = #{deliver,jdbcType=BIGINT},
+            deliver_status = #{deliverStatus,jdbcType=INTEGER},
+            deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
+            verifyer = #{verifyer,jdbcType=BIGINT},
+            verifyer_status = #{verifyerStatus,jdbcType=INTEGER},
+            verifyer_time = #{verifyerTime,jdbcType=TIMESTAMP},
+            original_id = #{originalId,jdbcType=BIGINT},
+            history_id = #{historyId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+</mapper>

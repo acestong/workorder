@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.base.SysEmployeeMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.base.SysEmployeeModel">
+        <id column="EMP_ID" jdbcType="BIGINT" property="EMPID"/>
+        <result column="EMP_NAME" jdbcType="VARCHAR" property="EMPNAME"/>
+        <result column="acronym" jdbcType="VARCHAR" property="acronym"/>
+        <result column="EMP_CODE" jdbcType="VARCHAR" property="EMPCODE"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID"/>
+        <result column="ORG_CODE" jdbcType="VARCHAR" property="ORGCODE"/>
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="ORGNAME"/>
+        <result column="DEP_ID" jdbcType="BIGINT" property="DEPID"/>
+        <result column="DEP_CODE" jdbcType="VARCHAR" property="DEPCODE"/>
+        <result column="DEP_NAME" jdbcType="VARCHAR" property="DEPNAME"/>
+        <result column="REGION_ID" jdbcType="BIGINT" property="REGIONID"/>
+        <result column="REGION_CODE" jdbcType="VARCHAR" property="REGIONCODE"/>
+        <result column="REGION_NAME" jdbcType="VARCHAR" property="REGIONNAME"/>
+        <result column="GENDER" jdbcType="VARCHAR" property="GENDER"/>
+        <result column="BIRTHDAY" jdbcType="TIMESTAMP" property="BIRTHDAY"/>
+        <result column="HEIGTH" jdbcType="DOUBLE" property="HEIGTH"/>
+        <result column="ENTER_DATE" jdbcType="TIMESTAMP" property="ENTERDATE"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="PHONE"/>
+        <result column="FAX" jdbcType="VARCHAR" property="FAX"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="EMAIL"/>
+        <result column="ADDRESS" jdbcType="VARCHAR" property="ADDRESS"/>
+        <result column="ZIPCODE" jdbcType="VARCHAR" property="ZIPCODE"/>
+        <result column="STATE" jdbcType="INTEGER" property="STATE"/>
+        <result column="DEGREE" jdbcType="VARCHAR" property="DEGREE"/>
+        <result column="GRADUATE_SCHOOL" jdbcType="VARCHAR" property="GRADUATESCHOOL"/>
+        <result column="EDUCATION" jdbcType="VARCHAR" property="EDUCATION"/>
+        <result column="IDCARD" jdbcType="VARCHAR" property="IDCARD"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="REMARK"/>
+        <result column="WORK_CONDITION" jdbcType="INTEGER" property="WORKCONDITION"/>
+        <result column="JOB" jdbcType="VARCHAR" property="JOB"/>
+        <result column="IS_DISTRIBUTE" jdbcType="INTEGER" property="ISDISTRIBUTE"/>
+        <result column="TELEPHONE" jdbcType="VARCHAR" property="TELEPHONE"/>
+        <result column="UNDISPLAY_HUMAN_MAP" jdbcType="VARCHAR" property="UNDISPLAYHUMANMAP"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="DELSTATE"/>
+        <result column="TEMPLET_ID" jdbcType="BIGINT" property="TEMPLETID"/>
+        <result column="HR_EMP_ID" jdbcType="BIGINT" property="HREMPID"/>
+        <result column="SOURCE" jdbcType="TINYINT" property="SOURCE"/>
+        <result column="SIMPLE_CODE" jdbcType="VARCHAR" property="SIMPLECODE"/>
+        <result column="INSURANCE_ID" jdbcType="BIGINT" property="INSURANCEID"/>
+        <result column="USER_ID" jdbcType="BIGINT" property="USERID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        EMP_ID, EMP_NAME, acronym, EMP_CODE, ORG_ID, ORG_CODE, ORG_NAME, DEP_ID, DEP_CODE, DEP_NAME,
+        REGION_ID, REGION_CODE, REGION_NAME, GENDER, BIRTHDAY, HEIGTH, ENTER_DATE, PHONE, 
+        FAX, EMAIL, ADDRESS, ZIPCODE, STATE, DEGREE, GRADUATE_SCHOOL, EDUCATION, IDCARD, 
+        CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, REMARK, WORK_CONDITION, JOB, 
+        IS_DISTRIBUTE, TELEPHONE, UNDISPLAY_HUMAN_MAP, REG_ID, DEL_STATE, TEMPLET_ID, HR_EMP_ID, 
+        SOURCE, SIMPLE_CODE, INSURANCE_ID
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_sys_employee
+        where EMP_ID = #{EMPID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.base.SysEmployeeModel"
+            resultMap="BaseResultMap">
+        select * from t_sys_employee where 1 = 1
+        <if test="EMPNAME != null">
+            and EMP_NAME = #{EMPNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="acronym != null">
+            and acronym = #{acronym,jdbcType=VARCHAR}
+        </if>
+        <if test="EMPCODE != null">
+            and EMP_CODE = #{EMPCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGCODE != null">
+            and ORG_CODE = #{ORGCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="ORGNAME != null">
+            and ORG_NAME = #{ORGNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="DEPID != null">
+            and DEP_ID = #{DEPID,jdbcType=BIGINT}
+        </if>
+        <if test="DEPCODE != null">
+            and DEP_CODE = #{DEPCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="DEPNAME != null">
+            and DEP_NAME = #{DEPNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="REGIONID != null">
+            and REGION_ID = #{REGIONID,jdbcType=BIGINT}
+        </if>
+        <if test="REGIONCODE != null">
+            and REGION_CODE = #{REGIONCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="REGIONNAME != null">
+            and REGION_NAME = #{REGIONNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="GENDER != null">
+            and GENDER = #{GENDER,jdbcType=VARCHAR}
+        </if>
+        <if test="BIRTHDAY != null">
+            and BIRTHDAY = #{BIRTHDAY,jdbcType=TIMESTAMP}
+        </if>
+        <if test="HEIGTH != null">
+            and HEIGTH = #{HEIGTH,jdbcType=DOUBLE}
+        </if>
+        <if test="ENTERDATE != null">
+            and ENTER_DATE = #{ENTERDATE,jdbcType=TIMESTAMP}
+        </if>
+        <if test="PHONE != null">
+            and PHONE = #{PHONE,jdbcType=VARCHAR}
+        </if>
+        <if test="FAX != null">
+            and FAX = #{FAX,jdbcType=VARCHAR}
+        </if>
+        <if test="EMAIL != null">
+            and EMAIL = #{EMAIL,jdbcType=VARCHAR}
+        </if>
+        <if test="ADDRESS != null">
+            and ADDRESS = #{ADDRESS,jdbcType=VARCHAR}
+        </if>
+        <if test="ZIPCODE != null">
+            and ZIPCODE = #{ZIPCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="STATE != null">
+            and STATE = #{STATE,jdbcType=INTEGER}
+        </if>
+        <if test="DEGREE != null">
+            and DEGREE = #{DEGREE,jdbcType=VARCHAR}
+        </if>
+        <if test="GRADUATESCHOOL != null">
+            and GRADUATE_SCHOOL = #{GRADUATESCHOOL,jdbcType=VARCHAR}
+        </if>
+        <if test="EDUCATION != null">
+            and EDUCATION = #{EDUCATION,jdbcType=VARCHAR}
+        </if>
+        <if test="IDCARD != null">
+            and IDCARD = #{IDCARD,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="REMARK != null">
+            and REMARK = #{REMARK,jdbcType=VARCHAR}
+        </if>
+        <if test="WORKCONDITION != null">
+            and WORK_CONDITION = #{WORKCONDITION,jdbcType=INTEGER}
+        </if>
+        <if test="JOB != null">
+            and JOB = #{JOB,jdbcType=VARCHAR}
+        </if>
+        <if test="ISDISTRIBUTE != null">
+            and IS_DISTRIBUTE = #{ISDISTRIBUTE,jdbcType=INTEGER}
+        </if>
+        <if test="TELEPHONE != null">
+            and TELEPHONE = #{TELEPHONE,jdbcType=VARCHAR}
+        </if>
+        <if test="UNDISPLAYHUMANMAP != null">
+            and UNDISPLAY_HUMAN_MAP = #{UNDISPLAYHUMANMAP,jdbcType=VARCHAR}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="TEMPLETID != null">
+            and TEMPLET_ID = #{TEMPLETID,jdbcType=BIGINT}
+        </if>
+        <if test="HREMPID != null">
+            and HR_EMP_ID = #{HREMPID,jdbcType=BIGINT}
+        </if>
+        <if test="SOURCE != null">
+            and SOURCE = #{SOURCE,jdbcType=TINYINT}
+        </if>
+        <if test="SIMPLECODE != null">
+            and SIMPLE_CODE = #{SIMPLECODE,jdbcType=VARCHAR}
+        </if>
+        <if test="INSURANCEID != null">
+            and INSURANCE_ID = #{INSURANCEID,jdbcType=BIGINT}
+        </if>
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByDepartIdsAndNotUserIds" resultMap="BaseResultMap">
+        select emp.*, su.USER_ID from t_sys_employee emp
+        inner join t_sys_user su
+        on (emp.EMP_ID = su.EMP_ID and su.EMP_ID is not null and su.REG_ID = #{regId, jdbcType=BIGINT}
+        <if test="userIds.size() != 0">
+            and su.USER_ID not in
+            <foreach collection="userIds" open="(" close=")" item="item" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        )
+        where emp.DEP_ID in
+        <foreach collection="departIds" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        and emp.DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+
+</mapper>

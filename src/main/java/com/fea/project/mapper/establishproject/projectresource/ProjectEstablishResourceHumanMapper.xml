@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.establishproject.projectresource.ProjectEstablishResourceHumanMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.establishproject.projectresource.ProjectEstablishResourceHumanModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="duty_level" jdbcType="VARCHAR" property="dutyLevel" />
+        <result column="personnel_cost" jdbcType="DECIMAL" property="personnelCost" />
+        <result column="invest_time" jdbcType="DECIMAL" property="investTime" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_status" jdbcType="INTEGER" property="delStatus" />
+        <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, duty_level, personnel_cost, invest_time, create_id, create_by, create_time,
+        update_id, update_by, update_time, del_status, project_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_establish_resource_human
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_establish_resource_human
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_establish_resource_human
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.establishproject.projectresource.ProjectEstablishResourceHumanModel">
+        insert into t_project_establish_resource_human (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{userId,jdbcType=BIGINT},
+            #{dutyLevel,jdbcType=VARCHAR},
+            #{personnelCost,jdbcType=DECIMAL}, 
+            #{investTime,jdbcType=DECIMAL}, 
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{delStatus,jdbcType=INTEGER},
+            #{projectId,jdbcType=BIGINT}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_establish_resource_human (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.userId,jdbcType=BIGINT},
+            #{item.dutyLevel,jdbcType=VARCHAR},
+            #{item.personnelCost,jdbcType=DECIMAL},
+            #{item.investTime,jdbcType=DECIMAL},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.projectId,jdbcType=BIGINT}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.establishproject.projectresource.ProjectEstablishResourceHumanModel" resultMap="BaseResultMap">
+        select * from t_project_establish_resource_human where 1 = 1
+        <if test="userId != null">
+            and id = #{userId,jdbcType=BIGINT}
+        </if>
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=BIGINT}
+        </if>
+        <if test="dutyLevel != null">
+            and duty_level = #{dutyLevel,jdbcType=VARCHAR}
+        </if>
+        <if test="personnelCost != null">
+            and personnel_cost = #{personnelCost,jdbcType=DECIMAL}
+        </if>
+        <if test="investTime != null">
+            and invest_time = #{investTime,jdbcType=DECIMAL}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.establishproject.projectresource.ProjectEstablishResourceHumanModel">
+        insert into t_project_establish_resource_human
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="dutyLevel != null">
+                duty_level,
+            </if>
+            <if test="personnelCost != null">
+                personnel_cost,
+            </if>
+            <if test="investTime != null">
+                invest_time,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="dutyLevel != null">
+                #{dutyLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="personnelCost != null">
+                #{personnelCost,jdbcType=DECIMAL},
+            </if>
+            <if test="investTime != null">
+                #{investTime,jdbcType=DECIMAL},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.establishproject.projectresource.ProjectEstablishResourceHumanModel">
+        update t_project_establish_resource_human
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="dutyLevel != null">
+                duty_level = #{dutyLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="personnelCost != null">
+                personnel_cost = #{personnelCost,jdbcType=DECIMAL},
+            </if>
+            <if test="investTime != null">
+                invest_time = #{investTime,jdbcType=DECIMAL},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.establishproject.projectresource.ProjectEstablishResourceHumanModel">
+        update t_project_establish_resource_human
+        set user_id = #{userId,jdbcType=BIGINT},
+            duty_level = #{dutyLevel,jdbcType=VARCHAR},
+            personnel_cost = #{personnelCost,jdbcType=DECIMAL},
+            invest_time = #{investTime,jdbcType=DECIMAL},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            project_id = #{projectId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <select id="selectVisiableUsers" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_establish_resource_human
+        where project_id = #{projectId,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.model.establishproject.vo.ProjectEstablishResourceHumanVo" extends="BaseResultMap" />
+    <select id="selectByFilterAndOrderParams" parameterType="com.fea.project.model.BasePageInfo" resultMap="BaseResultMap_vo" >
+        select <include refid="Base_Column_List" />
+        from t_project_establish_resource_human
+        where 1=1
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getProjectId() != null">
+                and project_id = #{model.projectId,jdbcType=BIGINT}
+            </if>
+        </if>
+        <if test="sortKey != null">
+            order by ${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by create_time desc
+        </if>
+    </select>
+
+</mapper>

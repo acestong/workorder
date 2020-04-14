@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.user.ProjectUserMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.user.ProjectUserModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, project_id, user_id, status, create_id, create_by, create_time, update_id, update_by,
+        update_time
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_user
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.user.ProjectUserModel">
+        insert into t_project_user (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{projectId,jdbcType=BIGINT},
+        #{userId,jdbcType=BIGINT},
+        #{status,jdbcType=INTEGER},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_user (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.projectId,jdbcType=BIGINT},
+            #{item.userId,jdbcType=BIGINT},
+            #{item.status,jdbcType=INTEGER},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.user.ProjectUserModel" resultMap="BaseResultMap">
+        select * from t_project_user where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=BIGINT}
+        </if>
+        <if test="status != null">
+            and status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.user.ProjectUserModel">
+        insert into t_project_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.user.ProjectUserModel">
+        update t_project_user
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.user.ProjectUserModel">
+        update t_project_user
+        set project_id = #{projectId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=BIGINT},
+            status = #{status,jdbcType=INTEGER},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByProjectId" resultType="long">
+        select distinct user_id from t_project_user
+        where project_id = #{projectId,jdbcType=BIGINT}
+        and status != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+    </select>
+
+    <delete id="deleteByProjectId">
+        delete from t_project_user
+        where project_id = #{projectId,jdbcType=BIGINT}
+    </delete>
+
+    <resultMap id="BaseResultMap_Vo" type="com.fea.project.model.user.vo.ProjectUserVo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+    </resultMap>
+    <select id="selectByProjectIdAndUserStatus" resultMap="BaseResultMap_Vo">
+        select *
+        from t_project_user
+        where project_id = #{projectId,jdbcType=BIGINT}
+        and status in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectByTeamId" resultMap="BaseResultMap_Vo">
+        select u.*, tmp.team_id as parent_id from t_project_user u
+            inner join (select user_id, team_id from t_project_team_user where team_id = #{teamId, jdbcType=BIGINT}
+            and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}) tmp on u.id = tmp.user_id
+            where u.`status` != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+    </select>
+
+    <select id="selectProjectUsersByTeamId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_user
+        where project_id = (select project_id from t_project_team where id = #{teamId, jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()})
+        and status != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+    </select>
+
+    <select id="selectProjectUsersByProjectId" resultMap="BaseResultMap_Vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_user
+        where `status` != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+        and project_id = #{projectId,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateByUserIdsAndStatus">
+        update t_project_user
+        <set>
+            <if test="model.projectId != null">
+                project_id = #{model.projectId,jdbcType=BIGINT},
+            </if>
+            <if test="model.userId != null">
+                user_id = #{model.userId,jdbcType=BIGINT},
+            </if>
+            <if test="model.status != null">
+                status = #{model.status,jdbcType=INTEGER},
+            </if>
+            <if test="model.createId != null">
+                create_id = #{model.createId,jdbcType=BIGINT},
+            </if>
+            <if test="model.createBy != null">
+                create_by = #{model.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="model.createTime != null">
+                create_time = #{model.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="model.updateId != null">
+                update_id = #{model.updateId,jdbcType=BIGINT},
+            </if>
+            <if test="model.updateBy != null">
+                update_by = #{model.updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="model.updateTime != null">
+                update_time = #{model.updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateByModelAndProjectTeamUserIds">
+        update t_project_user
+        <set>
+            <if test="model.projectId != null">
+                project_id = #{model.projectId,jdbcType=BIGINT},
+            </if>
+            <if test="model.userId != null">
+                user_id = #{model.userId,jdbcType=BIGINT},
+            </if>
+            <if test="model.status != null">
+                status = #{model.status,jdbcType=INTEGER},
+            </if>
+            <if test="model.createId != null">
+                create_id = #{model.createId,jdbcType=BIGINT},
+            </if>
+            <if test="model.createBy != null">
+                create_by = #{model.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="model.createTime != null">
+                create_time = #{model.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="model.updateId != null">
+                update_id = #{model.updateId,jdbcType=BIGINT},
+            </if>
+            <if test="model.updateBy != null">
+                update_by = #{model.updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="model.updateTime != null">
+                update_time = #{model.updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id in (select user_id from t_project_team_user where id in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </update>
+
+    <select id="selectProjectUsersByRoleId" resultMap="BaseResultMap_Vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_user
+        where user_id in (
+        select user_id from t_project_role_user where role_id = #{roleId, jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()})
+        and `status` != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+    </select>
+
+    <select id="selectProjectUsersByRoleIds" resultMap="BaseResultMap_Vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_user
+        where user_id in (
+        select user_id from t_project_role_user where role_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()})
+        and `status` = ${@com.fea.project.enums.user.UserStatusEnum@TYPE_NORMAL.getValue()}
+    </select>
+
+
+    <select id="listUnRoleTeamUsers" resultMap="BaseResultMap">
+        select * from t_project_user
+        where user_id not in (
+            select user_id from t_project_role_user where role_id in
+                (select id from t_project_role where project_id = #{projectId, jdbcType=BIGINT}
+                and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()})
+                 and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        )
+        and project_id = #{projectId, jdbcType=BIGINT}
+        and `status` != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+    </select>
+
+    <select id="selectUnGroupUserByProjectId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_user where id in (select user_id from t_project_team_user where team_id in (
+        select id from t_project_Team where project_id = #{projectId, jdbcType=BIGINT}
+        and short_name = #{shortName, jdbcType=VARCHAR}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}))
+        and `status` = ${@com.fea.project.enums.user.UserStatusEnum@TYPE_NORMAL.getValue()}
+    </select>
+    <select id="selectUserListTeamByProjectId" parameterType="long" resultType="com.fea.project.model.milestone.vo.UserListTeamVo">
+        select distinct
+        tpu.user_id as userId,
+        tpt.id as teamId,
+        tpt.name as teamName
+        from
+        t_project_team as tpt
+        left join  t_project_team_user as tptu on tptu.team_id = tpt.id
+        left join  t_project_user as tpu on (tpu.id = tptu.user_id and tpu.`status` =
+        ${@com.fea.project.enums.user.UserStatusEnum@TYPE_NORMAL.getValue()})
+        where  tpt.project_id = #{projectId, jdbcType=BIGINT}
+        and tpt.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and (tpt.short_name = '${@com.fea.project.enums.team.ProjectDefaultRootTeamEnum@TYPE_ROOT_TEAM.getShortName()}'
+        or  tpt.short_name is null)
+    </select>
+
+
+    <select id="selectByProjectIdAndUserIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_user
+        where project_id = #{projectId, jdbcType=BIGINT}
+        and `status` = ${@com.fea.project.enums.user.UserStatusEnum@TYPE_NORMAL.getValue()}
+        and user_id in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_user
+        where id in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+
+	<!-- 通过用户Id获取职位Id -->
+    <select id="selectJobIdByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+       SELECT DISTINCT
+		thed.JOB_ID jobId
+		from 
+		l2cplat_ceshi.t_sys_user tsu
+		LEFT JOIN
+		l2cplat_ceshi.t_sys_employee tse
+		ON tsu.EMP_ID = tse.EMP_ID
+		LEFT JOIN
+		l2cplat_ceshi.t_hr_emp_duty thed
+		on thed.EMP_ID = tse.HR_EMP_ID
+		LEFT JOIN
+		l2cplat_ceshi.t_sys_job tsj
+		on thed.JOB_ID = tsj.ID
+		where tsu.USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+
+
+	<!-- 通过jobId获取所有的下属信息 -->
+    <select id="selectUserInfoByJobId" parameterType="java.lang.Long" resultType="com.fea.project.model.user.vo.UserWithJobVo">
+		SELECT DISTINCT
+		tsu.USER_ID userId,
+		tsu.REALNAME userName,
+		tse.GENDER gender,
+		thed.JOB_ID jobId,
+		tsj.`NAME` jobName,
+		tsj.PARENT_ID parentJobId
+		from 
+		l2cplat_ceshi.t_sys_user tsu
+		LEFT JOIN
+		l2cplat_ceshi.t_sys_employee tse
+		ON tsu.EMP_ID = tse.EMP_ID
+		LEFT JOIN
+		l2cplat_ceshi.t_hr_emp_duty thed
+		on thed.EMP_ID = tse.HR_EMP_ID
+		LEFT JOIN
+		l2cplat_ceshi.t_sys_job tsj
+		on thed.JOB_ID = tsj.ID
+		where tsj.PARENT_ID = #{jobId,jdbcType=BIGINT}
+		ORDER BY tsj.`NAME`
+    </select>
+
+    <select id="selectNormalUserListByProjectId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_user
+        where `status` = ${@com.fea.project.enums.user.UserStatusEnum@TYPE_NORMAL.getValue()}
+        and project_id = #{projectId,jdbcType=BIGINT}
+    </select>
+</mapper>

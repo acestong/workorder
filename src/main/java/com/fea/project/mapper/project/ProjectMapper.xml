@@ -1,0 +1,1709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.project.ProjectMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.project.ProjectModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="type" jdbcType="BIGINT" property="type"/>
+        <result column="priority" jdbcType="BIGINT" property="priority"/>
+        <result column="level" jdbcType="BIGINT" property="level"/>
+        <result column="risk_level" jdbcType="BIGINT" property="riskLevel"/>
+        <result column="resource" jdbcType="INTEGER" property="resource"/>
+        <result column="connect_id" jdbcType="BIGINT" property="connectId"/>
+        <result column="resource_describe" jdbcType="VARCHAR" property="resourceDescribe"/>
+        <result column="applyer" jdbcType="BIGINT" property="applyer"/>
+        <result column="apply_depart" jdbcType="BIGINT" property="applyDepart"/>
+        <result column="plan_startTime" jdbcType="TIMESTAMP" property="planStartTime"/>
+        <result column="plan_endTime" jdbcType="TIMESTAMP" property="planEndTime"/>
+        <result column="duration" jdbcType="DECIMAL" property="duration"/>
+        <result column="leader" jdbcType="BIGINT" property="leader"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="content" jdbcType="BLOB" property="content"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="real_duration" jdbcType="DECIMAL" property="realDuration"/>
+        <result column="real_start_time" jdbcType="TIMESTAMP" property="realStartTime"/>
+        <result column="real_end_time" jdbcType="TIMESTAMP" property="realEndTime"/>
+        <result column="verify_status" jdbcType="INTEGER" property="verifyStatus"/>
+        <result column="establishment" jdbcType="INTEGER" property="establishment"/>
+        <result column="project_status" jdbcType="INTEGER" property="projectStatus"/>
+        <result column="action_status" jdbcType="INTEGER" property="actionStatus"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="area" jdbcType="BIGINT" property="area"/>
+        <result column="industry" jdbcType="BIGINT" property="industry"/>
+        <result column="budget" jdbcType="DECIMAL" property="budget"/>
+        <result column="currency_id" jdbcType="BIGINT" property="currencyId"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapVo" type="com.fea.project.model.project.vo.ProjectVo" extends="BaseResultMap">
+        <association property="partners" column="id"
+                     select="com.fea.project.dao.user.ProjectUserMapper.selectByProjectId"/>
+        <association property="schedule" column="id"
+                     select="com.fea.project.dao.task.TaskModelMapper.selectAvgRateByProjectId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, code, type, priority, level, risk_level, resource, connect_id, resource_describe
+        applyer, apply_depart, plan_startTime, plan_endTime, duration, leader, remark, content, create_id, create_by,
+        create_time, update_id, update_by, update_time, del_status, reg_id, parent_id, real_duration, real_start_time,
+        real_end_time, verify_status, establishment, project_status, action_status, version, area, industry, budget, currency_id
+    </sql>
+
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_project
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    
+        <resultMap id="rmVo" type="com.fea.project.model.plan.vo.ProjectTreeModelVo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="label" jdbcType="VARCHAR" property="label"/>
+        <result column="tag" jdbcType="BIGINT" property="tag"/>
+        <result column="job" jdbcType="VARCHAR" property="job"/>
+        <result column="leaderId" jdbcType="BIGINT" property="leaderId"/>
+        	 <association property="children" column="id"
+                     select="com.fea.project.dao.team.ProjectTeamMapper.selectProjectTreeById"/>
+   		 </resultMap>
+    <select id="selectProjectTreeById" parameterType="java.lang.Long" resultMap="rmVo">
+       select 
+		tpp.id id,
+		tpp.`name` label,
+		tpp.leader leaderId,
+		0  tag,
+		"项目"  job
+		from 
+		t_project_project tpp
+		 where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectManagerInfo" parameterType="java.lang.Long" resultMap="rmVo">
+       SELECT
+		tsu.USER_ID id,
+		tsu.REALNAME label,
+		1  tag,
+		"项目经理" job
+		from l2cplat_ceshi.t_sys_user tsu 
+		where USER_ID = #{leaderId,jdbcType=BIGINT}
+    </select>
+    
+  
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_project
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_project
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.project.ProjectModel">
+        insert into t_project_project (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{name,jdbcType=VARCHAR},
+        #{code,jdbcType=VARCHAR},
+        #{type,jdbcType=BIGINT},
+        #{priority,jdbcType=BIGINT},
+        #{level,jdbcType=BIGINT},
+        #{riskLevel,jdbcType=BIGINT},
+        #{resource,jdbcType=INTEGER},
+        #{connectId,jdbcType=VARCHAR},
+        #{resourceDescribe,jdbcType=VARCHAR},
+        #{applyer,jdbcType=BIGINT},
+        #{applyDepart,jdbcType=BIGINT},
+        #{planStartTime,jdbcType=TIMESTAMP},
+        #{planEndTime,jdbcType=TIMESTAMP},
+        #{duration,jdbcType=DECIMAL},
+        #{leader,jdbcType=BIGINT},
+        #{remark,jdbcType=VARCHAR},
+        #{content,jdbcType=BLOB},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{regId,jdbcType=BIGINT},
+        #{parentId,jdbcType=BIGINT},
+        #{realDuration,jdbcType=DECIMAL},
+        #{realStartTime,jdbcType=TIMESTAMP},
+        #{realEndTime,jdbcType=TIMESTAMP},
+        #{verifyStatus,jdbcType=INTEGER},
+        #{establishment,jdbcType=INTEGER},
+        #{projectStatus,jdbcType=INTEGER},
+        #{actionStatus,jdbcType=INTEGER},
+        #{version,jdbcType=BIGINT},
+        #{area,jdbcType=BIGINT},
+        #{industry,jdbcType=BIGINT},
+        #{budget,jdbcType=DECIMAL},
+        #{currencyId,jdbcType=BIGINT}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_project (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.code,jdbcType=VARCHAR},
+            #{item.type,jdbcType=BIGINT},
+            #{item.priority,jdbcType=BIGINT},
+            #{item.level,jdbcType=BIGINT},
+            #{item.riskLevel,jdbcType=BIGINT},
+            #{item.resource,jdbcType=INTEGER},
+            #{item.connectId,jdbcType=BIGINT},
+            #{item.resourceDescribe,jdbcType=VARCHAR},
+            #{item.applyer,jdbcType=BIGINT},
+            #{item.applyDepart,jdbcType=BIGINT},
+            #{item.planStartTime,jdbcType=TIMESTAMP},
+            #{item.planEndTime,jdbcType=TIMESTAMP},
+            #{item.duration,jdbcType=DECIMAL},
+            #{item.leader,jdbcType=BIGINT},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.content,jdbcType=BLOB},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.regId,jdbcType=BIGINT},
+            #{item.parentId,jdbcType=BIGINT},
+            #{item.realDuration,jdbcType=DECIMAL},
+            #{item.realStartTime,jdbcType=TIMESTAMP},
+            #{item.realEndTime,jdbcType=TIMESTAMP},
+            #{item.verifyStatus,jdbcType=INTEGER},
+            #{item.establishment,jdbcType=INTEGER},
+            #{item.projectStatus,jdbcType=INTEGER},
+            #{item.actionStatus,jdbcType=INTEGER},
+            #{item.version,jdbcType=BIGINT},
+            #{item.area,jdbcType=BIGINT},
+            #{item.industry,jdbcType=BIGINT},
+            #{item.budget,jdbcType=DECIMAL},
+            #{item.currencyId,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.project.ProjectModel" resultMap="BaseResultMap">
+        select * from t_project_project
+        where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="code != null">
+            and code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            and type = #{type,jdbcType=BIGINT}
+        </if>
+        <if test="priority != null">
+            and priority = #{priority,jdbcType=BIGINT}
+        </if>
+        <if test="level != null">
+            and level = #{level,jdbcType=BIGINT}
+        </if>
+        <if test="riskLevel != null">
+            and risk_level = #{riskLevel,jdbcType=BIGINT}
+        </if>
+        <if test="resource != null">
+            and resource = #{resource,jdbcType=INTEGER}
+        </if>
+        <if test="connectId != null">
+            and connect_id = #{connectId,jdbcType=VARCHAR}
+        </if>
+        <if test="resourceDescribe != null">
+            and resource_describe = #{resourceDescribe,jdbcType=VARCHAR}
+        </if>
+        <if test="applyer != null">
+            and applyer = #{applyer,jdbcType=BIGINT}
+        </if>
+        <if test="applyDepart != null">
+            and apply_depart = #{applyDepart,jdbcType=BIGINT}
+        </if>
+        <if test="planStartTime != null">
+            and plan_startTime = #{planStartTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="planEndTime != null">
+            and plan_endTime = #{planEndTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="duration != null">
+            and duration = #{duration,jdbcType=DECIMAL}
+        </if>
+        <if test="leader != null">
+            and leader = #{leader,jdbcType=BIGINT}
+        </if>
+        <if test="remark != null">
+            and remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="content != null">
+            and content = #{content,jdbcType=BLOB}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="parentId != null">
+            and parent_id = #{parentId,jdbcType=BIGINT}
+        </if>
+        <if test="realDuration != null">
+            and real_duration = #{realDuration,jdbcType=DECIMAL}
+        </if>
+        <if test="realStartTime != null">
+            and real_start_time = #{realStartTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="realEndTime != null">
+            and real_end_time = #{realEndTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="verifyStatus != null">
+            and verify_status = #{verifyStatus,jdbcType=INTEGER}
+        </if>
+        <if test="establishment != null">
+            and establishment = #{establishment,jdbcType=INTEGER}
+        </if>
+        <if test="projectStatus != null">
+            and project_status = #{projectStatus,jdbcType=INTEGER}
+        </if>
+        <if test="actionStatus != null">
+            and action_status = #{actionStatus,jdbcType=INTEGER}
+        </if>
+        <if test="version != null">
+            and version = #{version,jdbcType=BIGINT}
+        </if>
+        <if test="area != null">
+            and area = #{area,jdbcType=BIGINT}
+        </if>
+        <if test="industry != null">
+            and industry = #{industry,jdbcType=BIGINT}
+        </if>
+        <if test="budget != null">
+            and budget = #{budget,jdbcType=DECIMAL}
+        </if>
+        <if test="currencyId != null">
+            and currency_id = #{currencyId,jdbcType=BIGINT}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <sql id="Base_Column_List_Vo">
+        tp.id, tp.name, tp.code, tp.type, tp.priority, tp.level, tp.risk_level, tp.resource, tp.connect_id, tp.resource_describe,
+        tp.applyer, tp.apply_depart,tp.plan_startTime, tp.plan_endTime, tp.duration, tp.leader, tp.remark, tp.content, tp.create_id, tp.create_by,
+        tp.create_time, tp.update_id, tp.update_by, tp.update_time, tp.del_status, tp.reg_id, tp.parent_id,
+        tp.real_duration, tp.real_start_time, tp.real_end_time, tp.verify_status, tp.establishment, tp.project_status, tp.action_status, tp.version,
+        tp.area, tp.industry, tp.budget, tp.currency_id
+    </sql>
+    <select id="selectByFilterAndOrderParams"
+            parameterType="com.fea.project.model.BasePageInfo"
+            resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_project_project tp
+        where 1 = 1
+        and tp.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getIds() != null and model.getIds().size() != 0">
+                and tp.id in
+                <foreach collection="model.getIds()" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="model.getName() != null">
+                and tp.name = #{model.name,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCode() != null">
+                and tp.code = #{model.code,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getType() != null">
+                and tp.`type` = #{model.type,jdbcType=BIGINT}
+            </if>
+            <if test="model.getPriority() != null">
+                and tp.priority = #{model.priority,jdbcType=BIGINT}
+            </if>
+            <if test="model.getLevel() != null">
+                and tp.level = #{model.level,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRiskLevel() != null">
+                and tp.risk_level = #{model.riskLevel,jdbcType=BIGINT}
+            </if>
+            <if test="model.getResource() != null">
+                and tp.resource = #{model.resource,jdbcType=INTEGER}
+            </if>
+            <if test="model.getConnectId() != null">
+                and tp.connect_id = #{model.connectId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getResourceDescribe() != null">
+                and tp.resource_describe = #{model.resourceDescribe,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getApplyer() != null">
+                and tp.applyer = #{model.applyer,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyDepart() != null">
+                and tp.apply_depart = #{model.applyDepart,jdbcType=BIGINT}
+            </if>
+            <if test="model.getPlanStartTime() != null">
+                and tp.plan_startTime = #{model.planStartTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getPlanEndTime() != null">
+                and tp.plan_endTime = #{model.planEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getDuration() != null">
+                and tp.duration = #{model.duration,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getLeader() != null">
+                and tp.leader = #{model.leader,jdbcType=BIGINT}
+            </if>
+            <if test="model.getLeaderIds() != null and model.getLeaderIds().size() != 0">
+                and tp.leader in
+                <foreach collection="model.getLeaderIds()" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="model.getRemark() != null">
+                and tp.remark = #{model.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getContent() != null">
+                and tp.content = #{model.content,jdbcType=BLOB}
+            </if>
+            <if test="model.getCreateId() != null">
+                and tp.create_id = #{model.createId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and tp.create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and tp.create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateId() != null">
+                and tp.update_id = #{model.updateId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and tp.update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and tp.update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getRegId() != null">
+                and tp.reg_id = #{model.regId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getParentId() != null">
+                and tp.parent_id = #{model.parentId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRealDuration() != null">
+                and tp.real_duration = #{model.realDuration,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getRealStartTime() != null">
+                and tp.real_start_time = #{model.realStartTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getRealEndTime() != null">
+                and tp.real_end_time = #{model.realEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getVerifyStatus() != null">
+                and tp.verify_status = #{model.verifyStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getEstablishment() != null">
+                and tp.establishment = #{model.establishment,jdbcType=INTEGER}
+            </if>
+            <if test="model.getProjectStatus() != null">
+                and tp.project_status = #{model.projectStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getActionStatus() != null">
+                and tp.action_status = #{model.actionStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getVersion() != null">
+                and tp.version = #{model.version,jdbcType=BIGINT}
+            </if>
+            <if test="model.getVersion() != null">
+                and tp.version = #{model.version,jdbcType=BIGINT}
+            </if>
+            <if test="model.getArea() != null">
+                and tp.area = #{model.area,jdbcType=BIGINT}
+            </if>
+            <if test="model.getIndustry() != null">
+                and tp.industry = #{model.industry,jdbcType=BIGINT}
+            </if>
+            <if test="model.getBudget() != null">
+                and tp.budget = #{model.budget,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getCurrencyId() != null">
+                and tp.currency_id = #{model.currencyId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getTypeList() != null and model.getTypeList().size() != 0">
+                and tp.`type` in
+                <foreach collection="model.getTypeList()" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="model.getQueryType() != null">
+                <if test="model.getQueryType() == 1">
+                    and tp.create_id in
+                    <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="model.getQueryType() == 2">
+                    and tp.leader in
+                    <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="model.getQueryType() == 3">
+                    and tp.id in (
+                    select distinct project_id from t_project_concern where user_id in
+                    <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+                    )
+                </if>
+                <if test="model.getQueryType() == 4">
+                    and tp.id in (
+                    select distinct project_id from t_project_user where user_id in
+                    <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                    and project_id is not null
+                    and `status` != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+                    )
+                </if>
+            </if>
+        </if>
+        <if test="keywords != null">
+            and ((tp.name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (tp.code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (tp.create_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('type') != null">
+                and tp.`type` in
+                <foreach collection="filters.get('type')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('priority') != null">
+                and tp.priority in
+                <foreach collection="filters.get('priority')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('level') != null">
+                and tp.level in
+                <foreach collection="filters.get('level')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('riskLevel') != null">
+                and tp.risk_level in
+                <foreach collection="filters.get('riskLevel')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('resource') != null">
+                and tp.resource in
+                <foreach collection="filters.get('resource')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('levels') != null and filters.get('levels').size() != 0">
+                and tp.level in
+                <foreach collection="filters.get('levels')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('riskLevels') != null and filters.get('riskLevels').size() != 0">
+                and tp.risk_level in
+                <foreach collection="filters.get('riskLevels')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('actionStatusTypes') != null and filters.get('actionStatusTypes').size() != 0">
+                and tp.action_status in
+                <foreach collection="filters.get('actionStatusTypes')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </if>
+        <if test="sortKey != null">
+            order by tp.${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by tp.create_time desc
+        </if>
+    </select>
+
+    <select id="listByUserId" parameterType="com.fea.project.model.BasePageInfo" resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_project_project tp
+        where 1 = 1
+        and tp.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getName() != null">
+                and tp.name = #{model.name,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCode() != null">
+                and tp.code = #{model.code,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getType() != null">
+                and tp.`type` = #{model.type,jdbcType=BIGINT}
+            </if>
+            <if test="model.getPriority() != null">
+                and tp.priority = #{model.priority,jdbcType=BIGINT}
+            </if>
+            <if test="model.getLevel() != null">
+                and tp.level = #{model.level,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRiskLevel() != null">
+                and tp.risk_level = #{model.riskLevel,jdbcType=BIGINT}
+            </if>
+            <if test="model.getResource() != null">
+                and tp.resource = #{model.resource,jdbcType=INTEGER}
+            </if>
+            <if test="model.getConnectId() != null">
+                and tp.connect_id = #{model.connectId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getResourceDescribe() != null">
+                and tp.resource_describe = #{model.resourceDescribe,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getApplyer() != null">
+                and tp.applyer = #{model.applyer,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyDepart() != null">
+                and tp.apply_depart = #{model.applyDepart,jdbcType=BIGINT}
+            </if>
+            <if test="model.getPlanStartTime() != null">
+                and tp.plan_startTime = #{model.planStartTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getPlanEndTime() != null">
+                and tp.plan_endTime = #{model.planEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getDuration() != null">
+                and tp.duration = #{model.duration,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getLeader() != null">
+                and tp.leader = #{model.leader,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRemark() != null">
+                and tp.remark = #{model.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getContent() != null">
+                and tp.content = #{model.content,jdbcType=BLOB}
+            </if>
+            <if test="model.getCreateId() != null">
+                and tp.create_id = #{model.createId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and tp.create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and tp.create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateId() != null">
+                and tp.update_id = #{model.updateId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and tp.update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and tp.update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getRegId() != null">
+                and tp.reg_id = #{model.regId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getParentId() != null">
+                and tp.parent_id = #{model.parentId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRealDuration() != null">
+                and tp.real_duration = #{model.realDuration,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getRealStartTime() != null">
+                and tp.real_start_time = #{model.realStartTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getRealEndTime() != null">
+                and tp.real_end_time = #{model.realEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getVerifyStatus() != null">
+                and tp.verify_status = #{model.verifyStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getEstablishment() != null">
+                and tp.establishment = #{model.establishment,jdbcType=INTEGER}
+            </if>
+            <if test="model.getProjectStatus() != null">
+                and tp.project_status = #{model.projectStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getActionStatus() != null">
+                and tp.action_status = #{model.actionStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getVersion() != null">
+                and tp.version = #{model.version,jdbcType=BIGINT}
+            </if>
+            <if test="model.getArea() != null">
+                and tp.area = #{model.area,jdbcType=BIGINT}
+            </if>
+            <if test="model.getIndustry() != null">
+                and tp.industry = #{model.industry,jdbcType=BIGINT}
+            </if>
+            <if test="model.getBudget() != null">
+                and tp.budget = #{model.budget,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getCurrencyId() != null">
+                and tp.currency_id = #{model.currencyId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUserIds() != null">
+                and (tp.create_id in
+                <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+                or tp.leader in
+                <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+                or tp.id in (
+                select distinct project_id from t_project_concern where user_id in
+                <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+                and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()})
+                or tp.id in (
+                select distinct project_id from t_project_user where user_id in
+                <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+                and project_id is not null
+                and `status` != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+                )
+                )
+            </if>
+        </if>
+        <if test="keywords != null">
+            and ((tp.name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (tp.code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (tp.create_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('type') != null">
+                and tp.`type` in
+                <foreach collection="filters.get('type')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('priority') != null">
+                and tp.priority in
+                <foreach collection="filters.get('priority')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('level') != null">
+                and tp.level in
+                <foreach collection="filters.get('level')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('riskLevel') != null">
+                and tp.risk_level in
+                <foreach collection="filters.get('riskLevel')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('resource') != null">
+                and tp.resource in
+                <foreach collection="filters.get('resource')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </if>
+        <if test="sortKey != null">
+            order by tp.${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by tp.create_time desc
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.project.ProjectModel">
+        insert into t_project_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="priority != null">
+                priority,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="riskLevel != null">
+                risk_level,
+            </if>
+            <if test="resource != null">
+                resource,
+            </if>
+            <if test="connectId != null">
+                connect_id,
+            </if>
+            <if test="resourceDescribe != null">
+                resource_describe,
+            </if>
+            <if test="applyer != null">
+                applyer,
+            </if>
+            <if test="applyDepart != null">
+                apply_depart,
+            </if>
+            <if test="planStartTime != null">
+                plan_startTime,
+            </if>
+            <if test="planEndTime != null">
+                plan_endTime,
+            </if>
+            <if test="duration != null">
+                duration,
+            </if>
+            <if test="leader != null">
+                leader,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="realDuration != null">
+                real_duration,
+            </if>
+            <if test="realStartTime != null">
+                real_start_time,
+            </if>
+            <if test="realEndTime != null">
+                real_end_time,
+            </if>
+            <if test="verifyStatus != null">
+                verify_status,
+            </if>
+            <if test="establishment != null">
+                establishment,
+            </if>
+            <if test="projectStatus != null">
+                project_status,
+            </if>
+            <if test="actionStatus != null">
+                action_status,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="industry != null">
+                industry,
+            </if>
+            <if test="budget != null">
+                budget,
+            </if>
+            <if test="currencyId != null">
+                currency_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=BIGINT},
+            </if>
+            <if test="priority != null">
+                #{priority,jdbcType=BIGINT},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=BIGINT},
+            </if>
+            <if test="riskLevel != null">
+                #{riskLevel,jdbcType=BIGINT},
+            </if>
+            <if test="resource != null">
+                #{resource,jdbcType=INTEGER},
+            </if>
+            <if test="connectId != null">
+                #{connectId,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceDescribe != null">
+                #{resourceDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="applyer != null">
+                #{applyer,jdbcType=BIGINT},
+            </if>
+            <if test="applyDepart != null">
+                #{applyDepart,jdbcType=BIGINT},
+            </if>
+            <if test="planStartTime != null">
+                #{planStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planEndTime != null">
+                #{planEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                #{duration,jdbcType=DECIMAL},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=BLOB},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="realDuration != null">
+                #{realDuration,jdbcType=DECIMAL},
+            </if>
+            <if test="realStartTime != null">
+                #{realStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="realEndTime != null">
+                #{realEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyStatus != null">
+                #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="establishment != null">
+                #{establishment,jdbcType=INTEGER},
+            </if>
+            <if test="projectStatus != null">
+                #{projectStatus,jdbcType=INTEGER},
+            </if>
+            <if test="actionStatus != null">
+                #{actionStatus,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=BIGINT},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=BIGINT},
+            </if>
+            <if test="industry != null">
+                #{industry,jdbcType=BIGINT},
+            </if>
+            <if test="budget != null">
+                #{budget,jdbcType=DECIMAL},
+            </if>
+            <if test="currencyId != null">
+                #{currencyId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.project.ProjectModel">
+        update t_project_project
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=BIGINT},
+            </if>
+            <if test="priority != null">
+                priority = #{priority,jdbcType=BIGINT},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=BIGINT},
+            </if>
+            <if test="riskLevel != null">
+                risk_level = #{riskLevel,jdbcType=BIGINT},
+            </if>
+            <if test="resource != null">
+                resource = #{resource,jdbcType=INTEGER},
+            </if>
+            <if test="connectId != null">
+                connect_id = #{connectId,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceDescribe != null">
+                resource_describe = #{resourceDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="applyer != null">
+                applyer = #{applyer,jdbcType=BIGINT},
+            </if>
+            <if test="applyDepart != null">
+                apply_depart = #{applyDepart,jdbcType=BIGINT},
+            </if>
+            <if test="planStartTime != null">
+                plan_startTime = #{planStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planEndTime != null">
+                plan_endTime = #{planEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                duration = #{duration,jdbcType=DECIMAL},
+            </if>
+            <if test="leader != null">
+                leader = #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=BLOB},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="realDuration != null">
+                real_duration = #{realDuration,jdbcType=DECIMAL},
+            </if>
+            <if test="realStartTime != null">
+                real_start_time = #{realStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="realEndTime != null">
+                real_end_time = #{realEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyStatus != null">
+                verify_status = #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="establishment != null">
+                establishment = #{establishment,jdbcType=INTEGER},
+            </if>
+            <if test="projectStatus != null">
+                project_status = #{projectStatus,jdbcType=INTEGER},
+            </if>
+            <if test="actionStatus != null">
+                action_status = #{actionStatus,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="area != null">
+                area = #{area,jdbcType=BIGINT},
+            </if>
+            <if test="industry != null">
+                industry = #{industry,jdbcType=BIGINT},
+            </if>
+            <if test="budget != null">
+                budget = #{budget,jdbcType=DECIMAL},
+            </if>
+            <if test="currencyId != null">
+                currency_id = #{currencyId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.project.ProjectModel">
+        update t_project_project
+        set name = #{name,jdbcType=BIGINT},
+            type = #{type,jdbcType=BIGINT},
+            priority = #{priority,jdbcType=BIGINT},
+            level = #{level,jdbcType=BIGINT},
+            risk_level = #{riskLevel,jdbcType=BIGINT},
+            resource = #{resource,jdbcType=INTEGER},
+            connect_id = #{connectId,jdbcType=VARCHAR},
+            resource_describe = #{resourceDescribe,jdbcType=VARCHAR},
+            applyer = #{applyer,jdbcType=BIGINT},
+            apply_depart = #{applyDepart,jdbcType=BIGINT},
+            plan_startTime = #{planStartTime,jdbcType=TIMESTAMP},
+            plan_endTime = #{planEndTime,jdbcType=TIMESTAMP},
+            duration = #{duration,jdbcType=DECIMAL},
+            leader = #{leader,jdbcType=BIGINT},
+            remark = #{remark,jdbcType=VARCHAR},
+            content = #{content,jdbcType=BLOB},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            reg_id = #{regId,jdbcType=BIGINT},
+            parent_id = #{parentId,jdbcType=BIGINT},
+            real_duration = #{realDuration,jdbcType=DECIMAL},
+            real_start_time = #{realStartTime,jdbcType=TIMESTAMP},
+            real_end_time = #{realEndTime,jdbcType=TIMESTAMP},
+            verify_status = #{verifyStatus,jdbcType=INTEGER},
+            establishment = #{establishment,jdbcType=INTEGER},
+            project_status = #{projectStatus,jdbcType=INTEGER},
+            action_status = #{actionStatus,jdbcType=INTEGER},
+            version = #{version,jdbcType=BIGINT},
+            area = #{area,jdbcType=BIGINT},
+            industry = #{industry,jdbcType=BIGINT},
+            budget = #{budget,jdbcType=DECIMAL},
+            currency_id = #{currencyId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <select id="selectByRoleId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_project
+        where id = (
+        select project_id from t_project_role where id = #{roleId, jdbcType=BIGINT}
+        )
+
+    </select>
+
+    <select id="selectOne" resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_project_project tp
+        where 1 = 1
+        and tp.id = #{id, jdbcType=BIGINT}
+        <if test="establishFlag == false">
+            and tp.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        </if>
+    </select>
+
+    <select id="selectModelByStepId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_project
+        where id = (select project_id from t_project_step where id = #{stepId, jdbcType=BIGINT})
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_project
+        where id in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectModelByIdAndConditionModel" resultType="com.fea.project.model.project.ProjectModel">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_project
+        where id = #{id, jdbcType=BIGINT}
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowChangeProjectConditionTypeEnum@TYPE_PROJECT_TYPE.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowCreateProjectConditionTypeEnum@TYPE_PROJECT_TYPE.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowChangeProjectConditionTypeEnum@TYPE_PROJECT_APPLY_DEPARTMENT.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowCreateProjectConditionTypeEnum@TYPE_PROJECT_APPLY_DEPARTMENT.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowChangeProjectConditionTypeEnum@TYPE_PROJECT_LEVEL.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowCreateProjectConditionTypeEnum@TYPE_PROJECT_LEVEL.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowChangeProjectConditionTypeEnum@TYPE_PROJECT_RISK_LEVEL.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowCreateProjectConditionTypeEnum@TYPE_PROJECT_RISK_LEVEL.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowChangeProjectConditionTypeEnum@TYPE_PROJECT_AREA.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowCreateProjectConditionTypeEnum@TYPE_PROJECT_AREA.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowChangeProjectConditionTypeEnum@TYPE_PROJECT_RESOURCE.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowCreateProjectConditionTypeEnum@TYPE_PROJECT_RESOURCE.getValue)}
+        </if>
+        <if test="@com.fea.project.util.MapUtil@containsKey(map, @com.fea.project.enums.flow.base.flowtype.ProjectFlowChangeProjectConditionTypeEnum@TYPE_PROJECT_BUDGET.getValue)">
+            ${map.get(@com.fea.project.enums.flow.base.flowtype.ProjectFlowCreateProjectConditionTypeEnum@TYPE_PROJECT_BUDGET.getValue)}
+        </if>
+    </select>
+
+    <select id="selectWithEstablishProjectByFilterAndOrderParams"
+            parameterType="com.fea.project.model.BasePageInfo"
+            resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_project_project tp
+        where 1 = 1
+        and (tp.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+            or id in (select project_id from t_project_establish_project
+            where del_status =  ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+            <if test="model != null">
+                <if test="model.getRegId() != null">
+                    and reg_id = #{model.regId,jdbcType=BIGINT}
+                </if>
+            </if>
+            )
+        )
+        <if test="model != null">
+            <if test="model.getName() != null">
+                and tp.name = #{model.name,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCode() != null">
+                and tp.code = #{model.code,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getType() != null">
+                and tp.`type` = #{model.type,jdbcType=BIGINT}
+            </if>
+            <if test="model.getPriority() != null">
+                and tp.priority = #{model.priority,jdbcType=BIGINT}
+            </if>
+            <if test="model.getLevel() != null">
+                and tp.level = #{model.level,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRiskLevel() != null">
+                and tp.risk_level = #{model.riskLevel,jdbcType=BIGINT}
+            </if>
+            <if test="model.getResource() != null">
+                and tp.resource = #{model.resource,jdbcType=INTEGER}
+            </if>
+            <if test="model.getConnectId() != null">
+                and tp.connect_id = #{model.connectId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getResourceDescribe() != null">
+                and tp.resource_describe = #{model.resourceDescribe,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getApplyer() != null">
+                and tp.applyer = #{model.applyer,jdbcType=BIGINT}
+            </if>
+            <if test="model.getApplyDepart() != null">
+                and tp.apply_depart = #{model.applyDepart,jdbcType=BIGINT}
+            </if>
+            <if test="model.getPlanStartTime() != null">
+                and tp.plan_startTime = #{model.planStartTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getPlanEndTime() != null">
+                and tp.plan_endTime = #{model.planEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getDuration() != null">
+                and tp.duration = #{model.duration,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getLeader() != null">
+                and tp.leader = #{model.leader,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRemark() != null">
+                and tp.remark = #{model.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getContent() != null">
+                and tp.content = #{model.content,jdbcType=BLOB}
+            </if>
+            <if test="model.getCreateId() != null">
+                and tp.create_id = #{model.createId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and tp.create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and tp.create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateId() != null">
+                and tp.update_id = #{model.updateId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and tp.update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and tp.update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getRegId() != null">
+                and tp.reg_id = #{model.regId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getParentId() != null">
+                and tp.parent_id = #{model.parentId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRealDuration() != null">
+                and tp.real_duration = #{model.realDuration,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getRealStartTime() != null">
+                and tp.real_start_time = #{model.realStartTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getRealEndTime() != null">
+                and tp.real_end_time = #{model.realEndTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getVerifyStatus() != null">
+                and tp.verify_status = #{model.verifyStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getEstablishment() != null">
+                and tp.establishment = #{model.establishment,jdbcType=INTEGER}
+            </if>
+            <if test="model.getProjectStatus() != null">
+                and tp.project_status = #{model.projectStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getActionStatus() != null">
+                and tp.action_status = #{model.actionStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getVersion() != null">
+                and tp.version = #{model.version,jdbcType=BIGINT}
+            </if>
+            <if test="model.getArea() != null">
+                and tp.area = #{model.area,jdbcType=BIGINT}
+            </if>
+            <if test="model.getIndustry() != null">
+                and tp.industry = #{model.industry,jdbcType=BIGINT}
+            </if>
+            <if test="model.getBudget() != null">
+                and tp.budget = #{model.budget,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getCurrencyId() != null">
+                and tp.currency_id = #{model.currencyId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getTypeList() != null and model.getTypeList().size() != 0">
+                and tp.`type` in
+                <foreach collection="model.getTypeList()" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="model.getQueryType() != null">
+                <if test="model.getQueryType() == 1">
+                    and tp.create_id in
+                    <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="model.getQueryType() == 2">
+                    and tp.leader in
+                    <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="model.getQueryType() == 3">
+                    and tp.id in (
+                    select distinct project_id from t_project_concern where user_id in
+                    <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+                    )
+                </if>
+                <if test="model.getQueryType() == 4">
+                    and tp.id in (
+                    select distinct project_id from t_project_user where user_id in
+                    <foreach collection="model.getUserIds()" item="item" open="(" close=")" separator=",">
+                        #{item}
+                    </foreach>
+                    and project_id is not null
+                    and `status` != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()}
+                    )
+                </if>
+            </if>
+        </if>
+        <if test="keywords != null">
+            and ((tp.name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (tp.code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (tp.create_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('type') != null">
+                and tp.`type` in
+                <foreach collection="filters.get('type')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('priority') != null">
+                and tp.priority in
+                <foreach collection="filters.get('priority')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('level') != null">
+                and tp.level in
+                <foreach collection="filters.get('level')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('riskLevel') != null">
+                and tp.risk_level in
+                <foreach collection="filters.get('riskLevel')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('resource') != null">
+                and tp.resource in
+                <foreach collection="filters.get('resource')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </if>
+        <if test="sortKey != null">
+            order by tp.${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by tp.create_time desc
+        </if>
+    </select>
+
+    <update id="updateEstablishStatus">
+        update t_project_project
+        set establishment = #{establishment,jdbcType=INTEGER}
+        where id = #{id, jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateDelStatusByProjectId">
+        update t_project_project
+        set del_status = #{delStatus, jdbcType=INTEGER}
+        where id = #{id, jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateSelectiveByIdOnEstablish" parameterType="com.fea.project.model.project.ProjectModel">
+        update t_project_project
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=BIGINT},
+            </if>
+            <if test="priority != null">
+                priority = #{priority,jdbcType=BIGINT},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=BIGINT},
+            </if>
+            <if test="riskLevel != null">
+                risk_level = #{riskLevel,jdbcType=BIGINT},
+            </if>
+            <if test="resource != null">
+                resource = #{resource,jdbcType=INTEGER},
+            </if>
+            <if test="connectId != null">
+                connect_id = #{connectId,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceDescribe != null">
+                resource_describe = #{resourceDescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="applyer != null">
+                applyer = #{applyer,jdbcType=BIGINT},
+            </if>
+            <if test="applyDepart != null">
+                apply_depart = #{applyDepart,jdbcType=BIGINT},
+            </if>
+            <if test="planStartTime != null">
+                plan_startTime = #{planStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="planEndTime != null">
+                plan_endTime = #{planEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                duration = #{duration,jdbcType=DECIMAL},
+            </if>
+            <if test="leader != null">
+                leader = #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=BLOB},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="realDuration != null">
+                real_duration = #{realDuration,jdbcType=DECIMAL},
+            </if>
+            <if test="realStartTime != null">
+                real_start_time = #{realStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="realEndTime != null">
+                real_end_time = #{realEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyStatus != null">
+                verify_status = #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="establishment != null">
+                establishment = #{establishment,jdbcType=INTEGER},
+            </if>
+            <if test="projectStatus != null">
+                project_status = #{projectStatus,jdbcType=INTEGER},
+            </if>
+            <if test="actionStatus != null">
+                action_status = #{actionStatus,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=BIGINT},
+            </if>
+            <if test="area != null">
+                area = #{area,jdbcType=BIGINT},
+            </if>
+            <if test="industry != null">
+                industry = #{industry,jdbcType=BIGINT},
+            </if>
+            <if test="budget != null">
+                budget = #{budget,jdbcType=DECIMAL},
+            </if>
+            <if test="currencyId != null">
+                currency_id = #{currencyId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByCreateId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_project
+        where create_id = #{createId,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByAttention" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_project
+        where id in (
+            select project_id from t_project_concern
+            where user_id = #{userId, jdbcType=BIGINT}
+            and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        )
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByLeader" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_project
+        where leader = #{leaderId, jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByJoiner" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_project
+        where id in (select DISTINCT project_id from t_project_user
+            where user_id = #{userId,jdbcType=BIGINT}
+            and status != ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()})
+            and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+            and leader != #{userId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByLeaders" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_project
+        where leader in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="listByViewInfo" parameterType="com.fea.project.model.BasePageInfo" resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_project_project tp
+        where 1 = 1
+        and tp.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getViewId() != null and model.getConditionStrs() != null and model.getConditionStrs().size() != 0">
+                <foreach collection="model.getConditionStrs()" item="item">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="model.getMinBudget() != null">
+                and tp.budget >= #{model.minBudget, jdbcType=DECIMAl}
+            </if>
+            <if test="model.getMaxBudget() != null">
+                and tp.budget &lt;= #{model.maxBudget, jdbcType=DECIMAl}
+            </if>
+        </if>
+        <if test="keywords != null">
+            and ((tp.name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (tp.code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (tp.create_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('projectLevels') != null and filters.get('projectLevels').size() != 0">
+                and tp.level in
+                <foreach collection="filters.get('projectLevels')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('projectIndustries') != null and filters.get('projectIndustries').size() != 0">
+                and tp.industry in
+                <foreach collection="filters.get('projectIndustries')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('projectRegions') != null and filters.get('projectRegions').size() != 0">
+                and tp.area in
+                <foreach collection="filters.get('projectRegions')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('riskLevels') != null and filters.get('riskLevels').size() != 0">
+                and tp.risk_level in
+                <foreach collection="filters.get('riskLevels')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('leaderIds') != null and filters.get('leaderIds').size() != 0">
+                and tp.leaderIds in
+                <foreach collection="filters.get('leaderIds')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('orgs') != null and filters.get('orgs').size() != 0">
+                and tp.apply_depart in
+                <foreach collection="filters.get('orgs')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </if>
+        <if test="sortKey != null">
+            order by tp.${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by tp.create_time desc
+        </if>
+    </select>
+
+</mapper>

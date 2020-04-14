@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.task.TaskDeliverProductModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.task.TaskDeliverProductModel">
+    <id column="deliver_product_id" jdbcType="BIGINT" property="deliverProductId" />
+    <result column="deliver_product_name" jdbcType="VARCHAR" property="deliverProductName" />
+    <result column="deliver_product_num" jdbcType="VARCHAR" property="deliverProductNum" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_deliver_time" jdbcType="TIMESTAMP" property="taskDeliverTime" />
+    <result column="task_deliverer_id" jdbcType="BIGINT" property="taskDelivererId" />
+    <result column="task_deliverer_name" jdbcType="VARCHAR" property="taskDelivererName" />
+    <result column="task_deliver_status" jdbcType="BIGINT" property="taskDeliverStatus" />
+    <result column="deliver_check_score" jdbcType="BIGINT" property="deliverCheckScore" />
+    <result column="deliver_checker_id" jdbcType="BIGINT" property="deliverCheckerId" />
+    <result column="deliver_produce_desc" jdbcType="VARCHAR" property="deliverProduceDesc" />
+    <result column="delivery_check_time" jdbcType="TIMESTAMP" property="deliveryCheckTime" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" /> 
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <resultMap id="brm" type="com.fea.project.model.task.vo.TaskDeliverProductModelVo">
+    <id column="deliver_product_id" jdbcType="BIGINT" property="deliverProductId" />
+    <result column="deliver_product_name" jdbcType="VARCHAR" property="deliverProductName" />
+    <result column="deliver_product_num" jdbcType="VARCHAR" property="deliverProductNum" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_deliver_time" jdbcType="TIMESTAMP" property="taskDeliverTime" />
+    <result column="task_deliverer_id" jdbcType="BIGINT" property="taskDelivererId" />
+    <result column="task_deliverer_name" jdbcType="VARCHAR" property="taskDelivererName" />
+    <result column="task_deliver_status" jdbcType="BIGINT" property="taskDeliverStatus" />
+    <result column="deliver_check_score" jdbcType="BIGINT" property="deliverCheckScore" />
+    <result column="deliver_checker_id" jdbcType="BIGINT" property="deliverCheckerId" />
+    <result column="deliver_produce_desc" jdbcType="VARCHAR" property="deliverProduceDesc" />
+    <result column="delivery_check_time" jdbcType="TIMESTAMP" property="deliveryCheckTime" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" /> 
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    deliver_product_id, deliver_product_name, deliver_product_num,task_id, task_deliver_time, task_deliverer_id, 
+    task_deliverer_name , task_deliver_status, deliver_check_score, deliver_checker_id, 
+    deliver_produce_desc, delivery_check_time, create_id, create_by, create_time, update_id, 
+    update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.task.TaskDeliverProductModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_task_deliver_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_deliver_product
+    where deliver_product_id = #{deliverProductId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_task_deliver_product
+    where deliver_product_id = #{deliverProductId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.task.TaskDeliverProductModelExample">
+    delete from t_project_task_deliver_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="deliverProductId" parameterType="com.fea.project.model.task.TaskDeliverProductModel">
+    insert into t_project_task_deliver_product (deliver_product_id, deliver_product_name, deliver_product_num,
+      task_id, task_deliver_time, task_deliverer_id, 
+      task_deliverer_name , task_deliver_status, deliver_check_score, 
+      deliver_checker_id, deliver_produce_desc, delivery_check_time, 
+      create_id, create_by, create_time, 
+      update_id, update_by, update_time, 
+      del_status)
+    values (#{deliverProductId,jdbcType=BIGINT}, #{deliverProductName,jdbcType=VARCHAR}, #{deliverProductNum,jdbcType=VARCHAR}, 
+      #{taskId,jdbcType=BIGINT}, #{taskDeliverTime,jdbcType=TIMESTAMP}, #{taskDelivererId,jdbcType=BIGINT}, 
+      #{taskDelivererName,jdbcType=VARCHAR}, #{taskDeliverStatus,jdbcType=BIGINT}, #{deliverCheckScore,jdbcType=BIGINT}, 
+      #{deliverCheckerId,jdbcType=BIGINT}, #{deliverProduceDesc,jdbcType=VARCHAR}, #{deliveryCheckTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="deliverProductId" parameterType="com.fea.project.model.task.TaskDeliverProductModel">
+    insert into t_project_task_deliver_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deliverProductId != null">
+        deliver_product_id,
+      </if>
+      <if test="deliverProductName != null">
+        deliver_product_name,
+      </if>
+      <if test="deliverProductNum != null">
+        deliver_product_num,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="taskDeliverTime != null">
+        task_deliver_time,
+      </if>
+      <if test="taskDelivererId != null">
+        task_deliverer_id,
+      </if>
+      <if test="taskDelivererName != null">
+        task_deliverer_name,
+      </if>
+      <if test="taskDeliverStatus != null">
+        task_deliver_status,
+      </if>
+      <if test="deliverCheckScore != null">
+        deliver_check_score,
+      </if>
+      <if test="deliverCheckerId != null">
+        deliver_checker_id,
+      </if>
+      <if test="deliverProduceDesc != null">
+        deliver_produce_desc,
+      </if>
+      <if test="deliveryCheckTime != null">
+        delivery_check_time,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deliverProductId != null">
+        #{deliverProductId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverProductName != null">
+        #{deliverProductName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverProductNum != null">
+        #{deliverProductNum,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDeliverTime != null">
+        #{taskDeliverTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskDelivererId != null">
+        #{taskDelivererId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDelivererName != null">
+        #{taskDelivererName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskDeliverStatus != null">
+        #{taskDeliverStatus,jdbcType=BIGINT},
+      </if>
+      <if test="deliverCheckScore != null">
+        #{deliverCheckScore,jdbcType=BIGINT},
+      </if>
+      <if test="deliverCheckerId != null">
+        #{deliverCheckerId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverProduceDesc != null">
+        #{deliverProduceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryCheckTime != null">
+        #{deliveryCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.task.TaskDeliverProductModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_task_deliver_product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_task_deliver_product
+    <set>
+      <if test="record.deliverProductId != null">
+        deliver_product_id = #{record.deliverProductId,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliverProductName != null">
+        deliver_product_name = #{record.deliverProductName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverProductNum != null">
+        deliver_product_num = #{record.deliverProductNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskDeliverTime != null">
+        task_deliver_time = #{record.taskDeliverTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskDelivererId != null">
+        task_deliverer_id = #{record.taskDelivererId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskDelivererName != null">
+        task_deliverer_name = #{record.taskDelivererName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskDeliverStatus != null">
+        task_deliver_status = #{record.taskDeliverStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliverCheckScore != null">
+        deliver_check_score = #{record.deliverCheckScore,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliverCheckerId != null">
+        deliver_checker_id = #{record.deliverCheckerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliverProduceDesc != null">
+        deliver_produce_desc = #{record.deliverProduceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryCheckTime != null">
+        delivery_check_time = #{record.deliveryCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_task_deliver_product
+    set deliver_product_id = #{record.deliverProductId,jdbcType=BIGINT},
+      deliver_product_name = #{record.deliverProductName,jdbcType=VARCHAR},
+      deliver_product_num = #{record.deliverProductNum,jdbcType=VARCHAR},
+      task_id = #{record.taskId,jdbcType=BIGINT},
+      task_deliver_time = #{record.taskDeliverTime,jdbcType=TIMESTAMP},
+      task_deliverer_id = #{record.taskDelivererId,jdbcType=BIGINT},
+      task_deliverer_name = #{record.taskDelivererName,jdbcType=VARCHAR},
+      task_deliver_status = #{record.taskDeliverStatus,jdbcType=BIGINT},
+      deliver_check_score = #{record.deliverCheckScore,jdbcType=BIGINT},
+      deliver_checker_id = #{record.deliverCheckerId,jdbcType=BIGINT},
+      deliver_produce_desc = #{record.deliverProduceDesc,jdbcType=VARCHAR},
+      delivery_check_time = #{record.deliveryCheckTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.task.TaskDeliverProductModel">
+    update t_project_task_deliver_product
+    <set>
+      <if test="deliverProductName != null">
+        deliver_product_name = #{deliverProductName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverProductNum != null">
+        deliver_product_num = #{deliverProductNum,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDeliverTime != null">
+        task_deliver_time = #{taskDeliverTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskDelivererId != null">
+        task_deliverer_id = #{taskDelivererId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDelivererName != null">
+        task_deliverer_name = #{taskDelivererName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskDeliverStatus != null">
+        task_deliver_status = #{taskDeliverStatus,jdbcType=BIGINT},
+      </if>
+      <if test="deliverCheckScore != null">
+        deliver_check_score = #{deliverCheckScore,jdbcType=BIGINT},
+      </if>
+      <if test="deliverCheckerId != null">
+        deliver_checker_id = #{deliverCheckerId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverProduceDesc != null">
+        deliver_produce_desc = #{deliverProduceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryCheckTime != null">
+        delivery_check_time = #{deliveryCheckTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where deliver_product_id = #{deliverProductId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.task.TaskDeliverProductModel">
+    update t_project_task_deliver_product
+    set deliver_product_name = #{deliverProductName,jdbcType=VARCHAR},
+    set deliver_product_num = #{deliverProductNum,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=BIGINT},
+      task_deliver_time = #{taskDeliverTime,jdbcType=TIMESTAMP},
+      task_deliverer_id = #{taskDelivererId,jdbcType=BIGINT},
+      task_deliverer_name = #{taskDelivererName,jdbcType=VARCHAR},
+      task_deliver_status = #{taskDeliverStatus,jdbcType=BIGINT},
+      deliver_check_score = #{deliverCheckScore,jdbcType=BIGINT},
+      deliver_checker_id = #{deliverCheckerId,jdbcType=BIGINT},
+      deliver_produce_desc = #{deliverProduceDesc,jdbcType=VARCHAR},
+      delivery_check_time = #{deliveryCheckTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where deliver_product_id = #{deliverProductId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectAllWithDelStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_deliver_product 
+    where task_id = #{taskId,jdbcType=BIGINT}
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}  
+  </select>
+  <select id="selectByPrimaryKeyWithDelStatus" parameterType="com.fea.project.model.task.TaskDeliverProductModel" resultMap="brm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_deliver_product tptdp
+    where tptdp.deliver_product_id = #{deliverProductId,jdbcType=BIGINT} 
+    and tptdp.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}  
+  </select>
+  
+  <update id="updateByPrimaryKeySelectiveWithDelStatus" parameterType="com.fea.project.model.task.TaskDeliverProductModel">
+    update t_project_task_deliver_product tptdp
+	set tptdp.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()} 
+    where deliver_product_id = #{deliverProductId,jdbcType=BIGINT}
+  </update>
+  
+   <update id="updateBusinessIdInTProjectAppendix" parameterType="com.fea.project.model.task.vo.UpdateBusinessIdInProjectAppendixModelVo">
+    update t_project_appendix
+    set business_id = #{deliverProductId,jdbcType=BIGINT} 
+    where id = #{appendixId,jdbcType=BIGINT} 
+  </update>
+  
+   <select id="selectAllWithDelStatusWithPage" parameterType="com.fea.project.model.BasePageInfo" resultMap="BaseResultMap">
+    select 
+    *
+    from t_project_task_deliver_product 
+    where task_id = #{model.taskId,jdbcType=BIGINT}
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}  
+    order by 
+     <if test='sortKey == "deliverProductName" '>
+        deliver_product_name   ${sortValue},
+      </if>
+     <if test='sortKey == "deliverProductNum" '>
+        deliver_product_num   ${sortValue},
+      </if>
+      <if test='sortKey == "taskId" '>
+        task_id   ${sortValue},
+      </if>
+      <if test='sortKey == "taskDeliverTime" '>
+        task_deliver_time   ${sortValue},
+      </if>
+      <if test='sortKey == "taskDelivererId" '>
+        task_deliverer_id   ${sortValue},
+      </if>
+      <if test='sortKey == "taskDelivererName" '>
+        task_deliverer_name   ${sortValue},
+      </if>
+      <if test='sortKey == "taskDeliverStatus" '>
+        task_deliver_status   ${sortValue},
+      </if>
+      <if test='sortKey == "deliverCheckScore" '>
+        deliver_check_score   ${sortValue},
+      </if>
+      <if test='sortKey == "deliverCheckerId" '>
+        deliver_checker_id   ${sortValue},
+      </if>
+      <if test='sortKey == "deliverProduceDesc" '>
+        deliver_produce_desc   ${sortValue},
+      </if>
+      <if test='sortKey == "deliveryCheckTime" '>
+        delivery_check_time   ${sortValue},
+      </if>
+      <if test='sortKey == "createId" '>
+        create_id   ${sortValue},
+      </if>
+      <if test='sortKey == "createBy" '>
+        create_by   ${sortValue},
+      </if>
+      <if test='sortKey == "createTime" '>
+        create_time   ${sortValue},
+      </if>
+      <if test='sortKey == "updateId" '>
+        update_id   ${sortValue},
+      </if>
+      <if test='sortKey == "updateBy" '>
+        update_by   ${sortValue},
+      </if>
+      <if test='sortKey == "updateTime" '>
+        update_time   ${sortValue},
+      </if>
+      <if test='sortKey == "delStatus" '>
+        del_status   ${sortValue},
+      </if>
+      
+       <if test='sortKey != "createTime"'>
+        create_time  desc
+      </if>
+  </select>
+
+  <resultMap id="ResultMapDeliverableVo" type="com.fea.project.model.deliverable.vo.ProjectDeliverableVo">
+    <id column="deliver_product_id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="BIGINT" property="businessId" />
+    <result column="businessName" jdbcType="BIGINT" property="businessName" />
+    <result column="deliver_product_name" jdbcType="VARCHAR" property="deliverableName" />
+    <result column="deliver_product_num" jdbcType="VARCHAR" property="deliverableNum" />
+    <result column="task_deliver_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+    <result column="task_deliverer_id" jdbcType="BIGINT" property="deliver" />
+    <!--<result column="task_deliverer_name" jdbcType="VARCHAR" property="deliverName" />-->
+    <result column="task_deliver_status" jdbcType="BIGINT" property="verifyerStatus" />
+    <result column="deliver_check_score" jdbcType="BIGINT" property="verifyerScore" />
+    <result column="deliver_checker_id" jdbcType="BIGINT" property="verifyer" />
+    <result column="deliver_produce_desc" jdbcType="VARCHAR" property="description" />
+    <result column="delivery_check_time" jdbcType="TIMESTAMP" property="verifyerTime" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_step" jdbcType="VARCHAR" property="projectStep" />
+    <result column="projectStepName" jdbcType="VARCHAR" property="projectStepName" />
+    <result column="appendixCount" jdbcType="INTEGER" property="appendixCount" />
+  </resultMap>
+  <select id="selectTaskDeliverableVoByProjectId"
+          parameterType="com.fea.project.model.deliverable.vo.QueryDeliverableParamVo"
+          resultMap="ResultMapDeliverableVo">
+    select
+    tptd.deliver_product_id, tptd.deliver_product_name, tptd.deliver_product_num,
+    tptd.task_id, tptd.task_deliver_time, tptd.task_deliverer_id,
+    tptd.task_deliverer_name , tptd.task_deliver_status,
+    tptd.deliver_check_score, tptd.deliver_checker_id,
+    tptd.deliver_produce_desc, tptd.delivery_check_time,
+    tptd.create_id, tptd.create_by, tptd.create_time, tptd.update_id,
+    tptd.update_by, tptd.update_time,
+    tptc.task_name as businessName,
+    tptc.project_id,
+    tptc.project_step,
+    tps.name as projectStepName,
+    tpp.name as projectName,
+    count(tpa.id) as appendixCount
+    from
+    t_project_task_create as tptc
+    left join t_project_task_deliver_product as tptd on tptd.task_id = tptc.task_id
+    left join t_project_appendix as tpa on tpa.business_id = tptd.deliver_product_id and tpa.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()},
+    t_project_project as tpp,
+    t_project_step as tps
+    where tptd.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and tptc.project_step = tps.id
+    and tpp.id = tptc.project_id
+    and tptc.project_id = #{paramVo.projectId,jdbcType=BIGINT}
+    <if test="paramVo.deliverIds != null">
+      AND tptd.task_deliverer_id in
+      <foreach collection="paramVo.deliverIds" item="item" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="paramVo.keywords != null and paramVo.keywords !=''">
+      and (
+      tptd.deliver_product_name like CONCAT('%', #{paramVo.keywords, jdbcType=VARCHAR}, '%')
+      or tptd.deliver_product_num like CONCAT('%', #{paramVo.keywords, jdbcType=VARCHAR}, '%')
+      )
+    </if>
+    <if test="paramVo.filters != null">
+      <if test="paramVo.filters.get('projectStep') != null and paramVo.filters.get('projectStep').size() > 0">
+        and tptc.project_step in
+        <foreach collection="paramVo.filters.get('projectStep')" item="item" open="(" close=")" separator=",">
+          #{item}
+        </foreach>
+      </if>
+    </if>
+    group by tptd.deliver_product_id
+  </select>
+  <select id="selectTaskDeliverableInfoById" parameterType="long" resultMap="ResultMapDeliverableVo">
+    select
+    tptd.deliver_product_id, tptd.deliver_product_name, tptd.deliver_product_num,
+    tptd.task_id, tptd.task_deliver_time, tptd.task_deliverer_id,
+    tptd.task_deliverer_name , tptd.task_deliver_status,
+    tptd.deliver_check_score, tptd.deliver_checker_id,
+    tptd.deliver_produce_desc, tptd.delivery_check_time,
+    tptd.create_id, tptd.create_by, tptd.create_time, tptd.update_id,
+    tptd.update_by, tptd.update_time,
+    tptc.task_name as businessName,
+    tptc.project_id,
+    tptc.project_step,
+    tps.name as projectStepName,
+    tpp.name as projectName
+    from
+    t_project_task_create as tptc
+    left join t_project_task_deliver_product as tptd on tptd.task_id = tptc.task_id,
+    t_project_project as tpp,
+    t_project_step as tps
+    where tptd.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and tptc.project_step = tps.id
+    and tpp.id = tptc.project_id
+    and tptd.deliver_product_id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

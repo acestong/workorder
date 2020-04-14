@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.WorkorderReportModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.WorkorderReportModel">
+    <id column="report_id" jdbcType="BIGINT" property="reportId" />
+    <result column="workorder_id" jdbcType="BIGINT" property="workorderId" />
+    <result column="report_title" jdbcType="VARCHAR" property="reportTitle" />
+    <result column="actual_start_time" jdbcType="TIMESTAMP" property="actualStartTime" />
+    <result column="actual_end_time" jdbcType="TIMESTAMP" property="actualEndTime" />
+    <result column="actual_work_hour" jdbcType="DOUBLE" property="actualWorkHour" />
+    <result column="workorder_progross_rate" jdbcType="DOUBLE" property="workorderProgrossRate" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <resultMap id="rm" type="com.fea.project.workorder.model.vo.WorkorderReportModelVo">
+    <id column="report_id" jdbcType="BIGINT" property="reportId" />
+    <result column="workorder_id" jdbcType="BIGINT" property="workorderId" />
+    <result column="report_title" jdbcType="VARCHAR" property="reportTitle" />
+    <result column="actual_start_time" jdbcType="TIMESTAMP" property="actualStartTime" />
+    <result column="actual_end_time" jdbcType="TIMESTAMP" property="actualEndTime" />
+    <result column="actual_work_hour" jdbcType="DOUBLE" property="actualWorkHour" />
+    <result column="workorder_progross_rate" jdbcType="DOUBLE" property="workorderProgrossRate" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="planStartTime" jdbcType="TIMESTAMP" property="planStartTime" />
+    <result column="planEndTime" jdbcType="TIMESTAMP" property="planEndTime" />
+    <result column="planWorkHour" jdbcType="DOUBLE" property="planWorkHour" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    report_id, workorder_id, report_title, actual_start_time, actual_end_time, actual_work_hour, 
+    workorder_progross_rate, content, create_id, create_by, create_time, update_id, update_by, 
+    update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.WorkorderReportModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_report
+    where report_id = #{reportId,jdbcType=BIGINT}
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+  </select>
+  <select id="selectListByWorkorderId" parameterType="java.lang.Long" resultMap="rm">
+    select 
+    twr.*,
+     case twr.workorder_progross_rate
+
+            when '0' then '未开始'
+
+            when '1' then '已完成'
+
+            else '进行中' end status,
+    tww.start_time planStartTime,
+    tww.end_time planEndTime,
+    tww.work_hour planWorkHour
+    
+    from t_workorder_report twr
+    left join 
+    t_workorder_workorder tww
+    on twr.workorder_id = tww.workorder_id 
+    where twr.workorder_id = #{workorderId,jdbcType=BIGINT}
+    and twr.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    order by twr.create_time asc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_report
+    where report_id = #{reportId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.WorkorderReportModelExample">
+    delete from t_workorder_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="reportId" parameterType="com.fea.project.workorder.model.WorkorderReportModel">
+    insert into t_workorder_report (report_id, workorder_id, report_title, 
+      actual_start_time, actual_end_time, actual_work_hour, 
+      workorder_progross_rate, content, create_id, 
+      create_by, create_time, update_id, 
+      update_by, update_time, del_status
+      )
+    values (#{reportId,jdbcType=BIGINT}, #{workorderId,jdbcType=BIGINT}, #{reportTitle,jdbcType=VARCHAR}, 
+      #{actualStartTime,jdbcType=TIMESTAMP}, #{actualEndTime,jdbcType=TIMESTAMP}, #{actualWorkHour,jdbcType=DOUBLE}, 
+      #{workorderProgrossRate,jdbcType=DOUBLE}, #{content,jdbcType=VARCHAR}, #{createId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="reportId" parameterType="com.fea.project.workorder.model.WorkorderReportModel">
+    insert into t_workorder_report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="reportId != null">
+        report_id,
+      </if>
+      <if test="workorderId != null">
+        workorder_id,
+      </if>
+      <if test="reportTitle != null">
+        report_title,
+      </if>
+      <if test="actualStartTime != null">
+        actual_start_time,
+      </if>
+      <if test="actualEndTime != null">
+        actual_end_time,
+      </if>
+      <if test="actualWorkHour != null">
+        actual_work_hour,
+      </if>
+      <if test="workorderProgrossRate != null">
+        workorder_progross_rate,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="reportId != null">
+        #{reportId,jdbcType=BIGINT},
+      </if>
+      <if test="workorderId != null">
+        #{workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="reportTitle != null">
+        #{reportTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="actualStartTime != null">
+        #{actualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualEndTime != null">
+        #{actualEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualWorkHour != null">
+        #{actualWorkHour,jdbcType=DOUBLE},
+      </if>
+      <if test="workorderProgrossRate != null">
+        #{workorderProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.WorkorderReportModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_report
+    <set>
+      <if test="record.reportId != null">
+        report_id = #{record.reportId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workorderId != null">
+        workorder_id = #{record.workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.reportTitle != null">
+        report_title = #{record.reportTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actualStartTime != null">
+        actual_start_time = #{record.actualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualEndTime != null">
+        actual_end_time = #{record.actualEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualWorkHour != null">
+        actual_work_hour = #{record.actualWorkHour,jdbcType=DOUBLE},
+      </if>
+      <if test="record.workorderProgrossRate != null">
+        workorder_progross_rate = #{record.workorderProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_report
+    set report_id = #{record.reportId,jdbcType=BIGINT},
+      workorder_id = #{record.workorderId,jdbcType=BIGINT},
+      report_title = #{record.reportTitle,jdbcType=VARCHAR},
+      actual_start_time = #{record.actualStartTime,jdbcType=TIMESTAMP},
+      actual_end_time = #{record.actualEndTime,jdbcType=TIMESTAMP},
+      actual_work_hour = #{record.actualWorkHour,jdbcType=DOUBLE},
+      workorder_progross_rate = #{record.workorderProgrossRate,jdbcType=DOUBLE},
+      content = #{record.content,jdbcType=VARCHAR},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.WorkorderReportModel">
+    update t_workorder_report
+    <set>
+      <if test="workorderId != null">
+        workorder_id = #{workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="reportTitle != null">
+        report_title = #{reportTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="actualStartTime != null">
+        actual_start_time = #{actualStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualEndTime != null">
+        actual_end_time = #{actualEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualWorkHour != null">
+        actual_work_hour = #{actualWorkHour,jdbcType=DOUBLE},
+      </if>
+      <if test="workorderProgrossRate != null">
+        workorder_progross_rate = #{workorderProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where report_id = #{reportId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.WorkorderReportModel">
+    update t_workorder_report
+    set workorder_id = #{workorderId,jdbcType=BIGINT},
+      report_title = #{reportTitle,jdbcType=VARCHAR},
+      actual_start_time = #{actualStartTime,jdbcType=TIMESTAMP},
+      actual_end_time = #{actualEndTime,jdbcType=TIMESTAMP},
+      actual_work_hour = #{actualWorkHour,jdbcType=DOUBLE},
+      workorder_progross_rate = #{workorderProgrossRate,jdbcType=DOUBLE},
+      content = #{content,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where report_id = #{reportId,jdbcType=BIGINT}
+  </update>
+</mapper>

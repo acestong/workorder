@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.CommentWeightModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.CommentWeightModel">
+    <id column="comment_weight_id" jdbcType="BIGINT" property="commentWeightId" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="quality_weight" jdbcType="DOUBLE" property="qualityWeight" />
+    <result column="time_weight" jdbcType="DOUBLE" property="timeWeight" />
+    <result column="satisfy_weight" jdbcType="DOUBLE" property="satisfyWeight" />
+    <result column="create_id_weight" jdbcType="DOUBLE" property="createIdWeight" />
+    <result column="superior_id_weight" jdbcType="DOUBLE" property="superiorIdWeight" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    comment_weight_id, org_id, quality_weight, time_weight, satisfy_weight, create_id_weight, 
+    superior_id_weight, create_id, create_by, create_time, update_id, update_by, update_time, 
+    del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.CommentWeightModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_comment_weight
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_comment_weight
+    where comment_weight_id = #{commentWeightId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_comment_weight
+    where org_id = #{orgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_comment_weight
+    where comment_weight_id = #{commentWeightId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.CommentWeightModelExample">
+    delete from t_workorder_comment_weight
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="commentWeightId" parameterType="com.fea.project.workorder.model.CommentWeightModel">
+    insert into t_workorder_comment_weight (comment_weight_id, org_id, quality_weight, 
+      time_weight, satisfy_weight, create_id_weight, 
+      superior_id_weight, create_id, create_by, 
+      create_time, update_id, update_by, 
+      update_time, del_status)
+    values (#{commentWeightId,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, #{qualityWeight,jdbcType=DOUBLE}, 
+      #{timeWeight,jdbcType=DOUBLE}, #{satisfyWeight,jdbcType=DOUBLE}, #{createIdWeight,jdbcType=DOUBLE}, 
+      #{superiorIdWeight,jdbcType=DOUBLE}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="commentWeightId" parameterType="com.fea.project.workorder.model.CommentWeightModel">
+    insert into t_workorder_comment_weight
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentWeightId != null">
+        comment_weight_id,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="qualityWeight != null">
+        quality_weight,
+      </if>
+      <if test="timeWeight != null">
+        time_weight,
+      </if>
+      <if test="satisfyWeight != null">
+        satisfy_weight,
+      </if>
+      <if test="createIdWeight != null">
+        create_id_weight,
+      </if>
+      <if test="superiorIdWeight != null">
+        superior_id_weight,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentWeightId != null">
+        #{commentWeightId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="qualityWeight != null">
+        #{qualityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="timeWeight != null">
+        #{timeWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="satisfyWeight != null">
+        #{satisfyWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="createIdWeight != null">
+        #{createIdWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="superiorIdWeight != null">
+        #{superiorIdWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.CommentWeightModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_comment_weight
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_comment_weight
+    <set>
+      <if test="record.commentWeightId != null">
+        comment_weight_id = #{record.commentWeightId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        org_id = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.qualityWeight != null">
+        quality_weight = #{record.qualityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.timeWeight != null">
+        time_weight = #{record.timeWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.satisfyWeight != null">
+        satisfy_weight = #{record.satisfyWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.createIdWeight != null">
+        create_id_weight = #{record.createIdWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.superiorIdWeight != null">
+        superior_id_weight = #{record.superiorIdWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_comment_weight
+    set comment_weight_id = #{record.commentWeightId,jdbcType=BIGINT},
+      org_id = #{record.orgId,jdbcType=BIGINT},
+      quality_weight = #{record.qualityWeight,jdbcType=DOUBLE},
+      time_weight = #{record.timeWeight,jdbcType=DOUBLE},
+      satisfy_weight = #{record.satisfyWeight,jdbcType=DOUBLE},
+      create_id_weight = #{record.createIdWeight,jdbcType=DOUBLE},
+      superior_id_weight = #{record.superiorIdWeight,jdbcType=DOUBLE},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.CommentWeightModel">
+    update t_workorder_comment_weight
+    <set>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="qualityWeight != null">
+        quality_weight = #{qualityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="timeWeight != null">
+        time_weight = #{timeWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="satisfyWeight != null">
+        satisfy_weight = #{satisfyWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="createIdWeight != null">
+        create_id_weight = #{createIdWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="superiorIdWeight != null">
+        superior_id_weight = #{superiorIdWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where comment_weight_id = #{commentWeightId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.CommentWeightModel">
+    update t_workorder_comment_weight
+    set org_id = #{orgId,jdbcType=BIGINT},
+      quality_weight = #{qualityWeight,jdbcType=DOUBLE},
+      time_weight = #{timeWeight,jdbcType=DOUBLE},
+      satisfy_weight = #{satisfyWeight,jdbcType=DOUBLE},
+      create_id_weight = #{createIdWeight,jdbcType=DOUBLE},
+      superior_id_weight = #{superiorIdWeight,jdbcType=DOUBLE},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where comment_weight_id = #{commentWeightId,jdbcType=BIGINT}
+  </update>
+</mapper>

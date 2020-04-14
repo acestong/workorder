@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.base.SysUriMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.base.SysUriModel">
+        <id column="URI_ID" jdbcType="BIGINT" property="URIID" />
+        <result column="URI_NAME" jdbcType="VARCHAR" property="URINAME" />
+        <result column="URI_CODE" jdbcType="VARCHAR" property="URICODE" />
+        <result column="URI_ADDRESS" jdbcType="VARCHAR" property="URIADDRESS" />
+        <result column="TYPE" jdbcType="INTEGER" property="TYPE" />
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="DESCRIPTION" />
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID" />
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID" />
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME" />
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        URI_ID, URI_NAME, URI_CODE, URI_ADDRESS, TYPE, DESCRIPTION, REG_ID, ORG_ID, CREATE_USER,
+        CREATE_TIME, UPDATE_USER, UPDATE_TIME
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_sys_uri
+        where URI_ID = #{URIID,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_sys_uri
+        where URI_ID = #{URIID,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_sys_uri
+        where URI_ID in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="URI_ID" parameterType="com.fea.project.api.other.model.base.SysUriModel">
+        insert into t_sys_uri (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{URIID,jdbcType=BIGINT},
+            #{URINAME,jdbcType=VARCHAR},
+            #{URICODE,jdbcType=VARCHAR}, 
+            #{URIADDRESS,jdbcType=VARCHAR}, 
+            #{TYPE,jdbcType=INTEGER}, 
+            #{DESCRIPTION,jdbcType=VARCHAR}, 
+            #{REGID,jdbcType=BIGINT}, 
+            #{ORGID,jdbcType=BIGINT}, 
+            #{CREATEUSER,jdbcType=VARCHAR}, 
+            #{CREATETIME,jdbcType=TIMESTAMP}, 
+            #{UPDATEUSER,jdbcType=VARCHAR}, 
+            #{UPDATETIME,jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="URI_ID">
+        insert into t_sys_uri (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.URIID,jdbcType=BIGINT},
+                #{item.URINAME,jdbcType=VARCHAR},
+                #{item.URICODE,jdbcType=VARCHAR}, 
+                #{item.URIADDRESS,jdbcType=VARCHAR}, 
+                #{item.TYPE,jdbcType=INTEGER}, 
+                #{item.DESCRIPTION,jdbcType=VARCHAR}, 
+                #{item.REGID,jdbcType=BIGINT}, 
+                #{item.ORGID,jdbcType=BIGINT}, 
+                #{item.CREATEUSER,jdbcType=VARCHAR}, 
+                #{item.CREATETIME,jdbcType=TIMESTAMP}, 
+                #{item.UPDATEUSER,jdbcType=VARCHAR}, 
+                #{item.UPDATETIME,jdbcType=TIMESTAMP}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.base.SysUriModel" resultMap="BaseResultMap">
+        select * from t_sys_uri where 1 = 1
+        <if test="URIID != null">
+            and URI_ID = #{URIID,jdbcType=BIGINT}
+        </if>
+        <if test="URINAME != null">
+            and URI_NAME = #{URINAME,jdbcType=VARCHAR}
+        </if>
+        <if test="URICODE != null">
+            and URI_CODE = #{URICODE,jdbcType=VARCHAR}
+        </if>
+        <if test="URIADDRESS != null">
+            and URI_ADDRESS = #{URIADDRESS,jdbcType=VARCHAR}
+        </if>
+        <if test="TYPE != null">
+            and TYPE = #{TYPE,jdbcType=INTEGER}
+        </if>
+        <if test="DESCRIPTION != null">
+            and DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="URI_ID" parameterType="com.fea.project.api.other.model.base.SysUriModel">
+        insert into t_sys_uri
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="URIID != null">
+                URI_ID,
+            </if>
+            <if test="URINAME != null">
+                URI_NAME,
+            </if>
+            <if test="URICODE != null">
+                URI_CODE,
+            </if>
+            <if test="URIADDRESS != null">
+                URI_ADDRESS,
+            </if>
+            <if test="TYPE != null">
+                TYPE,
+            </if>
+            <if test="DESCRIPTION != null">
+                DESCRIPTION,
+            </if>
+            <if test="REGID != null">
+                REG_ID,
+            </if>
+            <if test="ORGID != null">
+                ORG_ID,
+            </if>
+            <if test="CREATEUSER != null">
+                CREATE_USER,
+            </if>
+            <if test="CREATETIME != null">
+                CREATE_TIME,
+            </if>
+            <if test="UPDATEUSER != null">
+                UPDATE_USER,
+            </if>
+            <if test="UPDATETIME != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="URIID != null">
+                #{URIID,jdbcType=BIGINT},
+            </if>
+            <if test="URINAME != null">
+                #{URINAME,jdbcType=VARCHAR},
+            </if>
+            <if test="URICODE != null">
+                #{URICODE,jdbcType=VARCHAR},
+            </if>
+            <if test="URIADDRESS != null">
+                #{URIADDRESS,jdbcType=VARCHAR},
+            </if>
+            <if test="TYPE != null">
+                #{TYPE,jdbcType=INTEGER},
+            </if>
+            <if test="DESCRIPTION != null">
+                #{DESCRIPTION,jdbcType=VARCHAR},
+            </if>
+            <if test="REGID != null">
+                #{REGID,jdbcType=BIGINT},
+            </if>
+            <if test="ORGID != null">
+                #{ORGID,jdbcType=BIGINT},
+            </if>
+            <if test="CREATEUSER != null">
+                #{CREATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="CREATETIME != null">
+                #{CREATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="UPDATEUSER != null">
+                #{UPDATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="UPDATETIME != null">
+                #{UPDATETIME,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.api.other.model.base.SysUriModel">
+        update t_sys_uri
+        <set>
+            <if test="URINAME != null">
+                URI_NAME = #{URINAME,jdbcType=VARCHAR},
+            </if>
+            <if test="URICODE != null">
+                URI_CODE = #{URICODE,jdbcType=VARCHAR},
+            </if>
+            <if test="URIADDRESS != null">
+                URI_ADDRESS = #{URIADDRESS,jdbcType=VARCHAR},
+            </if>
+            <if test="TYPE != null">
+                TYPE = #{TYPE,jdbcType=INTEGER},
+            </if>
+            <if test="DESCRIPTION != null">
+                DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR},
+            </if>
+            <if test="REGID != null">
+                REG_ID = #{REGID,jdbcType=BIGINT},
+            </if>
+            <if test="ORGID != null">
+                ORG_ID = #{ORGID,jdbcType=BIGINT},
+            </if>
+            <if test="CREATEUSER != null">
+                CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="CREATETIME != null">
+                CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="UPDATEUSER != null">
+                UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="UPDATETIME != null">
+                UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where URI_ID = #{URIID,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.api.other.model.base.SysUriModel">
+        update t_sys_uri
+        set URI_NAME = #{URINAME,jdbcType=VARCHAR},
+            URI_CODE = #{URICODE,jdbcType=VARCHAR},
+            URI_ADDRESS = #{URIADDRESS,jdbcType=VARCHAR},
+            TYPE = #{TYPE,jdbcType=INTEGER},
+            DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR},
+            REG_ID = #{REGID,jdbcType=BIGINT},
+            ORG_ID = #{ORGID,jdbcType=BIGINT},
+            CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR},
+            CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP},
+            UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR},
+            UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        where URI_ID = #{URIID,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByCurrentUserProjectPriority" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM T_SYS_URI WHERE URI_ID IN (
+            select URI_ID from t_sys_navigation_uri
+                where NAV_ID in
+                    (select distinct NAV_ID from t_sys_role_navigation
+                            where role_id in (
+                                select role_id from t_sys_user_role where USER_ID = #{userId, jdbcType=BIGINT} and REG_ID is not null
+                                ) and REG_ID is not null and NAV_ID is not null
+                    )
+        )
+        AND URI_CODE LIKE #{priorityStr, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPriorityStr" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        from T_SYS_URI
+        where URI_CODE LIKE #{priorityStr, jdbcType=VARCHAR}
+    </select>
+
+</mapper>

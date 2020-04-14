@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.businessflow.ProjectBusinessFlowCopyerMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.businessflow.ProjectBusinessFlowCopyerModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="list_id" jdbcType="BIGINT" property="listId"/>
+        <result column="person_type" jdbcType="INTEGER" property="personType"/>
+        <result column="detail_str" jdbcType="VARCHAR" property="detailStr"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="original_id" jdbcType="BIGINT" property="originalId"/>
+        <result column="business_flow_id" jdbcType="BIGINT" property="businessFlowId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, list_id, person_type, detail_str, create_id, create_by, create_time, update_id, update_by,
+        update_time, del_status, original_id, business_flow_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_business_flow_copyer
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_business_flow_copyer
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_business_flow_copyer
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id"
+            parameterType="com.fea.project.model.businessflow.ProjectBusinessFlowCopyerModel">
+        insert into t_project_business_flow_copyer (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{listId,jdbcType=BIGINT},
+        #{personType,jdbcType=INTEGER},
+        #{detailStr,jdbcType=VARCHAR},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{originalId,jdbcType=BIGINT},
+        #{businessFlowId,jdbcType=BIGINT}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_business_flow_copyer (
+        <include refid="Base_Column_List"/>
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.listId,jdbcType=BIGINT},
+            #{item.personType,jdbcType=INTEGER},
+            #{item.detailStr,jdbcType=VARCHAR},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.originalId,jdbcType=BIGINT},
+            #{item.businessFlowId,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.businessflow.ProjectBusinessFlowCopyerModel"
+            resultMap="BaseResultMap">
+        select * from t_project_business_flow_copyer where 1 = 1
+        <if test="id != null">
+            and id = #{listId,jdbcType=BIGINT}
+        </if>
+        <if test="listId != null">
+            and list_id = #{listId,jdbcType=BIGINT}
+        </if>
+        <if test="personType != null">
+            and person_type = #{personType,jdbcType=INTEGER}
+        </if>
+        <if test="detailStr != null">
+            and detail_str = #{detailStr,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="originalId != null">
+            and original_id = #{originalId,jdbcType=BIGINT}
+        </if>
+        <if test="businessFlowId != null">
+            and business_flow_id = #{businessFlowId,jdbcType=BIGINT}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id"
+            parameterType="com.fea.project.model.businessflow.ProjectBusinessFlowCopyerModel">
+        insert into t_project_business_flow_copyer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="listId != null">
+                list_id,
+            </if>
+            <if test="personType != null">
+                person_type,
+            </if>
+            <if test="detailStr != null">
+                detail_str,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="originalId != null">
+                original_id,
+            </if>
+            <if test="businessFlowId != null">
+                business_flow_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="listId != null">
+                #{listId,jdbcType=BIGINT},
+            </if>
+            <if test="personType != null">
+                #{personType,jdbcType=INTEGER},
+            </if>
+            <if test="detailStr != null">
+                #{detailStr,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="originalId != null">
+                #{originalId,jdbcType=BIGINT},
+            </if>
+            <if test="businessFlowId != null">
+                #{businessFlowId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.businessflow.ProjectBusinessFlowCopyerModel">
+        update t_project_business_flow_copyer
+        <set>
+            <if test="listId != null">
+                list_id = #{listId,jdbcType=BIGINT},
+            </if>
+            <if test="personType != null">
+                person_type = #{personType,jdbcType=INTEGER},
+            </if>
+            <if test="detailStr != null">
+                detail_str = #{detailStr,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="originalId != null">
+                original_id = #{originalId,jdbcType=BIGINT},
+            </if>
+            <if test="businessFlowId != null">
+                business_flow_id = #{businessFlowId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.businessflow.ProjectBusinessFlowCopyerModel">
+        update t_project_business_flow_copyer
+        set list_id = #{listId,jdbcType=BIGINT},
+            person_type = #{personType,jdbcType=INTEGER},
+            detail_str = #{detailStr,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            original_id = #{originalId,jdbcType=BIGINT},
+            business_flow_id = #{businessFlowId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+</mapper>

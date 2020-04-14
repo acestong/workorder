@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.plan.ReportRequirementModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.plan.ReportRequirementModel">
+    <id column="plan_report_requirement_id" jdbcType="BIGINT" property="planReportRequirementId" />
+    <result column="plan_report_requirement_theme" jdbcType="VARCHAR" property="planReportRequirementTheme" />
+    <result column="plan_report_requirement_time" jdbcType="TIMESTAMP" property="planReportRequirementTime" />
+    <result column="plan_report_requirement_method" jdbcType="BIGINT" property="planReportRequirementMethod" />
+    <result column="plan_report_requirement" jdbcType="VARCHAR" property="planReportRequirement" />
+    <result column="plan_report_appendix_id" jdbcType="BIGINT" property="planReportAppendixId" />
+    <result column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" /> 
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap> 
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    plan_report_requirement_id, plan_report_requirement_theme, plan_report_requirement_time, 
+    plan_report_requirement_method, plan_report_requirement, plan_report_appendix_id, 
+    plan_id, create_id, create_by, create_time, update_id, update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.plan.ReportRequirementModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_plan_report_requirement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_report_requirement
+    where plan_report_requirement_id = #{planReportRequirementId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_plan_report_requirement
+    where plan_report_requirement_id = #{planReportRequirementId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.plan.ReportRequirementModelExample">
+    delete from t_project_plan_report_requirement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="planReportRequirementId" parameterType="com.fea.project.model.plan.ReportRequirementModel">
+    insert into t_project_plan_report_requirement (plan_report_requirement_id, plan_report_requirement_theme, 
+      plan_report_requirement_time, plan_report_requirement_method, 
+      plan_report_requirement, plan_report_appendix_id, 
+      plan_id, create_id, create_by, 
+      create_time, update_id, update_by, 
+      update_time, del_status)
+    values (#{planReportRequirementId,jdbcType=BIGINT}, #{planReportRequirementTheme,jdbcType=VARCHAR}, 
+      #{planReportRequirementTime,jdbcType=TIMESTAMP}, #{planReportRequirementMethod,jdbcType=BIGINT}, 
+      #{planReportRequirement,jdbcType=VARCHAR}, #{planReportAppendixId,jdbcType=BIGINT}, 
+      #{planId,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="planReportRequirementId" parameterType="com.fea.project.model.plan.ReportRequirementModel">
+    insert into t_project_plan_report_requirement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planReportRequirementId != null">
+        plan_report_requirement_id,
+      </if>
+      <if test="planReportRequirementTheme != null">
+        plan_report_requirement_theme,
+      </if>
+      <if test="planReportRequirementTime != null">
+        plan_report_requirement_time,
+      </if>
+      <if test="planReportRequirementMethod != null">
+        plan_report_requirement_method,
+      </if>
+      <if test="planReportRequirement != null">
+        plan_report_requirement,
+      </if>
+      <if test="planReportAppendixId != null">
+        plan_report_appendix_id,
+      </if>
+      <if test="planId != null">
+        plan_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planReportRequirementId != null">
+        #{planReportRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="planReportRequirementTheme != null">
+        #{planReportRequirementTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="planReportRequirementTime != null">
+        #{planReportRequirementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planReportRequirementMethod != null">
+        #{planReportRequirementMethod,jdbcType=BIGINT},
+      </if>
+      <if test="planReportRequirement != null">
+        #{planReportRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="planReportAppendixId != null">
+        #{planReportAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.plan.ReportRequirementModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_plan_report_requirement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_plan_report_requirement
+    <set>
+      <if test="record.planReportRequirementId != null">
+        plan_report_requirement_id = #{record.planReportRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planReportRequirementTheme != null">
+        plan_report_requirement_theme = #{record.planReportRequirementTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planReportRequirementTime != null">
+        plan_report_requirement_time = #{record.planReportRequirementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planReportRequirementMethod != null">
+        plan_report_requirement_method = #{record.planReportRequirementMethod,jdbcType=BIGINT},
+      </if>
+      <if test="record.planReportRequirement != null">
+        plan_report_requirement = #{record.planReportRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planReportAppendixId != null">
+        plan_report_appendix_id = #{record.planReportAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planId != null">
+        plan_id = #{record.planId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_plan_report_requirement
+    set plan_report_requirement_id = #{record.planReportRequirementId,jdbcType=BIGINT},
+      plan_report_requirement_theme = #{record.planReportRequirementTheme,jdbcType=VARCHAR},
+      plan_report_requirement_time = #{record.planReportRequirementTime,jdbcType=TIMESTAMP},
+      plan_report_requirement_method = #{record.planReportRequirementMethod,jdbcType=BIGINT},
+      plan_report_requirement = #{record.planReportRequirement,jdbcType=VARCHAR},
+      plan_report_appendix_id = #{record.planReportAppendixId,jdbcType=BIGINT},
+      plan_id = #{record.planId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.plan.ReportRequirementModel">
+    update t_project_plan_report_requirement
+    <set>
+      <if test="planReportRequirementTheme != null">
+        plan_report_requirement_theme = #{planReportRequirementTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="planReportRequirementTime != null">
+        plan_report_requirement_time = #{planReportRequirementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planReportRequirementMethod != null">
+        plan_report_requirement_method = #{planReportRequirementMethod,jdbcType=BIGINT},
+      </if>
+      <if test="planReportRequirement != null">
+        plan_report_requirement = #{planReportRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="planReportAppendixId != null">
+        plan_report_appendix_id = #{planReportAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        plan_id = #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where plan_report_requirement_id = #{planReportRequirementId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.plan.ReportRequirementModel">
+    update t_project_plan_report_requirement
+    set plan_report_requirement_theme = #{planReportRequirementTheme,jdbcType=VARCHAR},
+      plan_report_requirement_time = #{planReportRequirementTime,jdbcType=TIMESTAMP},
+      plan_report_requirement_method = #{planReportRequirementMethod,jdbcType=BIGINT},
+      plan_report_requirement = #{planReportRequirement,jdbcType=VARCHAR},
+      plan_report_appendix_id = #{planReportAppendixId,jdbcType=BIGINT},
+      plan_id = #{planId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where plan_report_requirement_id = #{planReportRequirementId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByExampleWithDelStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_project_plan_report_requirement 
+    where del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}  
+    and plan_id = #{planId,jdbcType=BIGINT} 
+  </select>
+  <select id="selectByPrimaryKeyWithDelStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_report_requirement
+    where plan_report_requirement_id = #{planReportRequirementId,jdbcType=BIGINT}  and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+  </select>
+  
+   <select id="selectAllByPlanIdWithDelStatus" parameterType="com.fea.project.model.plan.vo.PageInfoFromFrontModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_report_requirement
+    where del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and (
+    		plan_id = #{planId,jdbcType=BIGINT}  
+    		<if test="businessId">
+    		or plan_id = #{businessId,jdbcType=BIGINT}  
+    		</if> 
+    		<if test="planTransferId">
+    		or plan_id = #{planTransferId,jdbcType=BIGINT}  
+    		</if> 
+    	)
+  </select>
+  
+  
+    <update id="updateByPrimaryKeySelectiveWithDelStatus" parameterType="com.fea.project.model.plan.ReportRequirementModel">
+    update t_project_plan_report_requirement
+	set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}
+    where plan_report_requirement_id = #{planReportRequirementId,jdbcType=BIGINT}
+  </update>
+  
+   <update id="updateBusinessIdInTProjectAppendix" parameterType="com.fea.project.model.plan.vo.UpdateBusinessIdInProjectAppendixModelVo">
+    update t_project_appendix
+    set business_id = #{businessAppendixId,jdbcType=BIGINT} 
+    where id = #{appendixId,jdbcType=BIGINT} 
+  </update>
+  
+      <update id="updateByList">
+   	update t_project_plan_report_requirement
+        	set plan_id = #{businessId,jdbcType=BIGINT}
+        	where plan_report_requirement_id in 
+        	 <foreach collection="list" open="(" close=")" separator="," index="index" item="item">
+        	 #{item,jdbcType=BIGINT}
+        	 </foreach>
+  </update>
+ 
+ 
+ <delete id="deleteByBusinessId" parameterType="java.lang.Long">
+    delete from t_project_plan_report_requirement
+    where plan_id = #{businessId,jdbcType=BIGINT}
+  </delete>
+</mapper>

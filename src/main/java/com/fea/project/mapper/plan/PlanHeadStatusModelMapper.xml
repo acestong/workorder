@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.plan.PlanHeadStatusModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.plan.PlanHeadStatusModel">
+    <id column="cur_user_id" jdbcType="BIGINT" property="curUserId" />
+    <result column="plan_head_status_id" jdbcType="BIGINT" property="planHeadStatusId" />
+    <result column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="plan_name" jdbcType="BIGINT" property="planName" />
+    <result column="plan_version" jdbcType="BIGINT" property="planVersion" />
+    <result column="plan_apply_desc" jdbcType="BIGINT" property="planApplyDesc" />
+    <result column="plan_num" jdbcType="BIGINT" property="planNum" />
+    <result column="parent_plan_id" jdbcType="BIGINT" property="parentPlanId" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" /> 
+    <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+    <result column="priority" jdbcType="BIGINT" property="priority" />
+    <result column="plan_startTime" jdbcType="BIGINT" property="planStarttime" />
+    <result column="plan_endTime" jdbcType="BIGINT" property="planEndtime" />
+    <result column="plan_deadline" jdbcType="BIGINT" property="planDeadline" />
+    <result column="plan_duration" jdbcType="BIGINT" property="planDuration" />
+    <result column="plan_leader_id" jdbcType="BIGINT" property="planLeaderId" />
+    <result column="plan_team_id" jdbcType="BIGINT" property="planTeamId" />
+    <result column="plan_milestone_id" jdbcType="BIGINT" property="planMilestoneId" />
+    <result column="plan_remind_hour" jdbcType="BIGINT" property="planRemindHour" />
+    <result column="plan_content" jdbcType="BIGINT" property="planContent" />
+    <result column="plan_appendix_id" jdbcType="BIGINT" property="planAppendixId" />
+    <result column="association_plan_id" jdbcType="BIGINT" property="associationPlanId" />
+    <result column="delivery_requirement_id" jdbcType="BIGINT" property="deliveryRequirementId" />
+    <result column="report_requirement_id" jdbcType="BIGINT" property="reportRequirementId" />
+    <result column="quality_requirement_id" jdbcType="BIGINT" property="qualityRequirementId" />
+    <result column="plan_remark" jdbcType="BIGINT" property="planRemark" />
+    <result column="check_status" jdbcType="BIGINT" property="checkStatus" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cur_user_id, plan_head_status_id, plan_id, plan_name, plan_version, plan_apply_desc, 
+    plan_num, parent_plan_id, project_id, project_step, priority, plan_startTime, plan_endTime, 
+    plan_deadline, plan_duration, plan_leader_id, plan_team_id, plan_milestone_id, plan_remind_hour, 
+    plan_content, plan_appendix_id, association_plan_id, delivery_requirement_id, report_requirement_id, 
+    quality_requirement_id, plan_remark, check_status, create_id, create_by, create_time, 
+    update_id, update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.plan.PlanHeadStatusModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_plan_head_status
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_head_status
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_plan_head_status
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.plan.PlanHeadStatusModelExample">
+    delete from t_project_plan_head_status
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="planHeadStatusId" parameterType="com.fea.project.model.plan.PlanHeadStatusModel">
+    insert into t_project_plan_head_status (cur_user_id, plan_head_status_id, plan_id, 
+      plan_name, plan_version, plan_apply_desc, 
+      plan_num, parent_plan_id, project_id, 
+      project_step, priority, plan_startTime, 
+      plan_endTime, plan_deadline, plan_duration, 
+      plan_leader_id, plan_team_id, plan_milestone_id, 
+      plan_remind_hour, plan_content, plan_appendix_id, 
+      association_plan_id, delivery_requirement_id, 
+      report_requirement_id, quality_requirement_id, 
+      plan_remark, check_status, create_id, 
+      create_by, create_time, update_id, 
+      update_by, update_time, del_status
+      )
+    values (#{curUserId,jdbcType=BIGINT}, #{planHeadStatusId,jdbcType=BIGINT}, #{planId,jdbcType=BIGINT}, 
+      #{planName,jdbcType=BIGINT}, #{planVersion,jdbcType=BIGINT}, #{planApplyDesc,jdbcType=BIGINT}, 
+      #{planNum,jdbcType=BIGINT}, #{parentPlanId,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT}, 
+      #{projectStep,jdbcType=BIGINT}, #{priority,jdbcType=BIGINT}, #{planStarttime,jdbcType=BIGINT}, 
+      #{planEndtime,jdbcType=BIGINT}, #{planDeadline,jdbcType=BIGINT}, #{planDuration,jdbcType=BIGINT}, 
+      #{planLeaderId,jdbcType=BIGINT}, #{planTeamId,jdbcType=BIGINT}, #{planMilestoneId,jdbcType=BIGINT}, 
+      #{planRemindHour,jdbcType=BIGINT}, #{planContent,jdbcType=BIGINT}, #{planAppendixId,jdbcType=BIGINT}, 
+      #{associationPlanId,jdbcType=BIGINT}, #{deliveryRequirementId,jdbcType=BIGINT}, 
+      #{reportRequirementId,jdbcType=BIGINT}, #{qualityRequirementId,jdbcType=BIGINT}, 
+      #{planRemark,jdbcType=BIGINT}, #{checkStatus,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{updateId,jdbcType=BIGINT}, 
+      #{updateBy,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{delStatus,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="planHeadStatusId" parameterType="com.fea.project.model.plan.PlanHeadStatusModel">
+    insert into t_project_plan_head_status
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="curUserId != null">
+        cur_user_id,
+      </if>
+      <if test="planHeadStatusId != null">
+        plan_head_status_id,
+      </if>
+      <if test="planId != null">
+        plan_id,
+      </if>
+      <if test="planName != null">
+        plan_name,
+      </if>
+      <if test="planVersion != null">
+        plan_version,
+      </if>
+      <if test="planApplyDesc != null">
+        plan_apply_desc,
+      </if>
+      <if test="planNum != null">
+        plan_num,
+      </if>
+      <if test="parentPlanId != null">
+        parent_plan_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectStep != null">
+        project_step,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="planStarttime != null">
+        plan_startTime,
+      </if>
+      <if test="planEndtime != null">
+        plan_endTime,
+      </if>
+      <if test="planDeadline != null">
+        plan_deadline,
+      </if>
+      <if test="planDuration != null">
+        plan_duration,
+      </if>
+      <if test="planLeaderId != null">
+        plan_leader_id,
+      </if>
+      <if test="planTeamId != null">
+        plan_team_id,
+      </if>
+      <if test="planMilestoneId != null">
+        plan_milestone_id,
+      </if>
+      <if test="planRemindHour != null">
+        plan_remind_hour,
+      </if>
+      <if test="planContent != null">
+        plan_content,
+      </if>
+      <if test="planAppendixId != null">
+        plan_appendix_id,
+      </if>
+      <if test="associationPlanId != null">
+        association_plan_id,
+      </if>
+      <if test="deliveryRequirementId != null">
+        delivery_requirement_id,
+      </if>
+      <if test="reportRequirementId != null">
+        report_requirement_id,
+      </if>
+      <if test="qualityRequirementId != null">
+        quality_requirement_id,
+      </if>
+      <if test="planRemark != null">
+        plan_remark,
+      </if>
+      <if test="checkStatus != null">
+        check_status,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="curUserId != null">
+        #{curUserId,jdbcType=BIGINT},
+      </if>
+      <if test="planHeadStatusId != null">
+        #{planHeadStatusId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="planName != null">
+        #{planName,jdbcType=BIGINT},
+      </if>
+      <if test="planVersion != null">
+        #{planVersion,jdbcType=BIGINT},
+      </if>
+      <if test="planApplyDesc != null">
+        #{planApplyDesc,jdbcType=BIGINT},
+      </if>
+      <if test="planNum != null">
+        #{planNum,jdbcType=BIGINT},
+      </if>
+      <if test="parentPlanId != null">
+        #{parentPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        #{projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="planStarttime != null">
+        #{planStarttime,jdbcType=BIGINT},
+      </if>
+      <if test="planEndtime != null">
+        #{planEndtime,jdbcType=BIGINT},
+      </if>
+      <if test="planDeadline != null">
+        #{planDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="planDuration != null">
+        #{planDuration,jdbcType=BIGINT},
+      </if>
+      <if test="planLeaderId != null">
+        #{planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="planTeamId != null">
+        #{planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="planMilestoneId != null">
+        #{planMilestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="planRemindHour != null">
+        #{planRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="planContent != null">
+        #{planContent,jdbcType=BIGINT},
+      </if>
+      <if test="planAppendixId != null">
+        #{planAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="associationPlanId != null">
+        #{associationPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryRequirementId != null">
+        #{deliveryRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="reportRequirementId != null">
+        #{reportRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="qualityRequirementId != null">
+        #{qualityRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="planRemark != null">
+        #{planRemark,jdbcType=BIGINT},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.plan.PlanHeadStatusModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_plan_head_status
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_plan_head_status
+    <set>
+      <if test="record.curUserId != null">
+        cur_user_id = #{record.curUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planHeadStatusId != null">
+        plan_head_status_id = #{record.planHeadStatusId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planId != null">
+        plan_id = #{record.planId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planName != null">
+        plan_name = #{record.planName,jdbcType=BIGINT},
+      </if>
+      <if test="record.planVersion != null">
+        plan_version = #{record.planVersion,jdbcType=BIGINT},
+      </if>
+      <if test="record.planApplyDesc != null">
+        plan_apply_desc = #{record.planApplyDesc,jdbcType=BIGINT},
+      </if>
+      <if test="record.planNum != null">
+        plan_num = #{record.planNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentPlanId != null">
+        parent_plan_id = #{record.parentPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectStep != null">
+        project_step = #{record.projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="record.priority != null">
+        priority = #{record.priority,jdbcType=BIGINT},
+      </if>
+      <if test="record.planStarttime != null">
+        plan_startTime = #{record.planStarttime,jdbcType=BIGINT},
+      </if>
+      <if test="record.planEndtime != null">
+        plan_endTime = #{record.planEndtime,jdbcType=BIGINT},
+      </if>
+      <if test="record.planDeadline != null">
+        plan_deadline = #{record.planDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="record.planDuration != null">
+        plan_duration = #{record.planDuration,jdbcType=BIGINT},
+      </if>
+      <if test="record.planLeaderId != null">
+        plan_leader_id = #{record.planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planTeamId != null">
+        plan_team_id = #{record.planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planMilestoneId != null">
+        plan_milestone_id = #{record.planMilestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planRemindHour != null">
+        plan_remind_hour = #{record.planRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="record.planContent != null">
+        plan_content = #{record.planContent,jdbcType=BIGINT},
+      </if>
+      <if test="record.planAppendixId != null">
+        plan_appendix_id = #{record.planAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="record.associationPlanId != null">
+        association_plan_id = #{record.associationPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliveryRequirementId != null">
+        delivery_requirement_id = #{record.deliveryRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="record.reportRequirementId != null">
+        report_requirement_id = #{record.reportRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="record.qualityRequirementId != null">
+        quality_requirement_id = #{record.qualityRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planRemark != null">
+        plan_remark = #{record.planRemark,jdbcType=BIGINT},
+      </if>
+      <if test="record.checkStatus != null">
+        check_status = #{record.checkStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_plan_head_status
+    set cur_user_id = #{record.curUserId,jdbcType=BIGINT},
+      plan_head_status_id = #{record.planHeadStatusId,jdbcType=BIGINT},
+      plan_id = #{record.planId,jdbcType=BIGINT},
+      plan_name = #{record.planName,jdbcType=BIGINT},
+      plan_version = #{record.planVersion,jdbcType=BIGINT},
+      plan_apply_desc = #{record.planApplyDesc,jdbcType=BIGINT},
+      plan_num = #{record.planNum,jdbcType=BIGINT},
+      parent_plan_id = #{record.parentPlanId,jdbcType=BIGINT},
+      project_id = #{record.projectId,jdbcType=BIGINT},
+      project_step = #{record.projectStep,jdbcType=BIGINT},
+      priority = #{record.priority,jdbcType=BIGINT},
+      plan_startTime = #{record.planStarttime,jdbcType=BIGINT},
+      plan_endTime = #{record.planEndtime,jdbcType=BIGINT},
+      plan_deadline = #{record.planDeadline,jdbcType=BIGINT},
+      plan_duration = #{record.planDuration,jdbcType=BIGINT},
+      plan_leader_id = #{record.planLeaderId,jdbcType=BIGINT},
+      plan_team_id = #{record.planTeamId,jdbcType=BIGINT},
+      plan_milestone_id = #{record.planMilestoneId,jdbcType=BIGINT},
+      plan_remind_hour = #{record.planRemindHour,jdbcType=BIGINT},
+      plan_content = #{record.planContent,jdbcType=BIGINT},
+      plan_appendix_id = #{record.planAppendixId,jdbcType=BIGINT},
+      association_plan_id = #{record.associationPlanId,jdbcType=BIGINT},
+      delivery_requirement_id = #{record.deliveryRequirementId,jdbcType=BIGINT},
+      report_requirement_id = #{record.reportRequirementId,jdbcType=BIGINT},
+      quality_requirement_id = #{record.qualityRequirementId,jdbcType=BIGINT},
+      plan_remark = #{record.planRemark,jdbcType=BIGINT},
+      check_status = #{record.checkStatus,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=BIGINT},
+      update_time = #{record.updateTime,jdbcType=BIGINT},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.plan.PlanHeadStatusModel">
+    update t_project_plan_head_status
+    <set>
+      <if test="planHeadStatusId != null">
+        plan_head_status_id = #{planHeadStatusId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        plan_id = #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="planName != null">
+        plan_name = #{planName,jdbcType=BIGINT},
+      </if>
+      <if test="planVersion != null">
+        plan_version = #{planVersion,jdbcType=BIGINT},
+      </if>
+      <if test="planApplyDesc != null">
+        plan_apply_desc = #{planApplyDesc,jdbcType=BIGINT},
+      </if>
+      <if test="planNum != null">
+        plan_num = #{planNum,jdbcType=BIGINT},
+      </if>
+      <if test="parentPlanId != null">
+        parent_plan_id = #{parentPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        project_step = #{projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="planStarttime != null">
+        plan_startTime = #{planStarttime,jdbcType=BIGINT},
+      </if>
+      <if test="planEndtime != null">
+        plan_endTime = #{planEndtime,jdbcType=BIGINT},
+      </if>
+      <if test="planDeadline != null">
+        plan_deadline = #{planDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="planDuration != null">
+        plan_duration = #{planDuration,jdbcType=BIGINT},
+      </if>
+      <if test="planLeaderId != null">
+        plan_leader_id = #{planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="planTeamId != null">
+        plan_team_id = #{planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="planMilestoneId != null">
+        plan_milestone_id = #{planMilestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="planRemindHour != null">
+        plan_remind_hour = #{planRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="planContent != null">
+        plan_content = #{planContent,jdbcType=BIGINT},
+      </if>
+      <if test="planAppendixId != null">
+        plan_appendix_id = #{planAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="associationPlanId != null">
+        association_plan_id = #{associationPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryRequirementId != null">
+        delivery_requirement_id = #{deliveryRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="reportRequirementId != null">
+        report_requirement_id = #{reportRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="qualityRequirementId != null">
+        quality_requirement_id = #{qualityRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="planRemark != null">
+        plan_remark = #{planRemark,jdbcType=BIGINT},
+      </if>
+      <if test="checkStatus != null">
+        check_status = #{checkStatus,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.plan.PlanHeadStatusModel">
+    update t_project_plan_head_status
+    set plan_head_status_id = #{planHeadStatusId,jdbcType=BIGINT},
+      plan_id = #{planId,jdbcType=BIGINT},
+      plan_name = #{planName,jdbcType=BIGINT},
+      plan_version = #{planVersion,jdbcType=BIGINT},
+      plan_apply_desc = #{planApplyDesc,jdbcType=BIGINT},
+      plan_num = #{planNum,jdbcType=BIGINT},
+      parent_plan_id = #{parentPlanId,jdbcType=BIGINT},
+      project_id = #{projectId,jdbcType=BIGINT},
+      project_step = #{projectStep,jdbcType=BIGINT},
+      priority = #{priority,jdbcType=BIGINT},
+      plan_startTime = #{planStarttime,jdbcType=BIGINT},
+      plan_endTime = #{planEndtime,jdbcType=BIGINT},
+      plan_deadline = #{planDeadline,jdbcType=BIGINT},
+      plan_duration = #{planDuration,jdbcType=BIGINT},
+      plan_leader_id = #{planLeaderId,jdbcType=BIGINT},
+      plan_team_id = #{planTeamId,jdbcType=BIGINT},
+      plan_milestone_id = #{planMilestoneId,jdbcType=BIGINT},
+      plan_remind_hour = #{planRemindHour,jdbcType=BIGINT},
+      plan_content = #{planContent,jdbcType=BIGINT},
+      plan_appendix_id = #{planAppendixId,jdbcType=BIGINT},
+      association_plan_id = #{associationPlanId,jdbcType=BIGINT},
+      delivery_requirement_id = #{deliveryRequirementId,jdbcType=BIGINT},
+      report_requirement_id = #{reportRequirementId,jdbcType=BIGINT},
+      quality_requirement_id = #{qualityRequirementId,jdbcType=BIGINT},
+      plan_remark = #{planRemark,jdbcType=BIGINT},
+      check_status = #{checkStatus,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectByCurUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_head_status
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+  </select>
+</mapper>

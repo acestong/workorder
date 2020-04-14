@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.fieldconfig.ProjectFieldConfigPersonMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.fieldconfig.ProjectFieldConfigPersonModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="user_id" jdbcType="BIGINT" property="userId" />
+        <result column="field_name" jdbcType="VARCHAR" property="fieldName" />
+        <result column="type_id" jdbcType="INTEGER" property="typeId" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, reg_id, user_id, field_name, type_id, create_id, create_by, create_time
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_field_config_person
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_field_config_person
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_field_config_person
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigPersonModel">
+        insert into t_project_field_config_person (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{regId,jdbcType=BIGINT},
+            #{userId,jdbcType=BIGINT},
+            #{fieldName,jdbcType=VARCHAR}, 
+            #{typeId,jdbcType=INTEGER},
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_field_config_person (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.id,jdbcType=BIGINT},
+                #{item.regId,jdbcType=BIGINT},
+                #{item.userId,jdbcType=BIGINT},
+                #{item.fieldName,jdbcType=VARCHAR}, 
+                #{item.typeId,jdbcType=INTEGER},
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigPersonModel" resultMap="BaseResultMap">
+        select * from t_project_field_config_person where 1 = 1
+        <if test="id != null">
+            and id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=BIGINT}
+        </if>
+        <if test="fieldName != null">
+            and field_name = #{fieldName,jdbcType=VARCHAR}
+        </if>
+        <if test="typeId != null">
+            and type_id = #{typeId,jdbcType=INTEGER}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigPersonModel">
+        insert into t_project_field_config_person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="fieldName != null">
+                field_name,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldName != null">
+                #{fieldName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigPersonModel">
+        update t_project_field_config_person
+        <set>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldName != null">
+                field_name = #{fieldName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigPersonModel">
+        update t_project_field_config_person
+        set reg_id = #{regId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=BIGINT},
+            field_name = #{fieldName,jdbcType=VARCHAR},
+            type_id = #{typeId,jdbcType=INTEGER},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByTypeIdAndUserId">
+        delete from t_project_field_config_person
+        where user_id = #{userId,jdbcType=BIGINT}
+        and type_id = #{typeId,jdbcType=INTEGER}
+    </delete>
+
+</mapper>

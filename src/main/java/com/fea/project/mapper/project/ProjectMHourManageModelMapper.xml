@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.project.ProjectMHourManageModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.project.ProjectMHourManageModel">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
+    <result column="upload_timeNum" jdbcType="INTEGER" property="uploadTimenum" />
+    <result column="work_report_id" jdbcType="VARCHAR" property="workReportId" />
+    <result column="overtime_id" jdbcType="VARCHAR" property="overtimeId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="confirm_status" jdbcType="INTEGER" property="confirmStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, upload_time, upload_timeNum, work_report_id, overtime_id, remark, create_id, 
+    create_by, create_time, update_id, update_by, update_time,confirm_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_project_mhourmanage
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_project_mhourmanage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.fea.project.model.project.ProjectMHourManageModel">
+    insert into t_project_project_mhourmanage (id, upload_time, upload_timeNum, 
+      work_report_id, overtime_id, remark, 
+      create_id, create_by, create_time, 
+      update_id, update_by, update_time,confirm_status
+      )
+    values (#{id,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP}, #{uploadTimenum,jdbcType=INTEGER},
+      #{workReportId,jdbcType=VARCHAR}, #{overtimeId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{confirmStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fea.project.model.project.ProjectMHourManageModel">
+    insert into t_project_project_mhourmanage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+      <if test="uploadTimenum != null">
+        upload_timeNum,
+      </if>
+      <if test="workReportId != null">
+        work_report_id,
+      </if>
+      <if test="overtimeId != null">
+        overtime_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="confirmStatus != null">
+        confirm_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadTimenum != null">
+        #{uploadTimenum,jdbcType=INTEGER},
+      </if>
+      <if test="workReportId != null">
+        #{workReportId,jdbcType=VARCHAR},
+      </if>
+      <if test="overtimeId != null">
+        #{overtimeId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmStatus != null">
+        #{confirmStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.project.ProjectMHourManageModel">
+    update t_project_project_mhourmanage
+    <set>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uploadTimenum != null">
+        upload_timeNum = #{uploadTimenum,jdbcType=INTEGER},
+      </if>
+      <if test="workReportId != null">
+        work_report_id = #{workReportId,jdbcType=VARCHAR},
+      </if>
+      <if test="overtimeId != null">
+        overtime_id = #{overtimeId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmStatus != null">
+        confirm_status = #{confirmStatus,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.project.ProjectMHourManageModel">
+    update t_project_project_mhourmanage
+    set upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      upload_timeNum = #{uploadTimenum,jdbcType=INTEGER},
+      work_report_id = #{workReportId,jdbcType=VARCHAR},
+      overtime_id = #{overtimeId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      confirm_status = #{confirmStatus,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectMyhourManageByTime"  resultType="map">
+       SELECT   tppm.id,
+				tppm.upload_time ,
+				tptwr.actual_task_duration,
+				tppo.over_time_num,
+				tptwr.actual_task_duration+ IFNULL(tppo.over_time_num,0)as sumduration,
+				tppm.create_time,
+				IF(tppm.confirm_status=0,'未确认','已确认') AS confirmStatus,
+				tppc.confirmTimeNum,
+				tppc.confirmName,
+				tppc.confirmTime
+        from t_project_project_mhourmanage tppm
+				LEFT JOIN t_project_task_work_report tptwr ON tptwr.work_report_id = tppm.work_report_id
+				LEFT JOIN t_project_project_overtime tppo ON tppo.id=tppm.overtime_id
+				LEFT JOIN t_project_project_confirmtime tppc ON tppc.reportid=tppm.id
+				WHERE tppm.create_id=#{userid} AND tppm.upload_time=#{selectDate}
+  </select>
+  <select id="selectMyhourManageByWeek"  resultType="map">
+       SELECT  tppm.id,
+				tppm.upload_time ,
+				tptwr.actual_task_duration,
+				tppo.over_time_num,
+				tptwr.actual_task_duration+ IFNULL(tppo.over_time_num,0)as sumduration,
+				tppm.create_time,
+				IF(tppm.confirm_status=0,'未确认','已确认') AS confirmStatus,
+				tppc.confirmTimeNum,
+				tppc.confirmName,
+				tppc.confirmTime
+        from t_project_project_mhourmanage tppm
+				LEFT JOIN t_project_task_work_report tptwr ON tptwr.work_report_id = tppm.work_report_id
+				LEFT JOIN t_project_project_overtime tppo ON tppo.id=tppm.overtime_id
+				LEFT JOIN t_project_project_confirmtime tppc ON tppc.reportid=tppm.id
+				WHERE tppm.create_id=#{userid} AND DATE_FORMAT(tppm.upload_time,'%Y-%u')=#{selectDate}
+  </select>
+  <select id="selectMyhourManageByMonthe"  resultType="map">
+       SELECT  tppm.id,
+				tppm.upload_time ,
+				tptwr.actual_task_duration,
+				tppo.over_time_num,
+				tptwr.actual_task_duration+ IFNULL(tppo.over_time_num,0)as sumduration,
+				tppm.create_time,
+				IF(tppm.confirm_status=0,'未确认','已确认') AS confirmStatus,
+				tppc.confirmTimeNum,
+				tppc.confirmName,
+				tppc.confirmTime
+        from t_project_project_mhourmanage tppm
+				LEFT JOIN t_project_task_work_report tptwr ON tptwr.work_report_id = tppm.work_report_id
+				LEFT JOIN t_project_project_overtime tppo ON tppo.id=tppm.overtime_id
+				LEFT JOIN t_project_project_confirmtime tppc ON tppc.reportid=tppm.id
+				WHERE tppm.create_id=#{userid} AND DATE_FORMAT(tppm.upload_time,'%Y-%m')=#{selectDate}
+  </select>
+  <select id="selectMyhourSumMyhourManage"  resultType="map">
+       SELECT
+				SUM(tptwr.actual_task_duration) as sumActual ,
+				SUM(tppo.over_time_num) as sumOver,
+				SUM(tptwr.actual_task_duration+ IFNULL(tppo.over_time_num,0)) as sum,
+				SUM(tppc.confirmTimeNum) as sumConfrim
+        from t_project_project_mhourmanage tppm
+				LEFT JOIN t_project_task_work_report tptwr ON tptwr.work_report_id = tppm.work_report_id
+				LEFT JOIN t_project_project_overtime tppo ON tppo.id=tppm.overtime_id
+				LEFT JOIN t_project_project_confirmtime tppc ON tppc.reportid=tppm.id
+				WHERE tppm.create_id=#{userid} AND ${sqlType}=#{selectDate}
+  </select>
+  <select id="selectmyhourManageDesByid"  resultType="map">
+      SELECT DISTINCT tppm.id,
+				tppm.upload_time ,
+				tptwr.actual_task_duration,
+				tppo.over_time_num,
+        tptwr.actual_task_duration+ IFNULL(tppo.over_time_num,0)as sumduration,
+				tppm.create_by,
+        tppm.create_time,
+				tppm.remark
+    from t_project_project_mhourmanage tppm
+				LEFT JOIN t_project_task_work_report tptwr ON tptwr.work_report_id = tppm.work_report_id
+				LEFT JOIN t_project_project_overtime tppo ON tppo.id=tppm.overtime_id
+        where tppm.id=#{id};
+  </select>
+  <select id="selectmyhourManageDesReportByid"  resultType="map">
+         SELECT DISTINCT
+          tptwr.work_report_id,
+            IF(ISNULL(tptc.task_num),'空',tptc.task_num) AS task_num,
+        tptc.task_name,
+            tpp.name,
+            tptc.task_start_time,
+            tptc.task_end_time,
+            tptc.task_deadline,
+            tptc.task_duration,
+            tptwr.actual_task_start_time,
+            tptwr.actual_task_end_time,
+        tptc.task_progross_rate,
+            tptwr.actual_task_duration
+        FROM `t_project_task_work_report` tptwr
+            LEFT JOIN
+            l2cplat_ceshi_wq.t_sys_user tsu
+            on tptwr.work_reporter_id = tsu.USER_ID
+            LEFT JOIN
+            t_project_task_create tptc
+            ON tptc.task_id = tptwr.task_id
+            LEFT JOIN
+            t_project_project tpp
+            ON tpp.id=tptc.project_id
+            LEFT JOIN
+        t_project_project_mhourmanage tppm
+        ON tppm.work_report_id =tptwr.work_report_id
+           where tppm.id=#{id};
+  </select>
+
+  <select id="selectmyhourManageDesOverByid"  resultType="map">
+             SELECT DISTINCT tppo.start_time,
+        tppo.END_TIME,
+        tppo.over_time_num,
+        tppot.type_name
+        from t_project_project_overtime tppo
+        LEFT JOIN t_project_project_overtime_type tppot ON tppo.over_time_type=tppot.id
+        LEFT JOIN t_project_project_mhourmanage tppm ON tppm.overtime_id=tppo.id
+        where tppm.id=#{id};
+  </select>
+
+  <select id="selectmyhourManageDesOverReportByid"  resultType="map">
+           SELECT DISTINCT
+            tptwr.work_report_id,
+            IF(ISNULL(tptc.task_num),'空',tptc.task_num) AS task_num,
+          tptc.task_name,
+              tpp.name,
+              tptc.task_start_time,
+              tptc.task_end_time,
+              tptc.task_deadline,
+              tptc.task_duration,
+              tptwr.actual_task_start_time,
+              tptwr.actual_task_end_time,
+          tptc.task_progross_rate,
+              tptwr.actual_task_duration
+          FROM `t_project_task_work_report` tptwr
+              LEFT JOIN
+              l2cplat_ceshi_wq.t_sys_user tsu
+              on tptwr.work_reporter_id = tsu.USER_ID
+              LEFT JOIN
+              t_project_task_create tptc
+              ON tptc.task_id = tptwr.task_id
+              LEFT JOIN
+              t_project_project tpp
+              ON tpp.id=tptc.project_id
+              LEFT JOIN
+          t_project_project_overtime tppo
+          ON tptwr.work_report_id =tppo.work_report_id
+          LEFT JOIN t_project_project_mhourmanage tppm
+              ON tppm.overtime_id=tppo.id
+          where tppm.id=#{id};
+  </select>
+    <select id="selectTeamhourManageDesProjectid"  resultType="map">
+         SELECT  DISTINCT
+				tppm.id,
+				tppm.create_id,
+				tppm.upload_time ,
+				tppm.create_by,
+				tsd.dep_name,
+				tptwr.actual_task_duration,
+				tppo.over_time_num,
+				tptwr.actual_task_duration+ IFNULL(tppo.over_time_num,0)as sumduration,
+				tppm.create_time,
+				IF(tppm.confirm_status=0,'未确认','已确认') as confirmStatus,
+				tppc.confirmTimeNum,
+				tppc.confirmName
+        from t_project_project_mhourmanage tppm
+				LEFT JOIN t_project_task_work_report tptwr ON tptwr.work_report_id = tppm.work_report_id
+				LEFT JOIN t_project_project_overtime tppo ON tppo.id=tppm.overtime_id
+				LEFT JOIN t_project_task_create tptc ON tptc.task_id = tptwr.task_id
+        LEFT JOIN l2cplat_ceshi_wq.t_sys_user tsu on tppm.create_id = tsu.USER_ID
+				LEFT JOIN l2cplat_ceshi.t_sys_employee tse ON tse.emp_id=tsu.emp_id
+        LEFT JOIN l2cplat_ceshi.t_sys_department tsd ON tsd.dep_id=tse.dep_id
+				LEFT JOIN t_project_project_confirmtime tppc ON tppc.reportid=tppm.id
+				WHERE tptc.project_id=#{projectId}
+				<if test="type!=null and type==0">
+                    AND tppm.upload_time=#{selectDate}
+                </if>
+                <if test="type!=null and type==1">
+                    AND DATE_FORMAT(tppm.upload_time,'%Y-%u')=#{selectDate}
+                </if>
+                <if test="type!=null and type==2">
+                    AND DATE_FORMAT(tppm.upload_time,'%Y-%m')=#{selectDate}
+                </if>
+  </select>
+    <select id="selectTeamhourManageSum"  resultType="map">
+        SELECT DISTINCT
+        SUM(tptwr.actual_task_duration) as sumActual ,
+        SUM(tppo.over_time_num) as sumOver,
+        SUM(tptwr.actual_task_duration+ IFNULL(tppo.over_time_num,0)) as sum,
+        SUM(tppc.confirmTimeNum) as sumConfrim
+        from t_project_project_mhourmanage tppm
+        LEFT JOIN t_project_task_work_report tptwr ON tptwr.work_report_id = tppm.work_report_id
+        LEFT JOIN t_project_project_overtime tppo ON tppo.id=tppm.overtime_id
+        LEFT JOIN t_project_project_confirmtime tppc ON tppc.reportid=tppm.id
+        LEFT JOIN t_project_task_create tptc ON tptc.task_id = tptwr.task_id
+            WHERE tptc.project_id=#{projectId}
+            <if test="type!=null and type==0">
+                AND tppm.upload_time=#{selectDate}
+            </if>
+            <if test="type!=null and type==1">
+                AND DATE_FORMAT(tppm.upload_time,'%Y-%u')=#{selectDate}
+            </if>
+            <if test="type!=null and type==2">
+                AND DATE_FORMAT(tppm.upload_time,'%Y-%m')=#{selectDate}
+            </if>
+    </select>
+
+
+</mapper>

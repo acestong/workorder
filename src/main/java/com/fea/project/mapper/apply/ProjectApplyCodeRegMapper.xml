@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.apply.ProjectApplyCodeRegMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.apply.ProjectApplyCodeRegModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="year_quarter" jdbcType="VARCHAR" property="yearQuarter"/>
+        <result column="last_code" jdbcType="VARCHAR" property="lastCode"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="flow_type" jdbcType="INTEGER" property="flowType"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, reg_id, year_quarter, last_code, update_time, del_status, flow_type
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_apply_code_reg
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_apply_code_reg
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_apply_code_reg
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.apply.ProjectApplyCodeRegModel">
+        insert into t_project_apply_code_reg (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{regId,jdbcType=BIGINT},
+        #{yearQuarter,jdbcType=VARCHAR},
+        #{lastCode,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{flowType,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_apply_code_reg (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.regId,jdbcType=BIGINT},
+            #{item.yearQuarter,jdbcType=VARCHAR},
+            #{item.lastCode,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.flowType,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.apply.ProjectApplyCodeRegModel"
+            resultMap="BaseResultMap">
+        select * from t_project_apply_code_reg where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="yearQuarter != null">
+            and year_quarter = #{yearQuarter,jdbcType=VARCHAR}
+        </if>
+        <if test="lastCode != null">
+            and last_code = #{lastCode,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="flowType != null">
+            and flow_type = #{flowType,jdbcType=INTEGER}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.apply.ProjectApplyCodeRegModel">
+        insert into t_project_apply_code_reg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="yearQuarter != null">
+                year_quarter,
+            </if>
+            <if test="lastCode != null">
+                last_code,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="flowType != null">
+                flow_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="yearQuarter != null">
+                #{yearQuarter,jdbcType=VARCHAR},
+            </if>
+            <if test="lastCode != null">
+                #{lastCode,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="flowType != null">
+                #{flowType,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.apply.ProjectApplyCodeRegModel">
+        update t_project_apply_code_reg
+        <set>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="yearQuarter != null">
+                year_quarter = #{yearQuarter,jdbcType=VARCHAR},
+            </if>
+            <if test="lastCode != null">
+                last_code = #{lastCode,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="flowType != null">
+                flow_type = #{flowType,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.apply.ProjectApplyCodeRegModel">
+        update t_project_apply_code_reg
+        set reg_id = #{regId,jdbcType=BIGINT},
+            year_quarter = #{yearQuarter,jdbcType=VARCHAR},
+            last_code = #{lastCode,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            flow_type = #{flowType,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <select id="selectByRegIdAndFlowType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_apply_code_reg
+        where reg_id = #{regId,jdbcType=BIGINT}
+        and flow_type = #{flowType,jdbcType=INTEGER}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+</mapper>

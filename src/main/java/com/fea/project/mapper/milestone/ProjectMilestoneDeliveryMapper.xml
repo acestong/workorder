@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.milestone.ProjectMilestoneDeliveryMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.milestone.ProjectMilestoneDeliveryModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="milestone_id" jdbcType="BIGINT" property="milestoneId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+        <result column="owner_id" jdbcType="BIGINT" property="ownerId" />
+        <result column="owner" jdbcType="VARCHAR" property="owner" />
+        <result column="team_id" jdbcType="BIGINT" property="teamId" />
+        <result column="team_name" jdbcType="VARCHAR" property="teamName" />
+        <result column="requirement" jdbcType="VARCHAR" property="requirement" />
+        <result column="sort" jdbcType="INTEGER" property="sort" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_state" jdbcType="INTEGER" property="delState" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        milestone_id, name, delivery_time, owner_id, owner, team_id, team_name, requirement,
+        sort, org_id, reg_id, create_id, create_by, create_time, update_id, update_by, update_time,
+        del_state
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from t_project_milestone_delivery
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_milestone_delivery
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_milestone_delivery
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.milestone.ProjectMilestoneDeliveryModel">
+        insert into t_project_milestone_delivery (
+        <include refid="Base_Column_List" />
+        )
+        values (#{milestoneId,jdbcType=BIGINT},
+        #{name,jdbcType=VARCHAR},
+        #{deliveryTime,jdbcType=TIMESTAMP},
+        #{ownerId,jdbcType=BIGINT},
+        #{owner,jdbcType=VARCHAR},
+        #{teamId,jdbcType=BIGINT},
+        #{teamName,jdbcType=VARCHAR},
+        #{requirement,jdbcType=VARCHAR},
+        #{sort,jdbcType=INTEGER},
+        #{orgId,jdbcType=BIGINT},
+        #{regId,jdbcType=BIGINT},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delState,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="insertList" keyProperty="id" parameterType="java.util.List">
+        insert into t_project_milestone_delivery (
+        <include refid="Base_Column_List" />
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.milestoneId,jdbcType=BIGINT},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.deliveryTime,jdbcType=TIMESTAMP},
+            #{item.ownerId,jdbcType=BIGINT},
+            #{item.owner,jdbcType=VARCHAR},
+            #{item.teamId,jdbcType=BIGINT},
+            #{item.teamName,jdbcType=VARCHAR},
+            #{item.requirement,jdbcType=VARCHAR},
+            #{item.sort,jdbcType=INTEGER},
+            #{item.orgId,jdbcType=BIGINT},
+            #{item.regId,jdbcType=BIGINT},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delState,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.milestone.ProjectMilestoneDeliveryModel" resultMap="BaseResultMap">
+        select * from t_project_milestone_delivery where 1 = 1
+        <if test="milestoneId != null">
+            and milestone_id = #{milestoneId,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="deliveryTime != null">
+            and delivery_time = #{deliveryTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ownerId != null">
+            and owner_id = #{ownerId,jdbcType=BIGINT}
+        </if>
+        <if test="owner != null">
+            and owner = #{owner,jdbcType=VARCHAR}
+        </if>
+        <if test="teamId != null">
+            and team_id = #{teamId,jdbcType=BIGINT}
+        </if>
+        <if test="teamName != null">
+            and team_name = #{teamName,jdbcType=VARCHAR}
+        </if>
+        <if test="requirement != null">
+            and requirement = #{requirement,jdbcType=VARCHAR}
+        </if>
+        <if test="sort != null">
+            and sort = #{sort,jdbcType=INTEGER}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delState != null">
+            and del_state = #{delState,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.milestone.ProjectMilestoneDeliveryModel">
+        insert into t_project_milestone_delivery
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="milestoneId != null">
+                milestone_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="deliveryTime != null">
+                delivery_time,
+            </if>
+            <if test="ownerId != null">
+                owner_id,
+            </if>
+            <if test="owner != null">
+                owner,
+            </if>
+            <if test="teamId != null">
+                team_id,
+            </if>
+            <if test="teamName != null">
+                team_name,
+            </if>
+            <if test="requirement != null">
+                requirement,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delState != null">
+                del_state,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="milestoneId != null">
+                #{milestoneId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryTime != null">
+                #{deliveryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ownerId != null">
+                #{ownerId,jdbcType=BIGINT},
+            </if>
+            <if test="owner != null">
+                #{owner,jdbcType=VARCHAR},
+            </if>
+            <if test="teamId != null">
+                #{teamId,jdbcType=BIGINT},
+            </if>
+            <if test="teamName != null">
+                #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="requirement != null">
+                #{requirement,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delState != null">
+                #{delState,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.milestone.ProjectMilestoneDeliveryModel">
+        update t_project_milestone_delivery
+        <set>
+            <if test="milestoneId != null">
+                milestone_id = #{milestoneId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryTime != null">
+                delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ownerId != null">
+                owner_id = #{ownerId,jdbcType=BIGINT},
+            </if>
+            <if test="owner != null">
+                owner = #{owner,jdbcType=VARCHAR},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=BIGINT},
+            </if>
+            <if test="teamName != null">
+                team_name = #{teamName,jdbcType=VARCHAR},
+            </if>
+            <if test="requirement != null">
+                requirement = #{requirement,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delState != null">
+                del_state = #{delState,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.milestone.ProjectMilestoneDeliveryModel">
+        update t_project_milestone_delivery
+        set milestone_id = #{milestoneId,jdbcType=BIGINT},
+            name = #{name,jdbcType=VARCHAR},
+            delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+            owner_id = #{ownerId,jdbcType=BIGINT},
+            owner = #{owner,jdbcType=VARCHAR},
+            team_id = #{teamId,jdbcType=BIGINT},
+            team_name = #{teamName,jdbcType=VARCHAR},
+            requirement = #{requirement,jdbcType=VARCHAR},
+            sort = #{sort,jdbcType=INTEGER},
+            org_id = #{orgId,jdbcType=BIGINT},
+            reg_id = #{regId,jdbcType=BIGINT},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_state = #{delState,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <resultMap id="BaseResultMapVo" type="com.fea.project.model.milestone.vo.ProjectMilestoneDeliveryVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="milestone_id" jdbcType="BIGINT" property="milestoneId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+        <result column="owner_id" jdbcType="BIGINT" property="ownerId" />
+        <result column="owner" jdbcType="VARCHAR" property="owner" />
+        <result column="team_id" jdbcType="BIGINT" property="teamId" />
+        <result column="team_name" jdbcType="VARCHAR" property="teamName" />
+        <result column="requirement" jdbcType="VARCHAR" property="requirement" />
+        <result column="sort" jdbcType="INTEGER" property="sort" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="appendixCount" jdbcType="INTEGER" property="appendixCount" />
+        <result column="verifyer" jdbcType="BIGINT" property="verifyer" />
+        <result column="verifyer_status" jdbcType="INTEGER" property="verifyerStatus" />
+        <result column="verifyer_time" jdbcType="TIMESTAMP" property="verifyerTime" />
+        <result column="deliver_time" jdbcType="TIMESTAMP" property="deliverableTime" />
+        <result column="deliver_status" jdbcType="TIMESTAMP" property="deliveryStatus" />
+    </resultMap>
+    <select id="selectByMilestoneId" parameterType="long" resultMap="BaseResultMapVo">
+        select tpmd.*,
+        count(tpa.id) as appendixCount
+        from t_project_milestone_delivery as tpmd
+        left join t_project_appendix as tpa on tpmd.id = tpa.business_id and tpa.del_status =
+        ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        where tpmd.del_state = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and tpmd.milestone_id = #{milestoneId,jdbcType=BIGINT}
+        GROUP BY tpmd.id
+    </select>
+</mapper>

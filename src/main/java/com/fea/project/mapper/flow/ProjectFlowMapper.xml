@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.flow.ProjectFlowMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.flow.ProjectFlowModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="flow_type" jdbcType="INTEGER" property="flowType"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="cant_change_verifyer" jdbcType="INTEGER" property="cantChangeVerifyer"/>
+        <result column="cant_change_copyer" jdbcType="INTEGER" property="cantChangeCopyer"/>
+        <result column="verify_cant_revert" jdbcType="INTEGER" property="verifyCantRevert"/>
+        <result column="copy_set_type" jdbcType="INTEGER" property="copySetType"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="project_type" jdbcType="BIGINT" property="projectType"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, reg_id, code, name, flow_type, state, start_time, end_time, create_id, create_by,
+        create_time, update_id, update_by, update_time, del_status, cant_change_verifyer, 
+        cant_change_copyer, verify_cant_revert, copy_set_type, project_id, project_type
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_flow
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_flow
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_flow
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.flow.ProjectFlowModel">
+        insert into t_project_flow (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{regId,jdbcType=BIGINT},
+        #{code,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{flowType,jdbcType=INTEGER},
+        #{state,jdbcType=INTEGER},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{cantChangeVerifyer,jdbcType=INTEGER},
+        #{cantChangeCopyer,jdbcType=INTEGER},
+        #{verifyCantRevert,jdbcType=INTEGER},
+        #{copySetType,jdbcType=INTEGER},
+        #{projectId,jdbcType=BIGINT},
+        #{projectType,jdbcType=BIGINT}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_flow (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.regId,jdbcType=BIGINT},
+            #{item.code,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.flowType,jdbcType=INTEGER},
+            #{item.state,jdbcType=INTEGER},
+            #{item.startTime,jdbcType=TIMESTAMP},
+            #{item.endTime,jdbcType=TIMESTAMP},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.cantChangeVerifyer,jdbcType=INTEGER},
+            #{item.cantChangeCopyer,jdbcType=INTEGER},
+            #{item.verifyCantRevert,jdbcType=INTEGER},
+            #{item.copySetType,jdbcType=INTEGER},
+            #{item.projectId,jdbcType=BIGINT},
+            #{item.projectType,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.flow.ProjectFlowModel" resultMap="BaseResultMap">
+        select * from t_project_flow where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="code != null">
+            and code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="flowType != null">
+            and flow_type = #{flowType,jdbcType=INTEGER}
+        </if>
+        <if test="state != null">
+            and state = #{state,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delStatus != null">
+            and del_status = #{delStatus,jdbcType=INTEGER}
+        </if>
+        <if test="cantChangeVerifyer != null">
+            and cant_change_verifyer = #{cantChangeVerifyer,jdbcType=INTEGER}
+        </if>
+        <if test="cantChangeCopyer != null">
+            and cant_change_copyer = #{cantChangeCopyer,jdbcType=INTEGER}
+        </if>
+        <if test="verifyCantRevert != null">
+            and verify_cant_revert = #{verifyCantRevert,jdbcType=INTEGER}
+        </if>
+        <if test="copySetType != null">
+            and copy_set_type = #{copySetType,jdbcType=INTEGER}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="projectType != null">
+            and project_type = #{projectType,jdbcType=BIGINT}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.flow.ProjectFlowModel">
+        insert into t_project_flow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="flowType != null">
+                flow_type,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="cantChangeVerifyer != null">
+                cant_change_verifyer,
+            </if>
+            <if test="cantChangeCopyer != null">
+                cant_change_copyer,
+            </if>
+            <if test="verifyCantRevert != null">
+                verify_cant_revert,
+            </if>
+            <if test="copySetType != null">
+                copy_set_type,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="projectType != null">
+                project_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="flowType != null">
+                #{flowType,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="cantChangeVerifyer != null">
+                #{cantChangeVerifyer,jdbcType=INTEGER},
+            </if>
+            <if test="cantChangeCopyer != null">
+                #{cantChangeCopyer,jdbcType=INTEGER},
+            </if>
+            <if test="verifyCantRevert != null">
+                #{verifyCantRevert,jdbcType=INTEGER},
+            </if>
+            <if test="copySetType != null">
+                #{copySetType,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="projectType != null">
+                #{projectType,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.flow.ProjectFlowModel">
+        update t_project_flow
+        <set>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="flowType != null">
+                flow_type = #{flowType,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="cantChangeVerifyer != null">
+                cant_change_verifyer = #{cantChangeVerifyer,jdbcType=INTEGER},
+            </if>
+            <if test="cantChangeCopyer != null">
+                cant_change_copyer = #{cantChangeCopyer,jdbcType=INTEGER},
+            </if>
+            <if test="verifyCantRevert != null">
+                verify_cant_revert = #{verifyCantRevert,jdbcType=INTEGER},
+            </if>
+            <if test="copySetType != null">
+                copy_set_type = #{copySetType,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="projectType != null">
+                project_type = #{projectType,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.flow.ProjectFlowModel">
+        update t_project_flow
+        set reg_id = #{regId,jdbcType=BIGINT},
+            code = #{code,jdbcType=VARCHAR},
+            name = #{name,jdbcType=VARCHAR},
+            flow_type = #{flowType,jdbcType=INTEGER},
+            state = #{state,jdbcType=INTEGER},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            cant_change_verifyer = #{cantChangeVerifyer,jdbcType=INTEGER},
+            cant_change_copyer = #{cantChangeCopyer,jdbcType=INTEGER},
+            verify_cant_revert = #{verifyCantRevert,jdbcType=INTEGER},
+            copy_set_type = #{copySetType,jdbcType=INTEGER},
+            project_id = #{projectId, jdbcType=BIGINT},
+            project_type = #{projectType,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_flow
+        where id in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.model.flow.vo.ProjectFlowVo" extends="BaseResultMap">
+    </resultMap>
+    <select id="selectProjectFlowByParam" parameterType="com.fea.project.model.BasePageInfo"
+            resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_flow
+        where 1=1
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getId() != null">
+                and id = #{model.id,jdbcType=BIGINT}
+            </if>
+            <if test="model.getRegId() != null">
+                and reg_id = #{model.regId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCode() != null">
+                and code = #{model.code,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getName() != null">
+                and name = #{model.name,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getFlowType() != null">
+                and flow_type = #{model.flowType,jdbcType=INTEGER}
+            </if>
+            <if test="model.getState() != null">
+                and state = #{model.state,jdbcType=INTEGER}
+            </if>
+            <if test="model.getStartTime() != null">
+                and start_time = #{model.startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getEndTime() != null">
+                and end_time = #{model.endTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getCreateId() != null">
+                and create_id = #{model.createId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateId() != null">
+                and update_id = #{model.updateId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getDelStatus() != null">
+                and del_status = #{model.delStatus,jdbcType=INTEGER}
+            </if>
+            <if test="model.getCantChangeVerifyer() != null">
+                and cant_change_verifyer = #{model.cantChangeVerifyer,jdbcType=INTEGER}
+            </if>
+            <if test="model.getCantChangeCopyer() != null">
+                and cant_change_copyer = #{model.cantChangeCopyer,jdbcType=INTEGER}
+            </if>
+            <if test="model.getVerifyCantRevert() != null">
+                and verify_cant_revert = #{model.verifyCantRevert,jdbcType=INTEGER}
+            </if>
+            <if test="model.getCopySetType() != null">
+                and copy_set_type = #{model.copySetType,jdbcType=INTEGER}
+            </if>
+            <if test="model.getProjectId() != null">
+                and (project_id = #{model.projectId,jdbcType=BIGINT}
+                <if test="model.getSelectConfig() == true">
+                    or project_id is null
+                </if>
+                )
+            </if>
+            <if test="model.getProjectType() != null">
+                and (project_type = #{model.projectType,jdbcType=BIGINT}
+                <if test="model.getSelectConfig() == true">
+                    or project_type is null
+                </if>
+                )
+            </if>
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('flowType') != null and filters.get('flowType').size() != 0">
+                and flow_type in
+                <foreach collection="filters.get('flowType')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('state') != null and filters.get('state').size() != 0">
+                and state in
+                <foreach collection="filters.get('state')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+        </if>
+        <if test="keywords != null and keywords != ''">
+            and ((name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (code like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (create_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="sortKey != null">
+            order by ${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by create_time desc
+        </if>
+    </select>
+
+    <resultMap id="BaseResultMap_flowDetail" type="com.fea.project.model.flow.vo.ProjectFlowVo"
+               extends="BaseResultMap_vo">
+        <association property="projectFlowListModels" column="id"
+                     select="com.fea.project.dao.flow.ProjectFlowListMapper.selectByFlowId"/>
+    </resultMap>
+    <select id="selectVoById" resultMap="BaseResultMap_flowDetail">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_flow
+        where id = #{id, jdbcType=BIGINT}
+    </select>
+
+
+</mapper>

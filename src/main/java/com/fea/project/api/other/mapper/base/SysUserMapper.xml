@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.base.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.base.SysUserModel">
+        <id column="USER_ID" jdbcType="BIGINT" property="userId"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="regId"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+        <result column="EMP_ID" jdbcType="BIGINT" property="empId"/>
+        <result column="REALNAME" jdbcType="VARCHAR" property="realName"/>
+        <result column="IS_SUPER" jdbcType="INTEGER" property="isSuper"/>
+        <result column="SUPERIOR_NAME" jdbcType="VARCHAR" property="superiorName"/>
+        <result column="is_group_manager" jdbcType="INTEGER" property="isGroupManager"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="delState"/>
+        <result column="IS_DISABLED" jdbcType="INTEGER" property="isDisabled"/>
+        <result column="GENDER" jdbcType="INTEGER" property="gender"/>
+        <result column="REG_NAME" jdbcType="VARCHAR" property="regName"/>
+        <result column="DEP_NAME" jdbcType="VARCHAR" property="deptName"/>
+        <result column="DUTY_NAME" jdbcType="VARCHAR" property="dutyName"/>
+        <result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="mail"/>
+        <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        USER_ID, REG_ID, ORG_ID, EMP_ID, REALNAME, IS_SUPER, SUPERIOR_NAME, is_group_manager, DEL_STATE, IS_DISABLED
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_sys_user
+        where USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+
+
+	<resultMap id="rmVo" type="com.fea.project.model.plan.vo.ProjectTreeModelVo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="label" jdbcType="VARCHAR" property="label"/>
+        <result column="tag" jdbcType="BIGINT" property="tag"/>
+        <result column="job" jdbcType="VARCHAR" property="job"/>
+        <result column="leaderId" jdbcType="BIGINT" property="leaderId"/>
+   		 </resultMap>
+   		 <select id="selectManagerInfo" parameterType="java.lang.Long" resultMap="rmVo">
+       SELECT
+		tsu.USER_ID id,
+		tsu.REALNAME label,
+		1  tag,
+		"" job
+		from l2cplat_ceshi.t_sys_user tsu 
+		where USER_ID = #{leaderId,jdbcType=BIGINT}
+    </select>
+		
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.base.SysUserModel"
+            resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_sys_user u
+        left join t_sys_organization tso on tso.ORG_ID = u.ORG_ID
+        left join t_sys_employee tse on u.EMP_ID = tse.EMP_ID
+        left join t_sys_department tsd on tsd.DEP_ID = tse.EMP_ID
+        where 1 = 1
+        <if test="regId != null">
+            and u.REG_ID = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and u.ORG_ID = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="empId != null">
+            and u.EMP_ID = #{empId,jdbcType=BIGINT}
+        </if>
+        <if test="realName != null">
+            and u.REALNAME = #{realName,jdbcType=VARCHAR}
+        </if>
+        <if test="isSuper != null">
+            and u.IS_SUPER = #{isSuper,jdbcType=INTEGER}
+        </if>
+        <if test="superiorName != null">
+            and u.SUPERIOR_NAME = #{superiorName,jdbcType=VARCHAR}
+        </if>
+        <if test="isGroupManager != null">
+            and u.is_group_manager = #{isGroupManager,jdbcType=INTEGER}
+        </if>
+        <if test="isGroupManager != null">
+            and u.is_group_manager = #{isGroupManager,jdbcType=INTEGER}
+        </if>
+        <if test="isGroupManager != null">
+            and u.is_group_manager = #{isGroupManager,jdbcType=INTEGER}
+        </if>
+        <if test="isDisabled != null">
+            and u.IS_DISABLED = #{isDisabled,jdbcType=INTEGER}
+        </if>
+        and u.DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <resultMap id="BaseResultMapVo" type="com.fea.project.api.other.model.base.vo.SysUserVo" extends="BaseResultMap">
+        <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
+        <result column="DEP_ID" jdbcType="BIGINT" property="deptId"/>
+        <result column="DEP_NAME" jdbcType="VARCHAR" property="deptName"/>
+    </resultMap>
+    <sql id="Base_Column_List_Vo">
+        u.USER_ID, u.REG_ID, u.ORG_ID, u.EMP_ID, u.REALNAME, u.IS_SUPER, u.SUPERIOR_NAME, u.is_group_manager, u.DEL_STATE, u.IS_DISABLED,
+        tso.ORG_NAME, tsd.DEP_ID, tsd.DEP_NAME
+    </sql>
+    <select id="selectByRegIds" resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_sys_user u
+        left join t_sys_organization tso on tso.ORG_ID = u.ORG_ID
+        left join t_sys_employee tse on u.EMP_ID = tse.EMP_ID
+        left join t_sys_department tsd on tsd.DEP_ID = tse.EMP_ID
+        where u.del_state = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and u.REG_ID in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <sql id="Base_Column_List_vo">
+        u.USER_ID, u.REG_ID, u.ORG_ID, u.EMP_ID, u.REALNAME, u.IS_SUPER, u.SUPERIOR_NAME, u.is_group_manager, u.DEL_STATE, u.IS_DISABLED
+    </sql>
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select<include refid="Base_Column_List_vo"/>, emp.GENDER as gender
+        from t_sys_user u
+        left join t_sys_employee emp on u.EMP_ID = emp.EMP_ID
+        where u.user_id in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+        and u.DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectBaseInfoByIds" resultMap="BaseResultMap">
+        select U.*, emp.GENDER as gender, reg.ORG_NAME as REG_NAME, dep.DEP_NAME, job.`NAME` as DUTY_NAME,
+        role.ROLE_NAME
+        from t_sys_user u
+        left join t_sys_employee emp on u.EMP_ID = emp.EMP_ID
+        left join t_sys_org_register reg on u.REG_ID = reg.REG_ID
+        left join t_sys_department dep on dep.DEP_ID = emp.DEP_ID
+        left join t_hr_employee hremp on hremp.id = emp.HR_EMP_ID
+        left join t_hr_emp_duty ed on hremp.id = ed.EMP_ID
+        left join t_sys_job job on job.id = ed.JOB_ID
+        left join t_sys_user_role userRole on userRole.USER_ID = u.USER_ID
+        left join t_sys_role role on userRole.ROLE_ID = role.ROLE_ID
+        where u.user_id in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+        and u.DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectUserInfoAndDeptInfoByIds" resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_sys_user u
+        left join t_sys_organization tso on tso.ORG_ID = u.ORG_ID
+        left join t_sys_employee tse on u.EMP_ID = tse.EMP_ID
+        left join t_sys_department tsd on tsd.DEP_ID = tse.EMP_ID
+        where u.del_state = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and u.user_id in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectJobIdByUserId" resultType="long">
+        select id from t_sys_job where id in (
+            select distinct JOB_ID from t_hr_emp_duty where EMP_ID in (
+                select distinct id from t_hr_employee
+                where id in (
+                    select distinct HR_EMP_ID from t_sys_employee
+                    where EMP_ID in (select distinct EMP_ID from t_sys_user where USER_ID =#{userId, jdbcType=BIGINT}  AND EMP_ID IS NOT NULL)
+                    AND HR_EMP_ID IS NOT NULL
+                )
+            )
+            AND JOB_ID IS NOT NULL
+        )
+        AND PARENT_ID IS NULL
+    </select>
+    <select id="selectJobIdByUserIdWithParentId" resultType="long">
+        select id from t_sys_job where id in (
+            select distinct JOB_ID from t_hr_emp_duty where EMP_ID in (
+                select distinct id from t_hr_employee
+                where id in (
+                    select distinct HR_EMP_ID from t_sys_employee
+                    where EMP_ID in (select distinct EMP_ID from t_sys_user where USER_ID =#{userId, jdbcType=BIGINT}  AND EMP_ID IS NOT NULL)
+                    AND HR_EMP_ID IS NOT NULL
+                )
+            ) 
+            AND JOB_ID IS NOT NULL
+        )
+    </select>
+
+
+    <select id="selectSysUserByJobId" resultMap="BaseResultMapVo">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_sys_user u
+        left join t_sys_organization tso on tso.ORG_ID = u.ORG_ID
+        left join t_sys_employee tse on u.EMP_ID = tse.EMP_ID
+        left join t_sys_department tsd on tsd.DEP_ID = tse.EMP_ID
+        where u.del_state = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and u.USER_ID in (
+        select USER_ID from t_sys_user where EMP_ID in (
+        select EMP_ID from t_sys_employee where HR_EMP_ID in (
+        select ID from t_hr_employee WHERE id IN (
+        select EMP_ID from t_hr_emp_duty where JOB_ID = #{jobId, jdbcType=BIGINT}
+        AND IS_DEL = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()})
+        and IS_DEL = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        ) and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        ) and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        )
+    </select>
+
+    <select id="selectUsersByJobIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_sys_user u
+        left join t_sys_organization tso on tso.ORG_ID = u.ORG_ID
+        left join t_sys_employee tse on u.EMP_ID = tse.EMP_ID
+        left join t_sys_department tsd on tsd.DEP_ID = tse.EMP_ID
+        where u.del_state = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and u.USER_ID in (
+        select USER_ID from t_sys_user where EMP_ID in (
+        select EMP_ID from t_sys_employee where HR_EMP_ID in (
+        select ID from t_hr_employee WHERE id IN (
+        select EMP_ID from t_hr_emp_duty where JOB_ID in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        AND IS_DEL = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()})
+        and IS_DEL = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        ) and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        ) and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        )
+    </select>
+    
+      <select id="selectUserByParentJobId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List_Vo"/>
+        from t_sys_user u
+        left join t_sys_organization tso on tso.ORG_ID = u.ORG_ID
+        left join t_sys_employee tse on u.EMP_ID = tse.EMP_ID
+        left join t_sys_department tsd on tsd.DEP_ID = tse.EMP_ID
+        where u.del_state = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and u.USER_ID in (
+        select USER_ID from t_sys_user where EMP_ID in (
+        select EMP_ID from t_sys_employee where HR_EMP_ID in (
+        select ID from t_hr_employee WHERE id IN (
+        select EMP_ID from t_hr_emp_duty where JOB_ID = #{jobId,jdbcType=BIGINT}
+        AND IS_DEL = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()})
+        and IS_DEL = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        ) and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        ) and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        )
+    </select>
+
+    <select id="selectSysUserByRoleIds" resultMap="BaseResultMap">
+        select * from t_sys_user where USER_ID in (
+        select USER_ID from t_sys_user_role where ROLE_ID in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+        and USER_ID is not null)
+        and STATE = ${@com.fea.project.enums.base.EnableStatusEnum@ENABLE.getStatus()}
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectSuperiorId" resultType="long">
+        select SUPERIOR_ID from t_hr_emp_duty where EMP_ID = #{empId, jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByEmpIdAndApplyer" resultType="com.fea.project.api.other.model.base.SysUserModel">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_user
+        where EMP_ID = #{empId,jdbcType=BIGINT}
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByOrgIds">
+        select <include refid="Base_Column_List" />
+        from t_sys_user
+        where ORG_ID in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

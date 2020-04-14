@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.feebudget.TallyMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.feebudget.TallyModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="reimburseId" jdbcType="BIGINT" property="reimburseId" />
+        <result column="tallyCode" jdbcType="VARCHAR" property="tallyCode" />
+        <result column="tallyType" jdbcType="TINYINT" property="tallyType" />
+        <result column="cateId" jdbcType="BIGINT" property="cateId" />
+        <result column="cateName" jdbcType="VARCHAR" property="cateName" />
+        <result column="cateStr" jdbcType="VARCHAR" property="cateStr" />
+        <result column="money" jdbcType="DOUBLE" property="money" />
+        <result column="currencyId" jdbcType="BIGINT" property="currencyId" />
+        <result column="currencyName" jdbcType="VARCHAR" property="currencyName" />
+        <result column="happenTime" jdbcType="DATE" property="happenTime" />
+        <result column="happenPlace" jdbcType="VARCHAR" property="happenPlace" />
+        <result column="relatedBill" jdbcType="TINYINT" property="relatedBill" />
+        <result column="billId" jdbcType="BIGINT" property="billId" />
+        <result column="billName" jdbcType="VARCHAR" property="billName" />
+        <result column="travelType" jdbcType="TINYINT" property="travelType" />
+        <result column="travelId" jdbcType="BIGINT" property="travelId" />
+        <result column="travelName" jdbcType="VARCHAR" property="travelName" />
+        <result column="purpose" jdbcType="VARCHAR" property="purpose" />
+        <result column="ownerType" jdbcType="TINYINT" property="ownerType" />
+        <result column="customerId" jdbcType="BIGINT" property="customerId" />
+        <result column="customerName" jdbcType="VARCHAR" property="customerName" />
+        <result column="contactIds" jdbcType="VARCHAR" property="contactIds" />
+        <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+        <result column="businessType" jdbcType="TINYINT" property="businessType" />
+        <result column="businessId" jdbcType="BIGINT" property="businessId" />
+        <result column="businessName" jdbcType="VARCHAR" property="businessName" />
+        <result column="hasTicket" jdbcType="TINYINT" property="hasTicket" />
+        <result column="ticketNum" jdbcType="INTEGER" property="ticketNum" />
+        <result column="ticketRemark" jdbcType="VARCHAR" property="ticketRemark" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="state" jdbcType="TINYINT" property="state" />
+        <result column="delState" jdbcType="TINYINT" property="delState" />
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+        <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        reimburseId, tallyCode, tallyType, cateId, cateName, cateStr, money, currencyId, 
+        currencyName, happenTime, happenPlace, relatedBill, billId, billName, travelType, 
+        travelId, travelName, purpose, ownerType, customerId, customerName, contactIds, contacts, 
+        businessType, businessId, businessName, hasTicket, ticketNum, ticketRemark, reg_id, 
+        org_id, state, delState, create_user_id, create_user, create_time, update_user_id, 
+        update_user, update_time
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_fin_tally
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_fin_tally
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_fin_tally
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.feebudget.TallyModel">
+        insert into t_fin_tally (
+        <include refid="Base_Column_List" />
+        )
+        values (#{reimburseId,jdbcType=BIGINT}, 
+            #{tallyCode,jdbcType=VARCHAR}, 
+            #{tallyType,jdbcType=TINYINT}, 
+            #{cateId,jdbcType=BIGINT}, 
+            #{cateName,jdbcType=VARCHAR}, 
+            #{cateStr,jdbcType=VARCHAR}, 
+            #{money,jdbcType=DOUBLE}, 
+            #{currencyId,jdbcType=BIGINT}, 
+            #{currencyName,jdbcType=VARCHAR}, 
+            #{happenTime,jdbcType=DATE}, 
+            #{happenPlace,jdbcType=VARCHAR}, 
+            #{relatedBill,jdbcType=TINYINT}, 
+            #{billId,jdbcType=BIGINT}, 
+            #{billName,jdbcType=VARCHAR}, 
+            #{travelType,jdbcType=TINYINT}, 
+            #{travelId,jdbcType=BIGINT}, 
+            #{travelName,jdbcType=VARCHAR}, 
+            #{purpose,jdbcType=VARCHAR}, 
+            #{ownerType,jdbcType=TINYINT}, 
+            #{customerId,jdbcType=BIGINT}, 
+            #{customerName,jdbcType=VARCHAR}, 
+            #{contactIds,jdbcType=VARCHAR}, 
+            #{contacts,jdbcType=VARCHAR}, 
+            #{businessType,jdbcType=TINYINT}, 
+            #{businessId,jdbcType=BIGINT}, 
+            #{businessName,jdbcType=VARCHAR}, 
+            #{hasTicket,jdbcType=TINYINT}, 
+            #{ticketNum,jdbcType=INTEGER}, 
+            #{ticketRemark,jdbcType=VARCHAR}, 
+            #{regId,jdbcType=BIGINT}, 
+            #{orgId,jdbcType=BIGINT}, 
+            #{state,jdbcType=TINYINT}, 
+            #{delState,jdbcType=TINYINT}, 
+            #{createUserId,jdbcType=BIGINT}, 
+            #{createUser,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateUserId,jdbcType=BIGINT}, 
+            #{updateUser,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_fin_tally (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.reimburseId,jdbcType=BIGINT}, 
+                #{item.tallyCode,jdbcType=VARCHAR}, 
+                #{item.tallyType,jdbcType=TINYINT}, 
+                #{item.cateId,jdbcType=BIGINT}, 
+                #{item.cateName,jdbcType=VARCHAR}, 
+                #{item.cateStr,jdbcType=VARCHAR}, 
+                #{item.money,jdbcType=DOUBLE}, 
+                #{item.currencyId,jdbcType=BIGINT}, 
+                #{item.currencyName,jdbcType=VARCHAR}, 
+                #{item.happenTime,jdbcType=DATE}, 
+                #{item.happenPlace,jdbcType=VARCHAR}, 
+                #{item.relatedBill,jdbcType=TINYINT}, 
+                #{item.billId,jdbcType=BIGINT}, 
+                #{item.billName,jdbcType=VARCHAR}, 
+                #{item.travelType,jdbcType=TINYINT}, 
+                #{item.travelId,jdbcType=BIGINT}, 
+                #{item.travelName,jdbcType=VARCHAR}, 
+                #{item.purpose,jdbcType=VARCHAR}, 
+                #{item.ownerType,jdbcType=TINYINT}, 
+                #{item.customerId,jdbcType=BIGINT}, 
+                #{item.customerName,jdbcType=VARCHAR}, 
+                #{item.contactIds,jdbcType=VARCHAR}, 
+                #{item.contacts,jdbcType=VARCHAR}, 
+                #{item.businessType,jdbcType=TINYINT}, 
+                #{item.businessId,jdbcType=BIGINT}, 
+                #{item.businessName,jdbcType=VARCHAR}, 
+                #{item.hasTicket,jdbcType=TINYINT}, 
+                #{item.ticketNum,jdbcType=INTEGER}, 
+                #{item.ticketRemark,jdbcType=VARCHAR}, 
+                #{item.regId,jdbcType=BIGINT}, 
+                #{item.orgId,jdbcType=BIGINT}, 
+                #{item.state,jdbcType=TINYINT}, 
+                #{item.delState,jdbcType=TINYINT}, 
+                #{item.createUserId,jdbcType=BIGINT}, 
+                #{item.createUser,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateUserId,jdbcType=BIGINT}, 
+                #{item.updateUser,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.feebudget.TallyModel" resultMap="BaseResultMap">
+        select * from l2cplat_ceshi.t_fin_tally where 1 = 1
+        <if test="reimburseId != null">
+            and reimburseId = #{reimburseId,jdbcType=BIGINT}
+        </if>
+        <if test="tallyCode != null">
+            and tallyCode = #{tallyCode,jdbcType=VARCHAR}
+        </if>
+        <if test="tallyType != null">
+            and tallyType = #{tallyType,jdbcType=TINYINT}
+        </if>
+        <if test="cateId != null">
+            and cateId = #{cateId,jdbcType=BIGINT}
+        </if>
+        <if test="cateName != null">
+            and cateName = #{cateName,jdbcType=VARCHAR}
+        </if>
+        <if test="cateStr != null">
+            and cateStr = #{cateStr,jdbcType=VARCHAR}
+        </if>
+        <if test="money != null">
+            and money = #{money,jdbcType=DOUBLE}
+        </if>
+        <if test="currencyId != null">
+            and currencyId = #{currencyId,jdbcType=BIGINT}
+        </if>
+        <if test="currencyName != null">
+            and currencyName = #{currencyName,jdbcType=VARCHAR}
+        </if>
+        <if test="happenTime != null">
+            and happenTime = #{happenTime,jdbcType=DATE}
+        </if>
+        <if test="happenPlace != null">
+            and happenPlace = #{happenPlace,jdbcType=VARCHAR}
+        </if>
+        <if test="relatedBill != null">
+            and relatedBill = #{relatedBill,jdbcType=TINYINT}
+        </if>
+        <if test="billId != null">
+            and billId = #{billId,jdbcType=BIGINT}
+        </if>
+        <if test="billName != null">
+            and billName = #{billName,jdbcType=VARCHAR}
+        </if>
+        <if test="travelType != null">
+            and travelType = #{travelType,jdbcType=TINYINT}
+        </if>
+        <if test="travelId != null">
+            and travelId = #{travelId,jdbcType=BIGINT}
+        </if>
+        <if test="travelName != null">
+            and travelName = #{travelName,jdbcType=VARCHAR}
+        </if>
+        <if test="purpose != null">
+            and purpose = #{purpose,jdbcType=VARCHAR}
+        </if>
+        <if test="ownerType != null">
+            and ownerType = #{ownerType,jdbcType=TINYINT}
+        </if>
+        <if test="customerId != null">
+            and customerId = #{customerId,jdbcType=BIGINT}
+        </if>
+        <if test="customerName != null">
+            and customerName = #{customerName,jdbcType=VARCHAR}
+        </if>
+        <if test="contactIds != null">
+            and contactIds = #{contactIds,jdbcType=VARCHAR}
+        </if>
+        <if test="contacts != null">
+            and contacts = #{contacts,jdbcType=VARCHAR}
+        </if>
+        <if test="businessType != null">
+            and businessType = #{businessType,jdbcType=TINYINT}
+        </if>
+        <if test="businessId != null">
+            and businessId = #{businessId,jdbcType=BIGINT}
+        </if>
+        <if test="businessName != null">
+            and businessName = #{businessName,jdbcType=VARCHAR}
+        </if>
+        <if test="hasTicket != null">
+            and hasTicket = #{hasTicket,jdbcType=TINYINT}
+        </if>
+        <if test="ticketNum != null">
+            and ticketNum = #{ticketNum,jdbcType=INTEGER}
+        </if>
+        <if test="ticketRemark != null">
+            and ticketRemark = #{ticketRemark,jdbcType=VARCHAR}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="state != null">
+            and state = #{state,jdbcType=TINYINT}
+        </if>
+        <if test="delState != null">
+            and delState = #{delState,jdbcType=TINYINT}
+        </if>
+        <if test="createUserId != null">
+            and create_user_id = #{createUserId,jdbcType=BIGINT}
+        </if>
+        <if test="createUser != null">
+            and create_user = #{createUser,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateUserId != null">
+            and update_user_id = #{updateUserId,jdbcType=BIGINT}
+        </if>
+        <if test="updateUser != null">
+            and update_user = #{updateUser,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.feebudget.TallyModel">
+        insert into t_fin_tally
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reimburseId != null">
+                reimburseId,
+            </if>
+            <if test="tallyCode != null">
+                tallyCode,
+            </if>
+            <if test="tallyType != null">
+                tallyType,
+            </if>
+            <if test="cateId != null">
+                cateId,
+            </if>
+            <if test="cateName != null">
+                cateName,
+            </if>
+            <if test="cateStr != null">
+                cateStr,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="currencyId != null">
+                currencyId,
+            </if>
+            <if test="currencyName != null">
+                currencyName,
+            </if>
+            <if test="happenTime != null">
+                happenTime,
+            </if>
+            <if test="happenPlace != null">
+                happenPlace,
+            </if>
+            <if test="relatedBill != null">
+                relatedBill,
+            </if>
+            <if test="billId != null">
+                billId,
+            </if>
+            <if test="billName != null">
+                billName,
+            </if>
+            <if test="travelType != null">
+                travelType,
+            </if>
+            <if test="travelId != null">
+                travelId,
+            </if>
+            <if test="travelName != null">
+                travelName,
+            </if>
+            <if test="purpose != null">
+                purpose,
+            </if>
+            <if test="ownerType != null">
+                ownerType,
+            </if>
+            <if test="customerId != null">
+                customerId,
+            </if>
+            <if test="customerName != null">
+                customerName,
+            </if>
+            <if test="contactIds != null">
+                contactIds,
+            </if>
+            <if test="contacts != null">
+                contacts,
+            </if>
+            <if test="businessType != null">
+                businessType,
+            </if>
+            <if test="businessId != null">
+                businessId,
+            </if>
+            <if test="businessName != null">
+                businessName,
+            </if>
+            <if test="hasTicket != null">
+                hasTicket,
+            </if>
+            <if test="ticketNum != null">
+                ticketNum,
+            </if>
+            <if test="ticketRemark != null">
+                ticketRemark,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="delState != null">
+                delState,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateUserId != null">
+                update_user_id,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reimburseId != null">
+                #{reimburseId,jdbcType=BIGINT},
+            </if>
+            <if test="tallyCode != null">
+                #{tallyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="tallyType != null">
+                #{tallyType,jdbcType=TINYINT},
+            </if>
+            <if test="cateId != null">
+                #{cateId,jdbcType=BIGINT},
+            </if>
+            <if test="cateName != null">
+                #{cateName,jdbcType=VARCHAR},
+            </if>
+            <if test="cateStr != null">
+                #{cateStr,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="currencyId != null">
+                #{currencyId,jdbcType=BIGINT},
+            </if>
+            <if test="currencyName != null">
+                #{currencyName,jdbcType=VARCHAR},
+            </if>
+            <if test="happenTime != null">
+                #{happenTime,jdbcType=DATE},
+            </if>
+            <if test="happenPlace != null">
+                #{happenPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="relatedBill != null">
+                #{relatedBill,jdbcType=TINYINT},
+            </if>
+            <if test="billId != null">
+                #{billId,jdbcType=BIGINT},
+            </if>
+            <if test="billName != null">
+                #{billName,jdbcType=VARCHAR},
+            </if>
+            <if test="travelType != null">
+                #{travelType,jdbcType=TINYINT},
+            </if>
+            <if test="travelId != null">
+                #{travelId,jdbcType=BIGINT},
+            </if>
+            <if test="travelName != null">
+                #{travelName,jdbcType=VARCHAR},
+            </if>
+            <if test="purpose != null">
+                #{purpose,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerType != null">
+                #{ownerType,jdbcType=TINYINT},
+            </if>
+            <if test="customerId != null">
+                #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="customerName != null">
+                #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactIds != null">
+                #{contactIds,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null">
+                #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null">
+                #{businessType,jdbcType=TINYINT},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="businessName != null">
+                #{businessName,jdbcType=VARCHAR},
+            </if>
+            <if test="hasTicket != null">
+                #{hasTicket,jdbcType=TINYINT},
+            </if>
+            <if test="ticketNum != null">
+                #{ticketNum,jdbcType=INTEGER},
+            </if>
+            <if test="ticketRemark != null">
+                #{ticketRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=TINYINT},
+            </if>
+            <if test="delState != null">
+                #{delState,jdbcType=TINYINT},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null">
+                #{updateUserId,jdbcType=BIGINT},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.feebudget.TallyModel">
+        update t_fin_tally
+        <set>
+            <if test="reimburseId != null">
+                reimburseId = #{reimburseId,jdbcType=BIGINT},
+            </if>
+            <if test="tallyCode != null">
+                tallyCode = #{tallyCode,jdbcType=VARCHAR},
+            </if>
+            <if test="tallyType != null">
+                tallyType = #{tallyType,jdbcType=TINYINT},
+            </if>
+            <if test="cateId != null">
+                cateId = #{cateId,jdbcType=BIGINT},
+            </if>
+            <if test="cateName != null">
+                cateName = #{cateName,jdbcType=VARCHAR},
+            </if>
+            <if test="cateStr != null">
+                cateStr = #{cateStr,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="currencyId != null">
+                currencyId = #{currencyId,jdbcType=BIGINT},
+            </if>
+            <if test="currencyName != null">
+                currencyName = #{currencyName,jdbcType=VARCHAR},
+            </if>
+            <if test="happenTime != null">
+                happenTime = #{happenTime,jdbcType=DATE},
+            </if>
+            <if test="happenPlace != null">
+                happenPlace = #{happenPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="relatedBill != null">
+                relatedBill = #{relatedBill,jdbcType=TINYINT},
+            </if>
+            <if test="billId != null">
+                billId = #{billId,jdbcType=BIGINT},
+            </if>
+            <if test="billName != null">
+                billName = #{billName,jdbcType=VARCHAR},
+            </if>
+            <if test="travelType != null">
+                travelType = #{travelType,jdbcType=TINYINT},
+            </if>
+            <if test="travelId != null">
+                travelId = #{travelId,jdbcType=BIGINT},
+            </if>
+            <if test="travelName != null">
+                travelName = #{travelName,jdbcType=VARCHAR},
+            </if>
+            <if test="purpose != null">
+                purpose = #{purpose,jdbcType=VARCHAR},
+            </if>
+            <if test="ownerType != null">
+                ownerType = #{ownerType,jdbcType=TINYINT},
+            </if>
+            <if test="customerId != null">
+                customerId = #{customerId,jdbcType=BIGINT},
+            </if>
+            <if test="customerName != null">
+                customerName = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactIds != null">
+                contactIds = #{contactIds,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null">
+                contacts = #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null">
+                businessType = #{businessType,jdbcType=TINYINT},
+            </if>
+            <if test="businessId != null">
+                businessId = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="businessName != null">
+                businessName = #{businessName,jdbcType=VARCHAR},
+            </if>
+            <if test="hasTicket != null">
+                hasTicket = #{hasTicket,jdbcType=TINYINT},
+            </if>
+            <if test="ticketNum != null">
+                ticketNum = #{ticketNum,jdbcType=INTEGER},
+            </if>
+            <if test="ticketRemark != null">
+                ticketRemark = #{ticketRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=TINYINT},
+            </if>
+            <if test="delState != null">
+                delState = #{delState,jdbcType=TINYINT},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=BIGINT},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserId != null">
+                update_user_id = #{updateUserId,jdbcType=BIGINT},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.feebudget.TallyModel">
+        update t_fin_tally
+        set reimburseId = #{reimburseId,jdbcType=BIGINT},
+            tallyCode = #{tallyCode,jdbcType=VARCHAR},
+            tallyType = #{tallyType,jdbcType=TINYINT},
+            cateId = #{cateId,jdbcType=BIGINT},
+            cateName = #{cateName,jdbcType=VARCHAR},
+            cateStr = #{cateStr,jdbcType=VARCHAR},
+            money = #{money,jdbcType=DOUBLE},
+            currencyId = #{currencyId,jdbcType=BIGINT},
+            currencyName = #{currencyName,jdbcType=VARCHAR},
+            happenTime = #{happenTime,jdbcType=DATE},
+            happenPlace = #{happenPlace,jdbcType=VARCHAR},
+            relatedBill = #{relatedBill,jdbcType=TINYINT},
+            billId = #{billId,jdbcType=BIGINT},
+            billName = #{billName,jdbcType=VARCHAR},
+            travelType = #{travelType,jdbcType=TINYINT},
+            travelId = #{travelId,jdbcType=BIGINT},
+            travelName = #{travelName,jdbcType=VARCHAR},
+            purpose = #{purpose,jdbcType=VARCHAR},
+            ownerType = #{ownerType,jdbcType=TINYINT},
+            customerId = #{customerId,jdbcType=BIGINT},
+            customerName = #{customerName,jdbcType=VARCHAR},
+            contactIds = #{contactIds,jdbcType=VARCHAR},
+            contacts = #{contacts,jdbcType=VARCHAR},
+            businessType = #{businessType,jdbcType=TINYINT},
+            businessId = #{businessId,jdbcType=BIGINT},
+            businessName = #{businessName,jdbcType=VARCHAR},
+            hasTicket = #{hasTicket,jdbcType=TINYINT},
+            ticketNum = #{ticketNum,jdbcType=INTEGER},
+            ticketRemark = #{ticketRemark,jdbcType=VARCHAR},
+            reg_id = #{regId,jdbcType=BIGINT},
+            org_id = #{orgId,jdbcType=BIGINT},
+            state = #{state,jdbcType=TINYINT},
+            delState = #{delState,jdbcType=TINYINT},
+            create_user_id = #{createUserId,jdbcType=BIGINT},
+            create_user = #{createUser,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_user_id = #{updateUserId,jdbcType=BIGINT},
+            update_user = #{updateUser,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

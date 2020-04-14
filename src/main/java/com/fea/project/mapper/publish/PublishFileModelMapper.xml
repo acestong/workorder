@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.publish.PublishFileModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.publish.PublishFileModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pubish_id" jdbcType="BIGINT" property="pubishId" />
+    <result column="publish_file_id" jdbcType="BIGINT" property="publishFileId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, pubish_id, publish_file_id
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.publish.PublishFileModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_publish_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_publish_file
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_publish_file
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.publish.PublishFileModelExample">
+    delete from t_project_publish_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.publish.PublishFileModel">
+    insert into t_project_publish_file (id, pubish_id, publish_file_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{pubishId,jdbcType=BIGINT}, #{publishFileId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective"  keyProperty="id" parameterType="com.fea.project.model.publish.PublishFileModel">
+    insert into t_project_publish_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pubishId != null">
+        pubish_id,
+      </if>
+      <if test="publishFileId != null">
+        publish_file_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pubishId != null">
+        #{pubishId,jdbcType=BIGINT},
+      </if>
+      <if test="publishFileId != null">
+        #{publishFileId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.publish.PublishFileModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_publish_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_publish_file
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.pubishId != null">
+        pubish_id = #{record.pubishId,jdbcType=BIGINT},
+      </if>
+      <if test="record.publishFileId != null">
+        publish_file_id = #{record.publishFileId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_publish_file
+    set id = #{record.id,jdbcType=BIGINT},
+      pubish_id = #{record.pubishId,jdbcType=BIGINT},
+      publish_file_id = #{record.publishFileId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.publish.PublishFileModel">
+    update t_project_publish_file
+    <set>
+      <if test="pubishId != null">
+        pubish_id = #{pubishId,jdbcType=BIGINT},
+      </if>
+      <if test="publishFileId != null">
+        publish_file_id = #{publishFileId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.publish.PublishFileModel">
+    update t_project_publish_file
+    set pubish_id = #{pubishId,jdbcType=BIGINT},
+      publish_file_id = #{publishFileId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectFileListByPublishId" parameterType="java.lang.Long" resultType="com.fea.project.model.publish.vo.PublishFileViewVo">
+    SELECT DISTINCT
+	tpa.id fileId,
+	tpa.real_name  fileName,
+	tpa.url filePath
+	from 
+	t_project_publish_file tppf
+	LEFT JOIN
+	t_project_appendix tpa
+	ON
+	tppf.publish_file_id = tpa.id
+	where tppf.pubish_id = #{publishId,jdbcType=BIGINT}
+  </select>
+</mapper>

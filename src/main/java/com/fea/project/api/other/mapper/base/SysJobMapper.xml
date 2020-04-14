@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.base.SysJobMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.base.SysJobModel">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="PARENTID"/>
+        <result column="NAME" jdbcType="VARCHAR" property="NAME"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID"/>
+        <result column="CREATE_USER_ID" jdbcType="BIGINT" property="CREATEUSERID"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER_ID" jdbcType="BIGINT" property="UPDATEUSERID"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="DEP_ID" jdbcType="BIGINT" property="DEPID"/>
+        <result column="DEP_NAME" jdbcType="VARCHAR" property="DEPNAME"/>
+        <result column="JOB_CODE" jdbcType="VARCHAR" property="JOBCODE"/>
+        <result column="STATE" jdbcType="TINYINT" property="STATE"/>
+        <result column="EFFECTIVEDATE" jdbcType="DATE" property="EFFECTIVEDATE"/>
+        <result column="NATURE" jdbcType="TINYINT" property="NATURE"/>
+        <result column="STAFF" jdbcType="INTEGER" property="STAFF"/>
+        <result column="KEYJOBS" jdbcType="BIT" property="KEYJOBS"/>
+        <result column="FUNCTION_ID" jdbcType="BIGINT" property="FUNCTIONID"/>
+        <result column="FUNCTION_NAME" jdbcType="VARCHAR" property="FUNCTIONNAME"/>
+        <result column="PRODUCTION" jdbcType="BIT" property="PRODUCTION"/>
+        <result column="SALARY_LEVELS_ID" jdbcType="BIGINT" property="SALARYLEVELSID"/>
+        <result column="SALARY_LEVELS_NAME" jdbcType="VARCHAR" property="SALARYLEVELSNAME"/>
+        <result column="SALARY_RANK_ID" jdbcType="BIGINT" property="SALARYRANKID"/>
+        <result column="SALARY_RANK_NAME" jdbcType="VARCHAR" property="SALARYRANKNAME"/>
+        <result column="JOBLEVELS_ID" jdbcType="BIGINT" property="JOBLEVELSID"/>
+        <result column="JOBLEVELS_NAME" jdbcType="VARCHAR" property="JOBLEVELSNAME"/>
+        <result column="PRIORITY" jdbcType="DOUBLE" property="PRIORITY"/>
+        <result column="ORDERCODE" jdbcType="VARCHAR" property="ORDERCODE"/>
+        <result column="DELSTATE" jdbcType="TINYINT" property="DELSTATE"/>
+        <result column="SPARE1" jdbcType="BIGINT" property="SPARE1"/>
+        <result column="SPARE2" jdbcType="BIGINT" property="SPARE2"/>
+        <result column="SPARE3" jdbcType="INTEGER" property="SPARE3"/>
+        <result column="SPARE4" jdbcType="INTEGER" property="SPARE4"/>
+        <result column="SPARE5" jdbcType="VARCHAR" property="SPARE5"/>
+        <result column="SPARE6" jdbcType="VARCHAR" property="SPARE6"/>
+        <result column="SPARE7" jdbcType="TIMESTAMP" property="SPARE7"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, PARENT_ID, NAME, REG_ID, ORG_ID, CREATE_USER_ID, CREATE_USER, CREATE_TIME, UPDATE_USER_ID,
+        UPDATE_USER, UPDATE_TIME, DEP_ID, DEP_NAME, JOB_CODE, STATE, EFFECTIVEDATE, NATURE, 
+        STAFF, KEYJOBS, FUNCTION_ID, FUNCTION_NAME, PRODUCTION, SALARY_LEVELS_ID, SALARY_LEVELS_NAME, 
+        SALARY_RANK_ID, SALARY_RANK_NAME, JOBLEVELS_ID, JOBLEVELS_NAME, PRIORITY, ORDERCODE, 
+        DELSTATE, SPARE1, SPARE2, SPARE3, SPARE4, SPARE5, SPARE6, SPARE7
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_sys_job
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+    <select id="selectByOrgIdAndParentId" parameterType="com.fea.project.api.other.model.base.SysJobModel"
+            resultMap="BaseResultMap">
+        select * 
+        from t_sys_job
+        where ORG_ID = #{ORGID,jdbcType=BIGINT}
+        and PARENT_ID is null
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.base.SysJobModel"
+            resultMap="BaseResultMap">
+        select * from t_sys_job where 1 = 1
+        <if test="ID != null">
+            and ID = #{ID,jdbcType=BIGINT}
+        </if>
+        <if test="PARENTID != null">
+            and PARENT_ID = #{PARENTID,jdbcType=BIGINT}
+        </if>
+        <if test="NAME != null">
+            and NAME = #{NAME,jdbcType=VARCHAR}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="CREATEUSERID != null">
+            and CREATE_USER_ID = #{CREATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSERID != null">
+            and UPDATE_USER_ID = #{UPDATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="DEPID != null">
+            and DEP_ID = #{DEPID,jdbcType=BIGINT}
+        </if>
+        <if test="DEPNAME != null">
+            and DEP_NAME = #{DEPNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="JOBCODE != null">
+            and JOB_CODE = #{JOBCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="STATE != null">
+            and STATE = #{STATE,jdbcType=TINYINT}
+        </if>
+        <if test="EFFECTIVEDATE != null">
+            and EFFECTIVEDATE = #{EFFECTIVEDATE,jdbcType=DATE}
+        </if>
+        <if test="NATURE != null">
+            and NATURE = #{NATURE,jdbcType=TINYINT}
+        </if>
+        <if test="STAFF != null">
+            and STAFF = #{STAFF,jdbcType=INTEGER}
+        </if>
+        <if test="KEYJOBS != null">
+            and KEYJOBS = #{KEYJOBS,jdbcType=BIT}
+        </if>
+        <if test="FUNCTIONID != null">
+            and FUNCTION_ID = #{FUNCTIONID,jdbcType=BIGINT}
+        </if>
+        <if test="FUNCTIONNAME != null">
+            and FUNCTION_NAME = #{FUNCTIONNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="PRODUCTION != null">
+            and PRODUCTION = #{PRODUCTION,jdbcType=BIT}
+        </if>
+        <if test="SALARYLEVELSID != null">
+            and SALARY_LEVELS_ID = #{SALARYLEVELSID,jdbcType=BIGINT}
+        </if>
+        <if test="SALARYLEVELSNAME != null">
+            and SALARY_LEVELS_NAME = #{SALARYLEVELSNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="SALARYRANKID != null">
+            and SALARY_RANK_ID = #{SALARYRANKID,jdbcType=BIGINT}
+        </if>
+        <if test="SALARYRANKNAME != null">
+            and SALARY_RANK_NAME = #{SALARYRANKNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="JOBLEVELSID != null">
+            and JOBLEVELS_ID = #{JOBLEVELSID,jdbcType=BIGINT}
+        </if>
+        <if test="JOBLEVELSNAME != null">
+            and JOBLEVELS_NAME = #{JOBLEVELSNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="PRIORITY != null">
+            and PRIORITY = #{PRIORITY,jdbcType=DOUBLE}
+        </if>
+        <if test="ORDERCODE != null">
+            and ORDERCODE = #{ORDERCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="DELSTATE != null">
+            and DELSTATE = #{DELSTATE,jdbcType=TINYINT}
+        </if>
+        <if test="SPARE1 != null">
+            and SPARE1 = #{SPARE1,jdbcType=BIGINT}
+        </if>
+        <if test="SPARE2 != null">
+            and SPARE2 = #{SPARE2,jdbcType=BIGINT}
+        </if>
+        <if test="SPARE3 != null">
+            and SPARE3 = #{SPARE3,jdbcType=INTEGER}
+        </if>
+        <if test="SPARE4 != null">
+            and SPARE4 = #{SPARE4,jdbcType=INTEGER}
+        </if>
+        <if test="SPARE5 != null">
+            and SPARE5 = #{SPARE5,jdbcType=VARCHAR}
+        </if>
+        <if test="SPARE6 != null">
+            and SPARE6 = #{SPARE6,jdbcType=VARCHAR}
+        </if>
+        <if test="SPARE7 != null">
+            and SPARE7 = #{SPARE7,jdbcType=TIMESTAMP}
+        </if>
+        AND DELSTATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.api.other.model.base.vo.SysJobVo" extends="BaseResultMap">
+        <association property="sysUserModels" column="id"
+                     select="com.fea.project.api.other.dao.base.SysUserMapper.selectSysUserByJobId" fetchType="lazy"/>
+    </resultMap>
+    <select id="selectTreeListByJobId" resultMap="BaseResultMap_vo">
+        select * from t_sys_job where FIND_IN_SET(id,dataPermQueryChildJobByPIds(#{jobId, jdbcType=BIGINT}))
+        and DELSTATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+    
+    
+    <!-- 通过用户Id获取职位Id -->
+    <select id="selectJobIdByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+       SELECT DISTINCT distinct
+		thed.JOB_ID jobId
+		from 
+		t_sys_user tsu
+		LEFT JOIN
+		t_sys_employee tse
+		ON tsu.EMP_ID = tse.EMP_ID
+		LEFT JOIN
+		t_hr_emp_duty thed
+		on thed.EMP_ID = tse.HR_EMP_ID
+		LEFT JOIN
+		t_sys_job tsj
+		on thed.JOB_ID = tsj.ID
+		where tsu.USER_ID = #{userId,jdbcType=BIGINT}
+    </select>
+
+
+	<!-- 通过jobId获取所有的下属信息 -->
+    <select id="selectUserInfoByJobId" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.ProjectTreeModelVo">
+		SELECT DISTINCT distinct
+		tsu.USER_ID userId,
+		tsu.REALNAME userName,
+		tse.GENDER gender,
+		thed.JOB_ID jobId,
+		tsj.`NAME` jobName,
+		tsj.PARENT_ID parentJobId
+		from 
+		t_sys_user tsu
+		LEFT JOIN
+		t_sys_employee tse
+		ON tsu.EMP_ID = tse.EMP_ID
+		LEFT JOIN
+		t_hr_emp_duty thed
+		on thed.EMP_ID = tse.HR_EMP_ID
+		LEFT JOIN
+		t_sys_job tsj
+		on thed.JOB_ID = tsj.ID
+		where tsj.PARENT_ID = #{jobId,jdbcType=BIGINT}
+		ORDER BY tsj.`NAME`
+    </select>
+    
+     <resultMap id="rm" type="com.fea.project.api.other.model.base.vo.EmpTreeModelVo">
+        <id column="jobId" jdbcType="BIGINT" property="jobId"/>
+        <result column="label" jdbcType="VARCHAR" property="label"/>
+        <result column="userId" jdbcType="BIGINT" property="userId"/>
+        <result column="userName" jdbcType="VARCHAR" property="userName"/>
+        <result column="gender" jdbcType="BIGINT" property="gender"/>
+        		<collection property="children" column="jobId" select="selectSonJobInfoList" />
+    </resultMap>
+    
+	<!-- 通过orgId获取当前职位下的emp相关信息 -->
+    <select id="selectEmpInfoByOrgId" parameterType="java.lang.Long" resultMap="rm">
+		SELECT distinct
+		tsj.ID jobId,
+		tsj.`NAME` label,
+		tsu.USER_ID userId,
+		tsu.REALNAME userName,
+		the.GENDER,
+		CASE the.GENDER  
+		 WHEN ${@com.fea.project.api.other.enums.base.GenderTypeEnum@TYPE_MALE.getValue()} THEN "男"
+		 WHEN ${@com.fea.project.api.other.enums.base.GenderTypeEnum@TYPE_FEMALE.getValue()} THEN "女"
+		 WHEN ${@com.fea.project.api.other.enums.base.GenderTypeEnum@TYPE_UNDEFINED.getValue()} THEN "未知" 
+		end as genderStr
+		from 
+		t_sys_job tsj
+		LEFT JOIN t_hr_emp_duty thed
+		on thed.JOB_ID = tsj.ID
+		LEFT JOIN t_hr_employee the
+		on thed.EMP_ID = the.ID
+		LEFT JOIN t_sys_employee tse
+		on tse.HR_EMP_ID = the.ID
+		LEFT JOIN t_sys_user tsu
+		on tsu.EMP_ID = tse.EMP_ID
+		where tsj.ORG_ID= #{orgId,jdbcType=BIGINT}
+		and PARENT_ID is null 
+		and USER_ID is Not null
+    </select>
+    
+    
+	<!-- 通过orgId获取当前职位下的emp相关信息 -->
+    <select id="selectSonJobInfoList" parameterType="java.lang.Long" resultMap="rm">
+    SELECT distinct
+		tsj.ID jobId,
+		tsj.`NAME` label,
+		tsu.USER_ID userId,
+		tsu.REALNAME userName,
+		the.GENDER,
+		CASE the.GENDER  
+		 WHEN ${@com.fea.project.api.other.enums.base.GenderTypeEnum@TYPE_MALE.getValue()} THEN "男"
+		 WHEN ${@com.fea.project.api.other.enums.base.GenderTypeEnum@TYPE_FEMALE.getValue()} THEN "女"
+		 WHEN ${@com.fea.project.api.other.enums.base.GenderTypeEnum@TYPE_UNDEFINED.getValue()} THEN "未知" 
+		end as genderStr
+		from 
+		t_sys_job tsj
+		LEFT JOIN t_hr_emp_duty thed
+		on thed.JOB_ID = tsj.ID
+		LEFT JOIN t_hr_employee the
+		on thed.EMP_ID = the.ID
+		LEFT JOIN t_sys_employee tse
+		on tse.HR_EMP_ID = the.ID
+		LEFT JOIN t_sys_user tsu
+		on tsu.EMP_ID = tse.EMP_ID
+		where 1=1
+		and USER_ID is Not null
+		and tsj.parent_id = #{jobId,jdbcType=BIGINT}
+    </select>
+
+    <resultMap id="regIdAndJobIds" type="com.fea.project.model.project.vo.UserIdAndJobIdModel" >
+        <result column="USER_ID" jdbcType="BIGINT" property="userId"/>
+        <result column="JOB_ID" jdbcType="BIGINT" property="jobId"/>
+    </resultMap>
+    <select id="selectByRegIdAndJobIds" resultMap="regIdAndJobIds">
+        select distinct tsu.USER_ID, thed.JOB_ID  from t_sys_user tsu
+        LEFT JOIN
+        t_sys_employee tse
+        ON tsu.EMP_ID = tse.EMP_ID
+        LEFT JOIN
+        t_hr_emp_duty thed
+        on thed.EMP_ID = tse.HR_EMP_ID
+        LEFT JOIN
+        t_sys_job tsj
+        on thed.JOB_ID = tsj.ID
+        where tsu.REG_ID = #{regId, jdbcType=BIGINT}
+        and thed.JOB_ID in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+    
+
+
+</mapper>

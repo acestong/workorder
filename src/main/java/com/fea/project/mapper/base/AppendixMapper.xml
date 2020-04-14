@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.base.AppendixMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.base.AppendixModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="business_type" jdbcType="INTEGER" property="businessType"/>
+        <result column="business_id" jdbcType="BIGINT" property="businessId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="file_size" jdbcType="INTEGER" property="fileSize"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, real_name, url, business_type, business_id, create_by, create_time, update_by,
+        update_time, del_status, file_size
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_appendix
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_sys_appendix
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_sys_appendix
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.base.AppendixModel">
+        insert into t_sys_appendix (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{name,jdbcType=VARCHAR},
+        #{realName,jdbcType=VARCHAR},
+        #{url,jdbcType=VARCHAR},
+        #{businessType,jdbcType=INTEGER},
+        #{businessId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER},
+        #{fileSize,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_sys_appendix (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.realName,jdbcType=VARCHAR},
+            #{item.url,jdbcType=VARCHAR},
+            #{item.businessType,jdbcType=INTEGER},
+            #{item.businessId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.fileSize,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.base.AppendixModel" resultMap="BaseResultMap">
+        select * from t_sys_appendix where 1 = 1
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="realName != null">
+            and real_name = #{realName,jdbcType=VARCHAR}
+        </if>
+        <if test="url != null">
+            and url = #{url,jdbcType=VARCHAR}
+        </if>
+        <if test="businessType != null">
+            and business_type = #{businessType,jdbcType=INTEGER}
+        </if>
+        <if test="businessId != null">
+            and business_id = #{businessId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delStatus != null">
+            and del_status = #{delStatus,jdbcType=INTEGER}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.base.AppendixModel">
+        insert into t_sys_appendix
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="businessType != null">
+                business_type,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="fileSize != null">
+                file_size,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null">
+                #{businessType,jdbcType=INTEGER},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.base.AppendixModel">
+        update t_sys_appendix
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="businessType != null">
+                business_type = #{businessType,jdbcType=INTEGER},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.base.AppendixModel">
+        update t_sys_appendix
+        set name = #{name,jdbcType=VARCHAR},
+            real_name = #{realName,jdbcType=VARCHAR},
+            url = #{url,jdbcType=VARCHAR},
+            business_type = #{businessType,jdbcType=INTEGER},
+            business_id = #{businessId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            file_size = #{fileSize,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBusinessIdByIds">
+        update t_sys_appendix
+        set business_id = #{id,jdbcType=BIGINT}
+        where id in
+        <foreach collection="list" open="(" close=")" item="item" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="selectByBusinessId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_appendix where business_id = #{businessId, jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+
+    <select id="selectByFilterAndOrderParams"
+            parameterType="com.fea.project.model.PageInfoQueryOrderAndFilterModel"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_appendix where 1 = 1
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getName() != null">
+                and name = #{model.name,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getRealName() != null">
+                and real_name = #{model.realName,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getBusinessType() != null">
+                and business_type = #{model.businessType,jdbcType=INTEGER}
+            </if>
+            <if test="model.getBusinessId() != null">
+                and business_id = #{model.businessId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getDelStatus() != null">
+                and del_status = #{model.delStatus,jdbcType=INTEGER}
+            </if>
+
+        </if>
+        <if test="keywords != null">
+            and ((name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (real_name like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (url like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="filters != null">
+            <if test="filters.get('businessType') != null">
+                and business_type in
+                <foreach collection="filters.get('businessType')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="filters.get('businessId') != null">
+                and business_id in
+                <foreach collection="filters.get('businessId')" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+
+        </if>
+        <if test="sortKey != null">
+            order by ${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+    </select>
+
+    <update id="updateAppendixDeleteStatusWhenNotInAppendixs">
+        update t_sys_appendix
+        set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}
+        where business_id = #{businessId,jdbcType=BIGINT}
+        and id not in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+
+</mapper>

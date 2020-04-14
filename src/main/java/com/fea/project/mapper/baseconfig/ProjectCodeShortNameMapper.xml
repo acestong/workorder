@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.baseconfig.ProjectCodeShortNameMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.baseconfig.ProjectCodeShortNameModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code_id" jdbcType="BIGINT" property="codeId"/>
+        <result column="dic_project_type" jdbcType="BIGINT" property="dicProjectType"/>
+        <result column="short_code" jdbcType="VARCHAR" property="shortCode"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code_id, dic_project_type, short_code, parent_code_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_code_shortname
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_code_shortname
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_code_shortname
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.baseconfig.ProjectCodeShortNameModel">
+        insert into t_project_code_shortname (
+        <include refid="Base_Column_List"/>
+        )
+        values (#{id,jdbcType=BIGINT},
+        #{codeId,jdbcType=BIGINT},
+        #{dicProjectType,jdbcType=BIGINT},
+        #{shortCode,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_code_shortname (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.codeId,jdbcType=BIGINT},
+            #{item.dicProjectType,jdbcType=BIGINT},
+            #{item.shortCode,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.baseconfig.ProjectCodeShortNameModel"
+            resultMap="BaseResultMap">
+        select * from t_project_code_shortname where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="codeId != null">
+            and code_id = #{codeId,jdbcType=BIGINT}
+        </if>
+        <if test="dicProjectType != null">
+            and dic_project_type = #{dicProjectType,jdbcType=BIGINT}
+        </if>
+        <if test="shortCode != null">
+            and short_code = #{shortCode,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <resultMap id="BaseResultMapVo" type="com.fea.project.model.baseconfig.vo.ProjectCodeShortNameVo"
+               extends="BaseResultMap">
+        <result column="parent_code_id" jdbcType="BIGINT" property="parentCodeId"/>
+        <result column="dic_project_typename" jdbcType="BIGINT" property="dicProjectTypeName"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="state_name" jdbcType="VARCHAR" property="stateName"/>
+    </resultMap>
+    <select id="selectRegProjectCodeShortName"
+            resultMap="BaseResultMapVo">
+        select ts.id, dic.id as dic_project_type, dic.name dic_project_typename, dic.state, (
+                CASE state
+                    WHEN ${@com.fea.project.enums.base.EnableStatusEnum@ENABLE.getStatus()} THEN '启用'
+                    WHEN ${@com.fea.project.enums.base.EnableStatusEnum@DISABLE.getStatus()} THEN '禁用'
+                    ELSE NULL
+                END
+            ) as state_name, ts.short_code, #{codeId, jdbcType=BIGINT} as code_id, dic.parent_id as parent_code_id from (
+                select id, name, state, parent_id from t_project_dictionary_item where dic_id in (
+                    select id from t_project_dictionary where short_name = "project_type")
+                and reg_id = #{regId, jdbcType=BIGINT}
+                and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+            ) as dic
+        left join t_project_code_shortname ts on (dic.id = ts.dic_project_type and ts.code_id = #{codeId, jdbcType=BIGINT})
+    </select>
+
+    <insert id="insertSelective" keyProperty="id"
+            parameterType="com.fea.project.model.baseconfig.ProjectCodeShortNameModel">
+        insert into t_project_code_shortname
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="codeId != null">
+                code_id,
+            </if>
+            <if test="dicProjectType != null">
+                dic_project_type,
+            </if>
+            <if test="shortCode != null">
+                short_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="codeId != null">
+                #{codeId,jdbcType=BIGINT},
+            </if>
+            <if test="dicProjectType != null">
+                #{dicProjectType,jdbcType=BIGINT},
+            </if>
+            <if test="shortCode != null">
+                #{shortCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.baseconfig.ProjectCodeShortNameModel">
+        update t_project_code_shortname
+        <set>
+            <if test="codeId != null">
+                code_id = #{codeId,jdbcType=BIGINT},
+            </if>
+            <if test="dicProjectType != null">
+                dic_project_type = #{dicProjectType,jdbcType=BIGINT},
+            </if>
+            <if test="shortCode != null">
+                short_code = #{shortCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.baseconfig.ProjectCodeShortNameModel">
+        update t_project_code_shortname
+        set code_id = #{codeId,jdbcType=BIGINT},
+            dic_project_type = #{dicProjectType,jdbcType=BIGINT},
+            short_code = #{shortCode,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByCodeIdAndIdNotInIds">
+        delete from t_project_code_shortname
+        where code_id = #{codeId,jdbcType=BIGINT}
+        <if test="list.size() != 0">
+            and id not in
+            <foreach collection="list" separator="," open="(" close=")" item="item">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
+
+</mapper>

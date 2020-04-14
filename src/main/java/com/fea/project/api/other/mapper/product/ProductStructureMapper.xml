@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.product.ProductStructureMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.product.ProductStructureModel">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="PARENTID"/>
+        <result column="GROUP_CODE" jdbcType="VARCHAR" property="GROUPCODE"/>
+        <result column="GROUP_NAME" jdbcType="VARCHAR" property="GROUPNAME"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="DESCRIPTION"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="MODELCODE" jdbcType="VARCHAR" property="MODELCODE"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="STATE" jdbcType="INTEGER" property="STATE"/>
+        <result column="IS_LEAF" jdbcType="INTEGER" property="ISLEAF"/>
+        <result column="LFT" jdbcType="INTEGER" property="LFT"/>
+        <result column="RGT" jdbcType="INTEGER" property="RGT"/>
+        <result column="PRIORITY" jdbcType="INTEGER" property="PRIORITY"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, PARENT_ID, GROUP_CODE, GROUP_NAME, DESCRIPTION, REG_ID, MODELCODE, CREATE_USER, CREATE_TIME,
+        UPDATE_USER, UPDATE_TIME, STATE, IS_LEAF, LFT, RGT, PRIORITY
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_pdt_structure
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.product.ProductStructureModel"
+            resultMap="BaseResultMap">
+        select * from t_pdt_structure where 1 = 1
+        <if test="ID != null">
+            and ID = #{ID,jdbcType=BIGINT}
+        </if>
+        <if test="PARENTID != null">
+            and PARENT_ID = #{PARENTID,jdbcType=BIGINT}
+        </if>
+        <if test="GROUPCODE != null">
+            and GROUP_CODE = #{GROUPCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="GROUPNAME != null">
+            and GROUP_NAME = #{GROUPNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="DESCRIPTION != null">
+            and DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="MODELCODE != null">
+            and MODELCODE = #{MODELCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ISLEAF != null">
+            and IS_LEAF = #{ISLEAF,jdbcType=INTEGER}
+        </if>
+        <if test="LFT != null">
+            and LFT = #{LFT,jdbcType=INTEGER}
+        </if>
+        <if test="RGT != null">
+            and RGT = #{RGT,jdbcType=INTEGER}
+        </if>
+        <if test="PRIORITY != null">
+            and PRIORITY = #{PRIORITY,jdbcType=INTEGER}
+        </if>
+        and STATE = 1
+    </select>
+
+    <select id="selectByParentId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_pdt_structure
+        where REG_ID = #{regId, jdbcType=BIGINT}
+        <if test="parentId == null">
+            AND PARENT_ID is null
+        </if>
+        <if test="parentId != null">
+            AND PARENT_ID = #{parentId, jdbcType = BIGINT}
+        </if>
+        and STATE = 1
+    </select>
+
+    <select id="selectProductsByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_pdt_structure
+        where ID in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+
+</mapper>

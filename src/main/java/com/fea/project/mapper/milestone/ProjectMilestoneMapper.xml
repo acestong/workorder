@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.milestone.ProjectMilestoneMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.milestone.ProjectMilestoneModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="number" jdbcType="VARCHAR" property="number" />
+        <result column="type" jdbcType="BIGINT" property="type" />
+        <result column="sort" jdbcType="INTEGER" property="sort" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="project_stage_id" jdbcType="BIGINT" property="projectStageId" />
+        <result column="project_stage" jdbcType="VARCHAR" property="projectStage" />
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="owner_id" jdbcType="BIGINT" property="ownerId" />
+        <result column="owner" jdbcType="VARCHAR" property="owner" />
+        <result column="team_id" jdbcType="BIGINT" property="teamId" />
+        <result column="team" jdbcType="VARCHAR" property="team" />
+        <result column="target" jdbcType="VARCHAR" property="target" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="version" jdbcType="INTEGER" property="version" />
+        <result column="del_states" jdbcType="INTEGER" property="delStates" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="is_finish" jdbcType="INTEGER" property="isFinish" />
+        <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
+        <result column="notarize" jdbcType="VARCHAR" property="notarize" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, number, type, sort, project_id, code, project_stage_id, project_stage, start_time,
+        end_time, owner_id, owner, team_id, team, target, remark, status, version, del_states,
+        org_id, reg_id, is_finish, finish_time, notarize, description, create_id, create_by,
+        create_time, update_id, update_by, update_time
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from t_project_milestone
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_milestone
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_milestone
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel">
+        insert into t_project_milestone (
+        <include refid="Base_Column_List" />
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{name,jdbcType=VARCHAR},
+        #{number,jdbcType=VARCHAR},
+        #{type,jdbcType=BIGINT},
+        #{sort,jdbcType=INTEGER},
+        #{projectId,jdbcType=BIGINT},
+        #{code,jdbcType=VARCHAR},
+        #{projectStageId,jdbcType=BIGINT},
+        #{projectStage,jdbcType=VARCHAR},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP},
+        #{ownerId,jdbcType=BIGINT},
+        #{owner,jdbcType=VARCHAR},
+        #{teamId,jdbcType=BIGINT},
+        #{team,jdbcType=VARCHAR},
+        #{target,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},
+        #{version,jdbcType=INTEGER},
+        #{delStates,jdbcType=INTEGER},
+        #{orgId,jdbcType=BIGINT},
+        #{regId,jdbcType=BIGINT},
+        #{isFinish,jdbcType=INTEGER},
+        #{finishTime,jdbcType=TIMESTAMP},
+        #{notarize,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="insertList" keyProperty="id" parameterType="java.util.List">
+        insert into t_project_milestone (
+        <include refid="Base_Column_List" />
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=VARCHAR},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.number,jdbcType=VARCHAR},
+            #{item.type,jdbcType=BIGINT},
+            #{item.sort,jdbcType=INTEGER},
+            #{item.projectId,jdbcType=BIGINT},
+            #{item.code,jdbcType=VARCHAR},
+            #{item.projectStageId,jdbcType=BIGINT},
+            #{item.projectStage,jdbcType=VARCHAR},
+            #{item.startTime,jdbcType=TIMESTAMP},
+            #{item.endTime,jdbcType=TIMESTAMP},
+            #{item.ownerId,jdbcType=BIGINT},
+            #{item.owner,jdbcType=VARCHAR},
+            #{item.teamId,jdbcType=BIGINT},
+            #{item.team,jdbcType=VARCHAR},
+            #{item.target,jdbcType=VARCHAR},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.status,jdbcType=INTEGER},
+            #{item.version,jdbcType=INTEGER},
+            #{item.delStates,jdbcType=INTEGER},
+            #{item.orgId,jdbcType=BIGINT},
+            #{item.regId,jdbcType=BIGINT},
+            #{item.isFinish,jdbcType=INTEGER},
+            #{item.finishTime,jdbcType=TIMESTAMP},
+            #{item.notarize,jdbcType=VARCHAR},
+            #{item.description,jdbcType=VARCHAR},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel" resultMap="BaseResultMap">
+        select *
+        from t_project_milestone
+        where del_states = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="number != null">
+            and number = #{number,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            and type = #{type,jdbcType=BIGINT}
+        </if>
+        <if test="sort != null">
+            and sort = #{sort,jdbcType=INTEGER}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="code != null">
+            and code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="projectStageId != null">
+            and project_stage_id = #{projectStageId,jdbcType=BIGINT}
+        </if>
+        <if test="projectStage != null">
+            and project_stage = #{projectStage,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ownerId != null">
+            and owner_id = #{ownerId,jdbcType=BIGINT}
+        </if>
+        <if test="owner != null">
+            and owner = #{owner,jdbcType=VARCHAR}
+        </if>
+        <if test="teamId != null">
+            and team_id = #{teamId,jdbcType=BIGINT}
+        </if>
+        <if test="team != null">
+            and team = #{team,jdbcType=VARCHAR}
+        </if>
+        <if test="target != null">
+            and target = #{target,jdbcType=VARCHAR}
+        </if>
+        <if test="remark != null">
+            and remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="version != null">
+            and version = #{version,jdbcType=INTEGER}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="isFinish != null">
+            and is_finish = #{isFinish,jdbcType=INTEGER}
+        </if>
+        <if test="finishTime != null">
+            and finish_time = #{finishTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="notarize != null">
+            and notarize = #{notarize,jdbcType=VARCHAR}
+        </if>
+        <if test="description != null">
+            and description = #{description,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel">
+        insert into t_project_milestone
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="number != null">
+                number,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="projectStageId != null">
+                project_stage_id,
+            </if>
+            <if test="projectStage != null">
+                project_stage,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="ownerId != null">
+                owner_id,
+            </if>
+            <if test="owner != null">
+                owner,
+            </if>
+            <if test="teamId != null">
+                team_id,
+            </if>
+            <if test="team != null">
+                team,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="delStates != null">
+                del_states,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="isFinish != null">
+                is_finish,
+            </if>
+            <if test="finishTime != null">
+                finish_time,
+            </if>
+            <if test="notarize != null">
+                notarize,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=BIGINT},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="projectStageId != null">
+                #{projectStageId,jdbcType=BIGINT},
+            </if>
+            <if test="projectStage != null">
+                #{projectStage,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ownerId != null">
+                #{ownerId,jdbcType=BIGINT},
+            </if>
+            <if test="owner != null">
+                #{owner,jdbcType=VARCHAR},
+            </if>
+            <if test="teamId != null">
+                #{teamId,jdbcType=BIGINT},
+            </if>
+            <if test="team != null">
+                #{team,jdbcType=VARCHAR},
+            </if>
+            <if test="target != null">
+                #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=INTEGER},
+            </if>
+            <if test="delStates != null">
+                #{delStates,jdbcType=INTEGER},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="isFinish != null">
+                #{isFinish,jdbcType=INTEGER},
+            </if>
+            <if test="finishTime != null">
+                #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="notarize != null">
+                #{notarize,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel">
+        update t_project_milestone
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="number != null">
+                number = #{number,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=BIGINT},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="projectStageId != null">
+                project_stage_id = #{projectStageId,jdbcType=BIGINT},
+            </if>
+            <if test="projectStage != null">
+                project_stage = #{projectStage,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ownerId != null">
+                owner_id = #{ownerId,jdbcType=BIGINT},
+            </if>
+            <if test="owner != null">
+                owner = #{owner,jdbcType=VARCHAR},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=BIGINT},
+            </if>
+            <if test="team != null">
+                team = #{team,jdbcType=VARCHAR},
+            </if>
+            <if test="target != null">
+                target = #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=INTEGER},
+            </if>
+            <if test="delStates != null">
+                del_states = #{delStates,jdbcType=INTEGER},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="isFinish != null">
+                is_finish = #{isFinish,jdbcType=INTEGER},
+            </if>
+            <if test="finishTime != null">
+                finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="notarize != null">
+                notarize = #{notarize,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel">
+        update t_project_milestone
+        set name = #{name,jdbcType=VARCHAR},
+            number = #{number,jdbcType=VARCHAR},
+            type = #{type,jdbcType=BIGINT},
+            sort = #{sort,jdbcType=INTEGER},
+            project_id = #{projectId,jdbcType=BIGINT},
+            code = #{code,jdbcType=VARCHAR},
+            project_stage_id = #{projectStageId,jdbcType=BIGINT},
+            project_stage = #{projectStage,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            owner_id = #{ownerId,jdbcType=BIGINT},
+            owner = #{owner,jdbcType=VARCHAR},
+            team_id = #{teamId,jdbcType=BIGINT},
+            team = #{team,jdbcType=VARCHAR},
+            target = #{target,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            status = #{status,jdbcType=INTEGER},
+            version = #{version,jdbcType=INTEGER},
+            del_states = #{delStates,jdbcType=INTEGER},
+            org_id = #{orgId,jdbcType=BIGINT},
+            reg_id = #{regId,jdbcType=BIGINT},
+            is_finish = #{isFinish,jdbcType=INTEGER},
+            finish_time = #{finishTime,jdbcType=TIMESTAMP},
+            notarize = #{notarize,jdbcType=VARCHAR},
+            description = #{description,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <sql id="Base_Column_List_Two">
+        tpm.id, tpm.name, tpm.number, tpm.type, tpm.sort, tpm.project_id, tpm.code,
+        tpm.project_stage_id, tpm.project_stage, tpm.start_time,
+        tpm.end_time, tpm.owner_id, tpm.owner, tpm.team_id, tpm.team, tpm.target, tpm.remark, tpm.status,
+        tpm.version, tpm.org_id, tpm.reg_id, tpm.is_finish, tpm.finish_time, tpm.notarize, tpm.description,
+        tpm.create_id, tpm.create_by,tpm.create_time, tpm.update_id, tpm.update_by, tpm.update_time,
+        tpcm.name as typeString,tpp.name as projectName
+    </sql>
+    <resultMap id="BaseResultMapTwo" type="com.fea.project.model.milestone.vo.ProjectMilestoneVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="number" jdbcType="VARCHAR" property="number" />
+        <result column="type" jdbcType="BIGINT" property="type" />
+        <result column="sort" jdbcType="INTEGER" property="sort" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="project_stage_id" jdbcType="BIGINT" property="projectStageId" />
+        <result column="project_stage" jdbcType="VARCHAR" property="projectStage" />
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="owner_id" jdbcType="BIGINT" property="ownerId" />
+        <result column="owner" jdbcType="VARCHAR" property="owner" />
+        <result column="team_id" jdbcType="BIGINT" property="teamId" />
+        <result column="team" jdbcType="VARCHAR" property="team" />
+        <result column="target" jdbcType="VARCHAR" property="target" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="version" jdbcType="INTEGER" property="version" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="is_finish" jdbcType="INTEGER" property="isFinish" />
+        <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
+        <result column="notarize" jdbcType="VARCHAR" property="notarize" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="typeString" jdbcType="VARCHAR" property="typeString" />
+        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+    </resultMap>
+
+    <select id="selectByFilterAndParams"
+            parameterType="com.fea.project.model.BasePageInfo"
+            resultMap="BaseResultMapTwo">
+        select
+        <include refid="Base_Column_List_Two" />
+        from
+        t_project_milestone as tpm
+        left join t_project_config_milestone as tpcm on tpm.type=tpcm.id,
+        t_project_project as tpp
+        where del_states = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and tpp.id = tpm.project_id
+        <if test="model.name != null">
+            and tpm.name = #{model.name,jdbcType=VARCHAR}
+        </if>
+        <if test="model.number != null">
+            and tpm.number = #{model.number,jdbcType=VARCHAR}
+        </if>
+        <if test="model.type != null">
+            and tpm.type = #{model.type,jdbcType=BIGINT}
+        </if>
+        <if test="model.sort != null">
+            and tpm.sort = #{model.sort,jdbcType=INTEGER}
+        </if>
+        <if test="model.projectId != null">
+            and tpm.project_id = #{model.projectId,jdbcType=BIGINT}
+        </if>
+        <if test="model.code != null">
+            and tpm.code = #{model.code,jdbcType=VARCHAR}
+        </if>
+        <if test="model.projectStageId != null">
+            and tpm.project_stage_id = #{model.projectStageId,jdbcType=BIGINT}
+        </if>
+        <if test="model.projectStage != null">
+            and tpm.project_stage = #{model.projectStage,jdbcType=VARCHAR}
+        </if>
+        <if test="model.startTime != null">
+            and tpm.start_time = #{model.startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.endTime != null">
+            and tpm.end_time = #{model.endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.ownerId != null">
+            and tpm.owner_id = #{model.ownerId,jdbcType=BIGINT}
+        </if>
+        <if test="model.owner != null">
+            and tpm.owner = #{model.owner,jdbcType=VARCHAR}
+        </if>
+        <if test="model.teamId != null">
+            and tpm.team_id = #{model.teamId,jdbcType=BIGINT}
+        </if>
+        <if test="model.team != null">
+            and tpm.team = #{model.team,jdbcType=VARCHAR}
+        </if>
+        <if test="model.target != null">
+            and tpm.target = #{model.target,jdbcType=VARCHAR}
+        </if>
+        <if test="model.remark != null">
+            and tpm.remark = #{model.remark,jdbcType=VARCHAR}
+        </if>
+        <if test="model.status != null">
+            and tpm.status = #{model.status,jdbcType=INTEGER}
+        </if>
+        <if test="model.version != null">
+            and tpm.version = #{model.version,jdbcType=INTEGER}
+        </if>
+        <if test="model.orgId != null">
+            and tpm.org_id = #{model.orgId,jdbcType=BIGINT}
+        </if>
+        <if test="model.regId != null">
+            and tpm.reg_id = #{model.regId,jdbcType=BIGINT}
+        </if>
+        <if test="model.isFinish != null">
+            and tpm.is_finish = #{model.isFinish,jdbcType=INTEGER}
+        </if>
+        <if test="model.finishTime != null">
+            and tpm.finish_time = #{model.finishTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.notarize != null">
+            and tpm.notarize = #{model.notarize,jdbcType=VARCHAR}
+        </if>
+        <if test="model.description != null">
+            and tpm.description = #{model.description,jdbcType=VARCHAR}
+        </if>
+        <if test="model.createId != null">
+            and tpm.create_id = #{model.createId,jdbcType=BIGINT}
+        </if>
+        <if test="model.createBy != null">
+            and tpm.create_by = #{model.createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="model.createTime != null">
+            and tpm.create_time = #{model.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.updateId != null">
+            and tpm.update_id = #{model.updateId,jdbcType=BIGINT}
+        </if>
+        <if test="model.updateBy != null">
+            and tpm.update_by = #{model.updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="model.updateTime != null">
+            and tpm.update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+        </if>
+        order by tpm.end_time asc
+    </select>
+
+    <select id="selectMilestoneByProjectIdAndSort" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel" resultMap="BaseResultMap">
+        select*
+        from t_project_milestone
+        where del_states = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and sort = #{sort,jdbcType=INTEGER}
+        and project_id = #{projectId,jdbcType=BIGINT}
+    </select>
+    <select id="selectMilestoneCountByType" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel" resultType="integer">
+        select
+        count(id)
+        from t_project_milestone
+        where del_states = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="number != null">
+            and number = #{number,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            and type = #{type,jdbcType=BIGINT}
+        </if>
+        <if test="sort != null">
+            and sort = #{sort,jdbcType=INTEGER}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="code != null">
+            and code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="projectStageId != null">
+            and project_stage_id = #{projectStageId,jdbcType=BIGINT}
+        </if>
+        <if test="projectStage != null">
+            and project_stage = #{projectStage,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ownerId != null">
+            and owner_id = #{ownerId,jdbcType=BIGINT}
+        </if>
+        <if test="owner != null">
+            and owner = #{owner,jdbcType=VARCHAR}
+        </if>
+        <if test="teamId != null">
+            and team_id = #{teamId,jdbcType=BIGINT}
+        </if>
+        <if test="team != null">
+            and team = #{team,jdbcType=VARCHAR}
+        </if>
+        <if test="target != null">
+            and target = #{target,jdbcType=VARCHAR}
+        </if>
+        <if test="remark != null">
+            and remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="version != null">
+            and version = #{version,jdbcType=INTEGER}
+        </if>
+        <if test="delStates != null">
+            and del_states = #{delStates,jdbcType=INTEGER}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="isFinish != null">
+            and is_finish = #{isFinish,jdbcType=INTEGER}
+        </if>
+        <if test="finishTime != null">
+            and finish_time = #{finishTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="notarize != null">
+            and notarize = #{notarize,jdbcType=VARCHAR}
+        </if>
+        <if test="description != null">
+            and description = #{description,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+    <select id="existsCheck" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel" resultType="integer">
+        SELECT COUNT(*)
+        FROM t_project_milestone
+        WHERE project_id = #{projectId,jdbcType=BIGINT}
+        AND sort = #{sort,jdbcType=INTEGER}
+
+    </select>
+    <select id="maxSortCheck" parameterType="com.fea.project.model.milestone.ProjectMilestoneModel"
+            resultType="integer">
+        SELECT MAX(sort)
+        FROM t_project_milestone
+        WHERE project_id = #{projectId,jdbcType=BIGINT}
+    </select>
+    <select id="selectListByModel"
+            parameterType="com.fea.project.model.milestone.ProjectMilestoneModel"
+            resultMap="BaseResultMapTwo">
+        select
+        <include refid="Base_Column_List_Two" />
+        from
+        t_project_milestone as tpm
+        left join t_project_config_milestone as tpcm on tpm.type=tpcm.id,
+        t_project_project as tpp
+        where del_states = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and tpp.id = tpm.project_id
+        <if test="id != null">
+            and tpm.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and tpm.name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="number != null">
+            and tpm.number = #{number,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            and tpm.type = #{type,jdbcType=BIGINT}
+        </if>
+        <if test="sort != null">
+            and tpm.sort = #{sort,jdbcType=INTEGER}
+        </if>
+        <if test="projectId != null">
+            and tpm.project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="code != null">
+            and tpm.code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="projectStageId != null">
+            and tpm.project_stage_id = #{projectStageId,jdbcType=BIGINT}
+        </if>
+        <if test="projectStage != null">
+            and tpm.project_stage = #{projectStage,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and tpm.start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and tpm.end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ownerId != null">
+            and tpm.owner_id = #{ownerId,jdbcType=BIGINT}
+        </if>
+        <if test="owner != null">
+            and tpm.owner = #{owner,jdbcType=VARCHAR}
+        </if>
+        <if test="teamId != null">
+            and tpm.team_id = #{teamId,jdbcType=BIGINT}
+        </if>
+        <if test="team != null">
+            and tpm.team = #{team,jdbcType=VARCHAR}
+        </if>
+        <if test="target != null">
+            and tpm.target = #{target,jdbcType=VARCHAR}
+        </if>
+        <if test="remark != null">
+            and tpm.remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and tpm.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="version != null">
+            and tpm.version = #{version,jdbcType=INTEGER}
+        </if>
+        <if test="orgId != null">
+            and tpm.org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and tpm.reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="isFinish != null">
+            and tpm.is_finish = #{isFinish,jdbcType=INTEGER}
+        </if>
+        <if test="finishTime != null">
+            and tpm.finish_time = #{finishTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="notarize != null">
+            and tpm.notarize = #{notarize,jdbcType=VARCHAR}
+        </if>
+        <if test="description != null">
+            and tpm.description = #{description,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and tpm.create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and tpm.create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and tpm.create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and tpm.update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and tpm.update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and tpm.update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        order by tpm.end_time asc
+    </select>
+    <select id="selectByModelIds" parameterType="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_project_milestone
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+    </select>
+</mapper>

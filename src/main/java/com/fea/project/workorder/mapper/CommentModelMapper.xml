@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.CommentModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.CommentModel">
+    <id column="comment_id" jdbcType="BIGINT" property="commentId" />
+    <result column="workorder_id" jdbcType="BIGINT" property="workorderId" />
+    <result column="quality_weight" jdbcType="DOUBLE" property="qualityWeight" />
+    <result column="quality_score" jdbcType="DOUBLE" property="qualityScore" />
+    <result column="time_weight" jdbcType="DOUBLE" property="timeWeight" />
+    <result column="time_score" jdbcType="DOUBLE" property="timeScore" />
+    <result column="satisfy_weight" jdbcType="DOUBLE" property="satisfyWeight" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="satisfy_score" jdbcType="DOUBLE" property="satisfyScore" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_role" jdbcType="BIGINT" property="createRole" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    comment_id, workorder_id, quality_weight, quality_score, time_weight, time_score, 
+    satisfy_weight, score, satisfy_score, remark, create_role, create_id, create_by, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.CommentModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_comment
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </select>
+  <select id="selectListByWorkorderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_comment
+    where workorder_id = #{workorderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_comment
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.CommentModelExample">
+    delete from t_workorder_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="commentId" parameterType="com.fea.project.workorder.model.CommentModel">
+    insert into t_workorder_comment (comment_id, workorder_id, quality_weight, 
+      quality_score, time_weight, time_score, 
+      satisfy_weight, score, satisfy_score, 
+      remark, create_role, create_id, 
+      create_by, create_time)
+    values (#{commentId,jdbcType=BIGINT}, #{workorderId,jdbcType=BIGINT}, #{qualityWeight,jdbcType=DOUBLE}, 
+      #{qualityScore,jdbcType=DOUBLE}, #{timeWeight,jdbcType=DOUBLE}, #{timeScore,jdbcType=DOUBLE}, 
+      #{satisfyWeight,jdbcType=DOUBLE}, #{score,jdbcType=DOUBLE}, #{satisfyScore,jdbcType=DOUBLE}, 
+      #{remark,jdbcType=VARCHAR}, #{createRole,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyProperty="commentId" parameterType="com.fea.project.workorder.model.CommentModel">
+    insert into t_workorder_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="workorderId != null">
+        workorder_id,
+      </if>
+      <if test="qualityWeight != null">
+        quality_weight,
+      </if>
+      <if test="qualityScore != null">
+        quality_score,
+      </if>
+      <if test="timeWeight != null">
+        time_weight,
+      </if>
+      <if test="timeScore != null">
+        time_score,
+      </if>
+      <if test="satisfyWeight != null">
+        satisfy_weight,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="satisfyScore != null">
+        satisfy_score,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createRole != null">
+        create_role,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="workorderId != null">
+        #{workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="qualityWeight != null">
+        #{qualityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="qualityScore != null">
+        #{qualityScore,jdbcType=DOUBLE},
+      </if>
+      <if test="timeWeight != null">
+        #{timeWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="timeScore != null">
+        #{timeScore,jdbcType=DOUBLE},
+      </if>
+      <if test="satisfyWeight != null">
+        #{satisfyWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="satisfyScore != null">
+        #{satisfyScore,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createRole != null">
+        #{createRole,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.CommentModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_comment
+    <set>
+      <if test="record.commentId != null">
+        comment_id = #{record.commentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workorderId != null">
+        workorder_id = #{record.workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.qualityWeight != null">
+        quality_weight = #{record.qualityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.qualityScore != null">
+        quality_score = #{record.qualityScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.timeWeight != null">
+        time_weight = #{record.timeWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.timeScore != null">
+        time_score = #{record.timeScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.satisfyWeight != null">
+        satisfy_weight = #{record.satisfyWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=DOUBLE},
+      </if>
+      <if test="record.satisfyScore != null">
+        satisfy_score = #{record.satisfyScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createRole != null">
+        create_role = #{record.createRole,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_comment
+    set comment_id = #{record.commentId,jdbcType=BIGINT},
+      workorder_id = #{record.workorderId,jdbcType=BIGINT},
+      quality_weight = #{record.qualityWeight,jdbcType=DOUBLE},
+      quality_score = #{record.qualityScore,jdbcType=DOUBLE},
+      time_weight = #{record.timeWeight,jdbcType=DOUBLE},
+      time_score = #{record.timeScore,jdbcType=DOUBLE},
+      satisfy_weight = #{record.satisfyWeight,jdbcType=DOUBLE},
+      score = #{record.score,jdbcType=DOUBLE},
+      satisfy_score = #{record.satisfyScore,jdbcType=DOUBLE},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_role = #{record.createRole,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.CommentModel">
+    update t_workorder_comment
+    <set>
+      <if test="workorderId != null">
+        workorder_id = #{workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="qualityWeight != null">
+        quality_weight = #{qualityWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="qualityScore != null">
+        quality_score = #{qualityScore,jdbcType=DOUBLE},
+      </if>
+      <if test="timeWeight != null">
+        time_weight = #{timeWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="timeScore != null">
+        time_score = #{timeScore,jdbcType=DOUBLE},
+      </if>
+      <if test="satisfyWeight != null">
+        satisfy_weight = #{satisfyWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="satisfyScore != null">
+        satisfy_score = #{satisfyScore,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createRole != null">
+        create_role = #{createRole,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.CommentModel">
+    update t_workorder_comment
+    set workorder_id = #{workorderId,jdbcType=BIGINT},
+      quality_weight = #{qualityWeight,jdbcType=DOUBLE},
+      quality_score = #{qualityScore,jdbcType=DOUBLE},
+      time_weight = #{timeWeight,jdbcType=DOUBLE},
+      time_score = #{timeScore,jdbcType=DOUBLE},
+      satisfy_weight = #{satisfyWeight,jdbcType=DOUBLE},
+      score = #{score,jdbcType=DOUBLE},
+      satisfy_score = #{satisfyScore,jdbcType=DOUBLE},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_role = #{createRole,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </update>
+</mapper>

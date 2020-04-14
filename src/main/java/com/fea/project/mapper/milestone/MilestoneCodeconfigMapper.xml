@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.milestone.MilestoneCodeconfigMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.milestone.MilestoneCodeconfigModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="prefix" jdbcType="VARCHAR" property="prefix" />
+        <result column="is_prefix" jdbcType="BIT" property="isPrefix" />
+        <result column="is_date" jdbcType="BIT" property="isDate" />
+        <result column="next_no" jdbcType="BIGINT" property="nextNo" />
+        <result column="no_len" jdbcType="INTEGER" property="noLen" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, type, prefix, is_prefix, is_date, next_no, no_len, reg_id, create_id, create_by,
+        create_time, update_id, update_by, update_time
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_milestone_codeconfig
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_milestone_codeconfig
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_milestone_codeconfig
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.milestone.MilestoneCodeconfigModel">
+        insert into t_project_milestone_codeconfig (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{type,jdbcType=INTEGER},
+            #{prefix,jdbcType=VARCHAR},
+            #{isPrefix,jdbcType=BIT}, 
+            #{isDate,jdbcType=BIT}, 
+            #{nextNo,jdbcType=BIGINT}, 
+            #{noLen,jdbcType=INTEGER}, 
+            #{regId,jdbcType=BIGINT}, 
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_milestone_codeconfig (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.id,jdbcType=BIGINT},
+                #{item.type,jdbcType=INTEGER},
+                #{item.prefix,jdbcType=VARCHAR},
+                #{item.isPrefix,jdbcType=BIT}, 
+                #{item.isDate,jdbcType=BIT}, 
+                #{item.nextNo,jdbcType=BIGINT}, 
+                #{item.noLen,jdbcType=INTEGER}, 
+                #{item.regId,jdbcType=BIGINT}, 
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.milestone.MilestoneCodeconfigModel" resultMap="BaseResultMap">
+        select * from t_project_milestone_codeconfig where 1 = 1
+        <if test="type != null">
+            and type = #{type,jdbcType=INTEGER}
+        </if>
+        <if test="prefix != null">
+            and prefix = #{prefix,jdbcType=VARCHAR}
+        </if>
+        <if test="isPrefix != null">
+            and is_prefix = #{isPrefix,jdbcType=BIT}
+        </if>
+        <if test="isDate != null">
+            and is_date = #{isDate,jdbcType=BIT}
+        </if>
+        <if test="nextNo != null">
+            and next_no = #{nextNo,jdbcType=BIGINT}
+        </if>
+        <if test="noLen != null">
+            and no_len = #{noLen,jdbcType=INTEGER}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.milestone.MilestoneCodeconfigModel">
+        insert into t_project_milestone_codeconfig
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="prefix != null">
+                prefix,
+            </if>
+            <if test="isPrefix != null">
+                is_prefix,
+            </if>
+            <if test="isDate != null">
+                is_date,
+            </if>
+            <if test="nextNo != null">
+                next_no,
+            </if>
+            <if test="noLen != null">
+                no_len,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="prefix != null">
+                #{prefix,jdbcType=VARCHAR},
+            </if>
+            <if test="isPrefix != null">
+                #{isPrefix,jdbcType=BIT},
+            </if>
+            <if test="isDate != null">
+                #{isDate,jdbcType=BIT},
+            </if>
+            <if test="nextNo != null">
+                #{nextNo,jdbcType=BIGINT},
+            </if>
+            <if test="noLen != null">
+                #{noLen,jdbcType=INTEGER},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.milestone.MilestoneCodeconfigModel">
+        update t_project_milestone_codeconfig
+        <set>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="prefix != null">
+                prefix = #{prefix,jdbcType=VARCHAR},
+            </if>
+            <if test="isPrefix != null">
+                is_prefix = #{isPrefix,jdbcType=BIT},
+            </if>
+            <if test="isDate != null">
+                is_date = #{isDate,jdbcType=BIT},
+            </if>
+            <if test="nextNo != null">
+                next_no = #{nextNo,jdbcType=BIGINT},
+            </if>
+            <if test="noLen != null">
+                no_len = #{noLen,jdbcType=INTEGER},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.milestone.MilestoneCodeconfigModel">
+        update t_project_milestone_codeconfig
+        set type = #{type,jdbcType=INTEGER},
+            prefix = #{prefix,jdbcType=VARCHAR},
+            is_prefix = #{isPrefix,jdbcType=BIT},
+            is_date = #{isDate,jdbcType=BIT},
+            next_no = #{nextNo,jdbcType=BIGINT},
+            no_len = #{noLen,jdbcType=INTEGER},
+            reg_id = #{regId,jdbcType=BIGINT},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByType" parameterType="com.fea.project.model.milestone.MilestoneCodeconfigModel" resultMap="BaseResultMap">
+        select *
+        from t_project_milestone_codeconfig
+        where 1 = 1
+            and type = #{type,jdbcType=INTEGER}
+            and reg_id = #{regId,jdbcType=BIGINT}
+
+    </select>
+</mapper>

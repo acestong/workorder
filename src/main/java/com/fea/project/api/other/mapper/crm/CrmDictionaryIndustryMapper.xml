@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.crm.CrmDictionaryIndustryMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.crm.CrmDictionaryIndustryModel">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="PARENTID"/>
+        <result column="CODE" jdbcType="VARCHAR" property="CODE"/>
+        <result column="NAME" jdbcType="VARCHAR" property="NAME"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="DESCRIPTION"/>
+        <result column="STATUS" jdbcType="INTEGER" property="STATUS"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="LFT" jdbcType="INTEGER" property="LFT"/>
+        <result column="RGT" jdbcType="INTEGER" property="RGT"/>
+        <result column="PRIORITY" jdbcType="INTEGER" property="PRIORITY"/>
+        <result column="DELSTATE" jdbcType="TINYINT" property="DELSTATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, REG_ID, PARENT_ID, CODE, NAME, DESCRIPTION, STATUS, CREATE_USER, CREATE_TIME, UPDATE_USER,
+        UPDATE_TIME, LFT, RGT, PRIORITY, DELSTATE
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_crm_dictionary_industry
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.crm.CrmDictionaryIndustryModel"
+            resultMap="BaseResultMap">
+        select * from t_crm_dictionary_industry where 1 = 1
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="PARENTID != null">
+            and PARENT_ID = #{PARENTID,jdbcType=BIGINT}
+        </if>
+        <if test="CODE != null">
+            and CODE = #{CODE,jdbcType=VARCHAR}
+        </if>
+        <if test="NAME != null">
+            and NAME = #{NAME,jdbcType=VARCHAR}
+        </if>
+        <if test="DESCRIPTION != null">
+            and DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="STATUS != null">
+            and STATUS = #{STATUS,jdbcType=INTEGER}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="LFT != null">
+            and LFT = #{LFT,jdbcType=INTEGER}
+        </if>
+        <if test="RGT != null">
+            and RGT = #{RGT,jdbcType=INTEGER}
+        </if>
+        <if test="PRIORITY != null">
+            and PRIORITY = #{PRIORITY,jdbcType=INTEGER}
+        </if>
+        and DELSTATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectIndustryByLevel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_dictionary_industry
+        where REG_ID = #{regId,jdbcType=BIGINT}
+        <if test="parentId == null">
+            and PARENT_ID is null
+        </if>
+        <if test="parentId != null">
+            and PARENT_ID = #{parentId,jdbcType=BIGINT}
+        </if>
+        and DELSTATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_dictionary_industry
+        where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectByRegId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_dictionary_industry
+        where REG_ID = #{regId,jdbcType=BIGINT}
+        and DELSTATE = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and status = ${@com.fea.project.enums.base.EnableStatusEnum@ENABLE.getStatus()}
+    </select>
+
+
+</mapper>

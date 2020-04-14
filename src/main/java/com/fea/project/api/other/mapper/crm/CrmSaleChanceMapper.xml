@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.crm.CrmSaleChanceMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.crm.CrmSaleChanceModel">
+        <id column="ID" jdbcType="BIGINT" property="id"/>
+        <result column="CUSTOMER_ID" jdbcType="BIGINT" property="customerId"/>
+        <result column="CUSTOMER" jdbcType="VARCHAR" property="customer"/>
+        <result column="TRAIL_ID" jdbcType="BIGINT" property="trailId"/>
+        <result column="TRAIL" jdbcType="VARCHAR" property="trail"/>
+        <result column="PRIORITY_ID" jdbcType="BIGINT" property="priorityId"/>
+        <result column="PRIORITY" jdbcType="VARCHAR" property="priority"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="CODE" jdbcType="VARCHAR" property="code"/>
+        <result column="STAGE_ID" jdbcType="BIGINT" property="stageId"/>
+        <result column="STAGE" jdbcType="VARCHAR" property="stage"/>
+        <result column="SIGNING_ID" jdbcType="BIGINT" property="signingId"/>
+        <result column="SIGNING" jdbcType="VARCHAR" property="signing"/>
+        <result column="MONEY" jdbcType="DOUBLE" property="money"/>
+        <result column="SIGNTIME" jdbcType="TIMESTAMP" property="signTime"/>
+        <result column="SALE_WEIGHT" jdbcType="DOUBLE" property="saleWeight"/>
+        <result column="CREATE_USER_ID" jdbcType="BIGINT" property="createUserId"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="createUser"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_USER_ID" jdbcType="BIGINT" property="updateUserId"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <result column="OWNER_ID" jdbcType="BIGINT" property="ownerId"/>
+        <result column="OWNER" jdbcType="VARCHAR" property="owner"/>
+        <result column="STATUS" jdbcType="VARCHAR" property="status"/>
+        <result column="APPROVE_STATUS" jdbcType="INTEGER" property="approveStatus"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="delState"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="regId"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="orgId"/>
+        <result column="sale_chance_type_id" jdbcType="BIGINT" property="saleChanceTypeId"/>
+        <result column="currency_id" jdbcType="BIGINT" property="currencyId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, CUSTOMER_ID, CUSTOMER, TRAIL_ID, TRAIL, PRIORITY_ID, PRIORITY, NAME, CODE,
+        STAGE_ID, STAGE, SIGNING_ID, SIGNING, MONEY, SIGNTIME, SALE_WEIGHT, CREATE_USER_ID, 
+        CREATE_USER, CREATE_TIME, UPDATE_USER_ID, UPDATE_USER, UPDATE_TIME, DESCRIPTION, 
+        OWNER_ID, OWNER, STATUS, APPROVE_STATUS, DEL_STATE, REG_ID, ORG_ID, sale_chance_type_id, currency_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from t_crm_sale_chance
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.crm.CrmSaleChanceModel"
+            resultMap="BaseResultMap">
+        select * from t_crm_sale_chance where 1 = 1
+        <if test="customerId != null">
+            and CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+        </if>
+        <if test="customer != null">
+            and CUSTOMER = #{customer,jdbcType=VARCHAR}
+        </if>
+        <if test="trailId != null">
+            and TRAIL_ID = #{trailId,jdbcType=BIGINT}
+        </if>
+        <if test="trail != null">
+            and TRAIL = #{trail,jdbcType=VARCHAR}
+        </if>
+        <if test="priorityId != null">
+            and PRIORITY_ID = #{priorityId,jdbcType=BIGINT}
+        </if>
+        <if test="priority != null">
+            and PRIORITY = #{priority,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            and NAME = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="code != null">
+            and CODE = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="stageId != null">
+            and STAGE_ID = #{stageId,jdbcType=BIGINT}
+        </if>
+        <if test="stage != null">
+            and STAGE = #{stage,jdbcType=VARCHAR}
+        </if>
+        <if test="signingId != null">
+            and SIGNING_ID = #{signingId,jdbcType=BIGINT}
+        </if>
+        <if test="signing != null">
+            and SIGNING = #{signing,jdbcType=VARCHAR}
+        </if>
+        <if test="money != null">
+            and MONEY = #{money,jdbcType=DOUBLE}
+        </if>
+        <if test="signTime != null">
+            and SIGNTIME = #{signTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="saleWeight != null">
+            and SALE_WEIGHT = #{saleWeight,jdbcType=DOUBLE}
+        </if>
+        <if test="createUserId != null">
+            and CREATE_USER_ID = #{createUserId,jdbcType=BIGINT}
+        </if>
+        <if test="createUser != null">
+            and CREATE_USER = #{createUser,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateUserId != null">
+            and UPDATE_USER_ID = #{updateUserId,jdbcType=BIGINT}
+        </if>
+        <if test="updateUser != null">
+            and UPDATE_USER = #{updateUser,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="description != null">
+            and DESCRIPTION = #{description,jdbcType=VARCHAR}
+        </if>
+        <if test="ownerId != null">
+            and OWNER_ID = #{ownerId,jdbcType=BIGINT}
+        </if>
+        <if test="owner != null">
+            and OWNER = #{owner,jdbcType=VARCHAR}
+        </if>
+        <if test="status != null">
+            and STATUS = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="approveStatus != null">
+            and APPROVE_STATUS = #{approveStatus,jdbcType=INTEGER}
+        </if>
+        <if test="regId != null">
+            and REG_ID = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and ORG_ID = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="saleChanceTypeId != null">
+            and sale_chance_type_id = #{saleChanceTypeId,jdbcType=BIGINT}
+        </if>
+        <if test="currencyId != null">
+            and currency_id = #{currencyId,jdbcType=BIGINT}
+        </if>
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_sale_chance
+        where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getProductsByIds" resultType="long">
+        select pdt_id from t_crm_salechance_pdt
+        where chance_id in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.api.other.model.crm.vo.CrmSaleChanceVo" extends="BaseResultMap" />
+    <select id="selectVosByIds" resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_sale_chance
+        where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

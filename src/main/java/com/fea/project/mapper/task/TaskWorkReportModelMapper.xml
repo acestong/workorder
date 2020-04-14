@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.task.TaskWorkReportModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.task.TaskWorkReportModel">
+    <id column="work_report_id" jdbcType="BIGINT" property="workReportId" />
+    <result column="work_report_title" jdbcType="VARCHAR" property="workReportTitle" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="work_reporter_id" jdbcType="BIGINT" property="workReporterId" />
+    <result column="work_reporter_name" jdbcType="VARCHAR" property="workReporterName" />
+    <result column="work_task_content" jdbcType="VARCHAR" property="workTaskContent" />
+    <result column="actual_task_start_time" jdbcType="TIMESTAMP" property="actualTaskStartTime" />
+    <result column="actual_task_end_time" jdbcType="TIMESTAMP" property="actualTaskEndTime" />
+    <result column="actual_task_duration" jdbcType="BIGINT" property="actualTaskDuration" />
+    <result column="task_progross_rate" jdbcType="DOUBLE" property="taskProgrossRate" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" /> 
+    <!-- 
+    
+    <association property="taskModel" javaType="com.fea.project.model.task.TaskModel">
+    	<id column="task_id" jdbcType="BIGINT" property="taskId" />
+	    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+	    <result column="task_num" jdbcType="VARCHAR" property="taskNum" />
+	    <result column="parent_task_id" jdbcType="BIGINT" property="parentTaskId" />
+	    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+	    <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+	    <result column="priority" jdbcType="BIGINT" property="priority" />
+	    <result column="task_start_time" jdbcType="TIMESTAMP" property="taskStartTime" />
+	    <result column="task_end_time" jdbcType="TIMESTAMP" property="taskEndTime" />
+	    <result column="task_deadline" jdbcType="TIMESTAMP" property="taskDeadline" />
+	    <result column="task_duration" jdbcType="BIGINT" property="taskDuration" />
+	    <result column="task_leader_id" jdbcType="BIGINT" property="taskLeaderId" />
+	    <result column="task_leader_name" jdbcType="VARCHAR" property="taskLeaderName" />
+	    <result column="task_team_id" jdbcType="BIGINT" property="taskTeamId" />
+	    <result column="task_team_name" jdbcType="VARCHAR" property="taskTeamName" />
+	    <result column="task_dispatch_method" jdbcType="BIGINT" property="taskDispatchMethod" />
+	    <result column="task_participants" jdbcType="VARCHAR" property="taskParticipants" />
+	    <result column="task_remind_hour" jdbcType="BIGINT" property="taskRemindHour" />
+	    <result column="task_content" jdbcType="VARCHAR" property="taskContent" />
+	    <result column="task_remark" jdbcType="VARCHAR" property="taskRemark" />
+	    <result column="work_task_status" jdbcType="BIGINT" property="workTaskStatus" />
+	    <result column="work_task_num" jdbcType="VARCHAR" property="workTaskNum" />
+	    <result column="cancel_task_status" jdbcType="BIGINT" property="cancelTaskStatus" />
+	    <result column="cancel_task_reason" jdbcType="VARCHAR" property="cancelTaskReason" />
+	    <result column="stop_task_status" jdbcType="BIGINT" property="stopTaskStatus" />
+	    <result column="stop_task_reason" jdbcType="VARCHAR" property="stopTaskReason" />
+	    <result column="restart_task_status" jdbcType="BIGINT" property="restartTaskStatus" />
+	    <result column="restart_task_reason" jdbcType="VARCHAR" property="restartTaskReason" />
+	    <result column="task_response_id" jdbcType="BIGINT" property="taskResponseId" />
+	    <result column="task_status" jdbcType="BIGINT" property="taskStatus" />
+	    <result column="task_attention_status" jdbcType="BIGINT" property="taskAttentionStatus" />
+	    <result column="task_question" jdbcType="VARCHAR" property="taskQuestion" />
+	    <result column="create_id" jdbcType="BIGINT" property="createId" />
+	    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+	    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+	    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    </association>
+     -->
+  </resultMap>
+  <resultMap id="rm" type="com.fea.project.model.task.vo.TaskWorkReportModelVo">
+    <id column="work_report_id" jdbcType="BIGINT" property="workReportId" />
+    <result column="work_report_title" jdbcType="VARCHAR" property="workReportTitle" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="work_reporter_id" jdbcType="BIGINT" property="workReporterId" />
+    <result column="work_reporter_name" jdbcType="VARCHAR" property="workReporterName" />
+    <result column="work_task_content" jdbcType="VARCHAR" property="workTaskContent" />
+    <result column="actual_task_start_time" jdbcType="TIMESTAMP" property="actualTaskStartTime" />
+    <result column="actual_task_end_time" jdbcType="TIMESTAMP" property="actualTaskEndTime" />
+    <result column="actual_task_duration" jdbcType="BIGINT" property="actualTaskDuration" />
+    <result column="task_progross_rate" jdbcType="DOUBLE" property="taskProgrossRate" />
+    <result column="taskStartTime" jdbcType="TIMESTAMP" property="taskStartTime" />
+    <result column="taskEndTime" jdbcType="TIMESTAMP" property="taskEndTime" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" /> 
+  </resultMap>
+  <resultMap id="rm1" type="com.fea.project.model.task.vo.ReportModelVo">
+    <id column="work_report_id" jdbcType="BIGINT" property="workReportId" />
+    <result column="work_report_title" jdbcType="VARCHAR" property="workReportTitle" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="work_reporter_id" jdbcType="BIGINT" property="workReporterId" />
+    <result column="work_reporter_name" jdbcType="VARCHAR" property="workReporterName" />
+    <result column="work_task_content" jdbcType="VARCHAR" property="workTaskContent" />
+    <result column="actual_task_start_time" jdbcType="TIMESTAMP" property="actualTaskStartTime" />
+    <result column="actual_task_end_time" jdbcType="TIMESTAMP" property="actualTaskEndTime" />
+    <result column="actual_task_duration" jdbcType="BIGINT" property="actualTaskDuration" />
+    <result column="task_progross_rate" jdbcType="DOUBLE" property="taskProgrossRate" />
+    <result column="taskStartTime" jdbcType="TIMESTAMP" property="taskStartTime" />
+    <result column="taskEndTime" jdbcType="TIMESTAMP" property="taskEndTime" />
+    <result column="taskProgrossRate" jdbcType="DOUBLE" property="taskProgrossRate" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" /> 
+    <result column="taskProgrossRate" jdbcType="DOUBLE" property="taskProgrossRate" /> 
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    work_report_id, work_report_title, task_id, work_reporter_id,work_reporter_name, work_task_content, 
+    actual_task_start_time, actual_task_end_time, actual_task_duration,task_progross_rate, create_id, create_by, 
+    create_time, update_id, update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.task.TaskWorkReportModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_task_work_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_work_report
+    where work_report_id = #{workReportId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_task_work_report
+    where work_report_id = #{workReportId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.task.TaskWorkReportModelExample">
+    delete from t_project_task_work_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="workReportId" parameterType="com.fea.project.model.task.TaskWorkReportModel">
+    insert into t_project_task_work_report (work_report_id, work_report_title, task_id, 
+      work_reporter_id,work_reporter_name, work_task_content, actual_task_start_time, 
+      actual_task_end_time, actual_task_duration, task_progross_rate,
+      create_id, create_by, create_time, 
+      update_id, update_by, update_time, 
+      del_status)
+    values (#{workReportId,jdbcType=BIGINT}, #{workReportTitle,jdbcType=VARCHAR}, #{taskId,jdbcType=BIGINT}, 
+      #{workReporterId,jdbcType=BIGINT}, #{workReporterName,jdbcType=VARCHAR},#{workTaskContent,jdbcType=VARCHAR}, #{actualTaskStartTime,jdbcType=TIMESTAMP}, 
+      #{actualTaskEndTime,jdbcType=TIMESTAMP}, #{actualTaskDuration,jdbcType=BIGINT},  #{taskProgrossRate,jdbcType=DOUBLE}, 
+      #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="workReportId" parameterType="com.fea.project.model.task.TaskWorkReportModel">
+    insert into t_project_task_work_report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workReportId != null">
+        work_report_id,
+      </if>
+      <if test="workReportTitle != null">
+        work_report_title,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="workReporterId != null">
+        work_reporter_id,
+      </if>
+      <if test="workReporterName != null">
+        work_reporter_name,
+      </if>
+      <if test="workTaskContent != null">
+        work_task_content,
+      </if>
+      <if test="actualTaskStartTime != null">
+        actual_task_start_time,
+      </if>
+      <if test="actualTaskEndTime != null">
+        actual_task_end_time,
+      </if>
+      <if test="actualTaskDuration != null">
+        actual_task_duration,
+      </if>
+      <if test="taskProgrossRate != null">
+        task_progross_rate,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workReportId != null">
+        #{workReportId,jdbcType=BIGINT},
+      </if>
+      <if test="workReportTitle != null">
+        #{workReportTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="workReporterId != null">
+        #{workReporterId,jdbcType=BIGINT},
+      </if>
+      <if test="workReporterName != null">
+        #{workReporterName,jdbcType=VARCHAR},
+      </if>
+      <if test="workTaskContent != null">
+        #{workTaskContent,jdbcType=VARCHAR},
+      </if>
+      <if test="actualTaskStartTime != null">
+        #{actualTaskStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualTaskEndTime != null">
+        #{actualTaskEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualTaskDuration != null">
+        #{actualTaskDuration,jdbcType=BIGINT},
+      </if>
+      <if test="taskProgrossRate != null">
+        #{taskProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.task.TaskWorkReportModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_task_work_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_task_work_report
+    <set>
+      <if test="record.workReportId != null">
+        work_report_id = #{record.workReportId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workReportTitle != null">
+        work_report_title = #{record.workReportTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workReporterId != null">
+        work_reporter_id = #{record.workReporterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workReporterName != null">
+        work_reporter_name = #{record.workReporterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workTaskContent != null">
+        work_task_content = #{record.workTaskContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actualTaskStartTime != null">
+        actual_task_start_time = #{record.actualTaskStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualTaskEndTime != null">
+        actual_task_end_time = #{record.actualTaskEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualTaskDuration != null">
+        actual_task_duration = #{record.actualTaskDuration,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskProgrossRate != null">
+        task_progross_rate = #{record.taskProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_task_work_report
+    set work_report_id = #{record.workReportId,jdbcType=BIGINT},
+      work_report_title = #{record.workReportTitle,jdbcType=VARCHAR},
+      task_id = #{record.taskId,jdbcType=BIGINT},
+      work_reporter_id = #{record.workReporterId,jdbcType=BIGINT},
+      work_reporter_name = #{record.workReporterName,jdbcType=VARCHAR},
+      work_task_content = #{record.workTaskContent,jdbcType=VARCHAR},
+      actual_task_start_time = #{record.actualTaskStartTime,jdbcType=TIMESTAMP},
+      actual_task_end_time = #{record.actualTaskEndTime,jdbcType=TIMESTAMP},
+      actual_task_duration = #{record.actualTaskDuration,jdbcType=BIGINT},
+      task_progross_rate = #{record.taskProgrossRate,jdbcType=DOUBLE},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.task.vo.ReportModelVo">
+    update t_project_task_work_report
+    <set>
+      <if test="workReportTitle != null">
+        work_report_title = #{workReportTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="workReporterId != null">
+        work_reporter_id = #{workReporterId,jdbcType=BIGINT},
+      </if>
+      <if test="workReporterName != null">
+        work_reporter_name = #{workReporterName,jdbcType=VARCHAR},
+      </if>
+      <if test="workTaskContent != null">
+        work_task_content = #{workTaskContent,jdbcType=VARCHAR},
+      </if>
+      <if test="actualTaskStartTime != null">
+        actual_task_start_time = #{actualTaskStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualTaskEndTime != null">
+        actual_task_end_time = #{actualTaskEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualTaskDuration != null">
+        actual_task_duration = #{actualTaskDuration,jdbcType=BIGINT},
+      </if>
+      <if test="taskProgrossRate != null">
+        task_progross_rate = #{taskProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where work_report_id = #{workReportId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.task.TaskWorkReportModel">
+    update t_project_task_work_report
+    set work_report_title = #{workReportTitle,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=BIGINT},
+      work_reporter_id = #{workReporterId,jdbcType=BIGINT},
+      work_reporter_name = #{workReporterName,jdbcType=VARCHAR},
+      work_task_content = #{workTaskContent,jdbcType=VARCHAR},
+      actual_task_start_time = #{actualTaskStartTime,jdbcType=TIMESTAMP},
+      actual_task_end_time = #{actualTaskEndTime,jdbcType=TIMESTAMP},
+      actual_task_duration = #{actualTaskDuration,jdbcType=BIGINT},
+      task_progross_rate = #{taskProgrossRate,jdbcType=DOUBLE},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where work_report_id = #{workReportId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectAllWithDelStatus" parameterType="java.lang.Long" resultMap="rm">
+		select DISTINCT
+		tptwr.*,
+		tsu.REALNAME workReporterName,
+		tptc.task_end_time taskEndTime,
+		tptc.task_start_time taskStartTime
+		from t_project_task_work_report tptwr
+		LEFT JOIN
+		l2cplat_ceshi_wq.t_sys_user tsu
+		on tptwr.work_reporter_id = tsu.USER_ID
+		LEFT JOIN
+		t_project_task_create tptc
+		ON tptc.task_id = tptwr.task_id
+		where tptwr.task_id = #{taskId,jdbcType=BIGINT}  
+		and tptwr.del_status =${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+		order by tptwr.create_time desc
+		
+  </select>
+  
+  <select id="selectByPrimaryKeyWithDelStatus" parameterType="com.fea.project.model.task.TaskWorkReportModel" resultMap="rm1">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_work_report
+    where work_report_id = #{workReportId,jdbcType=BIGINT}
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}  
+  </select>
+  
+    <update id="updateByPrimaryKeySelectiveWithDelStatus" parameterType="com.fea.project.model.task.TaskWorkReportModel">
+    update t_project_task_work_report
+	set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()} 
+    where work_report_id = #{workReportId,jdbcType=BIGINT}
+  </update>
+  
+    <update id="updateBusinessIdInAppendix" parameterType="com.fea.project.model.task.vo.TaskWorkReportModelVo">
+  	UPDATE
+	t_project_appendix
+	set
+	business_id = #{workReportId,jdbcType=BIGINT}
+	where id = #{appendixId,jdbcType=BIGINT}
+
+  </update>
+  
+  <select id="selectLatestOneByTaskId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT distinct 
+	<include refid="Base_Column_List" /> 
+	from 
+	t_project_task_work_report
+	where task_id = #{taskId,jdbcType=BIGINT}
+	and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+	ORDER BY create_time desc
+	limit 0,1
+  </select>
+</mapper>

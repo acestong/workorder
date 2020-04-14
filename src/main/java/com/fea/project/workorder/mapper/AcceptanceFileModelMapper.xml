@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.AcceptanceFileModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.AcceptanceFileModel">
+    <id column="acceptance_file_id" jdbcType="BIGINT" property="acceptanceFileId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="file_desc" jdbcType="VARCHAR" property="fileDesc" />
+    <result column="acceptance_id" jdbcType="BIGINT" property="acceptanceId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap id="rm" type="com.fea.project.workorder.model.vo.AcceptanceFileModelVo">
+    <id column="acceptance_file_id" jdbcType="BIGINT" property="acceptanceFileId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="file_desc" jdbcType="VARCHAR" property="fileDesc" />
+    <result column="acceptance_id" jdbcType="BIGINT" property="acceptanceId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    acceptance_file_id, name, file_desc, acceptance_id, create_id, create_by, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.AcceptanceFileModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_acceptance_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByModel" parameterType="com.fea.project.workorder.model.AcceptanceFileModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_acceptance_file
+    where 1=1 
+    <if test="acceptanceFileId != null">
+	    and acceptance_file_id = #{acceptanceFileId,jdbcType=BIGINT}
+    </if>
+    <if test="name != null">
+	    and name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="fileDesc != null">
+	    and file_desc = #{fileDesc,jdbcType=VARCHAR}
+    </if>
+    <if test="acceptanceId != null">
+	    and acceptance_id = #{acceptanceId,jdbcType=BIGINT}
+    </if>
+    <if test="createId != null">
+	    and create_id = #{createId,jdbcType=BIGINT}
+    </if>
+    <if test="create_by != null">
+	    and create_by = #{create_by,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null">
+	    and create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_acceptance_file
+    where acceptance_file_id = #{acceptanceFileId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByAcceptanceId" parameterType="java.lang.Long" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_acceptance_file
+    where acceptance_id = #{acceptanceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_acceptance_file
+    where acceptance_file_id = #{acceptanceFileId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.AcceptanceFileModelExample">
+    delete from t_workorder_acceptance_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="acceptanceFileId" parameterType="com.fea.project.workorder.model.AcceptanceFileModel">
+    insert into t_workorder_acceptance_file (acceptance_file_id, name, file_desc, 
+      acceptance_id, create_id, create_by, 
+      create_time)
+    values (#{acceptanceFileId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{fileDesc,jdbcType=VARCHAR}, 
+      #{acceptanceId,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyProperty="acceptanceFileId"  parameterType="com.fea.project.workorder.model.AcceptanceFileModel">
+    insert into t_workorder_acceptance_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="acceptanceFileId != null">
+        acceptance_file_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="fileDesc != null">
+        file_desc,
+      </if>
+      <if test="acceptanceId != null">
+        acceptance_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="acceptanceFileId != null">
+        #{acceptanceFileId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fileDesc != null">
+        #{fileDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceId != null">
+        #{acceptanceId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.AcceptanceFileModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_acceptance_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_acceptance_file
+    <set>
+      <if test="record.acceptanceFileId != null">
+        acceptance_file_id = #{record.acceptanceFileId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileDesc != null">
+        file_desc = #{record.fileDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptanceId != null">
+        acceptance_id = #{record.acceptanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_acceptance_file
+    set acceptance_file_id = #{record.acceptanceFileId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      file_desc = #{record.fileDesc,jdbcType=VARCHAR},
+      acceptance_id = #{record.acceptanceId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.AcceptanceFileModel">
+    update t_workorder_acceptance_file
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fileDesc != null">
+        file_desc = #{fileDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceId != null">
+        acceptance_id = #{acceptanceId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where acceptance_file_id = #{acceptanceFileId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.AcceptanceFileModel">
+    update t_workorder_acceptance_file
+    set name = #{name,jdbcType=VARCHAR},
+      file_desc = #{fileDesc,jdbcType=VARCHAR},
+      acceptance_id = #{acceptanceId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where acceptance_file_id = #{acceptanceFileId,jdbcType=BIGINT}
+  </update>
+</mapper>

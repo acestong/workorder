@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.MouldModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.MouldModel">
+    <id column="mould_id" jdbcType="BIGINT" property="mouldId" />
+    <result column="mould_name" jdbcType="VARCHAR" property="mouldName" />
+    <result column="work_order_type_id" jdbcType="BIGINT" property="workOrderTypeId" />
+    <result column="mould_version" jdbcType="BIGINT" property="mouldVersion" />
+    <result column="mould_desc" jdbcType="VARCHAR" property="mouldDesc" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <resultMap id="rm" type="com.fea.project.workorder.model.vo.MouldModelVo">
+    <id column="mould_id" jdbcType="BIGINT" property="mouldId" />
+    <result column="mould_name" jdbcType="VARCHAR" property="mouldName" />
+    <result column="work_order_type_id" jdbcType="BIGINT" property="workOrderTypeId" />
+    <result column="mould_version" jdbcType="BIGINT" property="mouldVersion" />
+    <result column="mould_desc" jdbcType="VARCHAR" property="mouldDesc" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    	<collection property="procedureInfoList" column="mould_id" select="com.fea.project.workorder.dao.ProcedureModelMapper.selectByMouldId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mould_id, mould_name, work_order_type_id, mould_version, mould_desc, org_id, create_id, 
+    create_by, create_time, update_id, update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.MouldModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_mould
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_mould
+    where mould_id = #{mouldId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOrgId" parameterType="java.lang.Long" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_mould
+    where org_id = #{orgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_mould
+    where mould_id = #{mouldId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.MouldModelExample">
+    delete from t_workorder_mould
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="mouldId" parameterType="com.fea.project.workorder.model.MouldModel">
+    insert into t_workorder_mould (mould_id, mould_name, work_order_type_id, 
+      mould_version, mould_desc, org_id, 
+      create_id, create_by, create_time, 
+      update_id, update_by, update_time, 
+      del_status)
+    values (#{mouldId,jdbcType=BIGINT}, #{mouldName,jdbcType=VARCHAR}, #{workOrderTypeId,jdbcType=BIGINT}, 
+      #{mouldVersion,jdbcType=BIGINT}, #{mouldDesc,jdbcType=VARCHAR}, #{orgId,jdbcType=BIGINT}, 
+      #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{upTIMESTAMPId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective"  keyProperty="mouldId" parameterType="com.fea.project.workorder.model.MouldModel">
+    insert into t_workorder_mould
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mouldId != null">
+        mould_id,
+      </if>
+      <if test="mouldName != null">
+        mould_name,
+      </if>
+      <if test="workOrderTypeId != null">
+        work_order_type_id,
+      </if>
+      <if test="mouldVersion != null">
+        mould_version,
+      </if>
+      <if test="mouldDesc != null">
+        mould_desc,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mouldId != null">
+        #{mouldId,jdbcType=BIGINT},
+      </if>
+      <if test="mouldName != null">
+        #{mouldName,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrderTypeId != null">
+        #{workOrderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="mouldVersion != null">
+        #{mouldVersion,jdbcType=BIGINT},
+      </if>
+      <if test="mouldDesc != null">
+        #{mouldDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.MouldModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_mould
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_mould
+    <set>
+      <if test="record.mouldId != null">
+        mould_id = #{record.mouldId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mouldName != null">
+        mould_name = #{record.mouldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workOrderTypeId != null">
+        work_order_type_id = #{record.workOrderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mouldVersion != null">
+        mould_version = #{record.mouldVersion,jdbcType=BIGINT},
+      </if>
+      <if test="record.mouldDesc != null">
+        mould_desc = #{record.mouldDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgId != null">
+        org_id = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_mould
+    set mould_id = #{record.mouldId,jdbcType=BIGINT},
+      mould_name = #{record.mouldName,jdbcType=VARCHAR},
+      work_order_type_id = #{record.workOrderTypeId,jdbcType=BIGINT},
+      mould_version = #{record.mouldVersion,jdbcType=BIGINT},
+      mould_desc = #{record.mouldDesc,jdbcType=VARCHAR},
+      org_id = #{record.orgId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.MouldModel">
+    update t_workorder_mould
+    <set>
+      <if test="mouldName != null">
+        mould_name = #{mouldName,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrderTypeId != null">
+        work_order_type_id = #{workOrderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="mouldVersion != null">
+        mould_version = #{mouldVersion,jdbcType=BIGINT},
+      </if>
+      <if test="mouldDesc != null">
+        mould_desc = #{mouldDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where mould_id = #{mouldId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.MouldModel">
+    update t_workorder_mould
+    set mould_name = #{mouldName,jdbcType=VARCHAR},
+      work_order_type_id = #{workOrderTypeId,jdbcType=BIGINT},
+      mould_version = #{mouldVersion,jdbcType=BIGINT},
+      mould_desc = #{mouldDesc,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where mould_id = #{mouldId,jdbcType=BIGINT}
+  </update>
+</mapper>

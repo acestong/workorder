@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.project.draft.DraftStepVerifyMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.project.draft.DraftStepVerifyModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="step_id" jdbcType="BIGINT" property="stepId" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="verify_time" jdbcType="TIMESTAMP" property="verifyTime" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="verify_user" jdbcType="BIGINT" property="verifyUser" />
+        <result column="verify_by" jdbcType="VARCHAR" property="verifyBy" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="work_time" jdbcType="DECIMAL" property="workTime" />
+        <result column="original_id" jdbcType="BIGINT" property="originalId" />
+        <result column="draft_id" jdbcType="BIGINT" property="draftId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, step_id, status, verify_time, create_id, create_by, create_time, update_id, update_by,
+        update_time, verify_user, verify_by, remark, start_time, end_time, work_time, original_id, 
+        draft_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_draft_step_verify
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_draft_step_verify
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_draft_step_verify
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.project.draft.DraftStepVerifyModel">
+        insert into t_project_draft_step_verify (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{stepId,jdbcType=BIGINT},
+            #{status,jdbcType=INTEGER},
+            #{verifyTime,jdbcType=TIMESTAMP}, 
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{verifyUser,jdbcType=BIGINT}, 
+            #{verifyBy,jdbcType=VARCHAR}, 
+            #{remark,jdbcType=VARCHAR}, 
+            #{startTime,jdbcType=TIMESTAMP}, 
+            #{endTime,jdbcType=TIMESTAMP}, 
+            #{workTime,jdbcType=DECIMAL}, 
+            #{originalId,jdbcType=BIGINT}, 
+            #{draftId,jdbcType=BIGINT}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_draft_step_verify (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.stepId,jdbcType=BIGINT},
+                #{item.status,jdbcType=INTEGER},
+                #{item.verifyTime,jdbcType=TIMESTAMP}, 
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}, 
+                #{item.verifyUser,jdbcType=BIGINT}, 
+                #{item.verifyBy,jdbcType=VARCHAR}, 
+                #{item.remark,jdbcType=VARCHAR}, 
+                #{item.startTime,jdbcType=TIMESTAMP}, 
+                #{item.endTime,jdbcType=TIMESTAMP}, 
+                #{item.workTime,jdbcType=DECIMAL}, 
+                #{item.originalId,jdbcType=BIGINT}, 
+                #{item.draftId,jdbcType=BIGINT}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.project.draft.DraftStepVerifyModel" resultMap="BaseResultMap">
+        select * from t_project_draft_step_verify where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="stepId != null">
+            and step_id = #{stepId,jdbcType=BIGINT}
+        </if>
+        <if test="status != null">
+            and status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="verifyTime != null">
+            and verify_time = #{verifyTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="verifyUser != null">
+            and verify_user = #{verifyUser,jdbcType=BIGINT}
+        </if>
+        <if test="verifyBy != null">
+            and verify_by = #{verifyBy,jdbcType=VARCHAR}
+        </if>
+        <if test="remark != null">
+            and remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="startTime != null">
+            and start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="workTime != null">
+            and work_time = #{workTime,jdbcType=DECIMAL}
+        </if>
+        <if test="originalId != null">
+            and original_id = #{originalId,jdbcType=BIGINT}
+        </if>
+        <if test="draftId != null">
+            and draft_id = #{draftId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.project.draft.DraftStepVerifyModel">
+        insert into t_project_draft_step_verify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="stepId != null">
+                step_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="verifyTime != null">
+                verify_time,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="verifyUser != null">
+                verify_user,
+            </if>
+            <if test="verifyBy != null">
+                verify_by,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="workTime != null">
+                work_time,
+            </if>
+            <if test="originalId != null">
+                original_id,
+            </if>
+            <if test="draftId != null">
+                draft_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="stepId != null">
+                #{stepId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="verifyTime != null">
+                #{verifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyUser != null">
+                #{verifyUser,jdbcType=BIGINT},
+            </if>
+            <if test="verifyBy != null">
+                #{verifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="workTime != null">
+                #{workTime,jdbcType=DECIMAL},
+            </if>
+            <if test="originalId != null">
+                #{originalId,jdbcType=BIGINT},
+            </if>
+            <if test="draftId != null">
+                #{draftId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.project.draft.DraftStepVerifyModel">
+        update t_project_draft_step_verify
+        <set>
+            <if test="stepId != null">
+                step_id = #{stepId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="verifyTime != null">
+                verify_time = #{verifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verifyUser != null">
+                verify_user = #{verifyUser,jdbcType=BIGINT},
+            </if>
+            <if test="verifyBy != null">
+                verify_by = #{verifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="workTime != null">
+                work_time = #{workTime,jdbcType=DECIMAL},
+            </if>
+            <if test="originalId != null">
+                original_id = #{originalId,jdbcType=BIGINT},
+            </if>
+            <if test="draftId != null">
+                draft_id = #{draftId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.project.draft.DraftStepVerifyModel">
+        update t_project_draft_step_verify
+        set step_id = #{stepId,jdbcType=BIGINT},
+            status = #{status,jdbcType=INTEGER},
+            verify_time = #{verifyTime,jdbcType=TIMESTAMP},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            verify_user = #{verifyUser,jdbcType=BIGINT},
+            verify_by = #{verifyBy,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            work_time = #{workTime,jdbcType=DECIMAL},
+            original_id = #{originalId,jdbcType=BIGINT},
+            draft_id = #{draftId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByStepId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_draft_step_verify
+        where step_id = #{stepId,jdbcType=BIGINT}
+    </select>
+
+
+</mapper>

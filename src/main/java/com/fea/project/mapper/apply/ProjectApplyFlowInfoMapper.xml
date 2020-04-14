@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.apply.ProjectApplyFlowInfoMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.apply.ProjectApplyFlowInfoModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="apply_id" jdbcType="BIGINT" property="applyId"/>
+        <result column="business_flow_verify_id" jdbcType="BIGINT" property="businessFlowVerifyId"/>
+        <result column="person_type" jdbcType="INTEGER" property="personType"/>
+        <result column="verify_type" jdbcType="INTEGER" property="verifyType"/>
+        <result column="verify_status" jdbcType="INTEGER" property="verifyStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="stop_time" jdbcType="VARCHAR" property="stopTime"/>
+        <result column="action_time" jdbcType="TIMESTAMP" property="actionTime"/>
+        <result column="action_type" jdbcType="INTEGER" property="actionType"/>
+        <result column="verify_result" jdbcType="VARCHAR" property="verifyResult"/>
+        <result column="describe" jdbcType="VARCHAR" property="describe"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, apply_id, business_flow_verify_id, person_type, verify_type, verify_status, create_time, stop_time, action_time, action_type, verify_result, `describe`
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_apply_flow_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_apply_flow_info
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_apply_flow_info
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.apply.ProjectApplyFlowInfoModel">
+        insert into t_project_apply_flow_info (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{applyId,jdbcType=BIGINT},
+        #{businessFlowVerifyId,jdbcType=BIGINT},
+        #{personType,jdbcType=INTEGER},
+        #{verifyType,jdbcType=INTEGER},
+        #{verifyStatus,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{stopTime,jdbcType=VARCHAR},
+        #{actionTime,jdbcType=TIMESTAMP},
+        #{actionType,jdbcType=INTEGER},
+        #{verifyResult,jdbcType=VARCHAR},
+        #{describe,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_apply_flow_info (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.applyId,jdbcType=BIGINT},
+            #{item.businessFlowVerifyId,jdbcType=BIGINT},
+            #{item.personType,jdbcType=INTEGER},
+            #{item.verifyType,jdbcType=INTEGER},
+            #{item.verifyStatus,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.stopTime,jdbcType=VARCHAR},
+            #{item.actionTime,jdbcType=TIMESTAMP},
+            #{item.actionType,jdbcType=TIMESTAMP},
+            #{item.verifyResult,jdbcType=VARCHAR},
+            #{item.describe,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.apply.ProjectApplyFlowInfoModel"
+            resultMap="BaseResultMap">
+        select * from t_project_apply_flow_info where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="applyId != null">
+            and apply_id = #{applyId,jdbcType=BIGINT}
+        </if>
+        <if test="businessFlowVerifyId != null">
+            and business_flow_verify_id = #{businessFlowVerifyId,jdbcType=BIGINT}
+        </if>
+        <if test="personType != null">
+            and person_type = #{personType,jdbcType=INTEGER}
+        </if>
+        <if test="verifyType != null">
+            and verify_type = #{verifyType,jdbcType=INTEGER}
+        </if>
+        <if test="verifyStatus != null">
+            and verify_status = #{verifyStatus,jdbcType=INTEGER}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="stopTime != null">
+            and stop_time = #{stopTime,jdbcType=VARCHAR}
+        </if>
+        <if test="actionTime != null">
+            and action_time = #{actionTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="actionType != null">
+            and action_type = #{actionType,jdbcType=INTEGER}
+        </if>
+        <if test="verifyResult != null">
+            and verify_result = #{verifyResult,jdbcType=VARCHAR}
+        </if>
+        <if test="describe != null">
+            and `describe` = #{describe,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.apply.ProjectApplyFlowInfoModel">
+        insert into t_project_apply_flow_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="applyId != null">
+                apply_id,
+            </if>
+            <if test="businessFlowVerifyId != null">
+                business_flow_verify_id,
+            </if>
+            <if test="personType != null">
+                person_type,
+            </if>
+            <if test="verifyType != null">
+                verify_type,
+            </if>
+            <if test="verifyStatus != null">
+                verify_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="stopTime != null">
+                stop_time,
+            </if>
+            <if test="actionTime != null">
+                action_time,
+            </if>
+            <if test="actionType != null">
+                action_type,
+            </if>
+            <if test="verifyResult != null">
+                verify_result,
+            </if>
+            <if test="describe != null">
+                `describe`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="applyId != null">
+                #{applyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessFlowVerifyId != null">
+                #{businessFlowVerifyId,jdbcType=BIGINT},
+            </if>
+            <if test="personType != null">
+                #{personType,jdbcType=INTEGER},
+            </if>
+            <if test="verifyType != null">
+                #{verifyType,jdbcType=INTEGER},
+            </if>
+            <if test="verifyStatus != null">
+                #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stopTime != null">
+                #{stopTime,jdbcType=VARCHAR},
+            </if>
+            <if test="actionTime != null">
+                #{actionTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="actionType != null">
+                #{actionType,jdbcType=INTEGER},
+            </if>
+            <if test="verifyResult != null">
+                #{verifyResult,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                #{describe,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.apply.ProjectApplyFlowInfoModel">
+        update t_project_apply_flow_info
+        <set>
+            <if test="applyId != null">
+                apply_id = #{applyId,jdbcType=BIGINT},
+            </if>
+            <if test="businessFlowVerifyId != null">
+                business_flow_verify_id = #{businessFlowVerifyId,jdbcType=BIGINT},
+            </if>
+            <if test="personType != null">
+                person_type = #{personType,jdbcType=INTEGER},
+            </if>
+            <if test="verifyType != null">
+                verify_type = #{verifyType,jdbcType=INTEGER},
+            </if>
+            <if test="verifyStatus != null">
+                verify_status = #{verifyStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="stopTime != null">
+                stop_time = #{stopTime,jdbcType=VARCHAR},
+            </if>
+            <if test="actionTime != null">
+                action_time = #{actionTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="actionType != null">
+                action_type = #{actionType,jdbcType=INTEGER},
+            </if>
+            <if test="verifyResult != null">
+                verify_result = #{verifyResult,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                `describe` = #{describe,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.apply.ProjectApplyFlowInfoModel">
+        update t_project_apply_flow_info
+        set apply_id = #{applyId,jdbcType=BIGINT},
+            business_flow_verify_id = #{businessFlowVerifyId,jdbcType=BIGINT},
+            person_type = #{personType,jdbcType=INTEGER},
+            verify_type = #{verifyType,jdbcType=INTEGER},
+            verify_status = #{verifyStatus,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            stop_time = #{stopTime,jdbcType=VARCHAR},
+            action_time = #{actionTime,jdbcType=TIMESTAMP},
+            action_type = #{actionType,jdbcType=INTEGER},
+            verify_result = #{verifyResult,jdbcType=VARCHAR},
+            `describe` = #{describe,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.model.apply.vo.ProjectApplyFlowInfoVo"
+               extends="BaseResultMap">
+        <association property="projectApplyFlowVerifyModels" column="id"
+                     select="com.fea.project.dao.apply.ProjectApplyFlowVerifyMapper.selectByApplyFlowId"
+                     fetchType="lazy"/>
+    </resultMap>
+    <select id="selectByApplyId" resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_apply_flow_info
+        where apply_id = #{applyId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectWaitingVerifyModel" resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_apply_flow_info
+        where apply_id = #{applyId,jdbcType=BIGINT}
+        and action_time is null
+    </select>
+
+    <select id="selectVerifyedModelsByApplyId" resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_apply_flow_info
+        where apply_id = #{applyId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectCanRevertStep" resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_apply_flow_info
+        where apply_id = #{applyId,jdbcType=BIGINT}
+        and action_time is not null
+    </select>
+
+
+</mapper>

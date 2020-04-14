@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.AcceptanceContentModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.AcceptanceContentModel">
+    <id column="acceptance_content_id" jdbcType="BIGINT" property="acceptanceContentId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="unit" jdbcType="BIGINT" property="unit" />
+    <result column="count_num" jdbcType="BIGINT" property="countNum" />
+    <result column="conclusion" jdbcType="BIGINT" property="conclusion" />
+    <result column="opinion" jdbcType="VARCHAR" property="opinion" />
+    <result column="acceptance_id" jdbcType="BIGINT" property="acceptanceId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap id="rm" type="com.fea.project.workorder.model.vo.AcceptanceContentModelVo">
+	  <id column="acceptance_content_id" jdbcType="BIGINT" property="acceptanceContentId" />
+	    <result column="content" jdbcType="VARCHAR" property="content" />
+	    <result column="unit" jdbcType="BIGINT" property="unit" />
+	    <result column="unitStr" jdbcType="VARCHAR" property="unitStr" />
+	    <result column="count_num" jdbcType="BIGINT" property="countNum" />
+	    <result column="conclusion" jdbcType="BIGINT" property="conclusion" />
+	    <result column="conclusionStr" jdbcType="VARCHAR" property="conclusionStr" />
+	    <result column="opinion" jdbcType="VARCHAR" property="opinion" />
+	    <result column="acceptance_id" jdbcType="BIGINT" property="acceptanceId" />
+	    <result column="create_id" jdbcType="BIGINT" property="createId" />
+	    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    acceptance_content_id, content, unit, count_num, conclusion, opinion, acceptance_id, 
+    create_id, create_by, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.AcceptanceContentModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_acceptance_content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_acceptance_content
+    where acceptance_content_id = #{acceptanceContentId,jdbcType=BIGINT}
+  </select>
+  <select id="selectListByAcceptanceId" parameterType="java.lang.Long" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_acceptance_content
+    where acceptance_id = #{acceptanceId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByModel" parameterType="com.fea.project.workorder.model.AcceptanceContentModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_acceptance_content
+    where 1=1
+    <if test="acceptanceContentId != null">
+   	 	and acceptance_content_id = #{acceptanceContentId,jdbcType=BIGINT}
+    </if>
+    <if test="content != null">
+   	 	and content = #{content,jdbcType=VARCHAR}
+    </if>
+    <if test="unit != null">
+   	 	and unit = #{unit,jdbcType=BIGINT}
+    </if>
+    <if test="countNum != null">
+   	 	and count_num = #{countNum,jdbcType=BIGINT}
+    </if>
+    <if test="conclusion != null">
+   	 	and conclusion = #{conclusion,jdbcType=BIGINT}
+    </if>
+    <if test="opinion != null">
+   	 	and opinion = #{opinion,jdbcType=VARCHAR}
+    </if>
+    <if test="acceptanceId != null">
+   	 	and acceptance_id = #{acceptanceId,jdbcType=LONG}
+    </if>
+    <if test="createId != null">
+   	 	and create_id = #{createId,jdbcType=BIGINT}
+    </if>
+    <if test="createBy != null">
+   	 	and create_by = #{createBy,jdbcType=VARCHAR}
+    </if>
+    <if test="createTime != null">
+   	 	and createTime = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_acceptance_content
+    where acceptance_content_id = #{acceptanceContentId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.AcceptanceContentModelExample">
+    delete from t_workorder_acceptance_content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="acceptanceContentId" parameterType="com.fea.project.workorder.model.AcceptanceContentModel">
+    insert into t_workorder_acceptance_content (acceptance_content_id, content, unit, 
+      count_num, conclusion, opinion, 
+      acceptance_id, create_id, create_by, 
+      create_time)
+    values (#{acceptanceContentId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{unit,jdbcType=BIGINT}, 
+      #{countNum,jdbcType=BIGINT}, #{conclusion,jdbcType=BIGINT}, #{opinion,jdbcType=VARCHAR}, 
+      #{acceptanceId,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyProperty="acceptanceContentId" parameterType="com.fea.project.workorder.model.AcceptanceContentModel">
+    insert into t_workorder_acceptance_content
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="acceptanceContentId != null">
+        acceptance_content_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="countNum != null">
+        count_num,
+      </if>
+      <if test="conclusion != null">
+        conclusion,
+      </if>
+      <if test="opinion != null">
+        opinion,
+      </if>
+      <if test="acceptanceId != null">
+        acceptance_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="acceptanceContentId != null">
+        #{acceptanceContentId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=BIGINT},
+      </if>
+      <if test="countNum != null">
+        #{countNum,jdbcType=BIGINT},
+      </if>
+      <if test="conclusion != null">
+        #{conclusion,jdbcType=BIGINT},
+      </if>
+      <if test="opinion != null">
+        #{opinion,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceId != null">
+        #{acceptanceId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.AcceptanceContentModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_acceptance_content
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_acceptance_content
+    <set>
+      <if test="record.acceptanceContentId != null">
+        acceptance_content_id = #{record.acceptanceContentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=BIGINT},
+      </if>
+      <if test="record.countNum != null">
+        count_num = #{record.countNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.conclusion != null">
+        conclusion = #{record.conclusion,jdbcType=BIGINT},
+      </if>
+      <if test="record.opinion != null">
+        opinion = #{record.opinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acceptanceId != null">
+        acceptance_id = #{record.acceptanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_acceptance_content
+    set acceptance_content_id = #{record.acceptanceContentId,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=BIGINT},
+      count_num = #{record.countNum,jdbcType=BIGINT},
+      conclusion = #{record.conclusion,jdbcType=BIGINT},
+      opinion = #{record.opinion,jdbcType=VARCHAR},
+      acceptance_id = #{record.acceptanceId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.AcceptanceContentModel">
+    update t_workorder_acceptance_content
+    <set>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=BIGINT},
+      </if>
+      <if test="countNum != null">
+        count_num = #{countNum,jdbcType=BIGINT},
+      </if>
+      <if test="conclusion != null">
+        conclusion = #{conclusion,jdbcType=BIGINT},
+      </if>
+      <if test="opinion != null">
+        opinion = #{opinion,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptanceId != null">
+        acceptance_id = #{acceptanceId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where acceptance_content_id = #{acceptanceContentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.AcceptanceContentModel">
+    update t_workorder_acceptance_content
+    set content = #{content,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=BIGINT},
+      count_num = #{countNum,jdbcType=BIGINT},
+      conclusion = #{conclusion,jdbcType=BIGINT},
+      opinion = #{opinion,jdbcType=VARCHAR},
+      acceptance_id = #{acceptanceId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where acceptance_content_id = #{acceptanceContentId,jdbcType=BIGINT}
+  </update>
+</mapper>

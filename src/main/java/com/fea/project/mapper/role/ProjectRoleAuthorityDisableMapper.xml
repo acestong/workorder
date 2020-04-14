@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.role.ProjectRoleAuthorityDisableMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.role.ProjectRoleAuthorityDisableModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="authority_id" jdbcType="BIGINT" property="authorityId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        reg_id, authority_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_role_authority_disable
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_role_authority_disable
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_role_authority_disable
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.role.ProjectRoleAuthorityDisableModel">
+        insert into t_project_role_authority_disable (
+        <include refid="Base_Column_List"/>
+        )
+        values (#{regId,jdbcType=BIGINT},
+        #{authorityId,jdbcType=BIGINT}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_role_authority_disable (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.regId,jdbcType=BIGINT},
+            #{item.authorityId,jdbcType=BIGINT}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.role.ProjectRoleAuthorityDisableModel"
+            resultMap="BaseResultMap">
+        select * from t_project_role_authority_disable where 1 = 1
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="authorityId != null">
+            and authority_id = #{authorityId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id"
+            parameterType="com.fea.project.model.role.ProjectRoleAuthorityDisableModel">
+        insert into t_project_role_authority_disable
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="authorityId != null">
+                authority_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="authorityId != null">
+                #{authorityId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.role.ProjectRoleAuthorityDisableModel">
+        update t_project_role_authority_disable
+        <set>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="authorityId != null">
+                authority_id = #{authorityId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.role.ProjectRoleAuthorityDisableModel">
+        update t_project_role_authority_disable
+        set reg_id = #{regId,jdbcType=BIGINT},
+            authority_id = #{authorityId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

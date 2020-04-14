@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.publish.PublishLikeModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.publish.PublishLikeModel">
+    <id column="publish_like_id" jdbcType="BIGINT" property="publishLikeId" />
+    <result column="publish_id" jdbcType="BIGINT" property="publishId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="publish_like_time" jdbcType="TIMESTAMP" property="publishLikeTime" />
+    <result column="is_read" jdbcType="BIGINT" property="isRead" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    publish_like_id, publish_id, user_name, user_id, publish_like_time, is_read
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.publish.PublishLikeModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_publish_like
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_publish_like
+    where publish_like_id = #{publishLikeId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_publish_like
+    where publish_like_id = #{publishLikeId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.publish.PublishLikeModelExample">
+    delete from t_project_publish_like
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+   <delete id="deleteByPublishIdAndUserId" parameterType="com.fea.project.model.publish.PublishLikeModel">
+    delete from t_project_publish_like
+    where publish_id = #{publishId,jdbcType=BIGINT}
+    and user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert"  keyProperty="publishLikeId" parameterType="com.fea.project.model.publish.PublishLikeModel">
+    insert into t_project_publish_like (publish_like_id, publish_id, user_name, 
+      user_id, publish_like_time, is_read
+      )
+    values (#{publishLikeId,jdbcType=BIGINT}, #{publishId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT}, #{publishLikeTime,jdbcType=TIMESTAMP}, #{isRead,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="publishLikeId" parameterType="com.fea.project.model.publish.PublishLikeModel">
+    insert into t_project_publish_like
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="publishLikeId != null">
+        publish_like_id,
+      </if>
+      <if test="publishId != null">
+        publish_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="publishLikeTime != null">
+        publish_like_time,
+      </if>
+      <if test="isRead != null">
+        is_read,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="publishLikeId != null">
+        #{publishLikeId,jdbcType=BIGINT},
+      </if>
+      <if test="publishId != null">
+        #{publishId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="publishLikeTime != null">
+        #{publishLikeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isRead != null">
+        #{isRead,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.publish.PublishLikeModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_publish_like
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_publish_like
+    <set>
+      <if test="record.publishLikeId != null">
+        publish_like_id = #{record.publishLikeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.publishId != null">
+        publish_id = #{record.publishId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.publishLikeTime != null">
+        publish_like_time = #{record.publishLikeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isRead != null">
+        is_read = #{record.isRead,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_publish_like
+    set publish_like_id = #{record.publishLikeId,jdbcType=BIGINT},
+      publish_id = #{record.publishId,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      publish_like_time = #{record.publishLikeTime,jdbcType=TIMESTAMP},
+      is_read = #{record.isRead,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.publish.PublishLikeModel">
+    update t_project_publish_like
+    <set>
+      <if test="publishId != null">
+        publish_id = #{publishId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="publishLikeTime != null">
+        publish_like_time = #{publishLikeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isRead != null">
+        is_read = #{isRead,jdbcType=BIGINT},
+      </if>
+    </set>
+    where publish_like_id = #{publishLikeId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.publish.PublishLikeModel">
+    update t_project_publish_like
+    set publish_id = #{publishId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      publish_like_time = #{publishLikeTime,jdbcType=TIMESTAMP},
+      is_read = #{isRead,jdbcType=BIGINT}
+    where publish_like_id = #{publishLikeId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectLikeListByPublishId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_publish_like
+    where publish_id = #{publishId,jdbcType=BIGINT}
+  </select>
+  
+  
+  <select id="selectCountByCurUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+	SELECT DISTINCT
+	COUNT(tppl.publish_like_id) count
+	from t_project_publish_like tppl
+	LEFT JOIN
+	t_project_publish tpp
+	ON
+	tpp.publish_id = tppl.publish_id
+	where tpp.user_id = #{userId,jdbcType=BIGINT}
+	and is_read =  ${@com.fea.project.enums.publish.IsReadEnum@IS_NOT_READ.getStatus()}
+  </select>
+  
+  <update id="updateIsReadByCurUserId" parameterType="java.lang.Long">
+    update t_project_publish_like
+	set is_read = ${@com.fea.project.enums.publish.IsReadEnum@IS_READ.getStatus()}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

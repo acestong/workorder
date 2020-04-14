@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.crm.CrmSaleChanceTypeMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.crm.CrmSaleChanceTypeModel">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="TYPE" jdbcType="VARCHAR" property="TYPE"/>
+        <result column="AVERAGE_CONTRACT_AMOUNT" jdbcType="DOUBLE" property="AVERAGECONTRACTAMOUNT"/>
+        <result column="AVERAGE_CONTRACT_PERIOD" jdbcType="DOUBLE" property="AVERAGECONTRACTPERIOD"/>
+        <result column="AVERAGE_GROSS_RATE" jdbcType="DOUBLE" property="AVERAGEGROSSRATE"/>
+        <result column="TYPE_DESCRIPTION" jdbcType="VARCHAR" property="TYPEDESCRIPTION"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="CURRENCY_ID" jdbcType="BIGINT" property="CURRENCYID"/>
+        <result column="CURRENCY" jdbcType="VARCHAR" property="CURRENCY"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="DELSTATE"/>
+        <result column="org_id" jdbcType="BIGINT" property="orgId"/>
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_user_id" jdbcType="BIGINT" property="updateUserId"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="STATUS" jdbcType="INTEGER" property="STATUS"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, REG_ID, TYPE, AVERAGE_CONTRACT_AMOUNT, AVERAGE_CONTRACT_PERIOD, AVERAGE_GROSS_RATE,
+        TYPE_DESCRIPTION, CREATE_TIME, CURRENCY_ID, CURRENCY, UPDATE_TIME, DEL_STATE, org_id, 
+        create_user_id, create_user, update_user_id, update_user, STATUS
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_crm_sale_chance_type
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.crm.CrmSaleChanceTypeModel"
+            resultMap="BaseResultMap">
+        select * from t_crm_sale_chance_type where 1 = 1
+        <if test="ID != null">
+            and ID = #{ID,jdbcType=BIGINT}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="TYPE != null">
+            and TYPE = #{TYPE,jdbcType=VARCHAR}
+        </if>
+        <if test="AVERAGECONTRACTAMOUNT != null">
+            and AVERAGE_CONTRACT_AMOUNT = #{AVERAGECONTRACTAMOUNT,jdbcType=DOUBLE}
+        </if>
+        <if test="AVERAGECONTRACTPERIOD != null">
+            and AVERAGE_CONTRACT_PERIOD = #{AVERAGECONTRACTPERIOD,jdbcType=DOUBLE}
+        </if>
+        <if test="AVERAGEGROSSRATE != null">
+            and AVERAGE_GROSS_RATE = #{AVERAGEGROSSRATE,jdbcType=DOUBLE}
+        </if>
+        <if test="TYPEDESCRIPTION != null">
+            and TYPE_DESCRIPTION = #{TYPEDESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="CURRENCYID != null">
+            and CURRENCY_ID = #{CURRENCYID,jdbcType=BIGINT}
+        </if>
+        <if test="CURRENCY != null">
+            and CURRENCY = #{CURRENCY,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="createUserId != null">
+            and create_user_id = #{createUserId,jdbcType=BIGINT}
+        </if>
+        <if test="createUser != null">
+            and create_user = #{createUser,jdbcType=VARCHAR}
+        </if>
+        <if test="updateUserId != null">
+            and update_user_id = #{updateUserId,jdbcType=BIGINT}
+        </if>
+        <if test="updateUser != null">
+            and update_user = #{updateUser,jdbcType=VARCHAR}
+        </if>
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and STATUS = ${@com.fea.project.enums.base.EnableStatusEnum@ENABLE.getStatus()}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_sale_chance_type
+        where ID in
+        <foreach collection="list" separator="," open="(" close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

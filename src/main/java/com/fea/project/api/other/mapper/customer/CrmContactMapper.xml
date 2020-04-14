@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.customer.CrmContactMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.customer.CrmContactModel">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID"/>
+        <result column="CUSTOMER_ID" jdbcType="BIGINT" property="CUSTOMERID"/>
+        <result column="COMPANY_NAME" jdbcType="VARCHAR" property="COMPANYNAME"/>
+        <result column="CONTACT_NAME" jdbcType="VARCHAR" property="CONTACTNAME"/>
+        <result column="acronym" jdbcType="VARCHAR" property="acronym"/>
+        <result column="CODE" jdbcType="VARCHAR" property="CODE"/>
+        <result column="STRUCTURE_ID" jdbcType="BIGINT" property="STRUCTUREID"/>
+        <result column="DEPARTMENT_NAME" jdbcType="VARCHAR" property="DEPARTMENTNAME"/>
+        <result column="POSITION" jdbcType="VARCHAR" property="POSITION"/>
+        <result column="DUTY" jdbcType="VARCHAR" property="DUTY"/>
+        <result column="LEVEL_ID" jdbcType="BIGINT" property="LEVELID"/>
+        <result column="CONTACT_LEVEL" jdbcType="VARCHAR" property="CONTACTLEVEL"/>
+        <result column="FAMILIAR_ID" jdbcType="BIGINT" property="FAMILIARID"/>
+        <result column="FAMILIAR" jdbcType="VARCHAR" property="FAMILIAR"/>
+        <result column="RELATION_ID" jdbcType="BIGINT" property="RELATIONID"/>
+        <result column="RELATION" jdbcType="VARCHAR" property="RELATION"/>
+        <result column="INFO_PERCENT" jdbcType="INTEGER" property="INFOPERCENT"/>
+        <result column="INFO_INTEGRITY" jdbcType="INTEGER" property="INFOINTEGRITY"/>
+        <result column="INFO_INTEGRITY_STR" jdbcType="VARCHAR" property="INFOINTEGRITYSTR"/>
+        <result column="TOTAL_TIMES" jdbcType="INTEGER" property="TOTALTIMES"/>
+        <result column="CUR_MAN_TIMES" jdbcType="INTEGER" property="CURMANTIMES"/>
+        <result column="CUR_YEAR_TIMES" jdbcType="INTEGER" property="CURYEARTIMES"/>
+        <result column="CONTACT_TYPE_ID" jdbcType="INTEGER" property="CONTACTTYPEID"/>
+        <result column="CONTACT_TYPE" jdbcType="BIGINT" property="CONTACTTYPE"/>
+        <result column="IS_DECISION" jdbcType="INTEGER" property="ISDECISION"/>
+        <result column="IS_KEY" jdbcType="INTEGER" property="ISKEY"/>
+        <result column="IS_SIGN" jdbcType="INTEGER" property="ISSIGN"/>
+        <result column="CUR_YEAR_CHANCES" jdbcType="INTEGER" property="CURYEARCHANCES"/>
+        <result column="CUR_YEAR_QUOTES" jdbcType="INTEGER" property="CURYEARQUOTES"/>
+        <result column="CUR_YEAR_SALES" jdbcType="INTEGER" property="CURYEARSALES"/>
+        <result column="OWNER_ID" jdbcType="BIGINT" property="OWNERID"/>
+        <result column="OWNER" jdbcType="VARCHAR" property="OWNER"/>
+        <result column="CREATE_USER_ID" jdbcType="BIGINT" property="CREATEUSERID"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER_ID" jdbcType="BIGINT" property="UPDATEUSERID"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="ATTENTION_NUM" jdbcType="INTEGER" property="ATTENTIONNUM"/>
+        <result column="TEL_TYPE_ID" jdbcType="BIGINT" property="TELTYPEID"/>
+        <result column="TEL_TYPE" jdbcType="VARCHAR" property="TELTYPE"/>
+        <result column="TEL" jdbcType="VARCHAR" property="TEL"/>
+        <result column="MOBILE_TYPE_ID" jdbcType="BIGINT" property="MOBILETYPEID"/>
+        <result column="MOBILE_TYPE" jdbcType="VARCHAR" property="MOBILETYPE"/>
+        <result column="MOBILE" jdbcType="VARCHAR" property="MOBILE"/>
+        <result column="EMAIL_TYPE_ID" jdbcType="BIGINT" property="EMAILTYPEID"/>
+        <result column="EMAIL_TYPE" jdbcType="VARCHAR" property="EMAILTYPE"/>
+        <result column="EMAIL" jdbcType="VARCHAR" property="EMAIL"/>
+        <result column="FAX" jdbcType="VARCHAR" property="FAX"/>
+        <result column="WEIXIN" jdbcType="VARCHAR" property="WEIXIN"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="DELSTATE"/>
+        <result column="CALL_TIMES" jdbcType="INTEGER" property="CALLTIMES"/>
+        <result column="CALL_BACK_TIMES" jdbcType="INTEGER" property="CALLBACKTIMES"/>
+        <result column="SEND_EMAILS" jdbcType="INTEGER" property="SENDEMAILS"/>
+        <result column="GET_EMAILS" jdbcType="INTEGER" property="GETEMAILS"/>
+        <result column="SEND_POSTS" jdbcType="INTEGER" property="SENDPOSTS"/>
+        <result column="GET_POSTS" jdbcType="INTEGER" property="GETPOSTS"/>
+        <result column="OUT_VISIT_TIMES" jdbcType="INTEGER" property="OUTVISITTIMES"/>
+        <result column="COME_VISIT_TIMES" jdbcType="INTEGER" property="COMEVISITTIMES"/>
+        <result column="RECORD_TIMES" jdbcType="INTEGER" property="RECORDTIMES"/>
+        <result column="CREATE_RELATION" jdbcType="VARCHAR" property="CREATERELATION"/>
+        <result column="HELP_DESC" jdbcType="VARCHAR" property="HELPDESC"/>
+        <result column="RELATIONSHIP_TYPE" jdbcType="VARCHAR" property="RELATIONSHIPTYPE"/>
+        <result column="CARD_ADDRESS" jdbcType="VARCHAR" property="CARDADDRESS"/>
+        <result column="contact_source_typeid" jdbcType="INTEGER" property="contactSourceTypeid"/>
+        <result column="GENDER" jdbcType="INTEGER" property="GENDER"/>
+        <result column="CUSTOMERNAME" jdbcType="VARCHAR" property="CUSTOMERNAME"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        ID, REG_ID, ORG_ID, CUSTOMER_ID, COMPANY_NAME, CONTACT_NAME, acronym, CODE, STRUCTURE_ID,
+        DEPARTMENT_NAME, POSITION, DUTY, LEVEL_ID, CONTACT_LEVEL, FAMILIAR_ID, FAMILIAR, 
+        RELATION_ID, RELATION, INFO_PERCENT, INFO_INTEGRITY, INFO_INTEGRITY_STR, TOTAL_TIMES, 
+        CUR_MAN_TIMES, CUR_YEAR_TIMES, CONTACT_TYPE_ID, CONTACT_TYPE, IS_DECISION, IS_KEY, 
+        IS_SIGN, CUR_YEAR_CHANCES, CUR_YEAR_QUOTES, CUR_YEAR_SALES, OWNER_ID, OWNER, CREATE_USER_ID, 
+        CREATE_USER, CREATE_TIME, UPDATE_USER_ID, UPDATE_USER, UPDATE_TIME, ATTENTION_NUM, 
+        TEL_TYPE_ID, TEL_TYPE, TEL, MOBILE_TYPE_ID, MOBILE_TYPE, MOBILE, EMAIL_TYPE_ID, EMAIL_TYPE, 
+        EMAIL, FAX, WEIXIN, DEL_STATE, CALL_TIMES, CALL_BACK_TIMES, SEND_EMAILS, GET_EMAILS, 
+        SEND_POSTS, GET_POSTS, OUT_VISIT_TIMES, COME_VISIT_TIMES, RECORD_TIMES, CREATE_RELATION, 
+        HELP_DESC, RELATIONSHIP_TYPE, CARD_ADDRESS, contact_source_typeid,
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select cc.*, ce.GENDER, cust.NAME as CUSTOMERNAME
+        from t_crm_contact cc
+        left join t_crm_contact_ext ce on cc.ID = ce.CONTACT_ID
+        left join t_crm_customer cust on cc.CUSTOMER_ID = cust.ID
+        where cc.ID = #{ID,jdbcType=BIGINT}
+    </select>
+    
+    <select id="selectEmpInfoById" parameterType="java.lang.Long" resultType="com.fea.project.api.other.model.customer.CrmContactInfoModel">
+        select tcc.ID id,
+		CONTACT_NAME contactName,
+		TEL tel,
+		EMAIL email,
+		DEPARTMENT_NAME departmentName,
+		POSITION position,
+		tcci.CONTENT address 
+		from t_crm_contact  tcc
+		LEFT JOIN
+		t_crm_contact_info tcci
+		on tcc.ID = tcci.CONTACT_ID
+		where tcc.ID= #{id,jdbcType=BIGINT}
+		and tcci.TYPE = 4
+
+    </select>
+
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.customer.CrmContactModel"
+            resultMap="BaseResultMap">
+        select cc.*, ce.GENDER, cust.NAME as CUSTOMERNAME
+        from t_crm_contact cc
+        left join t_crm_contact_ext ce on cc.ID = ce.CONTACT_ID
+        left join t_crm_customer cust on cc.CUSTOMER_ID = cust.ID
+        where 1 = 1
+        <if test="ID != null">
+            and cc.ID = #{ID,jdbcType=BIGINT}
+        </if>
+        <if test="REGID != null">
+            and cc.REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGID != null">
+            and cc.ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="CUSTOMERID != null">
+            and cc.CUSTOMER_ID = #{CUSTOMERID,jdbcType=BIGINT}
+        </if>
+        <if test="COMPANYNAME != null">
+            and cc.COMPANY_NAME = #{COMPANYNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="CONTACTNAME != null">
+            and cc.CONTACT_NAME = #{CONTACTNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="acronym != null">
+            and cc.acronym = #{acronym,jdbcType=VARCHAR}
+        </if>
+        <if test="CODE != null">
+            and cc.CODE = #{CODE,jdbcType=VARCHAR}
+        </if>
+        <if test="STRUCTUREID != null">
+            and cc.STRUCTURE_ID = #{STRUCTUREID,jdbcType=BIGINT}
+        </if>
+        <if test="DEPARTMENTNAME != null">
+            and cc.DEPARTMENT_NAME = #{DEPARTMENTNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="POSITION != null">
+            and cc.POSITION = #{POSITION,jdbcType=VARCHAR}
+        </if>
+        <if test="DUTY != null">
+            and cc.DUTY = #{DUTY,jdbcType=VARCHAR}
+        </if>
+        <if test="LEVELID != null">
+            and cc.LEVEL_ID = #{LEVELID,jdbcType=BIGINT}
+        </if>
+        <if test="CONTACTLEVEL != null">
+            and cc.CONTACT_LEVEL = #{CONTACTLEVEL,jdbcType=VARCHAR}
+        </if>
+        <if test="FAMILIARID != null">
+            and cc.FAMILIAR_ID = #{FAMILIARID,jdbcType=BIGINT}
+        </if>
+        <if test="FAMILIAR != null">
+            and cc.FAMILIAR = #{FAMILIAR,jdbcType=VARCHAR}
+        </if>
+        <if test="RELATIONID != null">
+            and cc.RELATION_ID = #{RELATIONID,jdbcType=BIGINT}
+        </if>
+        <if test="RELATION != null">
+            and cc.RELATION = #{RELATION,jdbcType=VARCHAR}
+        </if>
+        <if test="INFOPERCENT != null">
+            and cc.INFO_PERCENT = #{INFOPERCENT,jdbcType=INTEGER}
+        </if>
+        <if test="INFOINTEGRITY != null">
+            and cc.INFO_INTEGRITY = #{INFOINTEGRITY,jdbcType=INTEGER}
+        </if>
+        <if test="INFOINTEGRITYSTR != null">
+            and cc.INFO_INTEGRITY_STR = #{INFOINTEGRITYSTR,jdbcType=VARCHAR}
+        </if>
+        <if test="TOTALTIMES != null">
+            and cc.TOTAL_TIMES = #{TOTALTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="CURMANTIMES != null">
+            and cc.CUR_MAN_TIMES = #{CURMANTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="CURYEARTIMES != null">
+            and cc.CUR_YEAR_TIMES = #{CURYEARTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="CONTACTTYPEID != null">
+            and cc.CONTACT_TYPE_ID = #{CONTACTTYPEID,jdbcType=INTEGER}
+        </if>
+        <if test="CONTACTTYPE != null">
+            and cc.CONTACT_TYPE = #{CONTACTTYPE,jdbcType=BIGINT}
+        </if>
+        <if test="ISDECISION != null">
+            and cc.IS_DECISION = #{ISDECISION,jdbcType=INTEGER}
+        </if>
+        <if test="ISKEY != null">
+            and cc.IS_KEY = #{ISKEY,jdbcType=INTEGER}
+        </if>
+        <if test="ISSIGN != null">
+            and cc.IS_SIGN = #{ISSIGN,jdbcType=INTEGER}
+        </if>
+        <if test="CURYEARCHANCES != null">
+            and cc.CUR_YEAR_CHANCES = #{CURYEARCHANCES,jdbcType=INTEGER}
+        </if>
+        <if test="CURYEARQUOTES != null">
+            and cc.CUR_YEAR_QUOTES = #{CURYEARQUOTES,jdbcType=INTEGER}
+        </if>
+        <if test="CURYEARSALES != null">
+            and cc.CUR_YEAR_SALES = #{CURYEARSALES,jdbcType=INTEGER}
+        </if>
+        <if test="OWNERID != null">
+            and cc.OWNER_ID = #{OWNERID,jdbcType=BIGINT}
+        </if>
+        <if test="OWNER != null">
+            and cc.OWNER = #{OWNER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATEUSERID != null">
+            and cc.CREATE_USER_ID = #{CREATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="CREATEUSER != null">
+            and cc.CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and cc.CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSERID != null">
+            and cc.UPDATE_USER_ID = #{UPDATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="UPDATEUSER != null">
+            and cc.UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and cc.UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ATTENTIONNUM != null">
+            and cc.ATTENTION_NUM = #{ATTENTIONNUM,jdbcType=INTEGER}
+        </if>
+        <if test="TELTYPEID != null">
+            and cc.TEL_TYPE_ID = #{TELTYPEID,jdbcType=BIGINT}
+        </if>
+        <if test="TELTYPE != null">
+            and cc.TEL_TYPE = #{TELTYPE,jdbcType=VARCHAR}
+        </if>
+        <if test="TEL != null">
+            and cc.TEL = #{TEL,jdbcType=VARCHAR}
+        </if>
+        <if test="MOBILETYPEID != null">
+            and cc.MOBILE_TYPE_ID = #{MOBILETYPEID,jdbcType=BIGINT}
+        </if>
+        <if test="MOBILETYPE != null">
+            and cc.MOBILE_TYPE = #{MOBILETYPE,jdbcType=VARCHAR}
+        </if>
+        <if test="MOBILE != null">
+            and cc.MOBILE = #{MOBILE,jdbcType=VARCHAR}
+        </if>
+        <if test="EMAILTYPEID != null">
+            and cc.EMAIL_TYPE_ID = #{EMAILTYPEID,jdbcType=BIGINT}
+        </if>
+        <if test="EMAILTYPE != null">
+            and cc.EMAIL_TYPE = #{EMAILTYPE,jdbcType=VARCHAR}
+        </if>
+        <if test="EMAIL != null">
+            and cc.EMAIL = #{EMAIL,jdbcType=VARCHAR}
+        </if>
+        <if test="FAX != null">
+            and cc.FAX = #{FAX,jdbcType=VARCHAR}
+        </if>
+        <if test="WEIXIN != null">
+            and cc.WEIXIN = #{WEIXIN,jdbcType=VARCHAR}
+        </if>
+        <if test="DELSTATE != null">
+            and cc.DEL_STATE = #{DELSTATE,jdbcType=INTEGER}
+        </if>
+        <if test="CALLTIMES != null">
+            and cc.CALL_TIMES = #{CALLTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="CALLBACKTIMES != null">
+            and cc.CALL_BACK_TIMES = #{CALLBACKTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="SENDEMAILS != null">
+            and cc.SEND_EMAILS = #{SENDEMAILS,jdbcType=INTEGER}
+        </if>
+        <if test="GETEMAILS != null">
+            and cc.GET_EMAILS = #{GETEMAILS,jdbcType=INTEGER}
+        </if>
+        <if test="SENDPOSTS != null">
+            and cc.SEND_POSTS = #{SENDPOSTS,jdbcType=INTEGER}
+        </if>
+        <if test="GETPOSTS != null">
+            and cc.GET_POSTS = #{GETPOSTS,jdbcType=INTEGER}
+        </if>
+        <if test="OUTVISITTIMES != null">
+            and cc.OUT_VISIT_TIMES = #{OUTVISITTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="COMEVISITTIMES != null">
+            and cc.COME_VISIT_TIMES = #{COMEVISITTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="RECORDTIMES != null">
+            and cc.RECORD_TIMES = #{RECORDTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="CREATERELATION != null">
+            and cc.CREATE_RELATION = #{CREATERELATION,jdbcType=VARCHAR}
+        </if>
+        <if test="HELPDESC != null">
+            and cc.HELP_DESC = #{HELPDESC,jdbcType=VARCHAR}
+        </if>
+        <if test="RELATIONSHIPTYPE != null">
+            and cc.RELATIONSHIP_TYPE = #{RELATIONSHIPTYPE,jdbcType=VARCHAR}
+        </if>
+        <if test="CARDADDRESS != null">
+            and cc.CARD_ADDRESS = #{CARDADDRESS,jdbcType=VARCHAR}
+        </if>
+        <if test="contactSourceTypeid != null">
+            and cc.contact_source_typeid = #{contactSourceTypeid,jdbcType=INTEGER}
+        </if>
+        and cc.DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByCustomerIds" resultMap="BaseResultMap">
+        select *
+        from t_crm_contact
+        where CUSTOMER_ID in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByContactorIds" resultMap="BaseResultMap">
+        select cc.*, ce.GENDER, cust.NAME as CUSTOMERNAME
+        from t_crm_contact cc
+        left join t_crm_contact_ext ce on cc.ID = ce.CONTACT_ID
+        left join t_crm_customer cust on cc.CUSTOMER_ID = cust.ID
+        where cc.ID in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.product.ProjectProductProfitMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.product.ProjectProductProfitModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="product_id" jdbcType="BIGINT" property="productId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="type_id" jdbcType="BIGINT" property="typeId" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="state" jdbcType="INTEGER" property="state" />
+        <result column="ordering" jdbcType="INTEGER" property="ordering" />
+        <result column="amount" jdbcType="DECIMAL" property="amount" />
+        <result column="amount_unit_id" jdbcType="BIGINT" property="amountUnitId" />
+        <result column="amount_unit" jdbcType="VARCHAR" property="amountUnit" />
+        <result column="currency" jdbcType="VARCHAR" property="currency" />
+        <result column="unit_id" jdbcType="BIGINT" property="unitId" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_status" jdbcType="INTEGER" property="delStatus" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        project_id, product_id, name, type_id, type, state, ordering, amount, amount_unit_id, 
+        amount_unit, currency, unit_id, unit, create_id, create_by, create_time, update_id, 
+        update_by, update_time, del_status
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_product_profit
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_product_profit
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_product_profit
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.product.ProjectProductProfitModel">
+        insert into t_project_product_profit (
+        <include refid="Base_Column_List" />
+        )
+        values (#{projectId,jdbcType=BIGINT}, 
+            #{productId,jdbcType=BIGINT}, 
+            #{name,jdbcType=VARCHAR}, 
+            #{typeId,jdbcType=BIGINT}, 
+            #{type,jdbcType=VARCHAR}, 
+            #{state,jdbcType=INTEGER}, 
+            #{ordering,jdbcType=INTEGER}, 
+            #{amount,jdbcType=DECIMAL}, 
+            #{amountUnitId,jdbcType=BIGINT}, 
+            #{amountUnit,jdbcType=VARCHAR}, 
+            #{currency,jdbcType=VARCHAR}, 
+            #{unitId,jdbcType=BIGINT}, 
+            #{unit,jdbcType=VARCHAR}, 
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{delStatus,jdbcType=INTEGER}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_product_profit (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.projectId,jdbcType=BIGINT}, 
+                #{item.productId,jdbcType=BIGINT}, 
+                #{item.name,jdbcType=VARCHAR}, 
+                #{item.typeId,jdbcType=BIGINT}, 
+                #{item.type,jdbcType=VARCHAR}, 
+                #{item.state,jdbcType=INTEGER}, 
+                #{item.ordering,jdbcType=INTEGER}, 
+                #{item.amount,jdbcType=DECIMAL}, 
+                #{item.amountUnitId,jdbcType=BIGINT}, 
+                #{item.amountUnit,jdbcType=VARCHAR}, 
+                #{item.currency,jdbcType=VARCHAR}, 
+                #{item.unitId,jdbcType=BIGINT}, 
+                #{item.unit,jdbcType=VARCHAR}, 
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}, 
+                #{item.delStatus,jdbcType=INTEGER}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.product.ProjectProductProfitModel" resultMap="BaseResultMap">
+        select * from t_project_product_profit where 1 = 1
+        and state=0
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="productId != null">
+            and product_id = #{productId,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="typeId != null">
+            and type_id = #{typeId,jdbcType=BIGINT}
+        </if>
+        <if test="type != null">
+            and type = #{type,jdbcType=VARCHAR}
+        </if>
+        <if test="state != null">
+            and state = #{state,jdbcType=INTEGER}
+        </if>
+        <if test="ordering != null">
+            and ordering = #{ordering,jdbcType=INTEGER}
+        </if>
+        <if test="amount != null">
+            and amount = #{amount,jdbcType=DECIMAL}
+        </if>
+        <if test="amountUnitId != null">
+            and amount_unit_id = #{amountUnitId,jdbcType=BIGINT}
+        </if>
+        <if test="amountUnit != null">
+            and amount_unit = #{amountUnit,jdbcType=VARCHAR}
+        </if>
+        <if test="currency != null">
+            and currency = #{currency,jdbcType=VARCHAR}
+        </if>
+        <if test="unitId != null">
+            and unit_id = #{unitId,jdbcType=BIGINT}
+        </if>
+        <if test="unit != null">
+            and unit = #{unit,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delStatus != null">
+            and del_status = #{delStatus,jdbcType=INTEGER}
+        </if>
+        order by ordering
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.product.ProjectProductProfitModel">
+        insert into t_project_product_profit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="ordering != null">
+                ordering,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="amountUnitId != null">
+                amount_unit_id,
+            </if>
+            <if test="amountUnit != null">
+                amount_unit,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="unitId != null">
+                unit_id,
+            </if>
+            <if test="unit != null">
+                unit,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="ordering != null">
+                #{ordering,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="amountUnitId != null">
+                #{amountUnitId,jdbcType=BIGINT},
+            </if>
+            <if test="amountUnit != null">
+                #{amountUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="currency != null">
+                #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="unitId != null">
+                #{unitId,jdbcType=BIGINT},
+            </if>
+            <if test="unit != null">
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.product.ProjectProductProfitModel">
+        update t_project_product_profit
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="ordering != null">
+                ordering = #{ordering,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="amountUnitId != null">
+                amount_unit_id = #{amountUnitId,jdbcType=BIGINT},
+            </if>
+            <if test="amountUnit != null">
+                amount_unit = #{amountUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="currency != null">
+                currency = #{currency,jdbcType=VARCHAR},
+            </if>
+            <if test="unitId != null">
+                unit_id = #{unitId,jdbcType=BIGINT},
+            </if>
+            <if test="unit != null">
+                unit = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.product.ProjectProductProfitModel">
+        update t_project_product_profit
+        set project_id = #{projectId,jdbcType=BIGINT},
+            product_id = #{productId,jdbcType=BIGINT},
+            name = #{name,jdbcType=VARCHAR},
+            type_id = #{typeId,jdbcType=BIGINT},
+            type = #{type,jdbcType=VARCHAR},
+            state = #{state,jdbcType=INTEGER},
+            ordering = #{ordering,jdbcType=INTEGER},
+            amount = #{amount,jdbcType=DECIMAL},
+            amount_unit_id = #{amountUnitId,jdbcType=BIGINT},
+            amount_unit = #{amountUnit,jdbcType=VARCHAR},
+            currency = #{currency,jdbcType=VARCHAR},
+            unit_id = #{unitId,jdbcType=BIGINT},
+            unit = #{unit,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="moveUp" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_product_profit f
+        WHERE f.ordering &lt; #{ordering} order by f.ordering desc limit 0,1
+    </select>
+    <select id="moveDown" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_product_profit f
+        WHERE f.ordering &gt; #{ordering} order by f.ordering asc limit 0,1
+    </select>
+
+</mapper>

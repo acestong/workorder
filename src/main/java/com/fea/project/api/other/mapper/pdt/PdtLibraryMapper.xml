@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.pdt.PdtLibraryMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.pdt.PdtLibraryModel">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="NAME" jdbcType="VARCHAR" property="NAME"/>
+        <result column="CODE" jdbcType="VARCHAR" property="CODE"/>
+        <result column="STR_ID" jdbcType="BIGINT" property="STRID"/>
+        <result column="STR_NAME" jdbcType="VARCHAR" property="STRNAME"/>
+        <result column="UNIT_ID" jdbcType="BIGINT" property="UNITID"/>
+        <result column="UNIT_NAME" jdbcType="VARCHAR" property="UNITNAME"/>
+        <result column="MODEL" jdbcType="VARCHAR" property="MODEL"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="DESCRIPTION"/>
+        <result column="TYPE" jdbcType="BIGINT" property="TYPE"/>
+        <result column="STATE" jdbcType="INTEGER" property="STATE"/>
+        <result column="MADE" jdbcType="BIGINT" property="MADE"/>
+        <result column="MAKE_TYPE" jdbcType="INTEGER" property="MAKETYPE"/>
+        <result column="MAKE_PROPERTY" jdbcType="INTEGER" property="MAKEPROPERTY"/>
+        <result column="SERVICE_TYPE" jdbcType="BIGINT" property="SERVICETYPE"/>
+        <result column="SERVICE_WAY" jdbcType="BIGINT" property="SERVICEWAY"/>
+        <result column="SOFT_TYPE" jdbcType="BIGINT" property="SOFTTYPE"/>
+        <result column="FUNCTION_TYPE" jdbcType="BIGINT" property="FUNCTIONTYPE"/>
+        <result column="CREATE_USER_ID" jdbcType="BIGINT" property="CREATEUSERID"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER_ID" jdbcType="BIGINT" property="UPDATEUSERID"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="MODELCODE" jdbcType="VARCHAR" property="MODELCODE"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="PARENTID"/>
+        <result column="DEL_STATE" jdbcType="TINYINT" property="DELSTATE"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="currency" jdbcType="BIGINT" property="currency"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        ID, NAME, CODE, STR_ID, STR_NAME, UNIT_ID, UNIT_NAME, MODEL, DESCRIPTION, TYPE, STATE,
+        MADE, MAKE_TYPE, MAKE_PROPERTY, SERVICE_TYPE, SERVICE_WAY, SOFT_TYPE, FUNCTION_TYPE, 
+        CREATE_USER_ID, CREATE_USER, CREATE_TIME, UPDATE_USER_ID, UPDATE_USER, UPDATE_TIME, 
+        REG_ID, MODELCODE, PARENT_ID, DEL_STATE, price, currency
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from t_pdt_library
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.pdt.PdtLibraryModel"
+            resultMap="BaseResultMap">
+        select * from t_pdt_library where 1 = 1
+        <if test="ID != null">
+            and ID = #{ID,jdbcType=BIGINT}
+        </if>
+        <if test="NAME != null">
+            and NAME = #{NAME,jdbcType=VARCHAR}
+        </if>
+        <if test="CODE != null">
+            and CODE = #{CODE,jdbcType=VARCHAR}
+        </if>
+        <if test="STRID != null">
+            and STR_ID = #{STRID,jdbcType=BIGINT}
+        </if>
+        <if test="STRNAME != null">
+            and STR_NAME = #{STRNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="UNITID != null">
+            and UNIT_ID = #{UNITID,jdbcType=BIGINT}
+        </if>
+        <if test="UNITNAME != null">
+            and UNIT_NAME = #{UNITNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="MODEL != null">
+            and MODEL = #{MODEL,jdbcType=VARCHAR}
+        </if>
+        <if test="DESCRIPTION != null">
+            and DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="TYPE != null">
+            and TYPE = #{TYPE,jdbcType=BIGINT}
+        </if>
+        <if test="STATE != null">
+            and STATE = #{STATE,jdbcType=INTEGER}
+        </if>
+        <if test="MADE != null">
+            and MADE = #{MADE,jdbcType=BIGINT}
+        </if>
+        <if test="MAKETYPE != null">
+            and MAKE_TYPE = #{MAKETYPE,jdbcType=INTEGER}
+        </if>
+        <if test="MAKEPROPERTY != null">
+            and MAKE_PROPERTY = #{MAKEPROPERTY,jdbcType=INTEGER}
+        </if>
+        <if test="SERVICETYPE != null">
+            and SERVICE_TYPE = #{SERVICETYPE,jdbcType=BIGINT}
+        </if>
+        <if test="SERVICEWAY != null">
+            and SERVICE_WAY = #{SERVICEWAY,jdbcType=BIGINT}
+        </if>
+        <if test="SOFTTYPE != null">
+            and SOFT_TYPE = #{SOFTTYPE,jdbcType=BIGINT}
+        </if>
+        <if test="FUNCTIONTYPE != null">
+            and FUNCTION_TYPE = #{FUNCTIONTYPE,jdbcType=BIGINT}
+        </if>
+        <if test="CREATEUSERID != null">
+            and CREATE_USER_ID = #{CREATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSERID != null">
+            and UPDATE_USER_ID = #{UPDATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="MODELCODE != null">
+            and MODELCODE = #{MODELCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="PARENTID != null">
+            and PARENT_ID = #{PARENTID,jdbcType=BIGINT}
+        </if>
+        <if test="DELSTATE != null">
+            and DEL_STATE = #{DELSTATE,jdbcType=TINYINT}
+        </if>
+        <if test="price != null">
+            and price = #{price,jdbcType=DOUBLE}
+        </if>
+        <if test="currency != null">
+            and currency = #{currency,jdbcType=BIGINT}
+        </if>
+        <if test="fieldExt != null">
+            and field_ext = #{fieldExt,jdbcType=LONGVARCHAR}
+        </if>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.publish.PublishAppointModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.publish.PublishAppointModel">
+    <id column="publish_appoint_id" jdbcType="BIGINT" property="publishAppointId" />
+    <result column="publish_id" jdbcType="BIGINT" property="publishId" />
+    <result column="publish_appoint_user_id" jdbcType="BIGINT" property="publishAppointUserId" />
+    <result column="publish_appoint_user_name" jdbcType="VARCHAR" property="publishAppointUserName" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_read" jdbcType="BIGINT" property="isRead" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    publish_appoint_id, publish_id,publish_appoint_user_id, publish_appoint_user_name, create_id, 
+    create_by, create_time, is_read
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.publish.PublishAppointModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_publish_appoint
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_publish_appoint
+    where publish_appoint_id = #{publishAppointId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_publish_appoint
+    where publish_appoint_id = #{publishAppointId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.publish.PublishAppointModelExample">
+    delete from t_project_publish_appoint
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="publishAppointId" parameterType="com.fea.project.model.publish.PublishAppointModel">
+    insert into t_project_publish_appoint (publish_appoint_id,publish_id, publish_appoint_user_id, 
+      publish_appoint_user_name, create_id, create_by, 
+      create_time, is_read)
+    values (#{publishAppointId,jdbcType=BIGINT}, #{publishId,jdbcType=BIGINT}, #{publishAppointUserId,jdbcType=BIGINT}, 
+      #{publishAppointUserName,jdbcType=VARCHAR}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{isRead,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="publishAppointId" parameterType="com.fea.project.model.publish.PublishAppointModel">
+    insert into t_project_publish_appoint
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="publishAppointId != null">
+        publish_appoint_id,
+      </if>
+      <if test="publishId != null">
+        publish_id,
+      </if>
+      <if test="publishAppointUserId != null">
+        publish_appoint_user_id,
+      </if>
+      <if test="publishAppointUserName != null">
+        publish_appoint_user_name,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isRead != null">
+        is_read,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="publishAppointId != null">
+        #{publishAppointId,jdbcType=BIGINT},
+      </if>
+      <if test="publishId != null">
+        #{publishId,jdbcType=BIGINT},
+      </if>
+      <if test="publishAppointUserId != null">
+        #{publishAppointUserId,jdbcType=BIGINT},
+      </if>
+      <if test="publishAppointUserName != null">
+        #{publishAppointUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isRead != null">
+        #{isRead,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.publish.PublishAppointModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_publish_appoint
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_publish_appoint
+    <set>
+      <if test="record.publishAppointId != null">
+        publish_appoint_id = #{record.publishAppointId,jdbcType=BIGINT},
+      </if>
+      <if test="record.publishId != null">
+        publish_id = #{record.publishId,jdbcType=BIGINT},
+      </if>
+      <if test="record.publishAppointUserId != null">
+        publish_appoint_user_id = #{record.publishAppointUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.publishAppointUserName != null">
+        publish_appoint_user_name = #{record.publishAppointUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isRead != null">
+        is_read = #{record.isRead,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_publish_appoint
+    set publish_appoint_id = #{record.publishAppointId,jdbcType=BIGINT},
+      publish_id = #{record.publishId,jdbcType=BIGINT},
+      publish_appoint_user_id = #{record.publishAppointUserId,jdbcType=BIGINT},
+      publish_appoint_user_name = #{record.publishAppointUserName,jdbcType=VARCHAR},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      is_read = #{record.isRead,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.publish.PublishAppointModel">
+    update t_project_publish_appoint
+    <set>
+      <if test="publishId != null">
+        publish_id = #{publishId,jdbcType=BIGINT},
+      </if>
+      <if test="publishId != null">
+        publish_id = #{publishId,jdbcType=BIGINT},
+      </if>
+      <if test="publishAppointUserId != null">
+        publish_appoint_user_id = #{publishAppointUserId,jdbcType=BIGINT},
+      </if>
+      <if test="publishAppointUserName != null">
+        publish_appoint_user_name = #{publishAppointUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isRead != null">
+        is_read = #{isRead,jdbcType=BIGINT},
+      </if>
+    </set>
+    where publish_appoint_id = #{publishAppointId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.publish.PublishAppointModel">
+    update t_project_publish_appoint
+    set publish_id = #{publishId,jdbcType=BIGINT},
+      publish_appoint_user_id = #{publishAppointUserId,jdbcType=BIGINT},
+      publish_appoint_user_name = #{publishAppointUserName,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_read = #{isRead,jdbcType=BIGINT}
+    where publish_appoint_id = #{publishAppointId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectCountByCurUserId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select DISTINCT
+	COUNT(*) count
+	from 
+	t_project_publish_appoint
+	where 
+	publish_appoint_user_id = #{publishAppointUserId,jdbcType=BIGINT}
+	and is_read = ${@com.fea.project.enums.publish.IsReadEnum@IS_NOT_READ.getStatus()}
+  </select>
+  
+  
+    <update id="updateIsReadByCurUserId" parameterType="java.lang.Long">
+    update t_project_publish_appoint
+    set is_read = ${@com.fea.project.enums.publish.IsReadEnum@IS_READ.getStatus()}
+    where publish_appoint_user_id = #{publishAppointUserId,jdbcType=BIGINT}
+  </update>
+</mapper>

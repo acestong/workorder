@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.publish.PublishModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.publish.PublishModel">
+    <id column="publish_id" jdbcType="BIGINT" property="publishId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="origin_type" jdbcType="BIGINT" property="originType" />
+    <result column="place" jdbcType="VARCHAR" property="place" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="is_company_publish" jdbcType="BIGINT" property="isCompanyPublish" />
+    <result column="reg_id" jdbcType="BIGINT" property="regId" />
+    <result column="business_type" jdbcType="BIGINT" property="businessType" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="is_transmited_publish" jdbcType="BIGINT" property="isTransmitedPublish" />
+    <result column="transmited_publish_id" jdbcType="BIGINT" property="transmitedPublishId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    publish_id, user_name, user_id, create_time, origin_type, place, content, is_company_publish, 
+    reg_id, business_type, business_id, project_id,is_transmited_publish,transmited_publish_id
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.publish.PublishModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_publish
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_publish
+    where publish_id = #{publishId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_publish
+    where publish_id = #{publishId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.publish.PublishModelExample">
+    delete from t_project_publish
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="publishId" parameterType="com.fea.project.model.publish.PublishModel">
+    insert into t_project_publish (publish_id, user_name, user_id, 
+      create_time, origin_type, place, 
+      content, is_company_publish, reg_id, 
+      business_type, business_id, project_id,is_transmited_publish,transmited_publish_id
+      )
+    values (#{publishId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{originType,jdbcType=BIGINT}, #{place,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{isCompanyPublish,jdbcType=BIGINT}, #{regId,jdbcType=BIGINT}, 
+      #{isTransmitedPublish,jdbcType=BIGINT},#{transmitedPublishId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="publishId" parameterType="com.fea.project.model.publish.PublishModel">
+    insert into t_project_publish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="publishId != null">
+        publish_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="originType != null">
+        origin_type,
+      </if>
+      <if test="place != null">
+        place,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="isCompanyPublish != null">
+        is_company_publish,
+      </if>
+      <if test="regId != null">
+        reg_id,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="businessId != null">
+        business_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="isTransmitedPublish != null">
+        is_transmited_publish,
+      </if>
+      <if test="transmitedPublishId != null">
+        transmited_publish_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="publishId != null">
+        #{publishId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="originType != null">
+        #{originType,jdbcType=BIGINT},
+      </if>
+      <if test="place != null">
+        #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompanyPublish != null">
+        #{isCompanyPublish,jdbcType=BIGINT},
+      </if>
+      <if test="regId != null">
+        #{regId,jdbcType=BIGINT},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="isTransmitedPublish != null">
+        #{isTransmitedPublish,jdbcType=BIGINT},
+      </if>
+      <if test="transmitedPublishId != null">
+        #{transmitedPublishId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.publish.PublishModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_publish
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_publish
+    <set>
+      <if test="record.publishId != null">
+        publish_id = #{record.publishId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.originType != null">
+        origin_type = #{record.originType,jdbcType=BIGINT},
+      </if>
+      <if test="record.place != null">
+        place = #{record.place,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCompanyPublish != null">
+        is_company_publish = #{record.isCompanyPublish,jdbcType=BIGINT},
+      </if>
+      <if test="record.regId != null">
+        reg_id = #{record.regId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessType != null">
+        business_type = #{record.businessType,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessId != null">
+        business_id = #{record.businessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isTransmitedPublish != null">
+        is_transmited_publish = #{record.isTransmitedPublish,jdbcType=BIGINT},
+      </if>
+      <if test="record.transmitedPublishId != null">
+        transmited_publish_id = #{record.transmitedPublishId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_publish
+    set publish_id = #{record.publishId,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      origin_type = #{record.originType,jdbcType=BIGINT},
+      place = #{record.place,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      is_company_publish = #{record.isCompanyPublish,jdbcType=BIGINT},
+      reg_id = #{record.regId,jdbcType=BIGINT},
+      business_type = #{record.businessType,jdbcType=BIGINT},
+      business_id = #{record.businessId,jdbcType=BIGINT},
+      project_id = #{record.projectId,jdbcType=BIGINT},
+      is_transmited_publish = #{record.isTransmitedPublish,jdbcType=BIGINT},
+      transmited_publish_id = #{record.transmitedPublishId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.publish.PublishModel">
+    update t_project_publish
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="originType != null">
+        origin_type = #{originType,jdbcType=BIGINT},
+      </if>
+      <if test="place != null">
+        place = #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompanyPublish != null">
+        is_company_publish = #{isCompanyPublish,jdbcType=BIGINT},
+      </if>
+      <if test="regId != null">
+        reg_id = #{regId,jdbcType=BIGINT},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="isTransmitedPublish != null">
+        is_transmited_publish = #{isTransmitedPublish,jdbcType=BIGINT},
+      </if>
+      <if test="transmitedPublishId != null">
+        transmited_publish_id = #{transmitedPublishId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where publish_id = #{publishId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.publish.PublishModel">
+    update t_project_publish
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      origin_type = #{originType,jdbcType=BIGINT},
+      place = #{place,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      is_company_publish = #{isCompanyPublish,jdbcType=BIGINT},
+      reg_id = #{regId,jdbcType=BIGINT},
+      business_type = #{businessType,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      project_id = #{projectId,jdbcType=BIGINT},
+      is_transmited_publish = #{isTransmitedPublish,jdbcType=BIGINT},
+      transmited_publish_id = #{transmitedPublishId,jdbcType=BIGINT}
+    where publish_id = #{publishId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectAllPublishWithMe" parameterType="com.fea.project.model.BasePageInfo" resultMap="BaseResultMap">
+	   SELECT distinct
+		tpp.* 
+		FROM 
+		t_project_publish tpp
+		LEFT JOIN
+		t_project_publish_scope tpps
+		ON
+		tpp.publish_id = tpps.publish_id
+		<!-- 获取转发我的动态的时候，需要进行自连接 -->
+		<if test="model.type==@com.fea.project.enums.publish.PublishNavigateTypeEnum@TRANSMIT_ME.getStatus">
+			LEFT JOIN
+			t_project_publish tpp1
+			ON 
+			tpp.transmited_publish_id = tpp1.publish_id
+		</if>
+		where tpp.reg_id = #{model.regId,jdbcType=BIGINT}
+		and 
+			<!-- 获取公开的动态的条件 -->
+			(tpp.is_company_publish = ${@com.fea.project.enums.publish.PublicScopeEnum@PUBLIC.getStatus()} 
+			<!-- 获取全部项目组成员下的所有动态的条件，即公开状态为全部项目成员，且当前用户Id存在于该动态下 -->
+				or (tpp.is_company_publish = ${@com.fea.project.enums.publish.PublicScopeEnum@ALL_PROJECR_MEMBER.getStatus()} 
+					and 
+					exists (
+						SELECT DISTINCT
+						tpt.project_id 
+						from 
+						t_project_team_user tptu
+						LEFT JOIN t_project_team tpt
+						on tptu.team_id = tpt.id
+						where tptu.user_id = #{model.userId,jdbcType=BIGINT}	
+							)
+					)
+			)	
+		and
+		(
+		 tpps.scope_department_id 
+			IN		(
+							select 
+						department_id
+						from 
+						l2cplat_ceshi.t_sys_user_ext
+						where user_id = #{model.userId,jdbcType=BIGINT}
+						)
+		or tpps.scope_person_id = #{model.userId,jdbcType=BIGINT}
+		or tpp.user_id = #{model.userId,jdbcType=BIGINT}
+		)
+		and tpp.user_name like #{keywords,jdbcType=VARCHAR} 
+		<!-- 条件：@我的，提醒表中被提醒的用户是我 -->
+		<if test="model.type==@com.fea.project.enums.publish.PublishNavigateTypeEnum@MY_APPOINT.getStatus">
+						and tpp.publish_id IN (
+							SELECT
+							publish_id 
+							from 
+							t_project_publish_appoint  
+							where publish_appoint_user_id = #{model.userId,jdbcType=BIGINT}
+						)
+		</if>
+		<!-- 条件：我的收藏 ，收藏表中收藏的用户是我-->
+		<if test="model.type==@com.fea.project.enums.publish.PublishNavigateTypeEnum@MY_COLLECT.getStatus">
+						and tpp.publish_id IN (
+							SELECT DISTINCT
+							publish_id
+							FROM
+							t_project_publish_collect
+							WHERE user_id =#{model.userId,jdbcType=BIGINT}
+						)
+		</if>
+		<!-- 条件：赞我的，是我创建的动态，且点赞是不是我，外加if外面的条件可筛选出赞我的所有动态 -->
+		<if test="model.type==@com.fea.project.enums.publish.PublishNavigateTypeEnum@LIKE_ME.getStatus">
+						and tpp.publish_id IN (
+							SELECT DISTINCT
+							publish_id
+							FROM
+							t_project_publish_like
+							WHERE user_id !=#{model.userId,jdbcType=BIGINT}
+						)
+						and tpp.user_id = #{model.userId,jdbcType=BIGINT}
+		</if>
+		<!-- 条件：我评论的，评论创建人是我的所有动态 -->
+		<if test="model.type==@com.fea.project.enums.publish.PublishNavigateTypeEnum@MY_COMMENT.getStatus">
+						and tpp.publish_id IN (
+							SELECT DISTINCT
+							business_id
+							from 
+							t_project_publish_comment
+							where user_id = #{model.userId,jdbcType=BIGINT}
+						)
+		</if>
+		<!-- 条件：评论我的，动态的创建人是我，评论人是别人，结合外面的条件，可以获取所有评论我的动态 -->
+		<if test="model.type==@com.fea.project.enums.publish.PublishNavigateTypeEnum@COMMENT_ME.getStatus">
+						and tpp.publish_id IN (
+							SELECT DISTINCT
+							business_id
+							from 
+							t_project_publish_comment
+							where user_id != #{model.userId,jdbcType=BIGINT}
+						)
+						and tpp.user_id = #{model.userId,jdbcType=BIGINT}
+		</if>
+		<!-- 条件：我转发的，转发新动态创建人是我，且是转发状态 -->
+		<if test="model.type==@com.fea.project.enums.publish.PublishNavigateTypeEnum@MY_TRANSMIT.getStatus">
+						and tpp.is_transmited_publish = ${@com.fea.project.enums.publish.IsTransmitedPublishEnum@IS_TRANSMIT_PUBLISH.getStatus()} 
+						and tpp.user_id = #{model.userId,jdbcType=BIGINT}
+		</if>
+		<!-- 条件：转发我的，原动态创建人是我，转发新动态的创建人不是我 -->
+		<if test="model.type==@com.fea.project.enums.publish.PublishNavigateTypeEnum@TRANSMIT_ME.getStatus">
+						and tpp1.user_id = #{model.userId,jdbcType=BIGINT}
+						and tpp.user_id != #{model.userId,jdbcType=BIGINT}
+						and tpp.is_transmited_publish = ${@com.fea.project.enums.publish.IsTransmitedPublishEnum@IS_TRANSMIT_PUBLISH.getStatus()} 
+		</if>
+		ORDER BY tpp.create_time desc
+  </select>
+  <select id="selectUserImage" parameterType="java.lang.Long" resultType="java.lang.String">
+	SELECT
+	tsu.image_path userImagePath
+	from 
+	t_project_publish tpp
+	LEFT JOIN
+	l2cplat_ceshi.t_sys_user tsu
+	on
+	tpp.user_id = tsu.USER_ID
+	where tpp.publish_id = #{publish,jdbcType=BIGINT}
+  </select>
+  
+    <select id="selectUserImageByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+	select 
+	image_path userImagePath 
+	from 
+	l2cplat_ceshi.t_sys_user
+	where USER_ID = #{userId,jdbcType=BIGINT}
+  </select>
+  
+    <select id="selectEmpInfoVoByCurUserId" parameterType="java.lang.Long" resultType="com.fea.project.model.publish.vo.EmpInfoVo">
+		SELECT
+	tse.EMP_ID empId,
+	tse.EMP_NAME empName,
+	tse.EMP_CODE empCode,
+	tse.ORG_NAME orgName,
+	tse.DEP_NAME depName,
+	tse.GENDER gender,
+	tse.EMAIL emile,
+	tse.TELEPHONE telephone,
+	tse.PHONE phone,
+	tse.JOB job,
+	tsu.image_path imagePath
+	from 
+	l2cplat_ceshi.t_sys_employee tse
+	LEFT JOIN
+	l2cplat_ceshi.t_sys_user tsu
+	ON
+	tse.EMP_ID = tsu.USER_ID
+	where tse.EMP_ID = #{userId,jdbcType=BIGINT}
+
+  </select>
+  
+  
+</mapper>

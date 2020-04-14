@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.crm.CrmContractMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.crm.CrmContractModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="version" jdbcType="VARCHAR" property="version"/>
+        <result column="assortment" jdbcType="BIGINT" property="assortment"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="parentId" jdbcType="BIGINT" property="parentId"/>
+        <result column="owner" jdbcType="VARCHAR" property="owner"/>
+        <result column="owner_id" jdbcType="BIGINT" property="ownerId"/>
+        <result column="business_type" jdbcType="INTEGER" property="businessType"/>
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName"/>
+        <result column="create_user_name" jdbcType="VARCHAR" property="createUserName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="apply_state" jdbcType="BIGINT" property="applyState"/>
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId"/>
+        <result column="update_user_id" jdbcType="BIGINT" property="updateUserId"/>
+        <result column="customer_id" jdbcType="BIGINT" property="customerId"/>
+        <result column="org_id" jdbcType="BIGINT" property="orgId"/>
+        <result column="parent_name" jdbcType="VARCHAR" property="parentName"/>
+        <result column="IS_REMOVE" jdbcType="INTEGER" property="isRemove"/>
+        <result column="sign_time" jdbcType="VARCHAR" property="signTime"/>
+        <result column="amount" jdbcType="DOUBLE" property="amount" />
+        <result column="business_id" jdbcType="BIGINT" property="businessId"/>
+        <result column="currency_id" jdbcType="BIGINT" property="currencyId"/>
+        <result column="amount" jdbcType="DECIMAL" property="amount"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, code, name, version, assortment, type, owner, owner_id, business_type, customer_name, create_user_name,
+        create_time, update_user_name, update_time, reg_id, apply_state, create_user_id, 
+        update_user_id, customer_id, org_id, parent_name, IS_REMOVE, business_id, currency_id, amount
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_crm_contract
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.crm.CrmContractModel"
+            resultMap="BaseResultMap">
+        select tcc.*, tsu.REALNAME as sale_sell, tccsf.sign_time as sign_time
+        from t_crm_contract tcc
+        left join t_crm_customer tco on tcc.customer_id = tco.id
+        left join t_sys_user tsu on tco.owner_id = tsu.USER_ID
+        left join t_crm_contract_signin_formation tccsf on tcc.id = tccsf.contract_id
+        where 1 = 1
+        <if test="code != null">
+            and tcc.code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="name != null">
+            and tcc.name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="version != null">
+            and tcc.version = #{version,jdbcType=VARCHAR}
+        </if>
+        <if test="assortment != null">
+            and tcc.assortment = #{assortment,jdbcType=BIGINT}
+        </if>
+        <if test="type != null">
+            and tcc.type = #{type,jdbcType=INTEGER}
+        </if>
+        <if test="owner != null">
+            and tcc.owner = #{owner,jdbcType=VARCHAR}
+        </if>
+        <if test="ownerId != null">
+            and tcc.owner_id = #{ownerId,jdbcType=BIGINT}
+        </if>
+        <if test="businessType != null">
+            and tcc.business_type = #{businessType,jdbcType=INTEGER}
+        </if>
+        <if test="customerName != null">
+            and tcc.customer_name = #{customerName,jdbcType=VARCHAR}
+        </if>
+        <if test="createUserName != null">
+            and tcc.create_user_name = #{createUserName,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and tcc.create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateUserName != null">
+            and tcc.update_user_name = #{updateUserName,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and tcc.update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="regId != null">
+            and tcc.reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="applyState != null">
+            and tcc.apply_state = #{applyState,jdbcType=BIGINT}
+        </if>
+        <if test="createUserId != null">
+            and tcc.create_user_id = #{createUserId,jdbcType=BIGINT}
+        </if>
+        <if test="updateUserId != null">
+            and tcc.update_user_id = #{updateUserId,jdbcType=BIGINT}
+        </if>
+        <if test="customerId != null">
+            and tcc.customer_id = #{customerId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and tcc.org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="parentName != null">
+            and tcc.parent_name = #{parentName,jdbcType=VARCHAR}
+        </if>
+        <if test="businessId != null">
+            and tcc.business_id = #{businessId,jdbcType=BIGINT}
+        </if>
+        <if test="currencyId != null">
+            and tcc.currency_id = #{currencyId,jdbcType=BIGINT}
+        </if>
+        <if test="amount != null">
+            and tcc.amount = #{amount,jdbcType=DECIMAL}
+        </if>
+        and tcc.IS_REMOVE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_contract
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getProductsByIds" resultType="long">
+        select product_id from t_crm_contract_quote_product
+        where contact_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectBySaleChanceTypes" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_contract
+        where business_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and IS_REMOVE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.api.other.model.crm.vo.CrmContractVo" extends="BaseResultMap" />
+    <select id="selectVosByIds" resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_crm_contract
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

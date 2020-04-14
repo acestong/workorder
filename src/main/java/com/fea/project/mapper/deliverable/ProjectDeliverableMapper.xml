@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.deliverable.ProjectDeliverableMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.deliverable.ProjectDeliverableModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="business_id" jdbcType="BIGINT" property="businessId" />
+        <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+        <result column="deliverable_name" jdbcType="VARCHAR" property="deliverableName" />
+        <result column="deliverable_num" jdbcType="VARCHAR" property="deliverableNum" />
+        <result column="deliverable_type" jdbcType="INTEGER" property="deliverableType" />
+        <result column="delivery_id" jdbcType="BIGINT" property="deliveryId" />
+        <result column="delivery_name" jdbcType="VARCHAR" property="deliveryName" />
+        <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_state" jdbcType="INTEGER" property="delState" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="verifyer" jdbcType="BIGINT" property="verifyer" />
+        <result column="verifyer_score" jdbcType="DOUBLE" property="verifyerScore" />
+        <result column="verifyer_status" jdbcType="INTEGER" property="verifyerStatus" />
+        <result column="verifyer_time" jdbcType="TIMESTAMP" property="verifyerTime" />
+        <result column="deliver" jdbcType="BIGINT" property="deliver" />
+        <result column="deliver_status" jdbcType="INTEGER" property="deliverStatus" />
+        <result column="deliver_time" jdbcType="TIMESTAMP" property="deliverTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, business_id, project_step, deliverable_name, deliverable_num, deliverable_type, delivery_id,
+        delivery_name, delivery_time, description, create_id, create_by, create_time, update_id,
+        update_by, update_time, del_state, org_id, reg_id, verifyer, verifyer_score, verifyer_status,
+        verifyer_time, deliver, deliver_status, deliver_time
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from t_project_deliverable
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_deliverable
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_deliverable
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.deliverable.ProjectDeliverableModel">
+        insert into t_project_deliverable (
+        <include refid="Base_Column_List" />
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{businessId,jdbcType=BIGINT},
+        #{projectStep,jdbcType=BIGINT},
+        #{deliverableName,jdbcType=VARCHAR},
+        #{deliverableNum,jdbcType=VARCHAR},
+        #{deliverableType,jdbcType=INTEGER},
+        #{deliveryId,jdbcType=BIGINT},
+        #{deliveryName,jdbcType=VARCHAR},
+        #{deliveryTime,jdbcType=TIMESTAMP},
+        #{description,jdbcType=VARCHAR},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delState,jdbcType=INTEGER},
+        #{orgId,jdbcType=BIGINT},
+        #{regId,jdbcType=BIGINT},
+        #{verifyer,jdbcType=BIGINT},
+        #{verifyerScore,jdbcType=DOUBLE},
+        #{verifyerStatus,jdbcType=INTEGER},
+        #{verifyerTime,jdbcType=TIMESTAMP},
+        #{deliver,jdbcType=BIGINT},
+        #{deliverStatus,jdbcType=INTEGER},
+        #{deliverTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="insertList" keyProperty="id" parameterType="java.util.List">
+        insert into t_project_deliverable (
+        <include refid="Base_Column_List" />
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.businessId,jdbcType=BIGINT},
+            #{item.projectStep,jdbcType=BIGINT},
+            #{item.deliverableName,jdbcType=VARCHAR},
+            #{item.deliverableNum,jdbcType=VARCHAR},
+            #{item.deliverableType,jdbcType=INTEGER},
+            #{item.deliveryId,jdbcType=BIGINT},
+            #{item.deliveryName,jdbcType=VARCHAR},
+            #{item.deliveryTime,jdbcType=TIMESTAMP},
+            #{item.description,jdbcType=VARCHAR},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delState,jdbcType=INTEGER},
+            #{item.orgId,jdbcType=BIGINT},
+            #{item.regId,jdbcType=BIGINT},
+            #{item.verifyer,jdbcType=BIGINT},
+            #{item.verifyerScore,jdbcType=DOUBLE},
+            #{item.verifyerStatus,jdbcType=INTEGER},
+            #{item.verifyerTime,jdbcType=TIMESTAMP},
+            #{item.deliver,jdbcType=BIGINT},
+            #{item.deliverStatus,jdbcType=INTEGER},
+            #{item.deliverTime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.deliverable.ProjectDeliverableModel" resultMap="BaseResultMap">
+        select * from t_project_deliverable where 1 = 1
+        <if test="businessId != null">
+            and business_id = #{businessId,jdbcType=BIGINT}
+        </if>
+        <if test="projectStep != null">
+            and project_step = #{projectStep,jdbcType=BIGINT}
+        </if>
+        <if test="deliverableName != null">
+            and deliverable_name = #{deliverableName,jdbcType=VARCHAR}
+        </if>
+        <if test="deliverableNum != null">
+            and deliverable_num = #{deliverableNum,jdbcType=VARCHAR}
+        </if>
+        <if test="deliverableType != null">
+            and deliverable_type = #{deliverableType,jdbcType=INTEGER}
+        </if>
+        <if test="deliveryId != null">
+            and delivery_id = #{deliveryId,jdbcType=BIGINT}
+        </if>
+        <if test="deliveryName != null">
+            and delivery_name = #{deliveryName,jdbcType=VARCHAR}
+        </if>
+        <if test="deliveryTime != null">
+            and delivery_time = #{deliveryTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="description != null">
+            and description = #{description,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delState != null">
+            and del_state = #{delState,jdbcType=INTEGER}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="verifyer != null">
+            and verifyer = #{verifyer,jdbcType=BIGINT}
+        </if>
+        <if test="verifyerScore != null">
+            and verifyer_score = #{verifyerScore,jdbcType=DOUBLE}
+        </if>
+        <if test="verifyerStatus != null">
+            and verifyer_status = #{verifyerStatus,jdbcType=INTEGER}
+        </if>
+        <if test="verifyerTime != null">
+            and verifyer_time = #{verifyerTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="deliver != null">
+            and deliver = #{deliver,jdbcType=BIGINT}
+        </if>
+        <if test="deliverStatus != null">
+            and deliver_status = #{deliverStatus,jdbcType=INTEGER}
+        </if>
+        <if test="deliverTime != null">
+            and deliver_time = #{deliverTime,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.deliverable.ProjectDeliverableModel">
+        insert into t_project_deliverable
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="projectStep != null">
+                project_step,
+            </if>
+            <if test="deliverableName != null">
+                deliverable_name,
+            </if>
+            <if test="deliverableNum != null">
+                deliverable_num,
+            </if>
+            <if test="deliverableType != null">
+                deliverable_type,
+            </if>
+            <if test="deliveryId != null">
+                delivery_id,
+            </if>
+            <if test="deliveryName != null">
+                delivery_name,
+            </if>
+            <if test="deliveryTime != null">
+                delivery_time,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delState != null">
+                del_state,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="verifyer != null">
+                verifyer,
+            </if>
+            <if test="verifyerScore != null">
+                verifyer_score,
+            </if>
+            <if test="verifyerStatus != null">
+                verifyer_status,
+            </if>
+            <if test="verifyerTime != null">
+                verifyer_time,
+            </if>
+            <if test="deliver != null">
+                deliver,
+            </if>
+            <if test="deliverStatus != null">
+                deliver_status,
+            </if>
+            <if test="deliverTime != null">
+                deliver_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="projectStep != null">
+                #{projectStep,jdbcType=BIGINT},
+            </if>
+            <if test="deliverableName != null">
+                #{deliverableName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliverableNum != null">
+                #{deliverableNum,jdbcType=VARCHAR},
+            </if>
+            <if test="deliverableType != null">
+                #{deliverableType,jdbcType=INTEGER},
+            </if>
+            <if test="deliveryId != null">
+                #{deliveryId,jdbcType=BIGINT},
+            </if>
+            <if test="deliveryName != null">
+                #{deliveryName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryTime != null">
+                #{deliveryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delState != null">
+                #{delState,jdbcType=INTEGER},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="verifyer != null">
+                #{verifyer,jdbcType=BIGINT},
+            </if>
+            <if test="verifyerScore != null">
+                #{verifyerScore,jdbcType=DOUBLE},
+            </if>
+            <if test="verifyerStatus != null">
+                #{verifyerStatus,jdbcType=INTEGER},
+            </if>
+            <if test="verifyerTime != null">
+                #{verifyerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deliver != null">
+                #{deliver,jdbcType=BIGINT},
+            </if>
+            <if test="deliverStatus != null">
+                #{deliverStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deliverTime != null">
+                #{deliverTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.deliverable.ProjectDeliverableModel">
+        update t_project_deliverable
+        <set>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=BIGINT},
+            </if>
+            <if test="projectStep != null">
+                project_step = #{projectStep,jdbcType=BIGINT},
+            </if>
+            <if test="deliverableName != null">
+                deliverable_name = #{deliverableName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliverableNum != null">
+                deliverable_num = #{deliverableNum,jdbcType=VARCHAR},
+            </if>
+            <if test="deliverableType != null">
+                deliverable_type = #{deliverableType,jdbcType=INTEGER},
+            </if>
+            <if test="deliveryId != null">
+                delivery_id = #{deliveryId,jdbcType=BIGINT},
+            </if>
+            <if test="deliveryName != null">
+                delivery_name = #{deliveryName,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryTime != null">
+                delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delState != null">
+                del_state = #{delState,jdbcType=INTEGER},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="verifyer != null">
+                verifyer = #{verifyer,jdbcType=BIGINT},
+            </if>
+            <if test="verifyerScore != null">
+                verifyer_score = #{verifyerScore,jdbcType=DOUBLE},
+            </if>
+            <if test="verifyerStatus != null">
+                verifyer_status = #{verifyerStatus,jdbcType=INTEGER},
+            </if>
+            <if test="verifyerTime != null">
+                verifyer_time = #{verifyerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deliver != null">
+                deliver = #{deliver,jdbcType=BIGINT},
+            </if>
+            <if test="deliverStatus != null">
+                deliver_status = #{deliverStatus,jdbcType=INTEGER},
+            </if>
+            <if test="deliverTime != null">
+                deliver_time = #{deliverTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.deliverable.ProjectDeliverableModel">
+        update t_project_deliverable
+        set business_id = #{businessId,jdbcType=BIGINT},
+            project_step = #{projectStep,jdbcType=BIGINT},
+            deliverable_name = #{deliverableName,jdbcType=VARCHAR},
+            deliverable_num = #{deliverableNum,jdbcType=VARCHAR},
+            deliverable_type = #{deliverableType,jdbcType=INTEGER},
+            delivery_id = #{deliveryId,jdbcType=BIGINT},
+            delivery_name = #{deliveryName,jdbcType=VARCHAR},
+            delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+            description = #{description,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_state = #{delState,jdbcType=INTEGER},
+            org_id = #{orgId,jdbcType=BIGINT},
+            reg_id = #{regId,jdbcType=BIGINT},
+            verifyer = #{verifyer,jdbcType=BIGINT},
+            verifyer_score = #{verifyerScore,jdbcType=DOUBLE},
+            verifyer_status = #{verifyerStatus,jdbcType=INTEGER},
+            verifyer_time = #{verifyerTime,jdbcType=TIMESTAMP},
+            deliver = #{deliver,jdbcType=BIGINT},
+            deliver_status = #{deliverStatus,jdbcType=INTEGER},
+            deliver_time = #{deliverTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <resultMap id="BaseResultMapVo" type="com.fea.project.model.deliverable.vo.ProjectDeliverableVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="business_id" jdbcType="BIGINT" property="businessId" />
+        <result column="businessName" jdbcType="VARCHAR" property="businessName" />
+        <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+        <result column="projectStepName" jdbcType="VARCHAR" property="projectStepName" />
+        <result column="deliverable_name" jdbcType="VARCHAR" property="deliverableName" />
+        <result column="deliverable_num" jdbcType="VARCHAR" property="deliverableNum" />
+        <result column="deliverable_type" jdbcType="INTEGER" property="deliverableType" />
+        <result column="delivery_id" jdbcType="BIGINT" property="deliveryId" />
+        <result column="delivery_name" jdbcType="VARCHAR" property="deliveryName" />
+        <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="verifyer" jdbcType="BIGINT" property="verifyer" />
+        <result column="verifyer_score" jdbcType="DOUBLE" property="verifyerScore" />
+        <result column="verifyer_status" jdbcType="INTEGER" property="verifyerStatus" />
+        <result column="verifyer_time" jdbcType="TIMESTAMP" property="verifyerTime" />
+        <result column="deliver" jdbcType="BIGINT" property="deliver" />
+        <result column="deliver_status" jdbcType="INTEGER" property="deliverStatus" />
+        <result column="deliver_time" jdbcType="TIMESTAMP" property="deliverTime" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+        <result column="appendixCount" jdbcType="INTEGER" property="appendixCount" />
+    </resultMap>
+    <select id="selectDeliverableByProjectId"
+            parameterType="com.fea.project.model.deliverable.vo.QueryDeliverableParamVo"
+            resultMap="BaseResultMapVo">
+        select
+        tpd.id, tpd.business_id, tpd.project_step, tpd.deliverable_name,
+        tpd.deliverable_num, tpd.deliverable_type, tpd.delivery_id,
+        tpd.delivery_name, tpd.delivery_time, tpd.description,
+        tpd.create_id, tpd.create_by, tpd.create_time, tpd.update_id, tpd.update_by,
+        tpd.update_time, tpd.del_state, tpd.org_id, tpd.reg_id,
+        tpd.verifyer, tpd.verifyer_score, tpd.verifyer_status,tpd.verifyer_time,
+        tpd.deliver, tpd.deliver_status, tpd.deliver_time,
+        tpp.name as businessName,
+        tps.name as projectStepName,
+        tpp.id as project_id,
+        tpp.name as projectName,
+        count(tpa.id) as appendixCount
+        from
+        t_project_deliverable as tpd
+        left join t_project_appendix as tpa on tpd.id = tpa.business_id and tpa.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()},
+        t_project_project as tpp,
+        t_project_step as tps
+        where tpd.business_id = tpp.id
+        and tpd.project_step = tps.id
+        and tpd.del_state = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and tpd.business_id = #{paramVo.projectId,jdbcType=BIGINT}
+        <if test="paramVo.deliverIds != null">
+            AND tpd.deliver in
+            <foreach collection="paramVo.deliverIds" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="paramVo.keywords != null and paramVo.keywords !=''">
+            and (
+            tpd.deliverable_name like CONCAT('%', #{paramVo.keywords, jdbcType=VARCHAR}, '%')
+            or tpd.deliverable_num like CONCAT('%', #{paramVo.keywords, jdbcType=VARCHAR}, '%')
+            )
+        </if>
+        <if test="paramVo.filters != null">
+            <if test="paramVo.filters.get('projectStep') != null and paramVo.filters.get('projectStep').size() > 0">
+                and tpd.project_step in
+                <foreach collection="paramVo.filters.get('projectStep')" item="item" open="(" close=")" separator=",">
+                    #{item,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </if>
+        group by tpd.id
+    </select>
+    <select id="selectProjectDeliverableInfoById" parameterType="long" resultMap="BaseResultMapVo">
+        select
+        tpd.id, tpd.business_id, tpd.project_step, tpd.deliverable_name,
+        tpd.deliverable_num, tpd.deliverable_type, tpd.delivery_id,
+        tpd.delivery_name, tpd.delivery_time, tpd.description,
+        tpd.create_id, tpd.create_by, tpd.create_time, tpd.update_id, tpd.update_by,
+        tpd.update_time, tpd.del_state, tpd.org_id, tpd.reg_id,
+        tpd.verifyer, tpd.verifyer_score, tpd.verifyer_status,tpd.verifyer_time,
+        tpd.deliver, tpd.deliver_status, tpd.deliver_time,
+        tpp.name as businessName,
+        tps.name as projectStepName,
+        tpp.id as project_id,
+        tpp.name as projectName
+        from
+        t_project_deliverable as tpd,
+        t_project_project as tpp,
+        t_project_step as tps
+        where tpd.business_id = tpp.id
+        and tpd.project_step = tps.id
+        and tpd.del_state = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and tpd.id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectListByIds" parameterType="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_deliverable
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+    </select>
+</mapper>

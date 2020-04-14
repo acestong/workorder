@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.task.PercentSettingModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.task.PercentSettingModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="resource_business_id" jdbcType="BIGINT" property="resourceBusinessId" />
+    <result column="resource_business_type" jdbcType="BIGINT" property="resourceBusinessType" />
+    <result column="action_id" jdbcType="BIGINT" property="actionId" />
+    <result column="action_name" jdbcType="VARCHAR" property="actionName" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="business_type" jdbcType="BIGINT" property="businessType" />
+    <result column="estimate_id" jdbcType="BIGINT" property="estimateId" />
+    <result column="estimate_name" jdbcType="VARCHAR" property="estimateName" />
+    <result column="value" jdbcType="DOUBLE" property="value" />
+    <result column="type_id" jdbcType="BIGINT" property="typeId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, resource_business_id, resource_business_type, action_id, action_name, business_id, 
+    business_type, estimate_id, estimate_name, value, type_id, create_id, create_by, 
+    create_time, update_id, update_by, update_time, del_status
+  </sql>
+  
+  <select id="selectByExample" parameterType="com.fea.project.model.task.PercentSettingModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_task_setting_percent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_setting_percent
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <sql id="bcl">
+  action_id, action_name,  estimate_id, estimate_name, value
+  </sql>
+  <resultMap id="rm" type="com.fea.project.model.task.vo.PercentSettingModelVo">
+    <result column="action_id" jdbcType="BIGINT" property="actionId" />
+    <result column="action_name" jdbcType="VARCHAR" property="actionName" />
+    <result column="estimate_id" jdbcType="BIGINT" property="estimateId" />
+    <result column="estimate_name" jdbcType="VARCHAR" property="estimateName" />
+    <result column="value" jdbcType="DOUBLE" property="value" />
+  </resultMap>
+    <select id="selectByResourceBusinessId" parameterType="java.lang.Long" resultMap="rm">
+    select 
+    <include refid="bcl" />
+    from t_project_task_setting_percent
+    where resource_business_id = #{resourceBusinessId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_task_setting_percent
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.task.PercentSettingModelExample">
+    delete from t_project_task_setting_percent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.task.PercentSettingModel">
+    insert into t_project_task_setting_percent (id, resource_business_id, resource_business_type, 
+      action_id, action_name, business_id, 
+      business_type, estimate_id, estimate_name, 
+      value, type_id, create_id, 
+      create_by, create_time, update_id, 
+      update_by, update_time, del_status
+      )
+    values (#{id,jdbcType=BIGINT}, #{resourceBusinessId,jdbcType=BIGINT}, #{resourceBusinessType,jdbcType=BIGINT}, 
+      #{actionId,jdbcType=BIGINT}, #{actionName,jdbcType=VARCHAR}, #{businessId,jdbcType=BIGINT}, 
+      #{businessType,jdbcType=BIGINT}, #{estimateId,jdbcType=BIGINT}, #{estimateName,jdbcType=VARCHAR}, 
+      #{value,jdbcType=DOUBLE}, #{typeId,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.task.PercentSettingModel">
+    insert into t_project_task_setting_percent
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="resourceBusinessId != null">
+        resource_business_id,
+      </if>
+      <if test="resourceBusinessType != null">
+        resource_business_type,
+      </if>
+      <if test="actionId != null">
+        action_id,
+      </if>
+      <if test="actionName != null">
+        action_name,
+      </if>
+      <if test="businessId != null">
+        business_id,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="estimateId != null">
+        estimate_id,
+      </if>
+      <if test="estimateName != null">
+        estimate_name,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="resourceBusinessId != null">
+        #{resourceBusinessId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceBusinessType != null">
+        #{resourceBusinessType,jdbcType=BIGINT},
+      </if>
+      <if test="actionId != null">
+        #{actionId,jdbcType=BIGINT},
+      </if>
+      <if test="actionName != null">
+        #{actionName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null">
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=BIGINT},
+      </if>
+      <if test="estimateId != null">
+        #{estimateId,jdbcType=BIGINT},
+      </if>
+      <if test="estimateName != null">
+        #{estimateName,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.task.PercentSettingModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_task_setting_percent
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_task_setting_percent
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.resourceBusinessId != null">
+        resource_business_id = #{record.resourceBusinessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.resourceBusinessType != null">
+        resource_business_type = #{record.resourceBusinessType,jdbcType=BIGINT},
+      </if>
+      <if test="record.actionId != null">
+        action_id = #{record.actionId,jdbcType=BIGINT},
+      </if>
+      <if test="record.actionName != null">
+        action_name = #{record.actionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessId != null">
+        business_id = #{record.businessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessType != null">
+        business_type = #{record.businessType,jdbcType=BIGINT},
+      </if>
+      <if test="record.estimateId != null">
+        estimate_id = #{record.estimateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.estimateName != null">
+        estimate_name = #{record.estimateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.value != null">
+        value = #{record.value,jdbcType=DOUBLE},
+      </if>
+      <if test="record.typeId != null">
+        type_id = #{record.typeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_task_setting_percent
+    set id = #{record.id,jdbcType=BIGINT},
+      resource_business_id = #{record.resourceBusinessId,jdbcType=BIGINT},
+      resource_business_type = #{record.resourceBusinessType,jdbcType=BIGINT},
+      action_id = #{record.actionId,jdbcType=BIGINT},
+      action_name = #{record.actionName,jdbcType=VARCHAR},
+      business_id = #{record.businessId,jdbcType=BIGINT},
+      business_type = #{record.businessType,jdbcType=BIGINT},
+      estimate_id = #{record.estimateId,jdbcType=BIGINT},
+      estimate_name = #{record.estimateName,jdbcType=VARCHAR},
+      value = #{record.value,jdbcType=DOUBLE},
+      type_id = #{record.typeId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.task.PercentSettingModel">
+    update t_project_task_setting_percent
+    <set>
+      <if test="resourceBusinessId != null">
+        resource_business_id = #{resourceBusinessId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceBusinessType != null">
+        resource_business_type = #{resourceBusinessType,jdbcType=BIGINT},
+      </if>
+      <if test="actionId != null">
+        action_id = #{actionId,jdbcType=BIGINT},
+      </if>
+      <if test="actionName != null">
+        action_name = #{actionName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null">
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=BIGINT},
+      </if>
+      <if test="estimateId != null">
+        estimate_id = #{estimateId,jdbcType=BIGINT},
+      </if>
+      <if test="estimateName != null">
+        estimate_name = #{estimateName,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.task.PercentSettingModel">
+    update t_project_task_setting_percent
+    set resource_business_id = #{resourceBusinessId,jdbcType=BIGINT},
+      resource_business_type = #{resourceBusinessType,jdbcType=BIGINT},
+      action_id = #{actionId,jdbcType=BIGINT},
+      action_name = #{actionName,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=BIGINT},
+      business_type = #{businessType,jdbcType=BIGINT},
+      estimate_id = #{estimateId,jdbcType=BIGINT},
+      estimate_name = #{estimateName,jdbcType=VARCHAR},
+      value = #{value,jdbcType=DOUBLE},
+      type_id = #{typeId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

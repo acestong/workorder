@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.fieldconfig.ProjectFieldConfigEnterpriseMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.fieldconfig.ProjectFieldConfigEnterpriseModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="field_name" jdbcType="VARCHAR" property="fieldName" />
+        <result column="type_id" jdbcType="INTEGER" property="typeId" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, reg_id, field_name, type_id, create_id, create_by, create_time, name
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_field_config_enterprise
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_field_config_enterprise
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_field_config_enterprise
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigEnterpriseModel">
+        insert into t_project_field_config_enterprise (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{regId,jdbcType=BIGINT},
+            #{fieldName,jdbcType=VARCHAR},
+            #{typeId,jdbcType=INTEGER},
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP},
+            #{name,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_field_config_enterprise (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.id,jdbcType=BIGINT},
+                #{item.regId,jdbcType=BIGINT},
+                #{item.fieldName,jdbcType=VARCHAR},
+                #{item.typeId,jdbcType=INTEGER},
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP},
+                #{item.name,jdbcType=VARCHAR}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigEnterpriseModel" resultMap="BaseResultMap">
+        select * from t_project_field_config_enterprise where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="regId == null">
+            and reg_id is null
+        </if>
+        <if test="fieldName != null">
+            and field_name = #{fieldName,jdbcType=VARCHAR}
+        </if>
+        <if test="typeId != null">
+            and type_id = #{typeId,jdbcType=INTEGER}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="name != null">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="selectSysInit" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_field_config_enterprise
+        where type_id = #{typeId,jdbcType=INTEGER}
+        and reg_id is null
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigEnterpriseModel">
+        insert into t_project_field_config_enterprise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="fieldName != null">
+                field_name,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldName != null">
+                #{fieldName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigEnterpriseModel">
+        update t_project_field_config_enterprise
+        <set>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="fieldName != null">
+                field_name = #{fieldName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.fieldconfig.ProjectFieldConfigEnterpriseModel">
+        update t_project_field_config_enterprise
+        set reg_id = #{regId,jdbcType=BIGINT},
+            field_name = #{fieldName,jdbcType=VARCHAR},
+            type_id = #{typeId,jdbcType=INTEGER},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            name = #{name,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_project_field_config_enterprise
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

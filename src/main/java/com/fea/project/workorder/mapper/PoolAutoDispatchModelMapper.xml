@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.PoolAutoDispatchModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.PoolAutoDispatchModel">
+    <id column="auto_dispatch_id" jdbcType="BIGINT" property="autoDispatchId" />
+    <result column="workorder_pool_id" jdbcType="BIGINT" property="workorderPoolId" />
+    <result column="workorder_type_id" jdbcType="BIGINT" property="workorderTypeId" />
+    <result column="connector" jdbcType="VARCHAR" property="connector" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    auto_dispatch_id, workorder_pool_id, workorder_type_id, connector
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.PoolAutoDispatchModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_pool_auto_dispatch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_pool_auto_dispatch
+    where auto_dispatch_id = #{autoDispatchId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_pool_auto_dispatch
+    where auto_dispatch_id = #{autoDispatchId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.PoolAutoDispatchModelExample">
+    delete from t_workorder_pool_auto_dispatch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="autoDispatchId" parameterType="com.fea.project.workorder.model.PoolAutoDispatchModel">
+    insert into t_workorder_pool_auto_dispatch (auto_dispatch_id, workorder_pool_id, workorder_type_id, 
+      connector)
+    values (#{autoDispatchId,jdbcType=BIGINT}, #{workorderPoolId,jdbcType=BIGINT}, #{workorderTypeId,jdbcType=BIGINT}, 
+      #{connector,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertByList" keyProperty="autoDispatchId">
+    insert into t_workorder_pool_auto_dispatch (auto_dispatch_id, workorder_pool_id, workorder_type_id, 
+      connector)
+    values 
+      <foreach collection="list" index="index" item="item" separator=",">
+            (
+				#{item.autoDispatchId,jdbcType=BIGINT}, 
+				#{poolId,jdbcType=BIGINT}, 
+				#{item.workorderTypeId,jdbcType=BIGINT}, 
+				#{item.connector,jdbcType=VARCHAR}
+                )
+        </foreach>
+  </insert>
+  <insert id="insertSelective" keyProperty="autoDispatchId"  parameterType="com.fea.project.workorder.model.PoolAutoDispatchModel">
+    insert into t_workorder_pool_auto_dispatch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="autoDispatchId != null">
+        auto_dispatch_id,
+      </if>
+      <if test="workorderPoolId != null">
+        workorder_pool_id,
+      </if>
+      <if test="workorderTypeId != null">
+        workorder_type_id,
+      </if>
+      <if test="connector != null">
+        connector,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="autoDispatchId != null">
+        #{autoDispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="workorderPoolId != null">
+        #{workorderPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="workorderTypeId != null">
+        #{workorderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="connector != null">
+        #{connector,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.PoolAutoDispatchModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_pool_auto_dispatch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_pool_auto_dispatch
+    <set>
+      <if test="record.autoDispatchId != null">
+        auto_dispatch_id = #{record.autoDispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workorderPoolId != null">
+        workorder_pool_id = #{record.workorderPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workorderTypeId != null">
+        workorder_type_id = #{record.workorderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.connector != null">
+        connector = #{record.connector,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_pool_auto_dispatch
+    set auto_dispatch_id = #{record.autoDispatchId,jdbcType=BIGINT},
+      workorder_pool_id = #{record.workorderPoolId,jdbcType=BIGINT},
+      workorder_type_id = #{record.workorderTypeId,jdbcType=BIGINT},
+      connector = #{record.connector,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.PoolAutoDispatchModel">
+    update t_workorder_pool_auto_dispatch
+    <set>
+      <if test="workorderPoolId != null">
+        workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="workorderTypeId != null">
+        workorder_type_id = #{workorderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="connector != null">
+        connector = #{connector,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where auto_dispatch_id = #{autoDispatchId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.PoolAutoDispatchModel">
+    update t_workorder_pool_auto_dispatch
+    set workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT},
+      workorder_type_id = #{workorderTypeId,jdbcType=BIGINT},
+      connector = #{connector,jdbcType=VARCHAR}
+    where auto_dispatch_id = #{autoDispatchId,jdbcType=BIGINT}
+  </update>
+</mapper>

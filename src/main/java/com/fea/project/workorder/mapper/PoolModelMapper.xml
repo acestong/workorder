@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.PoolModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.PoolModel">
+    <id column="workorder_pool_id" jdbcType="BIGINT" property="workorderPoolId" />
+    <result column="pool_name" jdbcType="VARCHAR" property="poolName" />
+    <result column="pool_desc" jdbcType="VARCHAR" property="poolDesc" />
+    <result column="pool_manager_id" jdbcType="BIGINT" property="poolManagerId" />
+    <result column="pool_manager_name" jdbcType="VARCHAR" property="poolManagerName" />
+    <result column="is_auto_dispatch" jdbcType="BIGINT" property="isAutoDispatch" />
+    <result column="workorder_selection_type" jdbcType="BIGINT" property="workorderSelectionType" />
+    <result column="auto_dispatch_rule" jdbcType="BIGINT" property="autoDispatchRule" />
+    <result column="is_remind" jdbcType="BIGINT" property="isRemind" />
+    <result column="remind_count" jdbcType="DOUBLE" property="remindCount" />
+    <result column="remind_unit" jdbcType="VARCHAR" property="remindUnit" />
+    <result column="remind_id" jdbcType="BIGINT" property="remindId" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    workorder_pool_id, pool_name, pool_desc, pool_manager_id, pool_manager_name, is_auto_dispatch, 
+    workorder_selection_type, auto_dispatch_rule, is_remind, remind_count, remind_unit, 
+    remind_id, org_id, create_id, create_by, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.PoolModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_pool
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_pool
+    where workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT}
+  </select>
+  <select id="selectListByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_pool
+    where org_id = #{orgId,jdbcType=BIGINT}
+  </select>
+  <select id="selectIdAndNameListByOrgId" parameterType="java.lang.Long" resultType="com.fea.project.workorder.model.vo.IdAndNameModelVo">
+    select 
+     workorder_pool_id id, pool_name name
+    from t_workorder_pool
+    where org_id = #{orgId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_pool
+    where workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.PoolModelExample">
+    delete from t_workorder_pool
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="workorderPoolId" parameterType="com.fea.project.workorder.model.PoolModel">
+    insert into t_workorder_pool (workorder_pool_id, pool_name, pool_desc, 
+      pool_manager_id, pool_manager_name, is_auto_dispatch, 
+      workorder_selection_type, auto_dispatch_rule, 
+      is_remind, remind_count, remind_unit, 
+      remind_id, org_id,  create_id, create_by, 
+      create_time)
+    values (#{workorderPoolId,jdbcType=BIGINT}, #{poolName,jdbcType=VARCHAR}, #{poolDesc,jdbcType=VARCHAR}, 
+      #{poolManagerId,jdbcType=BIGINT}, #{poolManagerName,jdbcType=VARCHAR}, #{isAutoDispatch,jdbcType=BIGINT}, 
+      #{workorderSelectionType,jdbcType=BIGINT}, #{autoDispatchRule,jdbcType=BIGINT}, 
+      #{isRemind,jdbcType=BIGINT}, #{remindCount,jdbcType=DOUBLE}, #{remindUnit,jdbcType=VARCHAR}, 
+      #{remindId,jdbcType=BIGINT},#{orgId,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective"  keyProperty="workorderPoolId" parameterType="com.fea.project.workorder.model.PoolModel">
+    insert into t_workorder_pool
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workorderPoolId != null">
+        workorder_pool_id,
+      </if>
+      <if test="poolName != null">
+        pool_name,
+      </if>
+      <if test="poolDesc != null">
+        pool_desc,
+      </if>
+      <if test="poolManagerId != null">
+        pool_manager_id,
+      </if>
+      <if test="poolManagerName != null">
+        pool_manager_name,
+      </if>
+      <if test="isAutoDispatch != null">
+        is_auto_dispatch,
+      </if>
+      <if test="workorderSelectionType != null">
+        workorder_selection_type,
+      </if>
+      <if test="autoDispatchRule != null">
+        auto_dispatch_rule,
+      </if>
+      <if test="isRemind != null">
+        is_remind,
+      </if>
+      <if test="remindCount != null">
+        remind_count,
+      </if>
+      <if test="remindUnit != null">
+        remind_unit,
+      </if>
+      <if test="remindId != null">
+        remind_id,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workorderPoolId != null">
+        #{workorderPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="poolName != null">
+        #{poolName,jdbcType=VARCHAR},
+      </if>
+      <if test="poolDesc != null">
+        #{poolDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="poolManagerId != null">
+        #{poolManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="poolManagerName != null">
+        #{poolManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAutoDispatch != null">
+        #{isAutoDispatch,jdbcType=BIGINT},
+      </if>
+      <if test="workorderSelectionType != null">
+        #{workorderSelectionType,jdbcType=BIGINT},
+      </if>
+      <if test="autoDispatchRule != null">
+        #{autoDispatchRule,jdbcType=BIGINT},
+      </if>
+      <if test="isRemind != null">
+        #{isRemind,jdbcType=BIGINT},
+      </if>
+      <if test="remindCount != null">
+        #{remindCount,jdbcType=DOUBLE},
+      </if>
+      <if test="remindUnit != null">
+        #{remindUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="remindId != null">
+        #{remindId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.PoolModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_pool
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_pool
+    <set>
+      <if test="record.workorderPoolId != null">
+        workorder_pool_id = #{record.workorderPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="record.poolName != null">
+        pool_name = #{record.poolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poolDesc != null">
+        pool_desc = #{record.poolDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.poolManagerId != null">
+        pool_manager_id = #{record.poolManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.poolManagerName != null">
+        pool_manager_name = #{record.poolManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAutoDispatch != null">
+        is_auto_dispatch = #{record.isAutoDispatch,jdbcType=BIGINT},
+      </if>
+      <if test="record.workorderSelectionType != null">
+        workorder_selection_type = #{record.workorderSelectionType,jdbcType=BIGINT},
+      </if>
+      <if test="record.autoDispatchRule != null">
+        auto_dispatch_rule = #{record.autoDispatchRule,jdbcType=BIGINT},
+      </if>
+      <if test="record.isRemind != null">
+        is_remind = #{record.isRemind,jdbcType=BIGINT},
+      </if>
+      <if test="record.remindCount != null">
+        remind_count = #{record.remindCount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.remindUnit != null">
+        remind_unit = #{record.remindUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remindId != null">
+        remind_id = #{record.remindId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        org_id = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_pool
+    set workorder_pool_id = #{record.workorderPoolId,jdbcType=BIGINT},
+      pool_name = #{record.poolName,jdbcType=VARCHAR},
+      pool_desc = #{record.poolDesc,jdbcType=VARCHAR},
+      pool_manager_id = #{record.poolManagerId,jdbcType=BIGINT},
+      pool_manager_name = #{record.poolManagerName,jdbcType=VARCHAR},
+      is_auto_dispatch = #{record.isAutoDispatch,jdbcType=BIGINT},
+      workorder_selection_type = #{record.workorderSelectionType,jdbcType=BIGINT},
+      auto_dispatch_rule = #{record.autoDispatchRule,jdbcType=BIGINT},
+      is_remind = #{record.isRemind,jdbcType=BIGINT},
+      remind_count = #{record.remindCount,jdbcType=DOUBLE},
+      remind_unit = #{record.remindUnit,jdbcType=VARCHAR},
+      remind_id = #{record.remindId,jdbcType=BIGINT},
+      org_id = #{record.orgId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.PoolModel">
+    update t_workorder_pool
+    <set>
+      <if test="poolName != null">
+        pool_name = #{poolName,jdbcType=VARCHAR},
+      </if>
+      <if test="poolDesc != null">
+        pool_desc = #{poolDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="poolManagerId != null">
+        pool_manager_id = #{poolManagerId,jdbcType=BIGINT},
+      </if>
+      <if test="poolManagerName != null">
+        pool_manager_name = #{poolManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAutoDispatch != null">
+        is_auto_dispatch = #{isAutoDispatch,jdbcType=BIGINT},
+      </if>
+      <if test="workorderSelectionType != null">
+        workorder_selection_type = #{workorderSelectionType,jdbcType=BIGINT},
+      </if>
+      <if test="autoDispatchRule != null">
+        auto_dispatch_rule = #{autoDispatchRule,jdbcType=BIGINT},
+      </if>
+      <if test="isRemind != null">
+        is_remind = #{isRemind,jdbcType=BIGINT},
+      </if>
+      <if test="remindCount != null">
+        remind_count = #{remindCount,jdbcType=DOUBLE},
+      </if>
+      <if test="remindUnit != null">
+        remind_unit = #{remindUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="remindId != null">
+        remind_id = #{remindId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.PoolModel">
+    update t_workorder_pool
+    set pool_name = #{poolName,jdbcType=VARCHAR},
+      pool_desc = #{poolDesc,jdbcType=VARCHAR},
+      pool_manager_id = #{poolManagerId,jdbcType=BIGINT},
+      pool_manager_name = #{poolManagerName,jdbcType=VARCHAR},
+      is_auto_dispatch = #{isAutoDispatch,jdbcType=BIGINT},
+      workorder_selection_type = #{workorderSelectionType,jdbcType=BIGINT},
+      auto_dispatch_rule = #{autoDispatchRule,jdbcType=BIGINT},
+      is_remind = #{isRemind,jdbcType=BIGINT},
+      remind_count = #{remindCount,jdbcType=DOUBLE},
+      remind_unit = #{remindUnit,jdbcType=VARCHAR},
+      remind_id = #{remindId,jdbcType=BIGINT},
+      org_id = #{orgId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where workorder_pool_id = #{workorderPoolId,jdbcType=BIGINT}
+  </update>
+</mapper>

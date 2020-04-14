@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.task.TaskCommentModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.task.TaskCommentModel">
+    <id column="task_comment_id" jdbcType="BIGINT" property="taskCommentId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_deliver_product_id" jdbcType="BIGINT" property="taskDeliverProductId" />
+    <result column="valid_duration" jdbcType="BIGINT" property="validDuration" />
+    <result column="task_score" jdbcType="DOUBLE" property="taskScore" />
+     <result column="task_deliver_product_score" jdbcType="DOUBLE" property="taskDeliverProductScore" />
+    <result column="total_score" jdbcType="DOUBLE" property="totalScore" />
+    <result column="task_comment_time" jdbcType="TIMESTAMP" property="taskCommentTime" />
+    <result column="result_desc" jdbcType="VARCHAR" property="resultDesc" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    task_comment_id, task_id, task_deliver_product_id , valid_duration, task_score,task_deliver_product_score,total_score, task_comment_time, result_desc , create_id, 
+    create_by, create_time, update_id, update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.task.TaskCommentModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_task_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_comment
+    where task_comment_id = #{taskCommentId,jdbcType=BIGINT}
+  </select>
+  <select id="selectOneByTaskId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_comment
+    where task_id = #{taskId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_task_comment
+    where task_comment_id = #{taskCommentId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.task.TaskCommentModelExample">
+    delete from t_project_task_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="taskCommentId" parameterType="com.fea.project.model.task.TaskCommentModel">
+    insert into t_project_task_comment (task_comment_id, task_id, task_deliver_product_id, valid_duration, 
+      task_score, task_deliver_product_score, total_score,task_comment_time, result_desc,  create_id, 
+      create_by, create_time, update_id, 
+      update_by, update_time, del_status
+      )
+    values (#{taskCommentId,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT},#{taskDeliverProductId,jdbcType=BIGINT}, #{validDuration,jdbcType=BIGINT}, 
+      #{taskScore,jdbcType=DOUBLE}, #{taskDeliverProductScore,jdbcType=DOUBLE}, #{totalScore,jdbcType=DOUBLE}, #{taskCommentTime,jdbcType=TIMESTAMP},#{resultDesc,jdbcType=VARCHAR},  #{createId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="taskCommentId" parameterType="com.fea.project.model.task.TaskCommentModel">
+    insert into t_project_task_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskCommentId != null">
+        task_comment_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="taskDeliverProductId != null">
+        task_deliver_product_id,
+      </if>
+      <if test="validDuration != null">
+        valid_duration,
+      </if>
+      <if test="taskScore != null">
+        task_score,
+      </if>
+      <if test="taskDeliverProductScore != null">
+        task_deliver_product_score,
+      </if>
+      <if test="totalScore != null">
+        total_score,
+      </if>
+      <if test="taskCommentTime != null">
+        task_comment_time,
+      </if>
+      <if test="resultDesc != null">
+        result_desc ,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskCommentId != null">
+        #{taskCommentId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDeliverProductId != null">
+        #{taskDeliverProductId,jdbcType=BIGINT},
+      </if>
+      <if test="validDuration != null">
+        #{validDuration,jdbcType=BIGINT},
+      </if>
+      <if test="taskScore != null">
+        #{taskScore,jdbcType=DOUBLE},
+      </if>
+      <if test="taskDeliverProductScore != null">
+        #{taskDeliverProductScore,jdbcType=DOUBLE},
+      </if>
+      <if test="totalScore != null">
+        #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="taskCommentTime != null">
+        #{taskCommentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resultDesc != null">
+        #{resultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.task.TaskCommentModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_task_comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_task_comment
+    <set>
+      <if test="record.taskCommentId != null">
+        task_comment_id = #{record.taskCommentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskDeliverProductId != null">
+       task_deliver_product_id = #{record.taskDeliverProductId,jdbcType=BIGINT},
+      </if>
+      <if test="record.validDuration != null">
+        valid_duration = #{record.validDuration,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskScore != null">
+        task_score = #{record.taskScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taskDeliverProductScore != null">
+        task_deliver_product_score = #{record.taskDeliverProductScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalScore != null">
+        total_score = #{record.totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.taskCommentTime != null">
+        task_comment_time = #{record.taskCommentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.resultDesc != null">
+        result_desc = #{record.resultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_task_comment
+    set task_comment_id = #{record.taskCommentId,jdbcType=BIGINT},
+      task_id = #{record.taskId,jdbcType=BIGINT},
+      task_deliver_product_id = #{record.taskDeliverProductId,jdbcType=BIGINT},
+      valid_duration = #{record.validDuration,jdbcType=BIGINT},
+      task_score = #{record.taskScore,jdbcType=DOUBLE},
+      task_deliver_product_score = #{record.taskDeliverProductScore,jdbcType=DOUBLE},
+      total_score = #{record.totalScore,jdbcType=DOUBLE},
+      task_comment_time = #{record.taskCommentTime,jdbcType=TIMESTAMP},
+      result_desc = #{record.resultDesc,jdbcType=VARCHAR},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.task.TaskCommentModel">
+    update t_project_task_comment
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDeliverProductId != null">
+        task_deliver_product_id = #{taskDeliverProductId,jdbcType=BIGINT},
+      </if>
+      <if test="validDuration != null">
+        valid_duration = #{validDuration,jdbcType=BIGINT},
+      </if>
+      <if test="taskScore != null">
+        task_score = #{taskScore,jdbcType=DOUBLE},
+      </if>
+      <if test="taskDeliverProductScore != null">
+        task_deliver_product_score = #{taskDeliverProductScore,jdbcType=DOUBLE},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=DOUBLE},
+      </if>
+      <if test="taskCommentTime != null">
+        task_comment_time = #{taskCommentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resultDesc != null">
+        Result_desc = #{resultDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where task_comment_id = #{taskCommentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.task.TaskCommentModel">
+    update t_project_task_comment
+    set task_id = #{taskId,jdbcType=BIGINT},
+      task_deliver_product_id = #{taskDeliverProductId,jdbcType=BIGINT},
+      valid_duration = #{validDuration,jdbcType=BIGINT},
+      task_score = #{taskScore,jdbcType=DOUBLE},
+      task_deliver_product_score = #{taskDeliverProductScore,jdbcType=DOUBLE},
+      total_score = #{totalScore,jdbcType=DOUBLE},
+      task_comment_time = #{taskCommentTime,jdbcType=TIMESTAMP},
+      result_desc = #{resultDesc,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where task_comment_id = #{taskCommentId,jdbcType=BIGINT}
+  </update>
+  
+   <resultMap id="rm" type="com.fea.project.model.task.vo.TaskCommentModelVo">
+    <id column="task_comment_id" jdbcType="BIGINT" property="taskCommentId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_deliver_product_id" jdbcType="BIGINT" property="taskDeliverProductId" />
+    <result column="deliverProductName" jdbcType="VARCHAR" property="deliverProductName" />
+    <result column="deliverProductTime" jdbcType="TIMESTAMP" property="deliverProductTime" />
+    <result column="valid_duration" jdbcType="BIGINT" property="validDuration" />
+    <result column="task_score" jdbcType="DOUBLE" property="taskScore" />
+     <result column="task_deliver_product_score" jdbcType="DOUBLE" property="taskDeliverProductScore" />
+    <result column="total_score" jdbcType="DOUBLE" property="totalScore" />
+    <result column="task_comment_time" jdbcType="TIMESTAMP" property="taskCommentTime" />
+    <result column="result_desc" jdbcType="VARCHAR" property="resultDesc" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    <result column="taskStartTime" jdbcType="TIMESTAMP" property="taskStartTime" />
+    <result column="taskEndTime" jdbcType="TIMESTAMP" property="taskEndTime" />
+     <result column="taskDuration" jdbcType="BIGINT" property="taskDuration" />
+     </resultMap>
+   <select id="selectAllWithDelStatus" parameterType="java.lang.Long" resultMap="rm">
+		SELECT DISTINCT
+		tptco.*,
+		tptc.task_start_time taskStartTime,
+		tptc.task_end_time taskEndTime,
+		tptc.task_duration taskDuration,
+		tptdp.deliver_product_name DeliverProductName,
+		tptdp.task_deliver_time DeliverProductTime
+		from 
+		t_project_task_create tptc
+		LEFT JOIN
+		t_project_task_comment tptco
+		on 
+		tptc.task_id = tptco.task_id 
+		LEFT JOIN 
+		t_project_task_deliver_product tptdp
+		on tptco.task_deliver_product_id = tptdp.deliver_product_id 
+		where tptco.task_id = #{taskId,jdbcType=BIGINT} 
+		and tptc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+  </select>
+  <select id="selectByPrimaryKeyWithDelStatus" parameterType="com.fea.project.model.task.TaskCommentModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_comment tptc
+    where tptc.task_comment_id = #{taskCommentId,jdbcType=BIGINT} 
+    and tptc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}  
+    and tptc.task_id = #{taskId,jdbcType=BIGINT} 
+  </select>
+  
+    <update id="updateByPrimaryKeySelectiveWithDelStatus" parameterType="com.fea.project.model.task.TaskCommentModel">
+    update t_project_task_comment tptc
+	set tptc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()} 
+    where tptc.task_comment_id = #{taskCommentId,jdbcType=BIGINT}
+  </update>
+</mapper>

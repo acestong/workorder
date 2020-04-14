@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.establishproject.team.ProjectEstablishTeamUserMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.establishproject.team.ProjectEstablishTeamUserModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="team_id" jdbcType="BIGINT" property="teamId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="duration" jdbcType="INTEGER" property="duration"/>
+        <result column="time_percent" jdbcType="DECIMAL" property="timePercent"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.model.establishproject.vo.ProjectEstablishTeamUserVo" extends="BaseResultMap">
+        <result column="real_user_id" jdbcType="BIGINT" property="realUserId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, team_id, user_id, start_time, end_time, duration, time_percent,
+        create_id, create_by, create_time, update_id, update_by, update_time, del_status
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_establish_team_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_establish_team_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_establish_team_user
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.establishproject.team.ProjectEstablishTeamUserModel">
+        insert into t_project_establish_team_user (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{teamId,jdbcType=BIGINT},
+        #{userId,jdbcType=BIGINT},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP},
+        #{duration,jdbcType=INTEGER},
+        #{timePercent,jdbcType=DECIMAL},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{delStatus,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_establish_team_user (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.teamId,jdbcType=BIGINT},
+            #{item.userId,jdbcType=BIGINT},
+            #{item.startTime,jdbcType=TIMESTAMP},
+            #{item.endTime,jdbcType=TIMESTAMP},
+            #{item.duration,jdbcType=INTEGER},
+            #{item.timePercent,jdbcType=DECIMAL},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.delStatus,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.establishproject.team.ProjectEstablishTeamUserModel"
+            resultMap="BaseResultMap">
+        select * from t_project_establish_team_user where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="teamId != null">
+            and team_id = #{teamId,jdbcType=BIGINT}
+        </if>
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=BIGINT}
+        </if>
+        <if test="startTime != null">
+            and start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="duration != null">
+            and duration = #{duration,jdbcType=INTEGER}
+        </if>
+        <if test="timePercent != null">
+            and time_percent = #{timePercent,jdbcType=DECIMAL}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.establishproject.team.ProjectEstablishTeamUserModel">
+        insert into t_project_establish_team_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="teamId != null">
+                team_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="duration != null">
+                duration,
+            </if>
+            <if test="timePercent != null">
+                time_percent,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="teamId != null">
+                #{teamId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                #{duration,jdbcType=INTEGER},
+            </if>
+            <if test="timePercent != null">
+                #{timePercent,jdbcType=DECIMAL},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.establishproject.team.ProjectEstablishTeamUserModel">
+        update t_project_establish_team_user
+        <set>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                duration = #{duration,jdbcType=INTEGER},
+            </if>
+            <if test="timePercent != null">
+                time_percent = #{timePercent,jdbcType=DECIMAL},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.establishproject.team.ProjectEstablishTeamUserModel">
+        update t_project_establish_team_user
+        set team_id = #{teamId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=BIGINT},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            duration = #{duration,jdbcType=INTEGER},
+            time_percent = #{timePercent,jdbcType=DECIMAL},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <select id="selectByTeamId" resultMap="BaseResultMap_vo">
+        select u.*, pu.user_id as real_user_id
+        from t_project_establish_team_user u
+        inner join t_project_establish_user pu on (pu.id = u.user_id and pu.status !=  ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()})
+        where u.team_id = #{teamId, jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_establish_team_user
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectAllProjectUserByTeamId" resultMap="BaseResultMap_vo">
+        select u.*, pu.user_id as real_user_id
+        from t_project_establish_team_user u
+        inner join t_project_establish_user pu on (pu.id = u.user_id and pu.status !=  ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()})
+        where u.team_id in  (
+            select id from t_project_establish_team where project_id = (select project_id from t_project_establish_team where id = #{teamId, jdbcType=BIGINT})
+        )
+    </select>
+
+    <select id="selectByFilterAndOrderParams" parameterType="com.fea.project.model.BasePageInfo"
+            resultMap="BaseResultMap_vo">
+        select u.*, pu.user_id as real_user_id
+        from t_project_establish_team_user u
+        inner join t_project_establish_user pu on (pu.id = u.user_id and pu.status !=
+        ${@com.fea.project.enums.user.UserStatusEnum@TYPE_DELETE.getValue()})
+        where 1 = 1
+        and u.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model != null">
+            <if test="model.getTeamId() != null and model.getCanRoot() == null">
+                and u.team_id = #{model.teamId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getTeamId() != null and model.getCanRoot() != null">
+                and u.team_id in (
+                select id from t_project_establish_team where project_id = (select project_id from t_project_establish_team where id =
+                #{model.teamId, jdbcType=BIGINT})
+                )
+            </if>
+            <if test="model.getUserId() != null">
+                and u.user_id = #{model.userId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getStartTime() != null">
+                and u.start_time = #{model.startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getEndTime() != null">
+                and u.end_time = #{model.endTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getDuration() != null">
+                and u.duration = #{model.duration,jdbcType=INTEGER}
+            </if>
+            <if test="model.getTimePercent() != null">
+                and u.time_percent = #{model.timePercent,jdbcType=DECIMAL}
+            </if>
+            <if test="model.getCreateId() != null">
+                and u.create_id = #{model.createId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getCreateBy() != null">
+                and u.create_by = #{model.createBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getCreateTime() != null">
+                and u.create_time = #{model.createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="model.getUpdateId() != null">
+                and u.update_id = #{model.updateId,jdbcType=BIGINT}
+            </if>
+            <if test="model.getUpdateBy() != null">
+                and u.update_by = #{model.updateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="model.getUpdateTime() != null">
+                and u.update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </if>
+        <if test="keywords != null">
+            and ((u.create_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (u.update_by like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            or (u.duration like CONCAT('%', #{keywords, jdbcType=VARCHAR}, '%'))
+            )
+        </if>
+        <if test="sortKey != null">
+            order by u.${sortKey}
+            <if test="sortValue != null">
+                ${sortValue}
+            </if>
+        </if>
+        <if test="sortKey == null">
+            order by u.create_time desc
+        </if>
+
+    </select>
+
+    <update id="updateModelsByUserIds">
+        update t_project_establish_team_user
+        <set>
+            <if test="model.teamId != null">
+                team_id = #{model.teamId,jdbcType=BIGINT},
+            </if>
+            <if test="model.userId != null">
+                user_id = #{model.userId,jdbcType=BIGINT},
+            </if>
+            <if test="model.startTime != null">
+                start_time = #{model.startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="model.endTime != null">
+                end_time = #{model.endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="model.duration != null">
+                duration = #{model.duration,jdbcType=INTEGER},
+            </if>
+            <if test="model.timePercent != null">
+                time_percent = #{model.timePercent,jdbcType=DECIMAL},
+            </if>
+            <if test="model.createId != null">
+                create_id = #{model.createId,jdbcType=BIGINT},
+            </if>
+            <if test="model.createBy != null">
+                create_by = #{model.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="model.createTime != null">
+                create_time = #{model.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="model.updateId != null">
+                update_id = #{model.updateId,jdbcType=BIGINT},
+            </if>
+            <if test="model.updateBy != null">
+                update_by = #{model.updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="model.updateTime != null">
+                update_time = #{model.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="model.delStatus != null">
+                del_status = #{model.delStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <select id="selectByUserIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_establish_team_user
+        where user_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+
+</mapper>

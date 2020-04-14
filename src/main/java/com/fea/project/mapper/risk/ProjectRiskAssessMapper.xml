@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.risk.ProjectRiskAssessMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.risk.ProjectRiskAssessModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="reg_id" jdbcType="BIGINT" property="regId" />
+        <result column="org_id" jdbcType="BIGINT" property="orgId" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+        <result column="stage_id" jdbcType="BIGINT" property="stageId" />
+        <result column="stage" jdbcType="VARCHAR" property="stage" />
+        <result column="project_risk_id" jdbcType="BIGINT" property="projectRiskId" />
+        <result column="theme" jdbcType="VARCHAR" property="theme" />
+        <result column="times" jdbcType="VARCHAR" property="times" />
+        <result column="report" jdbcType="VARCHAR" property="report" />
+        <result column="rating" jdbcType="DECIMAL" property="rating" />
+        <result column="time" jdbcType="TIMESTAMP" property="time" />
+        <result column="evaluator" jdbcType="VARCHAR" property="evaluator" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="is_submit" jdbcType="INTEGER" property="isSubmit" />
+        <result column="is_check" jdbcType="INTEGER" property="isCheck" />
+        <result column="check_title" jdbcType="VARCHAR" property="checkTitle" />
+        <result column="check_explain" jdbcType="VARCHAR" property="checkExplain" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_status" jdbcType="INTEGER" property="delStatus" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,reg_id, org_id, project_id, project_name, stage_id,stage, project_risk_id, theme, times, report,
+        rating, time,  evaluator, content, is_submit, is_check, check_title, check_explain,
+        create_id, create_by, create_time, update_id, update_by, update_time, del_status
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_risk_assess
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_risk_assess
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_risk_assess
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.risk.ProjectRiskAssessModel">
+        insert into t_project_risk_assess (
+        <include refid="Base_Column_List" />
+        )
+        values (#{regId,jdbcType=BIGINT}, 
+            #{orgId,jdbcType=BIGINT}, 
+            #{projectId,jdbcType=BIGINT}, 
+            #{projectName,jdbcType=VARCHAR},
+            #{stageId,jdbcType=BIGINT},
+            #{stage,jdbcType=VARCHAR}, 
+            #{projectRiskId,jdbcType=BIGINT}, 
+            #{theme,jdbcType=VARCHAR}, 
+            #{times,jdbcType=VARCHAR}, 
+            #{report,jdbcType=VARCHAR}, 
+            #{rating,jdbcType=DECIMAL}, 
+            #{time,jdbcType=TIMESTAMP},
+            #{evaluator,jdbcType=VARCHAR}, 
+            #{content,jdbcType=VARCHAR}, 
+            #{isSubmit,jdbcType=INTEGER}, 
+            #{isCheck,jdbcType=INTEGER},
+            #{checkTitle,jdbcType=VARCHAR},
+            #{checkExplain,jdbcType=VARCHAR},
+             #{createId,jdbcType=BIGINT},
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{delStatus,jdbcType=INTEGER}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_project_risk_assess (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.regId,jdbcType=BIGINT}, 
+                #{item.orgId,jdbcType=BIGINT}, 
+                #{item.projectId,jdbcType=BIGINT}, 
+                #{item.projectName,jdbcType=VARCHAR},
+                #{item.stageId,jdbcType=BIGINT},
+                #{item.stage,jdbcType=VARCHAR}, 
+                #{item.projectRiskId,jdbcType=BIGINT}, 
+                #{item.theme,jdbcType=VARCHAR}, 
+                #{item.times,jdbcType=VARCHAR}, 
+                #{item.report,jdbcType=VARCHAR}, 
+                #{item.rating,jdbcType=DECIMAL}, 
+                #{item.time,jdbcType=TIMESTAMP},
+                #{item.evaluator,jdbcType=VARCHAR}, 
+                #{item.content,jdbcType=VARCHAR}, 
+                #{item.isSubmit,jdbcType=INTEGER}, 
+                #{item.isCheck,jdbcType=INTEGER},
+                #{item.checkTitle,jdbcType=VARCHAR},
+                #{item.checkExplain,jdbcType=VARCHAR},
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}, 
+                #{item.delStatus,jdbcType=INTEGER}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.risk.ProjectRiskAssessModel" resultMap="BaseResultMap">
+        select * from t_project_risk_assess where 1 = 1 and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="orgId != null">
+            and org_id = #{orgId,jdbcType=BIGINT}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="projectName != null">
+            and project_name = #{projectName,jdbcType=VARCHAR}
+        </if>
+        <if test="stageId != null">
+            and stage_id = #{stageId,jdbcType=BIGINT}
+        </if>
+        <if test="stage != null">
+            and stage = #{stage,jdbcType=VARCHAR}
+        </if>
+        <if test="projectRiskId != null">
+            and project_risk_id = #{projectRiskId,jdbcType=BIGINT}
+        </if>
+        <if test="theme != null">
+            and theme = #{theme,jdbcType=VARCHAR}
+        </if>
+        <if test="times != null">
+            and times = #{times,jdbcType=VARCHAR}
+        </if>
+        <if test="report != null">
+            and report = #{report,jdbcType=VARCHAR}
+        </if>
+        <if test="rating != null">
+            and rating = #{rating,jdbcType=DECIMAL}
+        </if>
+        <if test="time != null">
+            and time = #{time,jdbcType=TIMESTAMP}
+        </if>
+        <if test="evaluator != null">
+            and evaluator = #{evaluator,jdbcType=VARCHAR}
+        </if>
+        <if test="content != null">
+            and content = #{content,jdbcType=VARCHAR}
+        </if>
+        <if test="isSubmit != null">
+            and is_submit = #{isSubmit,jdbcType=INTEGER}
+        </if>
+        <if test="isCheck != null">
+            and is_check = #{isCheck,jdbcType=INTEGER}
+        </if>
+        <if test="checkTitle != null">
+            and check_title = #{checkTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="checkExplain != null">
+            and check_explain = #{checkExplain,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delStatus != null">
+            and del_status = #{delStatus,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.risk.ProjectRiskAssessModel">
+        insert into t_project_risk_assess
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="orgId != null">
+                org_id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="projectName != null">
+                project_name,
+            </if>
+            <if test="stageId != null">
+                stage_id,
+            </if>
+            <if test="stage != null">
+                stage,
+            </if>
+            <if test="projectRiskId != null">
+                project_risk_id,
+            </if>
+            <if test="theme != null">
+                theme,
+            </if>
+            <if test="times != null">
+                times,
+            </if>
+            <if test="report != null">
+                report,
+            </if>
+            <if test="rating != null">
+                rating,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="evaluator != null">
+                evaluator,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="isSubmit != null">
+                is_submit,
+            </if>
+            <if test="isCheck != null">
+                is_check,
+            </if>
+            <if test="checkTitle != null">
+                check_title,
+            </if>
+            <if test="checkExplain != null">
+                check_explain,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="projectName != null">
+                #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="stageId != null">
+                #{stageId,jdbcType=BIGINT},
+            </if>
+            <if test="stage != null">
+                #{stage,jdbcType=VARCHAR},
+            </if>
+            <if test="projectRiskId != null">
+                #{projectRiskId,jdbcType=BIGINT},
+            </if>
+            <if test="theme != null">
+                #{theme,jdbcType=VARCHAR},
+            </if>
+            <if test="times != null">
+                #{times,jdbcType=VARCHAR},
+            </if>
+            <if test="report != null">
+                #{report,jdbcType=VARCHAR},
+            </if>
+            <if test="rating != null">
+                #{rating,jdbcType=DECIMAL},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="evaluator != null">
+                #{evaluator,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="isSubmit != null">
+                #{isSubmit,jdbcType=INTEGER},
+            </if>
+            <if test="isCheck != null">
+                #{isCheck,jdbcType=INTEGER},
+            </if>
+            <if test="checkTitle != null">
+                #{checkTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="checkExplain != null">
+                #{checkExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.risk.ProjectRiskAssessModel">
+        update t_project_risk_assess
+        <set>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="projectName != null">
+                project_name = #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="stageId != null">
+                stage_id = #{stageId,jdbcType=BIGINT},
+            </if>
+            <if test="stage != null">
+                stage = #{stage,jdbcType=VARCHAR},
+            </if>
+            <if test="projectRiskId != null">
+                project_risk_id = #{projectRiskId,jdbcType=BIGINT},
+            </if>
+            <if test="theme != null">
+                theme = #{theme,jdbcType=VARCHAR},
+            </if>
+            <if test="times != null">
+                times = #{times,jdbcType=VARCHAR},
+            </if>
+            <if test="report != null">
+                report = #{report,jdbcType=VARCHAR},
+            </if>
+            <if test="rating != null">
+                rating = #{rating,jdbcType=DECIMAL},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="evaluator != null">
+                evaluator = #{evaluator,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="isSubmit != null">
+                is_submit = #{isSubmit,jdbcType=INTEGER},
+            </if>
+            <if test="isCheck != null">
+                is_check = #{isCheck,jdbcType=INTEGER},
+            </if>
+            <if test="checkTitle != null">
+                check_title = #{checkTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="checkExplain != null">
+                check_explain = #{checkExplain,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="checkSubmit" parameterType="com.fea.project.model.risk.ProjectRiskAssessModel">
+        update t_project_risk_assess
+        <set>
+            <if test="isCheck != null">
+                is_check = ${@com.fea.project.enums.risk.IsCheckEnum@NOT_AUDIT.getCode()},
+            </if>
+            <if test="checkTitle != null">
+                check_title = #{checkTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="checkExplain != null">
+                check_explain = #{checkExplain,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateById" parameterType="com.fea.project.model.risk.ProjectRiskAssessModel">
+        update t_project_risk_assess
+        set reg_id = #{regId,jdbcType=BIGINT},
+            org_id = #{orgId,jdbcType=BIGINT},
+            project_id = #{projectId,jdbcType=BIGINT},
+            project_name = #{projectName,jdbcType=VARCHAR},
+            stage_id = #{stageId,jdbcType=BIGINT},
+            stage = #{stage,jdbcType=VARCHAR},
+            project_risk_id = #{projectRiskId,jdbcType=BIGINT},
+            theme = #{theme,jdbcType=VARCHAR},
+            times = #{times,jdbcType=VARCHAR},
+            report = #{report,jdbcType=VARCHAR},
+            rating = #{rating,jdbcType=DECIMAL},
+            time = #{time,jdbcType=TIMESTAMP},
+            evaluator = #{evaluator,jdbcType=VARCHAR},
+            content = #{content,jdbcType=VARCHAR},
+            is_submit = #{isSubmit,jdbcType=INTEGER},
+            is_check = #{isCheck,jdbcType=INTEGER},
+            check_title = #{checkTitle,jdbcType=VARCHAR},
+            check_explain = #{checkExplain,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_status = #{delStatus,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByFilterAndParams"
+            parameterType="com.fea.project.model.PageInfoQueryOrderAndFilterModel"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_project_risk_assess
+        where 1 = 1
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="model.regId != null">
+            and reg_id = #{model.regId,jdbcType=BIGINT}
+        </if>
+        <if test="model.orgId != null">
+            and org_id = #{model.orgId,jdbcType=BIGINT}
+        </if>
+        <if test="model.projectId != null">
+            and project_id = #{model.projectId,jdbcType=BIGINT}
+        </if>
+        <if test="model.projectName != null">
+            and project_name = #{model.projectName,jdbcType=VARCHAR}
+        </if>
+        <if test="model.stage != null">
+            and stage = #{model.stage,jdbcType=VARCHAR}
+        </if>
+        <if test="model.projectRiskId != null">
+            and project_risk_id = #{model.projectRiskId,jdbcType=BIGINT}
+        </if>
+        <if test="model.theme != null">
+            and theme = #{model.theme,jdbcType=VARCHAR}
+        </if>
+        <if test="model.times != null">
+            and times = #{model.times,jdbcType=VARCHAR}
+        </if>
+        <if test="model.report != null">
+            and report = #{model.report,jdbcType=VARCHAR}
+        </if>
+        <if test="model.rating != null">
+            and rating = #{model.rating,jdbcType=DECIMAL}
+        </if>
+        <if test="model.time != null">
+            and time = #{model.time,jdbcType=TIMESTAMP}
+        </if>
+
+        <if test="model.evaluator != null">
+            and evaluator = #{model.evaluator,jdbcType=VARCHAR}
+        </if>
+        <if test="model.content != null">
+            and content = #{model.content,jdbcType=VARCHAR}
+        </if>
+        <if test="model.isSubmit != null">
+            and is_submit = #{model.isSubmit,jdbcType=INTEGER}
+        </if>
+        <if test="model.isCheck != null">
+            and is_check = #{model.isCheck,jdbcType=INTEGER}
+        </if>
+        <if test="model.checkTitle != null">
+            and check_title = #{model.checkTitle,jdbcType=VARCHAR}
+        </if>
+        <if test="model.checkExplain != null">
+            and check_explain = #{model.checkExplain,jdbcType=VARCHAR}
+        </if>
+        <if test="model.createId != null">
+            and create_id = #{model.createId,jdbcType=BIGINT}
+        </if>
+        <if test="model.createBy != null">
+            and create_by = #{model.createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="model.createTime != null">
+            and create_time = #{model.createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.updateId != null">
+            and update_id = #{model.updateId,jdbcType=BIGINT}
+        </if>
+        <if test="model.updateBy != null">
+            and update_by = #{model.updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="model.updateTime != null">
+            and update_time = #{model.updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="model.delStatus != null">
+            and del_status = #{model.delStatus,jdbcType=INTEGER}
+        </if>
+        order by create_time desc
+    </select>
+    <update id="deleteProjectRiskAssess" parameterType="java.lang.Long">
+        update t_project_risk_assess
+        set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

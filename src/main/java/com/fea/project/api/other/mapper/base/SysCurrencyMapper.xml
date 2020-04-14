@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.base.SysCurrencyMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.base.SysCurrencyModel">
+        <id column="ID" jdbcType="BIGINT" property="ID" />
+        <result column="NAME" jdbcType="VARCHAR" property="NAME" />
+        <result column="SHORT_NAME" jdbcType="VARCHAR" property="SHORTNAME" />
+        <result column="SYMBOL" jdbcType="VARCHAR" property="SYMBOL" />
+        <result column="STANDARD" jdbcType="VARCHAR" property="STANDARD" />
+        <result column="IS_AUTO" jdbcType="BIT" property="ISAUTO" />
+        <result column="SET_RATE" jdbcType="DOUBLE" property="SETRATE" />
+        <result column="NOW_RATE" jdbcType="DOUBLE" property="NOWRATE" />
+        <result column="UPDATE_TIME_RATE" jdbcType="TIMESTAMP" property="UPDATETIMERATE" />
+        <result column="IS_ACTIVE" jdbcType="BIT" property="ISACTIVE" />
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME" />
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME" />
+        <result column="STANDARD_MONEY" jdbcType="TINYINT" property="STANDARDMONEY" />
+        <result column="DELSTATE" jdbcType="TINYINT" property="DELSTATE" />
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID" />
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID" />
+        <result column="RATE_DIGIT" jdbcType="INTEGER" property="RATEDIGIT" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        NAME, SHORT_NAME, SYMBOL, STANDARD, IS_AUTO, SET_RATE, NOW_RATE, UPDATE_TIME_RATE, 
+        IS_ACTIVE, CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME, STANDARD_MONEY, DELSTATE, 
+        REG_ID, ORG_ID, RATE_DIGIT
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_sys_currency
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_sys_currency
+        where ID = #{ID,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_sys_currency
+        where ID in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="ID" parameterType="com.fea.project.api.other.model.base.SysCurrencyModel">
+        insert into t_sys_currency (
+        <include refid="Base_Column_List" />
+        )
+        values (#{NAME,jdbcType=VARCHAR}, 
+            #{SHORTNAME,jdbcType=VARCHAR}, 
+            #{SYMBOL,jdbcType=VARCHAR}, 
+            #{STANDARD,jdbcType=VARCHAR}, 
+            #{ISAUTO,jdbcType=BIT}, 
+            #{SETRATE,jdbcType=DOUBLE}, 
+            #{NOWRATE,jdbcType=DOUBLE}, 
+            #{UPDATETIMERATE,jdbcType=TIMESTAMP}, 
+            #{ISACTIVE,jdbcType=BIT}, 
+            #{CREATEUSER,jdbcType=VARCHAR}, 
+            #{CREATETIME,jdbcType=TIMESTAMP}, 
+            #{UPDATEUSER,jdbcType=VARCHAR}, 
+            #{UPDATETIME,jdbcType=TIMESTAMP}, 
+            #{STANDARDMONEY,jdbcType=TINYINT}, 
+            #{DELSTATE,jdbcType=TINYINT}, 
+            #{REGID,jdbcType=BIGINT}, 
+            #{ORGID,jdbcType=BIGINT}, 
+            #{RATEDIGIT,jdbcType=INTEGER}
+            )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into t_sys_currency (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.NAME,jdbcType=VARCHAR}, 
+                #{item.SHORTNAME,jdbcType=VARCHAR}, 
+                #{item.SYMBOL,jdbcType=VARCHAR}, 
+                #{item.STANDARD,jdbcType=VARCHAR}, 
+                #{item.ISAUTO,jdbcType=BIT}, 
+                #{item.SETRATE,jdbcType=DOUBLE}, 
+                #{item.NOWRATE,jdbcType=DOUBLE}, 
+                #{item.UPDATETIMERATE,jdbcType=TIMESTAMP}, 
+                #{item.ISACTIVE,jdbcType=BIT}, 
+                #{item.CREATEUSER,jdbcType=VARCHAR}, 
+                #{item.CREATETIME,jdbcType=TIMESTAMP}, 
+                #{item.UPDATEUSER,jdbcType=VARCHAR}, 
+                #{item.UPDATETIME,jdbcType=TIMESTAMP}, 
+                #{item.STANDARDMONEY,jdbcType=TINYINT}, 
+                #{item.DELSTATE,jdbcType=TINYINT}, 
+                #{item.REGID,jdbcType=BIGINT}, 
+                #{item.ORGID,jdbcType=BIGINT}, 
+                #{item.RATEDIGIT,jdbcType=INTEGER}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.base.SysCurrencyModel" resultMap="BaseResultMap">
+        select * from l2cplat_ceshi.t_sys_currency where 1 = 1
+        <if test="NAME != null">
+            and NAME = #{NAME,jdbcType=VARCHAR}
+        </if>
+        <if test="SHORTNAME != null">
+            and SHORT_NAME = #{SHORTNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="SYMBOL != null">
+            and SYMBOL = #{SYMBOL,jdbcType=VARCHAR}
+        </if>
+        <if test="STANDARD != null">
+            and STANDARD = #{STANDARD,jdbcType=VARCHAR}
+        </if>
+        <if test="ISAUTO != null">
+            and IS_AUTO = #{ISAUTO,jdbcType=BIT}
+        </if>
+        <if test="SETRATE != null">
+            and SET_RATE = #{SETRATE,jdbcType=DOUBLE}
+        </if>
+        <if test="NOWRATE != null">
+            and NOW_RATE = #{NOWRATE,jdbcType=DOUBLE}
+        </if>
+        <if test="UPDATETIMERATE != null">
+            and UPDATE_TIME_RATE = #{UPDATETIMERATE,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ISACTIVE != null">
+            and IS_ACTIVE = #{ISACTIVE,jdbcType=BIT}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="STANDARDMONEY != null">
+            and STANDARD_MONEY = #{STANDARDMONEY,jdbcType=TINYINT}
+        </if>
+        <if test="DELSTATE != null">
+            and DELSTATE = #{DELSTATE,jdbcType=TINYINT}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="RATEDIGIT != null">
+            and RATE_DIGIT = #{RATEDIGIT,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="ID" parameterType="com.fea.project.api.other.model.base.SysCurrencyModel">
+        insert into t_sys_currency
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="NAME != null">
+                NAME,
+            </if>
+            <if test="SHORTNAME != null">
+                SHORT_NAME,
+            </if>
+            <if test="SYMBOL != null">
+                SYMBOL,
+            </if>
+            <if test="STANDARD != null">
+                STANDARD,
+            </if>
+            <if test="ISAUTO != null">
+                IS_AUTO,
+            </if>
+            <if test="SETRATE != null">
+                SET_RATE,
+            </if>
+            <if test="NOWRATE != null">
+                NOW_RATE,
+            </if>
+            <if test="UPDATETIMERATE != null">
+                UPDATE_TIME_RATE,
+            </if>
+            <if test="ISACTIVE != null">
+                IS_ACTIVE,
+            </if>
+            <if test="CREATEUSER != null">
+                CREATE_USER,
+            </if>
+            <if test="CREATETIME != null">
+                CREATE_TIME,
+            </if>
+            <if test="UPDATEUSER != null">
+                UPDATE_USER,
+            </if>
+            <if test="UPDATETIME != null">
+                UPDATE_TIME,
+            </if>
+            <if test="STANDARDMONEY != null">
+                STANDARD_MONEY,
+            </if>
+            <if test="DELSTATE != null">
+                DELSTATE,
+            </if>
+            <if test="REGID != null">
+                REG_ID,
+            </if>
+            <if test="ORGID != null">
+                ORG_ID,
+            </if>
+            <if test="RATEDIGIT != null">
+                RATE_DIGIT,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="NAME != null">
+                #{NAME,jdbcType=VARCHAR},
+            </if>
+            <if test="SHORTNAME != null">
+                #{SHORTNAME,jdbcType=VARCHAR},
+            </if>
+            <if test="SYMBOL != null">
+                #{SYMBOL,jdbcType=VARCHAR},
+            </if>
+            <if test="STANDARD != null">
+                #{STANDARD,jdbcType=VARCHAR},
+            </if>
+            <if test="ISAUTO != null">
+                #{ISAUTO,jdbcType=BIT},
+            </if>
+            <if test="SETRATE != null">
+                #{SETRATE,jdbcType=DOUBLE},
+            </if>
+            <if test="NOWRATE != null">
+                #{NOWRATE,jdbcType=DOUBLE},
+            </if>
+            <if test="UPDATETIMERATE != null">
+                #{UPDATETIMERATE,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ISACTIVE != null">
+                #{ISACTIVE,jdbcType=BIT},
+            </if>
+            <if test="CREATEUSER != null">
+                #{CREATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="CREATETIME != null">
+                #{CREATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="UPDATEUSER != null">
+                #{UPDATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="UPDATETIME != null">
+                #{UPDATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="STANDARDMONEY != null">
+                #{STANDARDMONEY,jdbcType=TINYINT},
+            </if>
+            <if test="DELSTATE != null">
+                #{DELSTATE,jdbcType=TINYINT},
+            </if>
+            <if test="REGID != null">
+                #{REGID,jdbcType=BIGINT},
+            </if>
+            <if test="ORGID != null">
+                #{ORGID,jdbcType=BIGINT},
+            </if>
+            <if test="RATEDIGIT != null">
+                #{RATEDIGIT,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.api.other.model.base.SysCurrencyModel">
+        update t_sys_currency
+        <set>
+            <if test="NAME != null">
+                NAME = #{NAME,jdbcType=VARCHAR},
+            </if>
+            <if test="SHORTNAME != null">
+                SHORT_NAME = #{SHORTNAME,jdbcType=VARCHAR},
+            </if>
+            <if test="SYMBOL != null">
+                SYMBOL = #{SYMBOL,jdbcType=VARCHAR},
+            </if>
+            <if test="STANDARD != null">
+                STANDARD = #{STANDARD,jdbcType=VARCHAR},
+            </if>
+            <if test="ISAUTO != null">
+                IS_AUTO = #{ISAUTO,jdbcType=BIT},
+            </if>
+            <if test="SETRATE != null">
+                SET_RATE = #{SETRATE,jdbcType=DOUBLE},
+            </if>
+            <if test="NOWRATE != null">
+                NOW_RATE = #{NOWRATE,jdbcType=DOUBLE},
+            </if>
+            <if test="UPDATETIMERATE != null">
+                UPDATE_TIME_RATE = #{UPDATETIMERATE,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ISACTIVE != null">
+                IS_ACTIVE = #{ISACTIVE,jdbcType=BIT},
+            </if>
+            <if test="CREATEUSER != null">
+                CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="CREATETIME != null">
+                CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="UPDATEUSER != null">
+                UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR},
+            </if>
+            <if test="UPDATETIME != null">
+                UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP},
+            </if>
+            <if test="STANDARDMONEY != null">
+                STANDARD_MONEY = #{STANDARDMONEY,jdbcType=TINYINT},
+            </if>
+            <if test="DELSTATE != null">
+                DELSTATE = #{DELSTATE,jdbcType=TINYINT},
+            </if>
+            <if test="REGID != null">
+                REG_ID = #{REGID,jdbcType=BIGINT},
+            </if>
+            <if test="ORGID != null">
+                ORG_ID = #{ORGID,jdbcType=BIGINT},
+            </if>
+            <if test="RATEDIGIT != null">
+                RATE_DIGIT = #{RATEDIGIT,jdbcType=INTEGER},
+            </if>
+        </set>
+        where ID = #{ID,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.api.other.model.base.SysCurrencyModel">
+        update t_sys_currency
+        set NAME = #{NAME,jdbcType=VARCHAR},
+            SHORT_NAME = #{SHORTNAME,jdbcType=VARCHAR},
+            SYMBOL = #{SYMBOL,jdbcType=VARCHAR},
+            STANDARD = #{STANDARD,jdbcType=VARCHAR},
+            IS_AUTO = #{ISAUTO,jdbcType=BIT},
+            SET_RATE = #{SETRATE,jdbcType=DOUBLE},
+            NOW_RATE = #{NOWRATE,jdbcType=DOUBLE},
+            UPDATE_TIME_RATE = #{UPDATETIMERATE,jdbcType=TIMESTAMP},
+            IS_ACTIVE = #{ISACTIVE,jdbcType=BIT},
+            CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR},
+            CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP},
+            UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR},
+            UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP},
+            STANDARD_MONEY = #{STANDARDMONEY,jdbcType=TINYINT},
+            DELSTATE = #{DELSTATE,jdbcType=TINYINT},
+            REG_ID = #{REGID,jdbcType=BIGINT},
+            ORG_ID = #{ORGID,jdbcType=BIGINT},
+            RATE_DIGIT = #{RATEDIGIT,jdbcType=INTEGER}
+        where ID = #{ID,jdbcType=BIGINT}
+    </update>
+
+</mapper>

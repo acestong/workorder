@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.customer.CrmCustomerMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.customer.CrmCustomerModel">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID"/>
+        <result column="CUSTOMERGROUP_ID" jdbcType="BIGINT" property="CUSTOMERGROUPID"/>
+        <result column="NAME" jdbcType="VARCHAR" property="NAME"/>
+        <result column="CODE" jdbcType="VARCHAR" property="CODE"/>
+        <result column="CUSTOMER_BUSS_TYPE" jdbcType="INTEGER" property="CUSTOMERBUSSTYPE"/>
+        <result column="CATEGORY_ID" jdbcType="BIGINT" property="CATEGORYID"/>
+        <result column="GRADE_ID" jdbcType="BIGINT" property="GRADEID"/>
+        <result column="GRADE" jdbcType="VARCHAR" property="GRADE"/>
+        <result column="INDUSTRY_ID" jdbcType="VARCHAR" property="INDUSTRYID"/>
+        <result column="INDUSTRY" jdbcType="VARCHAR" property="INDUSTRY"/>
+        <result column="REGION_ID" jdbcType="VARCHAR" property="REGIONID"/>
+        <result column="REGION" jdbcType="VARCHAR" property="REGION"/>
+        <result column="IS_SIGNING" jdbcType="INTEGER" property="ISSIGNING"/>
+        <result column="FOREHEAD_SIGNING" jdbcType="DOUBLE" property="FOREHEADSIGNING"/>
+        <result column="FISCAL_SIGNING" jdbcType="DOUBLE" property="FISCALSIGNING"/>
+        <result column="FISCAL_OPPORTUNITY" jdbcType="INTEGER" property="FISCALOPPORTUNITY"/>
+        <result column="FISCAL_TOTAL_COST" jdbcType="DOUBLE" property="FISCALTOTALCOST"/>
+        <result column="FOREHEAD_PRODUCT" jdbcType="INTEGER" property="FOREHEADPRODUCT"/>
+        <result column="INTEGRITY" jdbcType="INTEGER" property="INTEGRITY"/>
+        <result column="INFO_INTEGRITY" jdbcType="INTEGER" property="INFOINTEGRITY"/>
+        <result column="INFO_INTEGRITY_STR" jdbcType="VARCHAR" property="INFOINTEGRITYSTR"/>
+        <result column="OWNER_ID" jdbcType="BIGINT" property="OWNERID"/>
+        <result column="OWNER" jdbcType="VARCHAR" property="OWNER"/>
+        <result column="CREATE_USER_ID" jdbcType="BIGINT" property="CREATEUSERID"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER_ID" jdbcType="BIGINT" property="UPDATEUSERID"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="ATTENTION_NUM" jdbcType="INTEGER" property="ATTENTIONNUM"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="DELSTATE"/>
+        <result column="STRUCTURE_IMAGE" jdbcType="VARCHAR" property="STRUCTUREIMAGE"/>
+        <result column="CALL_TIMES" jdbcType="INTEGER" property="CALLTIMES"/>
+        <result column="CALL_BACK_TIMES" jdbcType="INTEGER" property="CALLBACKTIMES"/>
+        <result column="SEND_EMAILS" jdbcType="INTEGER" property="SENDEMAILS"/>
+        <result column="GET_EMAILS" jdbcType="INTEGER" property="GETEMAILS"/>
+        <result column="SEND_POSTS" jdbcType="INTEGER" property="SENDPOSTS"/>
+        <result column="GET_POSTS" jdbcType="INTEGER" property="GETPOSTS"/>
+        <result column="OUT_VISIT_TIMES" jdbcType="INTEGER" property="OUTVISITTIMES"/>
+        <result column="COME_VISIT_TIMES" jdbcType="INTEGER" property="COMEVISITTIMES"/>
+        <result column="RECORD_TIMES" jdbcType="INTEGER" property="RECORDTIMES"/>
+        <result column="IS_COMMON" jdbcType="INTEGER" property="ISCOMMON"/>
+        <result column="CUSTOMER_PHASE_ID" jdbcType="BIGINT" property="CUSTOMERPHASEID"/>
+        <result column="IS_COMMON_TIME" jdbcType="TIMESTAMP" property="ISCOMMONTIME"/>
+        <result column="IS_COMMON_BACKTIME" jdbcType="DATE" property="ISCOMMONBACKTIME"/>
+        <result column="FORM_ID" jdbcType="BIGINT" property="FORMID"/>
+        <result column="ACTIVE_STATE" jdbcType="INTEGER" property="ACTIVESTATE"/>
+        <result column="CANCEL_STATE" jdbcType="INTEGER" property="CANCELSTATE"/>
+        <result column="oldOwnerId" jdbcType="BIGINT" property="oldOwnerId"/>
+        <result column="oldOwnerName" jdbcType="VARCHAR" property="oldOwnerName"/>
+        <result column="commonUserId" jdbcType="BIGINT" property="commonUserId"/>
+        <result column="commonUser" jdbcType="VARCHAR" property="commonUser"/>
+        <result column="isApplyCommon" jdbcType="INTEGER" property="isApplyCommon"/>
+        <result column="salechanceIds" jdbcType="VARCHAR" property="salechanceIds"/>
+        <result column="ispool" jdbcType="INTEGER" property="ispool"/>
+        <result column="isShow" jdbcType="INTEGER" property="isShow"/>
+        <result column="distribute_OwnerId" jdbcType="BIGINT" property="distributeOwnerId"/>
+        <result column="distribute_Owner" jdbcType="VARCHAR" property="distributeOwner"/>
+        <result column="distributeTime" jdbcType="TIMESTAMP" property="distributeTime"/>
+        <result column="distributeStatus" jdbcType="INTEGER" property="distributeStatus"/>
+        <result column="receiver" jdbcType="VARCHAR" property="receiver"/>
+        <result column="receiverId" jdbcType="BIGINT" property="receiverId"/>
+        <result column="receiveTime" jdbcType="TIMESTAMP" property="receiveTime"/>
+        <result column="commonApplyState" jdbcType="INTEGER" property="commonApplyState"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        REG_ID, ORG_ID, CUSTOMERGROUP_ID, NAME, CODE, CUSTOMER_BUSS_TYPE, CATEGORY_ID, GRADE_ID, 
+        GRADE, INDUSTRY_ID, INDUSTRY, REGION_ID, REGION, IS_SIGNING, FOREHEAD_SIGNING, FISCAL_SIGNING, 
+        FISCAL_OPPORTUNITY, FISCAL_TOTAL_COST, FOREHEAD_PRODUCT, INTEGRITY, INFO_INTEGRITY, 
+        INFO_INTEGRITY_STR, OWNER_ID, OWNER, CREATE_USER_ID, CREATE_USER, CREATE_TIME, UPDATE_USER_ID, 
+        UPDATE_USER, UPDATE_TIME, ATTENTION_NUM, DEL_STATE, STRUCTURE_IMAGE, CALL_TIMES, 
+        CALL_BACK_TIMES, SEND_EMAILS, GET_EMAILS, SEND_POSTS, GET_POSTS, OUT_VISIT_TIMES, 
+        COME_VISIT_TIMES, RECORD_TIMES, IS_COMMON, CUSTOMER_PHASE_ID, IS_COMMON_TIME, IS_COMMON_BACKTIME, 
+        FORM_ID, ACTIVE_STATE, CANCEL_STATE, oldOwnerId, oldOwnerName, commonUserId, commonUser, 
+        isApplyCommon, salechanceIds, ispool, isShow, distribute_OwnerId, distribute_Owner, 
+        distributeTime, distributeStatus, receiver, receiverId, receiveTime, commonApplyState
+    </sql>
+
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from t_crm_customer
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.customer.CrmCustomerModel"
+            resultMap="BaseResultMap">
+        select * from t_crm_customer where 1 = 1
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="CUSTOMERGROUPID != null">
+            and CUSTOMERGROUP_ID = #{CUSTOMERGROUPID,jdbcType=BIGINT}
+        </if>
+        <if test="NAME != null">
+            and NAME = #{NAME,jdbcType=VARCHAR}
+        </if>
+        <if test="CODE != null">
+            and CODE = #{CODE,jdbcType=VARCHAR}
+        </if>
+        <if test="CUSTOMERBUSSTYPE != null">
+            and CUSTOMER_BUSS_TYPE = #{CUSTOMERBUSSTYPE,jdbcType=INTEGER}
+        </if>
+        <if test="CATEGORYID != null">
+            and CATEGORY_ID = #{CATEGORYID,jdbcType=BIGINT}
+        </if>
+        <if test="GRADEID != null">
+            and GRADE_ID = #{GRADEID,jdbcType=BIGINT}
+        </if>
+        <if test="GRADE != null">
+            and GRADE = #{GRADE,jdbcType=VARCHAR}
+        </if>
+        <if test="INDUSTRYID != null">
+            and INDUSTRY_ID = #{INDUSTRYID,jdbcType=VARCHAR}
+        </if>
+        <if test="INDUSTRY != null">
+            and INDUSTRY = #{INDUSTRY,jdbcType=VARCHAR}
+        </if>
+        <if test="REGIONID != null">
+            and REGION_ID = #{REGIONID,jdbcType=VARCHAR}
+        </if>
+        <if test="REGION != null">
+            and REGION = #{REGION,jdbcType=VARCHAR}
+        </if>
+        <if test="ISSIGNING != null">
+            and IS_SIGNING = #{ISSIGNING,jdbcType=INTEGER}
+        </if>
+        <if test="FOREHEADSIGNING != null">
+            and FOREHEAD_SIGNING = #{FOREHEADSIGNING,jdbcType=DOUBLE}
+        </if>
+        <if test="FISCALSIGNING != null">
+            and FISCAL_SIGNING = #{FISCALSIGNING,jdbcType=DOUBLE}
+        </if>
+        <if test="FISCALOPPORTUNITY != null">
+            and FISCAL_OPPORTUNITY = #{FISCALOPPORTUNITY,jdbcType=INTEGER}
+        </if>
+        <if test="FISCALTOTALCOST != null">
+            and FISCAL_TOTAL_COST = #{FISCALTOTALCOST,jdbcType=DOUBLE}
+        </if>
+        <if test="FOREHEADPRODUCT != null">
+            and FOREHEAD_PRODUCT = #{FOREHEADPRODUCT,jdbcType=INTEGER}
+        </if>
+        <if test="INTEGRITY != null">
+            and INTEGRITY = #{INTEGRITY,jdbcType=INTEGER}
+        </if>
+        <if test="INFOINTEGRITY != null">
+            and INFO_INTEGRITY = #{INFOINTEGRITY,jdbcType=INTEGER}
+        </if>
+        <if test="INFOINTEGRITYSTR != null">
+            and INFO_INTEGRITY_STR = #{INFOINTEGRITYSTR,jdbcType=VARCHAR}
+        </if>
+        <if test="OWNERID != null">
+            and OWNER_ID = #{OWNERID,jdbcType=BIGINT}
+        </if>
+        <if test="OWNER != null">
+            and OWNER = #{OWNER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATEUSERID != null">
+            and CREATE_USER_ID = #{CREATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSERID != null">
+            and UPDATE_USER_ID = #{UPDATEUSERID,jdbcType=BIGINT}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ATTENTIONNUM != null">
+            and ATTENTION_NUM = #{ATTENTIONNUM,jdbcType=INTEGER}
+        </if>
+        <if test="STRUCTUREIMAGE != null">
+            and STRUCTURE_IMAGE = #{STRUCTUREIMAGE,jdbcType=VARCHAR}
+        </if>
+        <if test="CALLTIMES != null">
+            and CALL_TIMES = #{CALLTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="CALLBACKTIMES != null">
+            and CALL_BACK_TIMES = #{CALLBACKTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="SENDEMAILS != null">
+            and SEND_EMAILS = #{SENDEMAILS,jdbcType=INTEGER}
+        </if>
+        <if test="GETEMAILS != null">
+            and GET_EMAILS = #{GETEMAILS,jdbcType=INTEGER}
+        </if>
+        <if test="SENDPOSTS != null">
+            and SEND_POSTS = #{SENDPOSTS,jdbcType=INTEGER}
+        </if>
+        <if test="GETPOSTS != null">
+            and GET_POSTS = #{GETPOSTS,jdbcType=INTEGER}
+        </if>
+        <if test="OUTVISITTIMES != null">
+            and OUT_VISIT_TIMES = #{OUTVISITTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="COMEVISITTIMES != null">
+            and COME_VISIT_TIMES = #{COMEVISITTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="RECORDTIMES != null">
+            and RECORD_TIMES = #{RECORDTIMES,jdbcType=INTEGER}
+        </if>
+        <if test="ISCOMMON != null">
+            and IS_COMMON = #{ISCOMMON,jdbcType=INTEGER}
+        </if>
+        <if test="CUSTOMERPHASEID != null">
+            and CUSTOMER_PHASE_ID = #{CUSTOMERPHASEID,jdbcType=BIGINT}
+        </if>
+        <if test="ISCOMMONTIME != null">
+            and IS_COMMON_TIME = #{ISCOMMONTIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="ISCOMMONBACKTIME != null">
+            and IS_COMMON_BACKTIME = #{ISCOMMONBACKTIME,jdbcType=DATE}
+        </if>
+        <if test="FORMID != null">
+            and FORM_ID = #{FORMID,jdbcType=BIGINT}
+        </if>
+        <if test="ACTIVESTATE != null">
+            and ACTIVE_STATE = #{ACTIVESTATE,jdbcType=INTEGER}
+        </if>
+        <if test="CANCELSTATE != null">
+            and CANCEL_STATE = #{CANCELSTATE,jdbcType=INTEGER}
+        </if>
+        <if test="oldOwnerId != null">
+            and oldOwnerId = #{oldOwnerId,jdbcType=BIGINT}
+        </if>
+        <if test="oldOwnerName != null">
+            and oldOwnerName = #{oldOwnerName,jdbcType=VARCHAR}
+        </if>
+        <if test="commonUserId != null">
+            and commonUserId = #{commonUserId,jdbcType=BIGINT}
+        </if>
+        <if test="commonUser != null">
+            and commonUser = #{commonUser,jdbcType=VARCHAR}
+        </if>
+        <if test="isApplyCommon != null">
+            and isApplyCommon = #{isApplyCommon,jdbcType=INTEGER}
+        </if>
+        <if test="salechanceIds != null">
+            and salechanceIds = #{salechanceIds,jdbcType=VARCHAR}
+        </if>
+        <if test="ispool != null">
+            and ispool = #{ispool,jdbcType=INTEGER}
+        </if>
+        <if test="isShow != null">
+            and isShow = #{isShow,jdbcType=INTEGER}
+        </if>
+        <if test="distributeOwnerId != null">
+            and distribute_OwnerId = #{distributeOwnerId,jdbcType=BIGINT}
+        </if>
+        <if test="distributeOwner != null">
+            and distribute_Owner = #{distributeOwner,jdbcType=VARCHAR}
+        </if>
+        <if test="distributeTime != null">
+            and distributeTime = #{distributeTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="distributeStatus != null">
+            and distributeStatus = #{distributeStatus,jdbcType=INTEGER}
+        </if>
+        <if test="receiver != null">
+            and receiver = #{receiver,jdbcType=VARCHAR}
+        </if>
+        <if test="receiverId != null">
+            and receiverId = #{receiverId,jdbcType=BIGINT}
+        </if>
+        <if test="receiveTime != null">
+            and receiveTime = #{receiveTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="commonApplyState != null">
+            and commonApplyState = #{commonApplyState,jdbcType=INTEGER}
+        </if>
+        and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select *
+        from t_crm_customer
+        where ID in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <select id="selectAddressByCustomerId" resultType="java.lang.String">
+       select 
+		CONCAT(ADDRESS,DETAIL_ADDRESS) address
+		 from t_crm_customer_address
+		where CUSTOMER_ID = #{customerId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.project.ProjectStepMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.project.ProjectStepModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="index" jdbcType="INTEGER" property="index"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="duration" jdbcType="INTEGER" property="duration"/>
+        <result column="leader" jdbcType="BIGINT" property="leader"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="deliver_claim" jdbcType="VARCHAR" property="deliverClaim"/>
+        <result column="del_status" jdbcType="INTEGER" property="delStatus"/>
+        <result column="create_id" jdbcType="BIGINT" property="createId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_id" jdbcType="BIGINT" property="updateId"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, project_id, name, `index`, start_time, end_time, duration, leader, content, deliver_claim,
+        del_status, create_id, create_by, create_time, update_id, update_by, update_time
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_step
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_step
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_step
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.project.ProjectStepModel">
+        insert into t_project_step (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{projectId,jdbcType=BIGINT},
+        #{name,jdbcType=VARCHAR},
+        #{index,jdbcType=INTEGER},
+        #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP},
+        #{duration,jdbcType=INTEGER},
+        #{leader,jdbcType=BIGINT},
+        #{content,jdbcType=VARCHAR},
+        #{deliverClaim,jdbcType=VARCHAR},
+        #{delStatus,jdbcType=INTEGER},
+        #{createId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=BIGINT},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_step (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.projectId,jdbcType=BIGINT},
+            #{item.name,jdbcType=VARCHAR},
+            #{item.index,jdbcType=INTEGER},
+            #{item.startTime,jdbcType=TIMESTAMP},
+            #{item.endTime,jdbcType=TIMESTAMP},
+            #{item.duration,jdbcType=INTEGER},
+            #{item.leader,jdbcType=BIGINT},
+            #{item.content,jdbcType=VARCHAR},
+            #{item.deliverClaim,jdbcType=VARCHAR},
+            #{item.delStatus,jdbcType=INTEGER},
+            #{item.createId,jdbcType=BIGINT},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateId,jdbcType=BIGINT},
+            #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateTime,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+
+    <resultMap id="BaseResultMapVo" type="com.fea.project.model.project.vo.ProjectStepVo" extends="BaseResultMap">
+        <result column="step_verify_id" jdbcType="BIGINT" property="stepVerifyId"/>
+        <result column="step_verify_status" jdbcType="INTEGER" property="stepVerifyStatus"/>
+    </resultMap>
+    <select id="selectByModel" parameterType="com.fea.project.model.project.ProjectStepModel"
+            resultMap="BaseResultMapVo">
+        select
+        ps.*,
+        psv.id as step_verify_id,
+        psv.status as step_verify_status
+        from
+        t_project_step ps
+        left join t_project_step_verify psv on psv.step_id = ps.id
+        where 1 = 1
+        <if test="id != null">
+            and ps.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="projectId != null">
+            and ps.project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and ps.name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="index != null">
+            and ps.`index` = #{index,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and ps.start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and ps.end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="duration != null">
+            and ps.duration = #{duration,jdbcType=INTEGER}
+        </if>
+        <if test="leader != null">
+            and ps.leader = #{leader,jdbcType=BIGINT}
+        </if>
+        <if test="content != null">
+            and ps.content = #{content,jdbcType=VARCHAR}
+        </if>
+        <if test="deliverClaim != null">
+            and ps.deliver_claim = #{deliverClaim,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and ps.create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and ps.create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and ps.create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and ps.update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and ps.update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and ps.update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        and ps.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        order by ps.`index`
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.project.ProjectStepModel">
+        insert into t_project_step
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="index != null">
+                `index`,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="duration != null">
+                duration,
+            </if>
+            <if test="leader != null">
+                leader,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="deliverClaim != null">
+                deliver_claim,
+            </if>
+            <if test="delStatus != null">
+                del_status,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="index != null">
+                #{index,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                #{duration,jdbcType=INTEGER},
+            </if>
+            <if test="leader != null">
+                #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="deliverClaim != null">
+                #{deliverClaim,jdbcType=VARCHAR},
+            </if>
+            <if test="delStatus != null">
+                #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.project.ProjectStepModel">
+        update t_project_step
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="index != null">
+                `index` = #{index,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="duration != null">
+                duration = #{duration,jdbcType=INTEGER},
+            </if>
+            <if test="leader != null">
+                leader = #{leader,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="deliverClaim != null">
+                deliver_claim = #{deliverClaim,jdbcType=VARCHAR},
+            </if>
+            <if test="delStatus != null">
+                del_status = #{delStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.project.ProjectStepModel">
+        update t_project_step
+        set project_id = #{projectId,jdbcType=BIGINT},
+            name = #{name,jdbcType=VARCHAR},
+            `index` = #{index,jdbcType=INTEGER},
+            start_time = #{startTime,jdbcType=TIMESTAMP},
+            end_time = #{endTime,jdbcType=TIMESTAMP},
+            duration = #{duration,jdbcType=INTEGER},
+            leader = #{leader,jdbcType=BIGINT},
+            content = #{content,jdbcType=VARCHAR},
+            deliver_claim = #{deliverClaim,jdbcType=VARCHAR},
+            del_status = #{delStatus,jdbcType=INTEGER},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+    <select id="selectByProjectId" parameterType="com.fea.project.model.project.ProjectStepModel" resultMap="BaseResultMap">
+        select
+           id,
+            name
+        from t_project_step
+        where project_id = #{projectId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByProjectIdAndKeepSaveIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_project_step
+        where project_id = #{projectId,jdbcType=BIGINT}
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        <if test="list.size() != 0">
+            and id not in
+            <foreach collection="list" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <update id="updateDeleteStatusByIds">
+        update t_project_step
+        set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}
+        where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </update>
+
+
+    <resultMap id="ResultMapVo" type="com.fea.project.model.milestone.vo.ProjectStepShowVo" extends="BaseResultMap">
+        <result column="step_verify_id" jdbcType="BIGINT" property="stepVerifyId"/>
+        <result column="step_verify_status" jdbcType="INTEGER" property="stepVerifyStatus"/>
+        <result column="projectName" jdbcType="INTEGER" property="projectName"/>
+        <result column="step_start_time" jdbcType="TIMESTAMP" property="stepStartTime"/>
+        <result column="step_end_time" jdbcType="TIMESTAMP" property="stepEndTime"/>
+        <result column="step_work_time" jdbcType="TIMESTAMP" property="stepWorkTime"/>
+        <result column="notarize" jdbcType="VARCHAR" property="notarize"/>
+    </resultMap>
+    <select id="selectVoListByModel" parameterType="com.fea.project.model.project.ProjectStepModel"
+            resultMap="ResultMapVo">
+        select
+        ps.*,
+        psv.id as step_verify_id,
+        psv.status as step_verify_status,
+        psv.verify_user as notarize,
+        psv.end_time as step_end_time
+        from
+        t_project_step ps
+        left join t_project_step_verify psv on psv.step_id = ps.id
+        where 1 = 1
+        <if test="id != null">
+            and ps.id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="projectId != null">
+            and ps.project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="name != null">
+            and ps.name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="index != null">
+            and ps.`index` = #{index,jdbcType=INTEGER}
+        </if>
+        <if test="startTime != null">
+            and ps.start_time = #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null">
+            and ps.end_time = #{endTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="duration != null">
+            and ps.duration = #{duration,jdbcType=INTEGER}
+        </if>
+        <if test="leader != null">
+            and ps.leader = #{leader,jdbcType=BIGINT}
+        </if>
+        <if test="content != null">
+            and ps.content = #{content,jdbcType=VARCHAR}
+        </if>
+        <if test="deliverClaim != null">
+            and ps.deliver_claim = #{deliverClaim,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and ps.create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and ps.create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and ps.create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and ps.update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and ps.update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and ps.update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        and ps.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        order by ps.`index`
+
+    </select>
+
+    <select id="selectStepDetailVoById" parameterType="long" resultMap="ResultMapVo">
+        select
+        ps.*,
+        psv.id as step_verify_id,
+        psv.status as step_verify_status,
+        psv.verify_user as notarize,
+        psv.start_time as step_start_time,
+        psv.end_time as step_end_time,
+        psv.work_time as step_work_time,
+        tpp.name as projectName
+        from
+        t_project_step ps
+        left join t_project_step_verify psv on psv.step_id = ps.id,
+        t_project_project tpp
+        where
+        tpp.id = ps.project_id
+        and ps.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and ps.id = #{id,jdbcType=BIGINT}
+        order by ps.`index`
+    </select>
+</mapper>

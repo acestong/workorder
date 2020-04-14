@@ -1,0 +1,1702 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.plan.PlanModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.plan.PlanModel">
+    <id column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="plan_name" jdbcType="VARCHAR" property="planName" />
+    <result column="plan_version" jdbcType="BIGINT" property="planVersion" />
+    <result column="plan_apply_desc" jdbcType="VARCHAR" property="planApplyDesc" />
+    <result column="plan_num" jdbcType="VARCHAR" property="planNum" />
+    <result column="parent_plan_id" jdbcType="BIGINT" property="parentPlanId" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" /> 
+    <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+    <result column="priority" jdbcType="BIGINT" property="priority" />
+    <result column="plan_startTime" jdbcType="TIMESTAMP" property="planStarttime" />
+    <result column="plan_endTime" jdbcType="TIMESTAMP" property="planEndtime" />
+    <result column="plan_deadline" jdbcType="TIMESTAMP" property="planDeadline" />
+    <result column="plan_duration" jdbcType="BIGINT" property="planDuration" />
+    <result column="leader_id_or_team_id" jdbcType="BIGINT" property="leaderIdOrTeamId" />
+    <result column="plan_leader_id" jdbcType="BIGINT" property="planLeaderId" />
+    <result column="plan_leader_name" jdbcType="VARCHAR" property="planLeaderName" />
+    <result column="plan_team_id" jdbcType="BIGINT" property="planTeamId" />
+    <result column="plan_team_name" jdbcType="BIGINT" property="planTeamName" />
+    <result column="plan_participant_id" jdbcType="BIGINT" property="planParticipantId" /> 
+    <result column="plan_milestone_id" jdbcType="BIGINT" property="planMilestoneId" />
+    <result column="plan_remind_hour" jdbcType="BIGINT" property="planRemindHour" />
+    <result column="plan_content" jdbcType="VARCHAR" property="planContent" />
+    <result column="plan_remark" jdbcType="VARCHAR" property="planRemark" />
+    <result column="check_status" jdbcType="BIGINT" property="checkStatus" />
+    <result column="plan_type" jdbcType="BIGINT" property="planType" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    plan_id, plan_name, plan_version, plan_apply_desc, plan_num, parent_plan_id, project_id, 
+    project_step, priority, plan_startTime, plan_endTime, plan_deadline, plan_duration, leader_id_or_team_id,
+    plan_leader_id, plan_leader_name, plan_team_id,plan_team_name, plan_participant_id, plan_milestone_id, plan_remind_hour, 
+    plan_content,  plan_remark, check_status, plan_type, create_id, create_by, 
+    create_time, update_id, update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.plan.PlanModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_plan_create
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_create
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_plan_create
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.plan.PlanModelExample">
+    delete from t_project_plan_create
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="planId" parameterType="com.fea.project.model.plan.PlanModel">
+    insert into t_project_plan_create (plan_id, plan_name, plan_version, 
+      plan_apply_desc, plan_num, parent_plan_id, 
+      project_id, project_step, priority, 
+      plan_startTime, plan_endTime, plan_deadline, 
+      plan_duration,leader_id_or_team_id, plan_leader_id, plan_leader_name, plan_team_id,plan_team_name, 
+      plan_participant_id, plan_milestone_id, plan_remind_hour, 
+      plan_content,  plan_remark, check_status, 
+      plan_type, create_id, create_by, 
+      create_time, update_id, update_by, 
+      update_time, del_status)
+    values (#{planId,jdbcType=BIGINT}, #{planName,jdbcType=VARCHAR}, #{planVersion,jdbcType=BIGINT}, 
+      #{planApplyDesc,jdbcType=VARCHAR}, #{planNum,jdbcType=VARCHAR}, #{parentPlanId,jdbcType=BIGINT}, 
+      #{projectId,jdbcType=BIGINT}, #{projectStep,jdbcType=BIGINT}, #{priority,jdbcType=BIGINT}, 
+      #{planStarttime,jdbcType=TIMESTAMP}, #{planEndtime,jdbcType=TIMESTAMP}, #{planDeadline,jdbcType=TIMESTAMP}, 
+      #{planDuration,jdbcType=BIGINT},#{leaderIdOrTeamId,jdbcType=BIGINT}, #{planLeaderId,jdbcType=BIGINT},#{planLeaderName,jdbcType=VARCHAR},
+      #{planTeamId,jdbcType=BIGINT}, #{planTeamName,jdbcType=VARCHAR}, 
+      #{planParticipantId,jdbcType=BIGINT}, #{planMilestoneId,jdbcType=BIGINT}, #{planRemindHour,jdbcType=BIGINT}, 
+      #{planContent,jdbcType=VARCHAR},  #{planRemark,jdbcType=VARCHAR}, #{checkStatus,jdbcType=BIGINT}, 
+      #{planType,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="planId" parameterType="com.fea.project.model.plan.PlanModel">
+    insert into t_project_plan_create
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planId != null">
+        plan_id,
+      </if>
+      <if test="planName != null">
+        plan_name,
+      </if>
+      <if test="planVersion != null">
+        plan_version,
+      </if>
+      <if test="planApplyDesc != null">
+        plan_apply_desc,
+      </if>
+      <if test="planNum != null">
+        plan_num,
+      </if>
+      <if test="parentPlanId != null">
+        parent_plan_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectStep != null">
+        project_step,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="planStarttime != null">
+        plan_startTime,
+      </if>
+      <if test="planEndtime != null">
+        plan_endTime,
+      </if>
+      <if test="planDeadline != null">
+        plan_deadline,
+      </if>
+      <if test="planDuration != null">
+        plan_duration,
+      </if>
+      <if test="leaderIdOrTeamId != null">
+        leader_id_or_team_id,
+      </if>
+      <if test="planLeaderId != null">
+        plan_leader_id,
+      </if>
+      <if test="planLeaderName != null">
+        plan_leader_name,
+      </if>
+      <if test="planTeamId != null">
+        plan_team_id,
+      </if>
+      <if test="planTeamName != null">
+        plan_team_name,
+      </if>
+      <if test="planParticipantId != null">
+        plan_participant_id,
+      </if>
+      <if test="planMilestoneId != null">
+        plan_milestone_id,
+      </if>
+      <if test="planRemindHour != null">
+        plan_remind_hour,
+      </if>
+      <if test="planContent != null">
+        plan_content,
+      </if>
+      <if test="planRemark != null">
+        plan_remark,
+      </if>
+      <if test="checkStatus != null">
+        check_status,
+      </if>
+      <if test="planType != null">
+        plan_type,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planId != null">
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="planName != null">
+        #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="planVersion != null">
+        #{planVersion,jdbcType=BIGINT},
+      </if>
+      <if test="planApplyDesc != null">
+        #{planApplyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="planNum != null">
+        #{planNum,jdbcType=VARCHAR},
+      </if>
+      <if test="parentPlanId != null">
+        #{parentPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        #{projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="planStarttime != null">
+        #{planStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEndtime != null">
+        #{planEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planDeadline != null">
+        #{planDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planDuration != null">
+        #{planDuration,jdbcType=BIGINT},
+      </if>
+      <if test="leaderIdOrTeamId != null">
+        #{leaderIdOrTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="planLeaderId != null">
+        #{planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="planLeaderName != null">
+        #{planLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="planTeamId != null">
+        #{planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="planTeamName != null">
+        #{planTeamName,jdbcType=VARCHAR},
+      </if>
+      <if test="planParticipantId != null">
+        #{planParticipantId,jdbcType=BIGINT},
+      </if>
+      <if test="planMilestoneId != null">
+        #{planMilestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="planRemindHour != null">
+        #{planRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="planContent != null">
+        #{planContent,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="planRemark != null">
+        #{planRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=BIGINT},
+      </if>
+      <if test="planType != null">
+        #{planType,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.plan.PlanModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_plan_create
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_plan_create
+    <set>
+      <if test="record.planId != null">
+        plan_id = #{record.planId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planName != null">
+        plan_name = #{record.planName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planVersion != null">
+        plan_version = #{record.planVersion,jdbcType=BIGINT},
+      </if>
+      <if test="record.planApplyDesc != null">
+        plan_apply_desc = #{record.planApplyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planNum != null">
+        plan_num = #{record.planNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentPlanId != null">
+        parent_plan_id = #{record.parentPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectStep != null">
+        project_step = #{record.projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="record.priority != null">
+        priority = #{record.priority,jdbcType=BIGINT},
+      </if>
+      <if test="record.planStarttime != null">
+        plan_startTime = #{record.planStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planEndtime != null">
+        plan_endTime = #{record.planEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planDeadline != null">
+        plan_deadline = #{record.planDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.planDuration != null">
+        plan_duration = #{record.planDuration,jdbcType=BIGINT},
+      </if>
+      <if test="record.leaderIdOrTeamId != null">
+        leader_id_or_team_id = #{record.leaderIdOrTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planLeaderId != null">
+        plan_leader_id = #{record.planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planLeaderName != null">
+        plan_leader_name = #{record.planLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planTeamId != null">
+        plan_team_id = #{record.planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planTeamName != null">
+        plan_team_name = #{record.planTeamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planParticipantId != null">
+        plan_participant_id = #{record.planParticipantId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planMilestoneId != null">
+        plan_milestone_id = #{record.planMilestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planRemindHour != null">
+        plan_remind_hour = #{record.planRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="record.planContent != null">
+        plan_content = #{record.planContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planRemark != null">
+        plan_remark = #{record.planRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.checkStatus != null">
+        check_status = #{record.checkStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.planType != null">
+        plan_type = #{record.planType,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_plan_create
+    set plan_id = #{record.planId,jdbcType=BIGINT},
+      plan_name = #{record.planName,jdbcType=VARCHAR},
+      plan_version = #{record.planVersion,jdbcType=BIGINT},
+      plan_apply_desc = #{record.planApplyDesc,jdbcType=VARCHAR},
+      plan_num = #{record.planNum,jdbcType=VARCHAR},
+      parent_plan_id = #{record.parentPlanId,jdbcType=BIGINT},
+      project_id = #{record.projectId,jdbcType=BIGINT},
+      project_step = #{record.projectStep,jdbcType=BIGINT},
+      priority = #{record.priority,jdbcType=BIGINT},
+      plan_startTime = #{record.planStarttime,jdbcType=TIMESTAMP},
+      plan_endTime = #{record.planEndtime,jdbcType=TIMESTAMP},
+      plan_deadline = #{record.planDeadline,jdbcType=TIMESTAMP},
+      plan_duration = #{record.planDuration,jdbcType=BIGINT},
+      leader_id_or_team_id = #{record.leaderIdOrTeamId,jdbcType=BIGINT},
+      plan_leader_id = #{record.planLeaderId,jdbcType=BIGINT},
+      plan_leader_name = #{record.planLeaderName,jdbcType=VARCHAR},
+      plan_team_id = #{record.planTeamId,jdbcType=BIGINT},
+      plan_team_name = #{record.planTeamName,jdbcType=VARCHAR},
+      plan_participant_id = #{record.planParticipantId,jdbcType=BIGINT},
+      plan_milestone_id = #{record.planMilestoneId,jdbcType=BIGINT},
+      plan_remind_hour = #{record.planRemindHour,jdbcType=BIGINT},
+      plan_content = #{record.planContent,jdbcType=VARCHAR},
+      plan_remark = #{record.planRemark,jdbcType=VARCHAR},
+      check_status = #{record.checkStatus,jdbcType=BIGINT},
+      plan_type = #{record.planType,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.plan.PlanModel">
+    update t_project_plan_create
+    <set>
+      <if test="planName != null">
+        plan_name = #{planName,jdbcType=VARCHAR},
+      </if>
+      <if test="planVersion != null">
+        plan_version = #{planVersion,jdbcType=BIGINT},
+      </if>
+      <if test="planApplyDesc != null">
+        plan_apply_desc = #{planApplyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="planNum != null">
+        plan_num = #{planNum,jdbcType=VARCHAR},
+      </if>
+      <if test="parentPlanId != null">
+        parent_plan_id = #{parentPlanId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        project_step = #{projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="planStarttime != null">
+        plan_startTime = #{planStarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planEndtime != null">
+        plan_endTime = #{planEndtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planDeadline != null">
+        plan_deadline = #{planDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planDuration != null">
+        plan_duration = #{planDuration,jdbcType=BIGINT},
+      </if>
+      <if test="leaderIdOrTeamId != null">
+        leader_id_or_team_id = #{leaderIdOrTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="planLeaderId != null">
+        plan_leader_id = #{planLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="planLeaderName != null">
+        plan_leader_name = #{planLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="planTeamId != null">
+        plan_team_id = #{planTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="planTeamName != null">
+        plan_team_name = #{planTeamName,jdbcType=VARCHAR},
+      </if>
+      <if test="planParticipantId != null">
+        plan_participant_id = #{planParticipantId,jdbcType=BIGINT},
+      </if>
+      <if test="planMilestoneId != null">
+        plan_milestone_id = #{planMilestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="planRemindHour != null">
+        plan_remind_hour = #{planRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="planContent != null">
+        plan_content = #{planContent,jdbcType=VARCHAR},
+      </if>
+      <if test="planRemark != null">
+        plan_remark = #{planRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null">
+        check_status = #{checkStatus,jdbcType=BIGINT},
+      </if>
+      <if test="planType != null">
+        plan_type = #{planType,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.plan.PlanModel">
+    update t_project_plan_create
+    set plan_name = #{planName,jdbcType=VARCHAR},
+      plan_version = #{planVersion,jdbcType=BIGINT},
+      plan_apply_desc = #{planApplyDesc,jdbcType=VARCHAR},
+      plan_num = #{planNum,jdbcType=VARCHAR},
+      parent_plan_id = #{parentPlanId,jdbcType=BIGINT},
+      project_id = #{projectId,jdbcType=BIGINT},
+      project_step = #{projectStep,jdbcType=BIGINT},
+      priority = #{priority,jdbcType=BIGINT},
+      plan_startTime = #{planStarttime,jdbcType=TIMESTAMP},
+      plan_endTime = #{planEndtime,jdbcType=TIMESTAMP},
+      plan_deadline = #{planDeadline,jdbcType=TIMESTAMP},
+      plan_duration = #{planDuration,jdbcType=BIGINT},
+      leader_id_or_team_id = #{leaderIdOrTeamId,jdbcType=BIGINT},
+      plan_leader_id = #{planLeaderId,jdbcType=BIGINT},
+      plan_leader_name = #{planLeaderName,jdbcType=VARCHAR},
+      plan_team_id = #{planTeamId,jdbcType=BIGINT},
+      plan_team_name = #{planTeamName,jdbcType=VARCHAR},
+      plan_participant_id = #{planParticipantId,jdbcType=BIGINT},
+      plan_milestone_id = #{planMilestoneId,jdbcType=BIGINT},
+      plan_remind_hour = #{planRemindHour,jdbcType=BIGINT},
+      plan_content = #{planContent,jdbcType=VARCHAR},
+      plan_remark = #{planRemark,jdbcType=VARCHAR},
+      check_status = #{checkStatus,jdbcType=BIGINT},
+      plan_type = #{planType,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectByExampleWithDelStatus" parameterType="com.fea.project.model.plan.PlanModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_plan_create 
+    where del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  
+   <select id="selectByPrimaryKeyWithDelStatus" parameterType="java.lang.Long" resultMap="rm">
+    select tppc.*, tpp.`name` projectName, tps.`name` projectStepStr ,
+	tpm.`name` milestoneName
+	from t_project_plan_create tppc 
+	LEFT JOIN t_project_project tpp 
+	ON tpp.id = tppc.project_id 
+	LEFT JOIN t_project_step tps 
+	ON tps.id = tppc.project_step 
+	LEFT JOIN t_project_milestone tpm
+	ON tpm.id = tppc.plan_milestone_id
+    where plan_id = #{planId,jdbcType=BIGINT} 
+  </select>
+  
+  
+   <update id="updateByPrimaryKeySelectiveWithDelStatus" parameterType="com.fea.project.model.plan.PlanModel">
+    update t_project_plan_create
+    set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectGroupLeaderByProjectId" parameterType="long" resultType="com.fea.project.model.plan.vo.TeamLeaderAndGroupInfoModelVO">
+    select DISTINCT 
+    id as teamId,
+    leader as groupLeaderId,
+    name as teamName 
+    from t_project_team tpt
+    where project_id = #{project_id,jdbcType=BIGINT} 
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    </select>
+    
+    
+     <select id="selectSelfPlanByCreateId" parameterType="long" resultMap="BaseResultMap">
+    select DISTINCT 
+    <include refid="Base_Column_List" />
+    from t_project_plan_create
+    where create_id = #{create_id,jdbcType=BIGINT} 
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    </select>
+    
+     <select id="selectParentPlanByProjectId" parameterType="long" resultType="com.fea.project.model.plan.vo.PlanNameInfoModelVO">
+    select DISTINCT 
+    plan_id planId,plan_name planName 
+    from t_project_plan_create
+    where project_id = #{project_id,jdbcType=BIGINT} 
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    </select>
+     <select id="selectParentPlanNameByParentPlanId" parameterType="long" resultType="java.lang.String">
+    select DISTINCT 
+   plan_name  
+    from t_project_plan_create
+    where plan_id = #{parentPlanId,jdbcType=BIGINT}
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    </select>
+    
+        <select id="selectProjectUserInfoByBaseProjectUserInfo" parameterType="com.fea.project.model.plan.vo.BaseProjectUserInfo" resultType="com.fea.project.model.plan.vo.ProjectUserIdAndNameInfoModelVO">
+    select DISTINCT 
+    tpp.id projectId ,
+	tpp.`name` projectName,
+	tpp.leader projectManagerId,
+	tpt.id teamId,
+	tpt.`name` teamName,
+	tpt.leader teamLeaderId,
+	tptu.user_id userId 
+    from t_project_project tpp,t_project_team tpt,t_project_team_user tptu
+    where tpp.id = tpt.project_id and tpt.id = tptu.team_id
+   <if test="projectId != null">
+   		and tpp.id = #{projectId,jdbcType=BIGINT}
+    </if>
+    <if test="teamId != null">
+    	and tpt.id = #{teamId,jdbcType=BIGINT}
+     </if>
+     <if test="userId != null">
+    	and tptu.user_id = #{userId,jdbcType=BIGINT} 
+     </if>
+    </select>
+    
+     <select id="selectProjectUserInfoByProjectIdAndUserId" parameterType="com.fea.project.model.plan.vo.BaseProjectUserInfo" resultType="com.fea.project.model.plan.vo.ProjectUserIdAndNameInfoModelVO">
+    select DISTINCT 
+    tpp.id projectId ,
+	tpp.`name` projectName,
+	tpp.leader projectManagerId,
+
+	tpt.id teamId,
+	tpt.`name` teamName,
+	tpt.leader teamLeaderId,
+
+	tptu.user_id userId 
+    from t_project_project tpp,t_project_team tpt,t_project_team_user tptu
+    where tpp.id = tpt.project_id and tpt.id = tptu.team_id 
+   <if test="projectId != null">
+   		and tpp.id = #{projectId,jdbcType=BIGINT}
+    </if>
+    	and tpt.id = #{teamId,jdbcType=BIGINT}
+     <if test="userId != null">
+    	and tptu.user_id = #{userId,jdbcType=BIGINT} 
+     </if>
+    </select>
+    
+    
+    <select id="selectAllWithOrderBy" parameterType="com.fea.project.model.BasePageInfo" resultMap="BaseResultMap">
+    select 
+    * 
+    from t_project_plan_create tppc
+    where tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    <if test="sortKey != null">
+    	order by 
+		    	
+		      <if test='sortKey == "planName"'>
+		         tppc.plan_name ${sortValue}, 
+		      </if>
+		      <if test='sortKey =="planVersion"'>
+		         tppc.plan_version ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planApplyDesc"'>
+		         tppc.plan_apply_desc ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planNum"'>
+		         tppc.plan_num ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "parentPlanId"'>
+		         tppc.parent_plan_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "projectId"'>
+		         tppc.project_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "projectStep"'>
+		         tppc.project_step ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "priority"'>
+		         tppc.priority ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planStarttime"'>
+		         tppc.plan_startTime ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planEndtime"'>
+		         tppc.plan_endTime ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planDeadline"'>
+		         tppc.plan_deadline ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planDuration"'>
+		         tppc.plan_duration ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "leaderIdOrTeamId"'>
+		         tppc.leader_id_or_team_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planLeaderId"'>
+		         tppc.plan_leader_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planLeaderName"'>
+		         tppc.plan_leader_name ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planTeamId"'>
+		         tppc.plan_team_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planTeamName"'>
+		         tppc.plan_team_name ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planParticipantId"'>
+		         tppc.plan_participant_id ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planMilestoneId"'>
+		         tppc.plan_milestone_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planRemindHour"'>
+		         tppc.plan_remind_hour ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planContent"'>
+		         tppc.plan_content ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planRemark"'>
+		         tppc.plan_remark ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "checkStatus"'>
+		         tppc.check_status ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createId"'>
+		         tppc.create_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createBy"'>
+		         tppc.create_by ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createTime"'>
+		         tppc.create_time ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateId"'>
+		         tppc.update_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateBy"'>
+		         tppc.update_by ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateTime"'>
+		         tppc.update_time ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "delStatus"'>
+		         tppc.del_status ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planId" '>
+		         tppc.plan_id  ${sortValue}
+		      </if>
+		      
+		      <if test='sortKey != "planId" '>
+		         tppc.plan_id  desc 
+		      </if>
+		    	
+     </if>
+  </select>
+  
+  
+  
+   <select id="selectProjectIdAndName" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.ProjectUserIdAndNameInfoModelVO">
+    select 
+	tpp.id projectId,
+	tpp.name projectName,
+	tpp.leader projectManagerId
+	from t_project_project tpp  
+	where  tpp.id = #{projectId,jdbcType=BIGINT} 
+  </select>
+  
+  <select id="selectTeamIdAndName" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.ProjectUserIdAndNameInfoModelVO">
+    select 
+	tpt.id teamId,
+	tpt.`name` teamName,
+	tpt.leader teamLeaderId, 
+	tpp.id projectId
+	from t_project_project tpp ,t_project_team tpt
+	where tpp.id = tpt.project_id 
+	and tpp.id = #{projectId,jdbcType=BIGINT} 
+  </select>
+  
+  <select id="selectUserIdAndName" parameterType="com.fea.project.model.plan.vo.ProjectUserIdAndNameInfoModelVO" resultType="com.fea.project.model.plan.vo.ProjectUserIdAndNameInfoModelVO">
+    select 
+	tptu.id userId,
+	tpt.id teamId
+	from t_project_project tpp ,t_project_team tpt,t_project_team_user tptu
+	where tpp.id = tpt.project_id 
+	and tpt.id = tptu.team_id 
+	and tpp.id = #{projectId,jdbcType=BIGINT}
+	and tpt.id = #{teamId,jdbcType=BIGINT}
+  </select>
+  
+  
+   <select id="selectParticipantInfo" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.PlanParticipantInfoModelVo">
+    SELECT 
+	tpu.user_id participantId ,tpu.plan_paticipant_user_id participantName
+	from t_project_user tpu 
+	where  tpu.project_id = #{projectId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectPlanListByConditionId" parameterType="com.fea.project.model.BasePageInfo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_create tppc 
+    where del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+	    <if test="model.planLeaderId != null">
+	     and create_id = #{model.planLeaderId,jdbcType=BIGINT}
+	    </if>
+	    <if test="model.planTeamId != null">
+	     and plan_team_id = #{model.planTeamId,jdbcType=BIGINT}
+	    </if>
+	     <if test="model.projectId != null">
+	     and project_id = #{model.projectId,jdbcType=BIGINT}
+	    </if>
+	    <if test="sortKey != null">
+    	order by 
+		    	
+		      <if test='sortKey == "planName"'>
+		         tppc.plan_name ${sortValue}, 
+		      </if>
+		      <if test='sortKey =="planVersion"'>
+		         tppc.plan_version ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planApplyDesc"'>
+		         tppc.plan_apply_desc ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planNum"'>
+		         tppc.plan_num ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "parentPlanId"'>
+		         tppc.parent_plan_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "projectId"'>
+		         tppc.project_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "projectStep"'>
+		         tppc.project_step ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "priority"'>
+		         tppc.priority ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planStarttime"'>
+		         tppc.plan_startTime ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planEndtime"'>
+		         tppc.plan_endTime ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planDeadline"'>
+		         tppc.plan_deadline ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planDuration"'>
+		         tppc.plan_duration ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "leaderIdOrTeamId"'>
+		         tppc.leader_id_or_team_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planLeaderId"'>
+		         tppc.plan_leader_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planLeaderName"'>
+		         tppc.plan_leader_name ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planTeamId"'>
+		         tppc.plan_team_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planTeamName"'>
+		         tppc.plan_team_name ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planParticipantId"'>
+		         tppc.plan_participant_id ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planMilestoneId"'>
+		         tppc.plan_milestone_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planRemindHour"'>
+		         tppc.plan_remind_hour ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planContent"'>
+		         tppc.plan_content ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planRemark"'>
+		         tppc.plan_remark ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "checkStatus"'>
+		         tppc.check_status ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createId"'>
+		         tppc.create_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createBy"'>
+		         tppc.create_by ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createTime"'>
+		         tppc.create_time ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateId"'>
+		         tppc.update_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateBy"'>
+		         tppc.update_by ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateTime"'>
+		         tppc.update_time ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "delStatus"'>
+		         tppc.del_status ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planId" '>
+		         tppc.plan_id  ${sortValue}
+		      </if>
+		      
+		      <if test='sortKey != "planId" '>
+		         tppc.plan_id  desc 
+		      </if>
+     </if>
+  </select>
+  
+  <resultMap id="rm" type="com.fea.project.model.plan.vo.PlanAndSonPlanModelVo">
+    <id column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="plan_name" jdbcType="VARCHAR" property="planName" />
+    <result column="plan_version" jdbcType="BIGINT" property="planVersion" />
+    <result column="plan_apply_desc" jdbcType="VARCHAR" property="planApplyDesc" />
+    <result column="plan_num" jdbcType="VARCHAR" property="planNum" />
+    <result column="parent_plan_id" jdbcType="BIGINT" property="parentPlanId" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+    <result column="priority" jdbcType="BIGINT" property="priority" />
+    <result column="plan_startTime" jdbcType="TIMESTAMP" property="planStarttime" />
+    <result column="plan_endTime" jdbcType="TIMESTAMP" property="planEndtime" />
+    <result column="plan_deadline" jdbcType="TIMESTAMP" property="planDeadline" />
+    <result column="plan_duration" jdbcType="BIGINT" property="planDuration" />
+    <result column="leader_id_or_team_id" jdbcType="BIGINT" property="leaderIdOrTeamId" />
+    <result column="plan_leader_id" jdbcType="BIGINT" property="planLeaderId" />
+    <result column="plan_leader_name" jdbcType="VARCHAR" property="planLeaderName" />
+    <result column="plan_team_id" jdbcType="BIGINT" property="planTeamId" />
+    <result column="plan_team_name" jdbcType="VARCHAR" property="planTeamName" />
+    <result column="plan_participant_id" jdbcType="BIGINT" property="planParticipantId" />
+    <result column="plan_milestone_id" jdbcType="BIGINT" property="planMilestoneId" />
+    <result column="milestoneName" jdbcType="VARCHAR" property="milestoneName" />
+    <result column="plan_remind_hour" jdbcType="BIGINT" property="planRemindHour" />
+    <result column="plan_content" jdbcType="VARCHAR" property="planContent" />
+    <result column="plan_remark" jdbcType="VARCHAR" property="planRemark" />
+    <result column="check_status" jdbcType="BIGINT" property="checkStatus" />
+    <result column="plan_type" jdbcType="BIGINT" property="planType" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+    <result column="projectStepStr" jdbcType="VARCHAR" property="projectStepStr" />
+  </resultMap>
+
+   <select id="selectPlanWithoutParentId" parameterType="com.fea.project.model.BasePageInfo" resultMap="rm">
+   select 
+    tppc.*,
+	tpp.`name` projectName,
+	tps.`name` projectStepStr,
+	tpm.`name` milestoneName
+    from t_project_plan_create tppc
+	LEFT JOIN
+	t_project_project tpp
+	ON 
+	tpp.id = tppc.project_id 
+	LEFT JOIN
+	t_project_step tps
+	ON
+	tps.id = tppc.project_step 
+	LEFT JOIN t_project_milestone tpm
+	ON tpm.id = tppc.plan_milestone_id
+    where tppc.parent_plan_id is null and  tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    and tppc.plan_type = #{model.planType,jdbcType=BIGINT}
+    and tppc.project_id = #{model.projectId,jdbcType=BIGINT}
+    <if test="sortKey != null">
+    	order by 
+		    	
+		      <if test='sortKey == "planName"'>
+		         tppc.plan_name ${sortValue}, 
+		      </if>
+		      <if test='sortKey =="planVersion"'>
+		         tppc.plan_version ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planApplyDesc"'>
+		         tppc.plan_apply_desc ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planNum"'>
+		         tppc.plan_num ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "parentPlanId"'>
+		         tppc.parent_plan_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "projectId"'>
+		         tppc.project_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "projectStep"'>
+		         tppc.project_step ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "priority"'>
+		         tppc.priority ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planStarttime"'>
+		         tppc.plan_startTime ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planEndtime"'>
+		         tppc.plan_endTime ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planDeadline"'>
+		         tppc.plan_deadline ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planDuration"'>
+		         tppc.plan_duration ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "leaderIdOrTeamId"'>
+		         tppc.leader_id_or_team_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planLeaderId"'>
+		         tppc.plan_leader_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planLeaderName"'>
+		         tppc.plan_leader_name ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planTeamId"'>
+		         tppc.plan_team_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planTeamName"'>
+		         tppc.plan_team_name ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planParticipantId"'>
+		         tppc.plan_participant_id ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planMilestoneId"'>
+		         tppc.plan_milestone_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planRemindHour"'>
+		         tppc.plan_remind_hour ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planContent"'>
+		         tppc.plan_content ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planRemark"'>
+		         tppc.plan_remark ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "checkStatus"'>
+		         tppc.check_status ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createId"'>
+		         tppc.create_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createBy"'>
+		         tppc.create_by ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createTime"'>
+		         tppc.create_time ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateId"'>
+		         tppc.update_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateBy"'>
+		         tppc.update_by ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateTime"'>
+		         tppc.update_time ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "delStatus"'>
+		         tppc.del_status ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planId" '>
+		         tppc.plan_id  ${sortValue}
+		      </if>
+		      
+		      <if test='sortKey != "planId" '>
+		         tppc.plan_id  desc 
+		      </if>
+		    	
+     </if>
+  </select>
+  
+  
+  <select id="selectPlanByProjectIdOrPlanTeamIdOrPlanLeaderId" parameterType="com.fea.project.model.BasePageInfo" resultMap="rm">
+   
+    select 
+    * 
+    from t_project_plan_create tppc
+    where tppc.parent_plan_id is null and  tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    <if test="model.projectId != null ">
+    	and tppc.project_id = #{model.projectId,jdbcType=BIGINT}
+    </if>
+    <if test="model.planLeaderId != null ">
+    	and tppc.plan_leader_id = #{model.planLeaderId,jdbcType=BIGINT}
+    </if>
+    <if test="model.planTeamId != null ">
+    	and tppc.plan_team_id = #{model.planTeamId,jdbcType=BIGINT}
+    </if>
+    <if test="sortKey != null">
+    	order by 
+		    	
+		      <if test='sortKey == "planName"'>
+		         tppc.plan_name ${sortValue}, 
+		      </if>
+		      <if test='sortKey =="planVersion"'>
+		         tppc.plan_version ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planApplyDesc"'>
+		         tppc.plan_apply_desc ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planNum"'>
+		         tppc.plan_num ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "parentPlanId"'>
+		         tppc.parent_plan_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "projectId"'>
+		         tppc.project_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "projectStep"'>
+		         tppc.project_step ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "priority"'>
+		         tppc.priority ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planStarttime"'>
+		         tppc.plan_startTime ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planEndtime"'>
+		         tppc.plan_endTime ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planDeadline"'>
+		         tppc.plan_deadline ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planDuration"'>
+		         tppc.plan_duration ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "leaderIdOrTeamId"'>
+		         tppc.leader_id_or_team_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planLeaderId"'>
+		         tppc.plan_leader_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planLeaderName"'>
+		         tppc.plan_leader_name ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planTeamId"'>
+		         tppc.plan_team_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planTeamName"'>
+		         tppc.plan_team_name ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planParticipantId"'>
+		         tppc.plan_participant_id ${sortValue}, 
+		      </if>
+		      
+		      <if test='sortKey == "planMilestoneId"'>
+		         tppc.plan_milestone_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planRemindHour"'>
+		         tppc.plan_remind_hour ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planContent"'>
+		         tppc.plan_content ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planRemark"'>
+		         tppc.plan_remark ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "checkStatus"'>
+		         tppc.check_status ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createId"'>
+		         tppc.create_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createBy"'>
+		         tppc.create_by ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "createTime"'>
+		         tppc.create_time ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateId"'>
+		         tppc.update_id ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateBy"'>
+		         tppc.update_by ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "updateTime"'>
+		         tppc.update_time ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "delStatus"'>
+		         tppc.del_status ${sortValue}, 
+		      </if>
+		      <if test='sortKey == "planId" '>
+		         tppc.plan_id  ${sortValue}
+		      </if>
+		      
+		      <if test='sortKey != "planId" '>
+		         tppc.plan_id  desc 
+		      </if>
+		    	
+     </if>
+  </select>
+  
+  
+    <resultMap id="brm" type="com.fea.project.model.plan.vo.PlanAndSonPlanModelVo">
+    <id column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="plan_name" jdbcType="VARCHAR" property="planName" />
+    <result column="plan_version" jdbcType="BIGINT" property="planVersion" />
+    <result column="plan_apply_desc" jdbcType="VARCHAR" property="planApplyDesc" />
+    <result column="plan_num" jdbcType="VARCHAR" property="planNum" />
+    <result column="parent_plan_id" jdbcType="BIGINT" property="parentPlanId" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+    <result column="priority" jdbcType="BIGINT" property="priority" />
+    <result column="plan_startTime" jdbcType="TIMESTAMP" property="planStarttime" />
+    <result column="plan_endTime" jdbcType="TIMESTAMP" property="planEndtime" />
+    <result column="plan_deadline" jdbcType="TIMESTAMP" property="planDeadline" />
+    <result column="plan_duration" jdbcType="BIGINT" property="planDuration" />
+    <result column="leader_id_or_team_id" jdbcType="BIGINT" property="leaderIdOrTeamId" />
+    <result column="plan_leader_id" jdbcType="BIGINT" property="planLeaderId" />
+    <result column="plan_leader_name" jdbcType="VARCHAR" property="planLeaderName" />
+    <result column="plan_team_id" jdbcType="BIGINT" property="planTeamId" />
+    <result column="plan_team_name" jdbcType="VARCHAR" property="planTeamName" />
+    <result column="plan_participant_id" jdbcType="BIGINT" property="planParticipantId" />
+    <result column="plan_milestone_id" jdbcType="BIGINT" property="planMilestoneId" />
+    <result column="milestoneName" jdbcType="VARCHAR" property="milestoneName" />
+    <result column="plan_remind_hour" jdbcType="BIGINT" property="planRemindHour" />
+    <result column="plan_content" jdbcType="VARCHAR" property="planContent" />
+    <result column="plan_remark" jdbcType="VARCHAR" property="planRemark" />
+    <result column="check_status" jdbcType="BIGINT" property="checkStatus" />
+    <result column="plan_type" jdbcType="BIGINT" property="planType" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+    <result column="projectStepStr" jdbcType="VARCHAR" property="projectStepStr" />
+    <association property="parentPlanName" column="parent_plan_id" select="selectParentPlanNameByParentPlanId" />
+    <collection property="planParticipantInfos" column="plan_id" select="com.fea.project.dao.plan.PlanParticipantModelMapper.selectInfoListByPlanId" />
+    <collection property="children" column="plan_id" select="selectSon" />
+  </resultMap>
+  <select id="selectListByPMPerson" parameterType="com.fea.project.model.BasePageInfo" resultMap="brm">
+     select 
+	    tppc.*,
+		tpp.`name` projectName,
+		tps.`name` projectStepStr,
+		tpm.`name` milestoneName,
+case 
+when tppc.priority = "1" then "最高"
+when tppc.priority = "2" then "高"
+when tppc.priority = "3" then "中"
+else "低"
+end priorityStr,
+
+case 
+when tppc.check_status = "1" then "已提交"
+when tppc.check_status = "2" then "审批中"
+when tppc.check_status = "3" then "已通过"
+when tppc.check_status = "4" then "未通过"
+else "未提交"
+end checkStatusStr
+		
+    	from t_project_plan_create tppc
+		LEFT JOIN
+		t_project_project tpp
+		ON 
+		tpp.id = tppc.project_id 
+		LEFT JOIN
+		t_project_step tps
+		ON
+		tps.id = tppc.project_step 
+		LEFT JOIN t_project_milestone tpm
+		ON tpm.id = tppc.plan_milestone_id
+    where tppc.parent_plan_id is null and  tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    and tppc.create_id = #{model.createId,jdbcType=BIGINT}
+    and tppc.plan_leader_id = #{model.createId,jdbcType=BIGINT}
+    and tppc.project_id = #{model.projectId,jdbcType=BIGINT}
+    <if test="model.projectStep != null">
+    and tppc.project_step = #{model.projectStep,jdbcType=BIGINT}
+    </if>
+    order by tppc.plan_startTime desc
+  </select>
+  
+   <select id="selectProjectPlanListByprojectId" parameterType="com.fea.project.model.BasePageInfo" resultMap="brm">
+     select 
+	    tppc.*,
+		tpp.`name` projectName,
+		tps.`name` projectStepStr,
+		tpm.`name` milestoneName,
+		case 
+		when tppc.priority = "1" then "最高"
+		when tppc.priority = "2" then "高"
+		when tppc.priority = "3" then "中"
+		else "低"
+		end priorityStr,
+		
+		case 
+		when tppc.check_status = "1" then "已提交"
+		when tppc.check_status = "2" then "审批中"
+		when tppc.check_status = "3" then "已通过"
+		when tppc.check_status = "4" then "未通过"
+		else "未提交"
+		end checkStatusStr
+				
+    	from t_project_plan_create tppc
+		LEFT JOIN
+		t_project_project tpp
+		ON 
+		tpp.id = tppc.project_id 
+		LEFT JOIN
+		t_project_step tps
+		ON
+		tps.id = tppc.project_step 
+		LEFT JOIN t_project_milestone tpm
+		ON tpm.id = tppc.plan_milestone_id
+    where tppc.parent_plan_id is null and  tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    and tppc.project_id = #{model.projectId,jdbcType=BIGINT}
+    and tppc.create_id = #{model.createId,jdbcType=BIGINT}
+    <if test="model.projectStep != null">
+    and tppc.project_step = #{model.projectStep,jdbcType=BIGINT}
+    </if>
+    order by tppc.plan_startTime desc
+  </select>
+  
+  <select id="selectTeamPlanListByTeamId" parameterType="com.fea.project.model.BasePageInfo" resultMap="brm">
+     select 
+	    tppc.*,
+		tpp.`name` projectName,
+		tps.`name` projectStepStr,
+		tpm.`name` milestoneName,
+		case 
+		when tppc.priority = "1" then "最高"
+		when tppc.priority = "2" then "高"
+		when tppc.priority = "3" then "中"
+		else "低"
+		end priorityStr,
+		
+		case 
+		when tppc.check_status = "1" then "已提交"
+		when tppc.check_status = "2" then "审批中"
+		when tppc.check_status = "3" then "已通过"
+		when tppc.check_status = "4" then "未通过"
+		else "未提交"
+		end checkStatusStr
+				
+    	from t_project_plan_create tppc
+		LEFT JOIN
+		t_project_project tpp
+		ON 
+		tpp.id = tppc.project_id 
+		LEFT JOIN
+		t_project_step tps
+		ON
+		tps.id = tppc.project_step 
+		LEFT JOIN t_project_milestone tpm
+		ON tpm.id = tppc.plan_milestone_id
+    where   tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    and tppc.project_id = #{model.projectId,jdbcType=BIGINT}
+    and tppc.plan_team_id = #{model.planTeamId,jdbcType=BIGINT}
+    and tppc.plan_type= ${@com.fea.project.enums.plan.PlanTypeEnum@TEAM_PLAN.getStatus}
+    <if test="model.projectStep != null">
+    and tppc.project_step = #{model.projectStep,jdbcType=BIGINT}
+    </if>
+    order by tppc.plan_startTime desc
+  </select>
+  
+  <select id="selectTeamLeaderPlanListByTeamLeaderId" parameterType="com.fea.project.model.BasePageInfo" resultMap="brm">
+     select 
+	    tppc.*,
+		tpp.`name` projectName,
+		tps.`name` projectStepStr,
+		tpm.`name` milestoneName,
+		case 
+		when tppc.priority = "1" then "最高"
+		when tppc.priority = "2" then "高"
+		when tppc.priority = "3" then "中"
+		else "低"
+		end priorityStr,
+		
+		case 
+		when tppc.check_status = "1" then "已提交"
+		when tppc.check_status = "2" then "审批中"
+		when tppc.check_status = "3" then "已通过"
+		when tppc.check_status = "4" then "未通过"
+		else "未提交"
+		end checkStatusStr
+				
+    	from t_project_plan_create tppc
+		LEFT JOIN
+		t_project_project tpp
+		ON 
+		tpp.id = tppc.project_id 
+		LEFT JOIN
+		t_project_step tps
+		ON
+		tps.id = tppc.project_step 
+		LEFT JOIN t_project_milestone tpm
+		ON tpm.id = tppc.plan_milestone_id
+    where   tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    and tppc.project_id = #{model.projectId,jdbcType=BIGINT}
+    and tppc.plan_leader_id = #{model.planLeaderId,jdbcType=BIGINT}
+     and tppc.plan_type != ${@com.fea.project.enums.plan.PlanTypeEnum@TEAM_PLAN.getStatus}
+    <if test="model.projectStep != null">
+    and tppc.project_step = #{model.projectStep,jdbcType=BIGINT}
+    </if>
+    order by tppc.plan_startTime desc
+  </select>
+  
+  <select id="selectLeaderPlanListByLeaderId" parameterType="com.fea.project.model.BasePageInfo" resultMap="brm">
+     select 
+	    tppc.*,
+		tpp.`name` projectName,
+		tps.`name` projectStepStr,
+		tpm.`name` milestoneName,
+		case 
+		when tppc.priority = "1" then "最高"
+		when tppc.priority = "2" then "高"
+		when tppc.priority = "3" then "中"
+		else "低"
+		end priorityStr,
+		
+		case 
+		when tppc.check_status = "1" then "已提交"
+		when tppc.check_status = "2" then "审批中"
+		when tppc.check_status = "3" then "已通过"
+		when tppc.check_status = "4" then "未通过"
+		else "未提交"
+		end checkStatusStr
+				
+    	from t_project_plan_create tppc
+		LEFT JOIN
+		t_project_project tpp
+		ON 
+		tpp.id = tppc.project_id 
+		LEFT JOIN
+		t_project_step tps
+		ON
+		tps.id = tppc.project_step 
+		LEFT JOIN t_project_milestone tpm
+		ON tpm.id = tppc.plan_milestone_id
+    where   tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+    and tppc.project_id = #{model.projectId,jdbcType=BIGINT}
+    and tppc.plan_leader_id = #{model.planLeaderId,jdbcType=BIGINT}
+    and tppc.plan_type= ${@com.fea.project.enums.plan.PlanTypeEnum@TEAMER_PLAN.getStatus}
+    <if test="model.projectStep != null">
+    and tppc.project_step = #{model.projectStep,jdbcType=BIGINT}
+    </if>
+    order by tppc.plan_startTime desc
+  </select>
+  
+  
+   <select id="selectSon" parameterType="com.fea.project.model.plan.vo.PlanAndSonPlanModelVo" resultMap="brm">
+	   select 
+	    tppc.*,
+		tpp.`name` projectName,
+		tps.`name` projectStepStr,
+		tpm.`name` milestoneName,
+case 
+when tppc.priority = "1" then "最高"
+when tppc.priority = "2" then "高"
+when tppc.priority = "3" then "中"
+else "低"
+end priorityStr,
+
+case 
+when tppc.check_status = "1" then "已提交"
+when tppc.check_status = "2" then "审批中"
+when tppc.check_status = "3" then "已通过"
+when tppc.check_status = "4" then "未通过"
+else "未提交"
+end checkStatusStr
+		
+    	from t_project_plan_create tppc
+		LEFT JOIN
+		t_project_project tpp
+		ON 
+		tpp.id = tppc.project_id 
+		LEFT JOIN
+		t_project_step tps
+		ON
+		tps.id = tppc.project_step 
+		LEFT JOIN t_project_milestone tpm
+		ON tpm.id = tppc.plan_milestone_id
+	    where tppc.parent_plan_id = #{parentPlanId,jdbcType=BIGINT}
+   		and tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+  </select>
+   <select id="selectSonPlanModel" parameterType="com.fea.project.model.plan.vo.PlanAndSonPlanModelVo" resultMap="rm">
+	   select 
+	    tppc.*,
+		tpp.`name` projectName,
+		tps.`name` projectStepStr,
+		tpm.`name` milestoneName
+    	from t_project_plan_create tppc
+		LEFT JOIN
+		t_project_project tpp
+		ON 
+		tpp.id = tppc.project_id 
+		LEFT JOIN
+		t_project_step tps
+		ON
+		tps.id = tppc.project_step 
+		LEFT JOIN t_project_milestone tpm
+		ON tpm.id = tppc.plan_milestone_id
+	    where tppc.parent_plan_id = #{parentPlanId,jdbcType=BIGINT}
+   		and tppc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+  </select>
+  
+    <select id="selectAppendixIDAndNameInfoByBusinessId" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.AppendixIdAndNameInfoModelVo">
+	    select
+			tpa.id appendixId,
+			tpa.real_name appendixName
+		from t_project_appendix tpa
+		where business_id = #{businessId}
+		and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+  </select>
+  <select id="selectPlanModelByMilestoneId" parameterType="long" resultMap="rm">
+    SELECT
+	tptc.*,
+	tps.`name` as projectStepStr,
+	tpm.`name` milestoneName
+    FROM
+	t_project_plan_create as tptc
+	LEFT JOIN t_project_milestone tpm
+	ON tpm.id = tppc.plan_milestone_id
+	LEFT JOIN t_project_step as tps
+	ON tptc.project_step = tps.id
+    where 1=1
+	and tptc.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+	and tptc.plan_milestone_id = #{milestoneId,jdbcType=BIGINT}
+  </select>
+  <update id="cancelMilestone" parameterType="list">
+    update t_project_plan_create
+    set plan_milestone_id = null
+    where id in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+      {item,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  
+   <select id="selectListByIds" parameterType="list" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_plan_create
+        where plan_id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+    </select>
+    
+    <select id="selectOneByPlanId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_plan_create
+        where plan_id = #{planId,jdbcType=BIGINT}
+    </select>
+    
+    <!-- 获取审核状态下所有的计划列表 -->
+    <select id="selectUnCommitPlanList" parameterType="com.fea.project.model.plan.PlanModel" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_plan_create
+        where del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()} 
+        and (
+        		plan_leader_id = ${@com.fea.project.util.UserUtil@getUserId()}
+			or create_id = ${@com.fea.project.util.UserUtil@getUserId()}
+			)
+		and check_status = ${@com.fea.project.enums.apply.ProjectApplyVerifyStatusEnum@TYPE_UNCOMMIT.getValue}
+		and project_id = #{projectId,jdbcType=BIGINT}
+    </select>
+    
+    <resultMap id="rm1" type="com.fea.project.model.plan.vo.ProjectUserIdAndNameInfoModelVO">
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="userId" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+    
+    <select id="selectParticipantInfos" parameterType="java.lang.Long" resultMap="rm1">
+       select
+		DISTINCT
+		tppp.user_name userName,
+		tppp.plan_paticipant_user_id userId
+		FROM
+		t_project_plan_participant tppp
+		where plan_id = #{planId,jdbcType=BIGINT}
+    </select>
+    
+</mapper>

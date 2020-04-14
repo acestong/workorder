@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.customer.CrmStructureMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.customer.CrmStructureModel">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="PARENT_ID" jdbcType="BIGINT" property="PARENTID"/>
+        <result column="GROUP_CODE" jdbcType="VARCHAR" property="GROUPCODE"/>
+        <result column="GROUP_NAME" jdbcType="VARCHAR" property="GROUPNAME"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="DESCRIPTION"/>
+        <result column="ORG_ID" jdbcType="BIGINT" property="ORGID"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="ORG_CODE" jdbcType="VARCHAR" property="ORGCODE"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="STATE" jdbcType="INTEGER" property="STATE"/>
+        <result column="LFT" jdbcType="INTEGER" property="LFT"/>
+        <result column="RGT" jdbcType="INTEGER" property="RGT"/>
+        <result column="PRIORITY" jdbcType="INTEGER" property="PRIORITY"/>
+        <result column="TOTAL" jdbcType="INTEGER" property="TOTAL"/>
+        <result column="CUSTOMER_ID" jdbcType="BIGINT" property="CUSTOMERID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        PARENT_ID, GROUP_CODE, GROUP_NAME, DESCRIPTION, ORG_ID, REG_ID, ORG_CODE, CREATE_USER, 
+        CREATE_TIME, UPDATE_USER, UPDATE_TIME, STATE, LFT, RGT, PRIORITY, TOTAL, CUSTOMER_ID
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_crm_structure
+        where ID = #{ID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.customer.CrmStructureModel"
+            resultMap="BaseResultMap">
+        select * from t_crm_structure where 1 = 1
+        <if test="PARENTID != null">
+            and PARENT_ID = #{PARENTID,jdbcType=BIGINT}
+        </if>
+        <if test="GROUPCODE != null">
+            and GROUP_CODE = #{GROUPCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="GROUPNAME != null">
+            and GROUP_NAME = #{GROUPNAME,jdbcType=VARCHAR}
+        </if>
+        <if test="DESCRIPTION != null">
+            and DESCRIPTION = #{DESCRIPTION,jdbcType=VARCHAR}
+        </if>
+        <if test="ORGID != null">
+            and ORG_ID = #{ORGID,jdbcType=BIGINT}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="ORGCODE != null">
+            and ORG_CODE = #{ORGCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="LFT != null">
+            and LFT = #{LFT,jdbcType=INTEGER}
+        </if>
+        <if test="RGT != null">
+            and RGT = #{RGT,jdbcType=INTEGER}
+        </if>
+        <if test="PRIORITY != null">
+            and PRIORITY = #{PRIORITY,jdbcType=INTEGER}
+        </if>
+        <if test="TOTAL != null">
+            and TOTAL = #{TOTAL,jdbcType=INTEGER}
+        </if>
+        <if test="CUSTOMERID != null">
+            and CUSTOMER_ID = #{CUSTOMERID,jdbcType=BIGINT}
+        </if>
+        and STATE = 1
+    </select>
+
+    <select id="selectByCustomerIds" resultMap="BaseResultMap">
+        select *
+        from t_crm_structure
+        where CUSTOMER_ID in
+        <foreach collection="list" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+        and STATE = 1
+    </select>
+
+</mapper>

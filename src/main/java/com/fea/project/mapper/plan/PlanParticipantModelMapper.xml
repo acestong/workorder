@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.plan.PlanParticipantModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.plan.PlanParticipantModel">
+    <id column="plan_panticipant_id" jdbcType="BIGINT" property="planPanticipantId" />
+    <result column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="plan_paticipant_user_id" jdbcType="BIGINT" property="planPaticipantUserId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue"> 
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    plan_panticipant_id, plan_id, plan_paticipant_user_id,user_name
+  </sql>
+  <select id="selectByExample" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+	* 
+	from 
+	t_project_plan_participant
+	where plan_id =  #{planId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_participant
+    where plan_panticipant_id = #{planPanticipantId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_plan_participant
+    where plan_panticipant_id = #{planPanticipantId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPlanId" parameterType="java.lang.Long">
+    delete from t_project_plan_participant
+    where plan_id = #{planId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.plan.PlanParticipantModelExample">
+    delete from t_project_plan_participant
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"  keyProperty="planPanticipantId" parameterType="com.fea.project.model.plan.PlanParticipantModel">
+    insert into t_project_plan_participant (plan_panticipant_id, plan_id, plan_paticipant_user_id,user_name
+      )
+    values (#{planPanticipantId,jdbcType=BIGINT}, #{planId,jdbcType=BIGINT}, #{planPaticipantUserId,jdbcType=BIGINT},
+    #{userName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="planPanticipantId" parameterType="com.fea.project.model.plan.PlanParticipantModel">
+    insert into t_project_plan_participant
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planPanticipantId != null">
+        plan_panticipant_id,
+      </if>
+      <if test="planId != null">
+        plan_id,
+      </if>
+      <if test="planPaticipantUserId != null">
+        plan_paticipant_user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planPanticipantId != null">
+        #{planPanticipantId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="planPaticipantUserId != null">
+        #{planPaticipantUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.plan.PlanParticipantModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_plan_participant
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_plan_participant
+    <set>
+      <if test="record.planPanticipantId != null">
+        plan_panticipant_id = #{record.planPanticipantId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planId != null">
+        plan_id = #{record.planId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planPaticipantUserId != null">
+        plan_paticipant_user_id = #{record.planPaticipantUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.user_name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_plan_participant
+    set plan_panticipant_id = #{record.planPanticipantId,jdbcType=BIGINT},
+      plan_id = #{record.planId,jdbcType=BIGINT},
+      plan_paticipant_user_id = #{record.planPaticipantUserId,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.plan.PlanParticipantModel">
+    update t_project_plan_participant
+    <set>
+      <if test="planId != null">
+        plan_id = #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="planPaticipantUserId != null">
+        plan_paticipant_user_id = #{planPaticipantUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where plan_panticipant_id = #{planPanticipantId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.plan.PlanParticipantModel">
+    update t_project_plan_participant
+    set plan_id = #{planId,jdbcType=BIGINT},
+      plan_paticipant_user_id = #{planPaticipantUserId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR}
+    where plan_panticipant_id = #{planPanticipantId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <update id="updatePlanId" parameterType="com.fea.project.model.plan.PlanParticipantModel">
+    update t_project_plan_participant
+      set  plan_id = #{planId,jdbcType=BIGINT},
+    where plan_panticipant_id = #{planPanticipantId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectAllByPlanId" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.ProjectUserIdAndNameInfoModelVO">
+    select 
+	tppp.plan_paticipant_user_id userId,user_name userName
+	from t_project_plan_participant tppp
+	where  plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  
+   <select id="selectInfoListByPlanId" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.IdAndNameModelVo">
+   select DISTINCT
+	plan_paticipant_user_id id,
+	user_name name
+	from 
+	t_project_plan_participant
+	where plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  
+   <select id="selectPlanParticipantListByPlanId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+	*
+	from t_project_plan_participant 
+	where plan_id = #{planId,jdbcType=BIGINT}
+  </select>
+  
+  <insert id="insertByList" keyProperty="planPanticipantId">
+    insert into t_project_plan_participant (plan_panticipant_id, plan_id, plan_paticipant_user_id
+      )
+    values 
+     <foreach collection="list" index="index" item="item" separator=",">
+            (
+				#{item.planPanticipantId,jdbcType=BIGINT}, 
+				#{item.planId,jdbcType=BIGINT}, 
+				#{item.planPaticipantUserId,jdbcType=BIGINT}
+				#{item.userName,jdbcType=VARCHAR}
+                )
+        </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.plan.PlanAppendixModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.plan.PlanAppendixModel">
+    <id column="business_appendix_id" jdbcType="BIGINT" property="businessAppendixId" />
+    <result column="business_appendix_name" jdbcType="VARCHAR" property="businessAppendixName" />
+    <result column="business_appendix_type" jdbcType="BIGINT" property="businessAppendixType" />
+    <result column="business_appendix_desc" jdbcType="VARCHAR" property="businessAppendixDesc" />
+    <result column="appendix_id" jdbcType="BIGINT" property="appendixId" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="business_name" jdbcType="VARCHAR" property="businessName" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="business_type" jdbcType="BIGINT" property="businessType" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+  </resultMap> 
+  <resultMap id="brm" type="com.fea.project.model.plan.vo.BusinessAppendixModelVo">
+    <id column="business_appendix_id" jdbcType="BIGINT" property="businessAppendixId" />
+    <result column="business_appendix_name" jdbcType="VARCHAR" property="businessAppendixName" />
+    <result column="business_appendix_type" jdbcType="BIGINT" property="businessAppendixType" />
+    <result column="business_appendix_desc" jdbcType="VARCHAR" property="businessAppendixDesc" />
+    <result column="appendix_id" jdbcType="BIGINT" property="appendixId" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="business_name" jdbcType="VARCHAR" property="businessName" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="business_type" jdbcType="BIGINT" property="businessType" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+  </resultMap> 
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    business_appendix_id, business_appendix_name, business_appendix_type, business_appendix_desc, appendix_id, 
+    business_id,business_name,project_id,business_type, create_id, create_by, create_time, update_id, update_by, update_time, del_status,project_step
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.plan.PlanAppendixModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_plan_appendix
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_appendix
+    where business_appendix_id = #{businessAppendixId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByBusinessAppendixId" parameterType="java.lang.Long" resultMap="brm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_appendix
+    where business_appendix_id = #{businessAppendixId,jdbcType=BIGINT}
+    and del_status =  ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}  
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_plan_appendix
+    where business_appendix_id = #{businessAppendixId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.plan.PlanAppendixModelExample">
+    delete from t_project_plan_appendix
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"  keyProperty="businessAppendixId"  parameterType="com.fea.project.model.plan.PlanAppendixModel">
+    insert into t_project_plan_appendix (business_appendix_id, business_appendix_name, 
+      business_appendix_type, business_appendix_desc, appendix_id, 
+      business_id,business_name,project_id,business_type, create_id, create_by, 
+      create_time, update_id, update_by, 
+      update_time, del_status,project_step)
+    values (#{businessAppendixId,jdbcType=BIGINT}, #{businessAppendixName,jdbcType=VARCHAR}, 
+      #{businessAppendixType,jdbcType=BIGINT}, #{businessAppendixDesc,jdbcType=VARCHAR}, #{appendixId,jdbcType=BIGINT}, 
+      #{businessId,jdbcType=BIGINT},#{businessName,jdbcType=VARCHAR},#{projectId,jdbcType=BIGINT},#{businessType,jdbcType=BIGINT},
+      #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT}, #{projectStep,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="businessAppendixId" parameterType="com.fea.project.model.plan.PlanAppendixModel">
+    insert into t_project_plan_appendix
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="businessAppendixId != null">
+        business_appendix_id,
+      </if>
+      <if test="businessAppendixName != null">
+        business_appendix_name,
+      </if>
+      <if test="businessAppendixType != null">
+        business_appendix_type,
+      </if>
+      <if test="businessAppendixDesc != null">
+        business_appendix_desc,
+      </if>
+      <if test="appendixId != null">
+        appendix_id,
+      </if>
+      <if test="businessId != null">
+        business_id,
+      </if>
+      <if test="businessName != null">
+       business_name,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+      <if test="projectStep != null">
+        project_step,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="businessAppendixId != null">
+        #{businessAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="businessAppendixName != null">
+        #{businessAppendixName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessAppendixType != null">
+        #{businessAppendixType,jdbcType=BIGINT},
+      </if>
+      <if test="businessAppendixDesc != null">
+        #{businessAppendixDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="appendixId != null">
+        #{appendixId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="businessName != null">
+        #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        #{projectStep,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.plan.PlanAppendixModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_plan_appendix
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_plan_appendix
+    <set>
+      <if test="record.businessAppendixId != null">
+        business_appendix_id = #{record.businessAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessAppendixName != null">
+        business_appendix_name = #{record.businessAppendixName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessAppendixType != null">
+        business_appendix_type = #{record.businessAppendixType,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessAppendixDesc != null">
+        business_appendix_desc = #{record.businessAppendixDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appendixId != null">
+        appendix_id = #{record.appendixId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessId != null">
+        business_id = #{record.businessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessName != null">
+        business_name = #{record.businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessType != null">
+        businessType = #{record.businessType,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectStep != null">
+        project_step = #{record.projectStep,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_plan_appendix
+    set business_appendix_id = #{record.businessAppendixId,jdbcType=BIGINT},
+      business_appendix_name = #{record.businessAppendixName,jdbcType=VARCHAR},
+      business_appendix_type = #{record.businessAppendixType,jdbcType=BIGINT},
+      business_appendix_desc = #{record.businessAppendixDesc,jdbcType=VARCHAR},
+      appendix_id = #{record.appendixId,jdbcType=BIGINT},
+      business_id = #{record.businessId,jdbcType=BIGINT},
+      business_name = #{record.businessName,jdbcType=VARCHAR},
+      project_id = #{record.projectId,jdbcType=BIGINT},
+      business_type = #{record.businessType,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+      project_step = #{record.projectStep,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.plan.PlanAppendixModel">
+    update t_project_plan_appendix
+    <set>
+      <if test="businessAppendixName != null">
+        business_appendix_name = #{businessAppendixName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessAppendixType != null">
+        business_appendix_type = #{businessAppendixType,jdbcType=BIGINT},
+      </if>
+      <if test="businessAppendixDesc != null">
+        business_appendix_desc = #{businessAppendixDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="appendixId != null">
+        appendix_id = #{appendixId,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="businessName != null">
+        businessName = #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        project_step = #{projectStep,jdbcType=BIGINT},
+      </if>
+    </set>
+    where business_appendix_id = #{businessAppendixId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.plan.PlanAppendixModel">
+    update t_project_plan_appendix
+    set business_appendix_name = #{businessAppendixName,jdbcType=VARCHAR},
+      business_appendix_type = #{businessAppendixType,jdbcType=BIGINT},
+      business_appendix_desc = #{businessAppendixDesc,jdbcType=VARCHAR},
+      appendix_id = #{appendixId,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      business_name = #{businessName,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=BIGINT},
+      business_type = #{businessType,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+      project_step = #{projectStep,jdbcType=BIGINT}
+    where business_appendix_id = #{businessAppendixId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectByExampleWithDelStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_project_plan_appendix 
+    where del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}  
+   and business_id = #{businessId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKeyWithDelStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_appendix
+    where business_appendix_id = #{businessAppendixId,jdbcType=BIGINT}
+  </select>
+  
+  
+   <resultMap id="rm" type="com.fea.project.model.plan.vo.AppendixModelVo">
+    <id column="business_appendix_id" jdbcType="BIGINT" property="businessAppendixId" />
+    <result column="business_appendix_name" jdbcType="VARCHAR" property="businessAppendixName" />
+    <result column="business_appendix_desc" jdbcType="VARCHAR" property="businessAppendixDesc" />
+    <result column="business_appendix_type" jdbcType="BIGINT" property="businessAppendixType" />
+    <collection property="appendixInfosList" column="business_appendix_id"  select="selectAppendixInfos"></collection>
+  </resultMap> 
+  
+  <select id="selectAllByBusinessIdWithDelStatus" parameterType="com.fea.project.model.plan.vo.PageInfoFromFrontModel" resultMap="rm">
+    select distinct
+    business_appendix_id, business_appendix_name,business_appendix_desc,business_appendix_type
+    from t_project_plan_appendix
+    where  del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and (
+    	business_id = #{businessId,jdbcType=BIGINT}
+    	<if test="planTransferId != null">
+    	or	business_id = #{planTransferId,jdbcType=BIGINT}
+    	</if>
+    	<if test="planId != null">
+    	or	business_id = #{planId,jdbcType=BIGINT}
+    	</if>
+    	)
+  </select>
+  <select id="selectAppendixInfos" parameterType="java.lang.Long" resultType="com.fea.project.model.plan.vo.AppendixInfosVo">
+		select DISTINCT
+		id  appendixId,
+		real_name appendixName
+		from 
+		t_project_appendix
+		where business_id = #{business_appendix_id,jdbcType=BIGINT}
+  </select>
+  
+  <update id="updateByPrimaryKeySelectiveWithDelStatus" parameterType="com.fea.project.model.plan.PlanAppendixModel">
+    update t_project_plan_appendix 
+	set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}  
+    where business_appendix_id = #{businessAppendixId,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateBusinessIdInTProjectAppendix" parameterType="com.fea.project.model.plan.vo.UpdateBusinessIdInProjectAppendixModelVo">
+    update t_project_appendix
+    set business_id = #{businessAppendixId,jdbcType=BIGINT} 
+    where id = #{appendixId,jdbcType=BIGINT} 
+  </update>
+  <select id="selectAppendixByIdsAndProjectId" parameterType="com.fea.project.model.projectdata.IdsVo"
+          resultType="com.fea.project.model.projectdata.AppendixDataFileVo">
+    select
+    tppa.business_appendix_id as businessAppendixId,
+    tppa.business_appendix_name as businessAppendixName,
+    tppa.business_appendix_type as businessAppendixType,
+    tpdi.name as businessAppendixTypeString,
+    tppa.business_appendix_desc as businessAppendixDesc,
+    tppa.business_type as businessType,
+    tppa.business_id as businessId,
+    tppa.create_id as createId,
+    tppa.create_by as createBy,
+    tppa.create_time as createTime,
+    tps.id as projectStepId,
+    tps.name as projectStepName,
+    count(tpa.business_id) as appendixCount
+    from
+    t_project_plan_appendix as tppa ,
+    t_project_appendix as tpa,
+    t_project_dictionary_item as tpdi,
+    t_project_step as tps
+    where
+    tppa.business_appendix_id = tpa.business_id
+    and tppa.project_step = tps.id
+    and tppa.business_appendix_type = tpdi.id
+    and tppa.del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and tppa.project_id = #{ids.projectId,jdbcType=BIGINT}
+    <if test="ids.businessIds != null and ids.businessIds.size > 0">
+      and tppa.business_id in
+      <foreach collection="ids.businessIds" index="idx" item="item" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="ids.createIds != null and ids.createIds.size > 0">
+      and tppa.create_id in
+      <foreach collection="ids.createIds" index="idx" item="item" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+    </if>
+    <if test="ids.keywords != null and ids.keywords != ''">
+      and (
+      tppa.business_appendix_name like CONCAT('%', #{ids.keywords, jdbcType=VARCHAR}, '%')
+      )
+    </if>
+    <if test="ids.filters != null">
+      <if test="ids.filters.get('businessAppendixType') != null and ids.filters.get('businessAppendixType').size > 0">
+        and tppa.business_appendix_type in
+        <foreach collection="ids.filters.get('businessAppendixType')" item="item" open="(" close=")" separator=",">
+          #{item}
+        </foreach>
+      </if>
+      <if test="ids.filters.get('projectStepId') != null and ids.filters.get('projectStepId').size > 0">
+        and tppa.project_step in
+        <foreach collection="ids.filters.get('projectStepId')" item="item" open="(" close=")" separator=",">
+          #{item}
+        </foreach>
+      </if>
+    </if>
+    GROUP BY tpa.business_id
+  </select>
+  
+  
+   <update id="updateByList">
+   	update t_project_plan_appendix
+        	set business_id = #{businessId,jdbcType=BIGINT},
+        	business_name =#{businessName,jdbcType=VARCHAR},
+        	project_Id = #{projectId,jdbcType=BIGINT},
+        	project_step = #{projectStep,jdbcType=BIGINT}
+        	where business_appendix_id in 
+        	 <foreach collection="list" open="(" close=")" separator="," index="index" item="item">
+        	 #{item,jdbcType=BIGINT}
+        	 </foreach>
+  </update>
+   <delete id="deleteByBusinessId" parameterType="java.lang.Long">
+    delete from t_project_plan_appendix
+    where business_id = #{businessId,jdbcType=BIGINT}
+  </delete>
+</mapper>

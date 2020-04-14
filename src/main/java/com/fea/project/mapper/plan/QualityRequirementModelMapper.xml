@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.plan.QualityRequirementModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.plan.QualityRequirementModel">
+    <id column="plan_quality_requirement_id" jdbcType="BIGINT" property="planQualityRequirementId" />
+    <result column="plan_quality_requirement_name" jdbcType="VARCHAR" property="planQualityRequirementName" />
+    <result column="plan_quality_requirement_content" jdbcType="VARCHAR" property="planQualityRequirementContent" />
+    <result column="plan_quality_appendix_id" jdbcType="BIGINT" property="planQualityAppendixId" />
+    <result column="plan_id" jdbcType="BIGINT" property="planId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+  </resultMap> 
+  <sql id="Example_Where_Clause"> 
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    plan_quality_requirement_id, plan_quality_requirement_name, plan_quality_requirement_content, 
+    plan_quality_appendix_id, plan_id, create_id, create_by, create_time, update_id, 
+    update_by, update_time, del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.plan.QualityRequirementModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_plan_quality_requirement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_quality_requirement
+    where plan_quality_requirement_id = #{planQualityRequirementId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_plan_quality_requirement
+    where plan_quality_requirement_id = #{planQualityRequirementId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.plan.QualityRequirementModelExample">
+    delete from t_project_plan_quality_requirement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="planQualityRequirementId" parameterType="com.fea.project.model.plan.QualityRequirementModel">
+    insert into t_project_plan_quality_requirement (plan_quality_requirement_id, plan_quality_requirement_name, 
+      plan_quality_requirement_content, plan_quality_appendix_id, 
+      plan_id, create_id, create_by, 
+      create_time, update_id, update_by, 
+      update_time, del_status)
+    values (#{planQualityRequirementId,jdbcType=BIGINT}, #{planQualityRequirementName,jdbcType=VARCHAR}, 
+      #{planQualityRequirementContent,jdbcType=VARCHAR}, #{planQualityAppendixId,jdbcType=BIGINT}, 
+      #{planId,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="planQualityRequirementId" parameterType="com.fea.project.model.plan.QualityRequirementModel">
+    insert into t_project_plan_quality_requirement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="planQualityRequirementId != null">
+        plan_quality_requirement_id,
+      </if>
+      <if test="planQualityRequirementName != null">
+        plan_quality_requirement_name,
+      </if>
+      <if test="planQualityRequirementContent != null">
+        plan_quality_requirement_content,
+      </if>
+      <if test="planQualityAppendixId != null">
+        plan_quality_appendix_id,
+      </if>
+      <if test="planId != null">
+        plan_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="planQualityRequirementId != null">
+        #{planQualityRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="planQualityRequirementName != null">
+        #{planQualityRequirementName,jdbcType=VARCHAR},
+      </if>
+      <if test="planQualityRequirementContent != null">
+        #{planQualityRequirementContent,jdbcType=VARCHAR},
+      </if>
+      <if test="planQualityAppendixId != null">
+        #{planQualityAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.plan.QualityRequirementModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_plan_quality_requirement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_plan_quality_requirement
+    <set>
+      <if test="record.planQualityRequirementId != null">
+        plan_quality_requirement_id = #{record.planQualityRequirementId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planQualityRequirementName != null">
+        plan_quality_requirement_name = #{record.planQualityRequirementName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planQualityRequirementContent != null">
+        plan_quality_requirement_content = #{record.planQualityRequirementContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planQualityAppendixId != null">
+        plan_quality_appendix_id = #{record.planQualityAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planId != null">
+        plan_id = #{record.planId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_plan_quality_requirement
+    set plan_quality_requirement_id = #{record.planQualityRequirementId,jdbcType=BIGINT},
+      plan_quality_requirement_name = #{record.planQualityRequirementName,jdbcType=VARCHAR},
+      plan_quality_requirement_content = #{record.planQualityRequirementContent,jdbcType=VARCHAR},
+      plan_quality_appendix_id = #{record.planQualityAppendixId,jdbcType=BIGINT},
+      plan_id = #{record.planId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.plan.QualityRequirementModel">
+    update t_project_plan_quality_requirement
+    <set>
+      <if test="planQualityRequirementName != null">
+        plan_quality_requirement_name = #{planQualityRequirementName,jdbcType=VARCHAR},
+      </if>
+      <if test="planQualityRequirementContent != null">
+        plan_quality_requirement_content = #{planQualityRequirementContent,jdbcType=VARCHAR},
+      </if>
+      <if test="planQualityAppendixId != null">
+        plan_quality_appendix_id = #{planQualityAppendixId,jdbcType=BIGINT},
+      </if>
+      <if test="planId != null">
+        plan_id = #{planId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where plan_quality_requirement_id = #{planQualityRequirementId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.plan.QualityRequirementModel">
+    update t_project_plan_quality_requirement
+    set plan_quality_requirement_name = #{planQualityRequirementName,jdbcType=VARCHAR},
+      plan_quality_requirement_content = #{planQualityRequirementContent,jdbcType=VARCHAR},
+      plan_quality_appendix_id = #{planQualityAppendixId,jdbcType=BIGINT},
+      plan_id = #{planId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where plan_quality_requirement_id = #{planQualityRequirementId,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+  <select id="selectByExampleWithDelStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_project_plan_quality_requirement 
+    where del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and plan_id=#{planId,jdbcType=BIGINT}  
+  </select>
+  <select id="selectByPrimaryKeyWithDelStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_quality_requirement
+    where plan_quality_requirement_id = #{planQualityRequirementId,jdbcType=BIGINT} and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+  </select>
+  
+  
+  <select id="selectAllByPlanIdWithDelStatus" parameterType="com.fea.project.model.plan.vo.PageInfoFromFrontModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_plan_quality_requirement
+    where  del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and (
+    		plan_id = #{planId,jdbcType=BIGINT} 
+    		<if test="businessId != null">
+    		or plan_id = #{businessId,jdbcType=BIGINT} 
+    		</if>
+    		<if test="planTransferId != null">
+    		or plan_id = #{planTransferId,jdbcType=BIGINT} 
+    		</if>
+    	)
+    
+  </select>
+  
+  
+    <update id="updateByPrimaryKeySelectiveWithDelStatus" parameterType="com.fea.project.model.plan.QualityRequirementModel">
+    update t_project_plan_quality_requirement
+	set del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@DELETE.getStatus()}
+    where plan_quality_requirement_id = #{planQualityRequirementId,jdbcType=BIGINT}
+  </update>
+  
+   <update id="updateBusinessIdInTProjectAppendix" parameterType="com.fea.project.model.plan.vo.UpdateBusinessIdInProjectAppendixModelVo">
+    update t_project_appendix
+    set business_id = #{businessAppendixId,jdbcType=BIGINT} 
+    where id = #{appendixId,jdbcType=BIGINT} 
+  </update>
+  
+  <update id="updateByList">
+   	update t_project_plan_quality_requirement
+        	set plan_id = #{businessId,jdbcType=BIGINT}
+        	where plan_quality_requirement_id in 
+        	 <foreach collection="list" open="(" close=")" separator="," index="index" item="item">
+        	 #{item,jdbcType=BIGINT}
+        	 </foreach>
+  </update>
+  
+  <delete id="deleteByBusinessId" parameterType="java.lang.Long">
+    delete from t_project_plan_quality_requirement
+    where plan_id = #{businessId,jdbcType=BIGINT}
+  </delete>
+</mapper>

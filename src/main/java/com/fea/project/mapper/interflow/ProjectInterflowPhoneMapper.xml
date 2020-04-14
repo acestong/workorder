@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.interflow.ProjectInterflowPhoneMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.interflow.ProjectInterflowPhoneModel">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="way" jdbcType="INTEGER" property="way" />
+        <result column="contact_type" jdbcType="INTEGER" property="contactType" />
+        <result column="contact_id" jdbcType="BIGINT" property="contactId" />
+        <result column="time" jdbcType="TIMESTAMP" property="time" />
+        <result column="details" jdbcType="VARCHAR" property="details" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="del_states" jdbcType="INTEGER" property="delStates" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+        <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, title, type, way, contact_type, contact_id, time, details, create_id, create_by,
+        create_time, update_id, update_by, update_time, del_states, project_id, project_step, 
+        task_id
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_interflow_phone
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_interflow_phone
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_interflow_phone
+        where id in 
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.interflow.ProjectInterflowPhoneModel">
+        insert into t_project_interflow_phone (
+        <include refid="Base_Column_List" />
+        )
+        values (
+            #{id,jdbcType=BIGINT},
+            #{title,jdbcType=VARCHAR},
+            #{type,jdbcType=INTEGER},
+            #{way,jdbcType=INTEGER}, 
+            #{contactType,jdbcType=INTEGER}, 
+            #{contactId,jdbcType=BIGINT}, 
+            #{time,jdbcType=TIMESTAMP}, 
+            #{details,jdbcType=VARCHAR}, 
+            #{createId,jdbcType=BIGINT}, 
+            #{createBy,jdbcType=VARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP}, 
+            #{updateId,jdbcType=BIGINT}, 
+            #{updateBy,jdbcType=VARCHAR}, 
+            #{updateTime,jdbcType=TIMESTAMP}, 
+            #{delStates,jdbcType=INTEGER}, 
+            #{projectId,jdbcType=BIGINT}, 
+            #{projectStep,jdbcType=BIGINT}, 
+            #{taskId,jdbcType=BIGINT}
+            )
+    </insert>
+
+    <insert id="insertList" keyProperty="id" parameterType="java.util.List">
+        insert into t_project_interflow_phone (
+        <include refid="Base_Column_List" />
+        ) values 
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+                #{item.id,jdbcType=BIGINT},
+                #{item.title,jdbcType=VARCHAR},
+                #{item.type,jdbcType=INTEGER},
+                #{item.way,jdbcType=INTEGER}, 
+                #{item.contactType,jdbcType=INTEGER}, 
+                #{item.contactId,jdbcType=BIGINT}, 
+                #{item.time,jdbcType=TIMESTAMP}, 
+                #{item.details,jdbcType=VARCHAR}, 
+                #{item.createId,jdbcType=BIGINT}, 
+                #{item.createBy,jdbcType=VARCHAR}, 
+                #{item.createTime,jdbcType=TIMESTAMP}, 
+                #{item.updateId,jdbcType=BIGINT}, 
+                #{item.updateBy,jdbcType=VARCHAR}, 
+                #{item.updateTime,jdbcType=TIMESTAMP}, 
+                #{item.delStates,jdbcType=INTEGER}, 
+                #{item.projectId,jdbcType=BIGINT}, 
+                #{item.projectStep,jdbcType=BIGINT}, 
+                #{item.taskId,jdbcType=BIGINT}
+                )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.interflow.ProjectInterflowPhoneModel" resultMap="BaseResultMap">
+        select * from t_project_interflow_phone where 1 = 1
+        <if test="title != null">
+            and title = #{title,jdbcType=VARCHAR}
+        </if>
+        <if test="type != null">
+            and type = #{type,jdbcType=INTEGER}
+        </if>
+        <if test="way != null">
+            and way = #{way,jdbcType=INTEGER}
+        </if>
+        <if test="contactType != null">
+            and contact_type = #{contactType,jdbcType=INTEGER}
+        </if>
+        <if test="contactId != null">
+            and contact_id = #{contactId,jdbcType=BIGINT}
+        </if>
+        <if test="time != null">
+            and time = #{time,jdbcType=TIMESTAMP}
+        </if>
+        <if test="details != null">
+            and details = #{details,jdbcType=VARCHAR}
+        </if>
+        <if test="createId != null">
+            and create_id = #{createId,jdbcType=BIGINT}
+        </if>
+        <if test="createBy != null">
+            and create_by = #{createBy,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updateId != null">
+            and update_id = #{updateId,jdbcType=BIGINT}
+        </if>
+        <if test="updateBy != null">
+            and update_by = #{updateBy,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="delStates != null">
+            and del_states = #{delStates,jdbcType=INTEGER}
+        </if>
+        <if test="projectId != null">
+            and project_id = #{projectId,jdbcType=BIGINT}
+        </if>
+        <if test="projectStep != null">
+            and project_step = #{projectStep,jdbcType=BIGINT}
+        </if>
+        <if test="taskId != null">
+            and task_id = #{taskId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.interflow.ProjectInterflowPhoneModel">
+        insert into t_project_interflow_phone
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="way != null">
+                way,
+            </if>
+            <if test="contactType != null">
+                contact_type,
+            </if>
+            <if test="contactId != null">
+                contact_id,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="details != null">
+                details,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateId != null">
+                update_id,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="delStates != null">
+                del_states,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="projectStep != null">
+                project_step,
+            </if>
+            <if test="taskId != null">
+                task_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="way != null">
+                #{way,jdbcType=INTEGER},
+            </if>
+            <if test="contactType != null">
+                #{contactType,jdbcType=INTEGER},
+            </if>
+            <if test="contactId != null">
+                #{contactId,jdbcType=BIGINT},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="details != null">
+                #{details,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStates != null">
+                #{delStates,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="projectStep != null">
+                #{projectStep,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null">
+                #{taskId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.interflow.ProjectInterflowPhoneModel">
+        update t_project_interflow_phone
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="way != null">
+                way = #{way,jdbcType=INTEGER},
+            </if>
+            <if test="contactType != null">
+                contact_type = #{contactType,jdbcType=INTEGER},
+            </if>
+            <if test="contactId != null">
+                contact_id = #{contactId,jdbcType=BIGINT},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="details != null">
+                details = #{details,jdbcType=VARCHAR},
+            </if>
+            <if test="createId != null">
+                create_id = #{createId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateId != null">
+                update_id = #{updateId,jdbcType=BIGINT},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delStates != null">
+                del_states = #{delStates,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=BIGINT},
+            </if>
+            <if test="projectStep != null">
+                project_step = #{projectStep,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null">
+                task_id = #{taskId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.interflow.ProjectInterflowPhoneModel">
+        update t_project_interflow_phone
+        set title = #{title,jdbcType=VARCHAR},
+            type = #{type,jdbcType=INTEGER},
+            way = #{way,jdbcType=INTEGER},
+            contact_type = #{contactType,jdbcType=INTEGER},
+            contact_id = #{contactId,jdbcType=BIGINT},
+            time = #{time,jdbcType=TIMESTAMP},
+            details = #{details,jdbcType=VARCHAR},
+            create_id = #{createId,jdbcType=BIGINT},
+            create_by = #{createBy,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_id = #{updateId,jdbcType=BIGINT},
+            update_by = #{updateBy,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            del_states = #{delStates,jdbcType=INTEGER},
+            project_id = #{projectId,jdbcType=BIGINT},
+            project_step = #{projectStep,jdbcType=BIGINT},
+            task_id = #{taskId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <resultMap id="BaseResultMapVo" type="com.fea.project.model.interflow.vo.ProjectInterflowPhoneModelVo"
+               extends="BaseResultMap">
+        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+        <result column="projectStepName" jdbcType="VARCHAR" property="projectStepName" />
+        <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    </resultMap>
+    <select id="selectModelVoById" parameterType="long" resultMap="BaseResultMapVo">
+        select
+        tpip.*,
+        tpp.name as projectName,
+        tps.name as projectStepName,
+        tptc.task_name
+        from t_project_interflow_phone as tpip
+        left join t_project_project as tpp on tpip.project_id=tpp.id
+        left join t_project_step as tps on tpip.project_step=tps.id
+        left join t_project_task_create as tptc on tpip.task_id=tptc.task_id
+        where tpip.id = #{id,jdbcType=BIGINT}
+    </select>
+    <resultMap id="ListShowMap" type="com.fea.project.model.interflow.vo.ProjectInterflowListShowVo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="type" jdbcType="INTEGER" property="type" />
+        <result column="way" jdbcType="INTEGER" property="way" />
+        <result column="time" jdbcType="TIMESTAMP" property="interflowTime" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+        <result column="task_id" jdbcType="BIGINT" property="taskId" />
+        <result column="create_id" jdbcType="BIGINT" property="createId" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_id" jdbcType="BIGINT" property="updateId" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="projectName" jdbcType="BIGINT" property="projectName" />
+        <result column="projectStepName" jdbcType="BIGINT" property="projectStepName" />
+        <result column="task_name" jdbcType="BIGINT" property="taskName" />
+    </resultMap>
+    <select id="selectShowListByProjectId"
+            parameterType="com.fea.project.model.interflow.vo.QueryInterflowParamVo"
+            resultMap="ListShowMap">
+        select
+        tpip.*,
+        tpp.name as projectName
+        from t_project_interflow_phone as tpip
+        left join t_project_project as tpp on tpip.project_id=tpp.id
+        where tpip.del_states = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+        and tpip.project_id = #{paramVo.projectId,jdbcType=BIGINT}
+        <if test="paramVo.createIds !=null and paramVo.createIds.size()>0">
+            and tpip.create_id in
+            <foreach collection="paramVo.createIds" item="item" open="(" close=")" separator=",">
+                #{item,jdbcType=BIGINT}
+            </foreach>
+        </if>
+        <if test="paramVo.keywords != null and keywords !=''">
+            and (
+            tpip.title like CONCAT('%', #{paramVo.keywords, jdbcType=VARCHAR}, '%')
+            )
+        </if>
+        <if test="paramVo.filters != null">
+            <if test="paramVo.filters.get('type') != null and paramVo.filters.get('type').size() > 0">
+                and tpip.type in
+                <foreach collection="paramVo.filters.get('type')" item="item" open="(" close=")" separator=",">
+                    #{item,jdbcType=BIGINT}
+                </foreach>
+            </if>
+            <if test="paramVo.filters.get('projectStep') != null and paramVo.filters.get('projectStep').size() > 0">
+                and tpip.project_step in
+                <foreach collection="paramVo.filters.get('projectStep')" item="item" open="(" close=")" separator=",">
+                    #{item,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </if>
+    </select>
+</mapper>

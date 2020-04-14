@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.baseconfig.ProjectCodeMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.model.baseconfig.ProjectCodeModel">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="dataStr" jdbcType="INTEGER" property="dataStr"/>
+        <result column="parent_number" jdbcType="INTEGER" property="parentNumber"/>
+        <result column="child_number" jdbcType="INTEGER" property="childNumber"/>
+        <result column="create_period" jdbcType="INTEGER" property="createPeriod"/>
+        <result column="reg_id" jdbcType="BIGINT" property="regId"/>
+        <result column="child_short_name" jdbcType="VARCHAR" property="childShortName"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap_pojo" type="com.fea.project.model.baseconfig.pojo.ProjectCodePojo"
+               extends="BaseResultMap">
+        <association property="projectCodeShortNameModels" column="{regId=reg_id, codeId=id}"
+                     select="com.fea.project.dao.baseconfig.ProjectCodeShortNameMapper.selectRegProjectCodeShortName"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap_vo" type="com.fea.project.model.baseconfig.vo.ProjectCodeVo" extends="BaseResultMap">
+        <association property="projectCodeShortNameModels" column="{regId=reg_id, codeId=id}"
+                     select="com.fea.project.dao.baseconfig.ProjectCodeShortNameMapper.selectRegProjectCodeShortName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, dataStr, parent_number, child_number, create_period,
+        reg_id, child_short_name
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_project_code
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from t_project_code
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="java.util.List">
+        delete from t_project_code
+        where id in
+        <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insert" keyProperty="id" parameterType="com.fea.project.model.baseconfig.ProjectCodeModel">
+        insert into t_project_code (
+        <include refid="Base_Column_List"/>
+        )
+        values (
+        #{id,jdbcType=BIGINT},
+        #{dataStr,jdbcType=INTEGER},
+        #{parentNumber,jdbcType=INTEGER},
+        #{childNumber,jdbcType=INTEGER},
+        #{createPeriod,jdbcType=INTEGER},
+        #{regId,jdbcType=BIGINT},
+        #{childShortName,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" keyProperty="id">
+        insert into t_project_code (
+        <include refid="Base_Column_List"/>
+        ) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.dataStr,jdbcType=INTEGER},
+            #{item.parentNumber,jdbcType=INTEGER},
+            #{item.childNumber,jdbcType=INTEGER},
+            #{item.createPeriod,jdbcType=INTEGER},
+            #{item.regId,jdbcType=BIGINT},
+            #{item.childShortName,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectByModel" parameterType="com.fea.project.model.baseconfig.ProjectCodeModel"
+            resultMap="BaseResultMap">
+        select * from t_project_code where 1 = 1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="dataStr != null">
+            and dataStr = #{dataStr,jdbcType=INTEGER}
+        </if>
+        <if test="parentNumber != null">
+            and parent_number = #{parentNumber,jdbcType=INTEGER}
+        </if>
+        <if test="childNumber != null">
+            and child_number = #{childNumber,jdbcType=INTEGER}
+        </if>
+        <if test="createPeriod != null">
+            and create_period = #{createPeriod,jdbcType=INTEGER}
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId,jdbcType=BIGINT}
+        </if>
+        <if test="childShortName != null">
+            and child_short_name = #{childShortName,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="selectByRegId" resultMap="BaseResultMap_vo">
+        select
+        <include refid="Base_Column_List"/>
+        from t_project_code
+        where 1 = 1
+        <if test="regId == null">
+            and reg_id is null
+        </if>
+        <if test="regId != null">
+            and reg_id = #{regId, jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <insert id="insertSelective" keyProperty="id" parameterType="com.fea.project.model.baseconfig.ProjectCodeModel">
+        insert into t_project_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="dataStr != null">
+                dataStr,
+            </if>
+            <if test="parentNumber != null">
+                parent_number,
+            </if>
+            <if test="childNumber != null">
+                child_number,
+            </if>
+            <if test="createPeriod != null">
+                create_period,
+            </if>
+            <if test="regId != null">
+                reg_id,
+            </if>
+            <if test="childShortName != null">
+                child_short_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="dataStr != null">
+                #{dataStr,jdbcType=INTEGER},
+            </if>
+            <if test="parentNumber != null">
+                #{parentNumber,jdbcType=INTEGER},
+            </if>
+            <if test="childNumber != null">
+                #{childNumber,jdbcType=INTEGER},
+            </if>
+            <if test="createPeriod != null">
+                #{createPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="regId != null">
+                #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="childShortName != null">
+                #{childShortName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="com.fea.project.model.baseconfig.ProjectCodeModel">
+        update t_project_code
+        <set>
+            <if test="dataStr != null">
+                dataStr = #{dataStr,jdbcType=INTEGER},
+            </if>
+            <if test="parentNumber != null">
+                parent_number = #{parentNumber,jdbcType=INTEGER},
+            </if>
+            <if test="childNumber != null">
+                child_number = #{childNumber,jdbcType=INTEGER},
+            </if>
+            <if test="createPeriod != null">
+                create_period = #{createPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="regId != null">
+                reg_id = #{regId,jdbcType=BIGINT},
+            </if>
+            <if test="childShortName != null">
+                child_short_name = #{childShortName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateById" parameterType="com.fea.project.model.baseconfig.ProjectCodeModel">
+        update t_project_code
+        set dataStr = #{dataStr,jdbcType=INTEGER},
+            parent_number = #{parentNumber,jdbcType=INTEGER},
+            child_number = #{childNumber,jdbcType=INTEGER},
+            create_period = #{createPeriod,jdbcType=INTEGER},
+            reg_id = #{regId,jdbcType=BIGINT},
+            child_short_name = #{childShortName, jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

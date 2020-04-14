@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.task.TaskNumModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.task.TaskNumModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="cur_user_id" jdbcType="BIGINT" property="curUserId" />
+    <result column="is_head_letter" jdbcType="BIGINT" property="isHeadLetter" />
+    <result column="head_letter" jdbcType="VARCHAR" property="headLetter" />
+    <result column="is_date" jdbcType="BIGINT" property="isDate" />
+    <result column="today" jdbcType="DATE" property="today" />
+    <result column="digit" jdbcType="BIGINT" property="digit" />
+    <result column="series_digit" jdbcType="BIGINT" property="seriesDigit" />
+    <result column="is_son_task" jdbcType="BIGINT" property="isSonTask" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, cur_user_id, is_head_letter, head_letter, is_date, today, digit, series_digit, 
+    is_son_task
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.task.TaskNumModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_task_num
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_num
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_task_num
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.task.TaskNumModelExample">
+    delete from t_project_task_num
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"  parameterType="com.fea.project.model.task.TaskNumModel">
+    insert into t_project_task_num (id, cur_user_id, is_head_letter, 
+      head_letter, is_date, today, 
+      digit, series_digit, is_son_task
+      )
+    values (#{id,jdbcType=BIGINT}, #{curUserId,jdbcType=BIGINT}, #{isHeadLetter,jdbcType=BIGINT}, 
+      #{headLetter,jdbcType=VARCHAR}, #{isDate,jdbcType=BIGINT}, #{today,jdbcType=DATE}, 
+      #{digit,jdbcType=BIGINT}, #{seriesDigit,jdbcType=BIGINT}, #{isSonTask,jdbcType=BIGINT}
+      )
+  </insert>
+  
+   <insert id="insertTaskNumAndSonTaskNum" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+    insert into t_project_task_num ( cur_user_id, is_head_letter, 
+      head_letter, is_date, today, 
+      digit, series_digit, is_son_task
+      )
+    values 
+      <foreach collection="list" separator="," item="item">
+      (
+	     #{item.curUserId,jdbcType=BIGINT}, #{item.isHeadLetter,jdbcType=BIGINT}, 
+	      #{item.headLetter,jdbcType=VARCHAR}, #{item.isDate,jdbcType=BIGINT}, #{item.today,jdbcType=DATE}, 
+	      #{item.digit,jdbcType=BIGINT}, #{item.seriesDigit,jdbcType=BIGINT}, #{item.isSonTask,jdbcType=BIGINT}
+      )
+      </foreach>
+  </insert>
+  <insert id="insertSelective"  parameterType="com.fea.project.model.task.TaskNumModel">
+    insert into t_project_task_num
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="curUserId != null">
+        cur_user_id,
+      </if>
+      <if test="isHeadLetter != null">
+        is_head_letter,
+      </if>
+      <if test="headLetter != null">
+        head_letter,
+      </if>
+      <if test="isDate != null">
+        is_date,
+      </if>
+      <if test="today != null">
+        today,
+      </if>
+      <if test="digit != null">
+        digit,
+      </if>
+      <if test="seriesDigit != null">
+        series_digit,
+      </if>
+      <if test="isSonTask != null">
+        is_son_task,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="curUserId != null">
+        #{curUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isHeadLetter != null">
+        #{isHeadLetter,jdbcType=BIGINT},
+      </if>
+      <if test="headLetter != null">
+        #{headLetter,jdbcType=VARCHAR},
+      </if>
+      <if test="isDate != null">
+        #{isDate,jdbcType=BIGINT},
+      </if>
+      <if test="today != null">
+        #{today,jdbcType=DATE},
+      </if>
+      <if test="digit != null">
+        #{digit,jdbcType=BIGINT},
+      </if>
+      <if test="seriesDigit != null">
+        #{seriesDigit,jdbcType=BIGINT},
+      </if>
+      <if test="isSonTask != null">
+        #{isSonTask,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.task.TaskNumModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_task_num
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_task_num
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.curUserId != null">
+        cur_user_id = #{record.curUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isHeadLetter != null">
+        is_head_letter = #{record.isHeadLetter,jdbcType=BIGINT},
+      </if>
+      <if test="record.headLetter != null">
+        head_letter = #{record.headLetter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDate != null">
+        is_date = #{record.isDate,jdbcType=BIGINT},
+      </if>
+      <if test="record.today != null">
+        today = #{record.today,jdbcType=DATE},
+      </if>
+      <if test="record.digit != null">
+        digit = #{record.digit,jdbcType=BIGINT},
+      </if>
+      <if test="record.seriesDigit != null">
+        series_digit = #{record.seriesDigit,jdbcType=BIGINT},
+      </if>
+      <if test="record.isSonTask != null">
+        is_son_task = #{record.isSonTask,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_task_num
+    set id = #{record.id,jdbcType=BIGINT},
+      cur_user_id = #{record.curUserId,jdbcType=BIGINT},
+      is_head_letter = #{record.isHeadLetter,jdbcType=BIGINT},
+      head_letter = #{record.headLetter,jdbcType=VARCHAR},
+      is_date = #{record.isDate,jdbcType=BIGINT},
+      today = #{record.today,jdbcType=DATE},
+      digit = #{record.digit,jdbcType=BIGINT},
+      series_digit = #{record.seriesDigit,jdbcType=BIGINT},
+      is_son_task = #{record.isSonTask,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.task.TaskNumModel">
+    update t_project_task_num
+    <set>
+      <if test="curUserId != null">
+        cur_user_id = #{curUserId,jdbcType=BIGINT},
+      </if>
+      <if test="isHeadLetter != null">
+        is_head_letter = #{isHeadLetter,jdbcType=BIGINT},
+      </if>
+      <if test="headLetter != null">
+        head_letter = #{headLetter,jdbcType=VARCHAR},
+      </if>
+      <if test="isDate != null">
+        is_date = #{isDate,jdbcType=BIGINT},
+      </if>
+      <if test="today != null">
+        today = #{today,jdbcType=DATE},
+      </if>
+      <if test="digit != null">
+        digit = #{digit,jdbcType=BIGINT},
+      </if>
+      <if test="seriesDigit != null">
+        series_digit = #{seriesDigit,jdbcType=BIGINT},
+      </if>
+      <if test="isSonTask != null">
+        is_son_task = #{isSonTask,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.task.TaskNumModel">
+    update t_project_task_num
+    set cur_user_id = #{curUserId,jdbcType=BIGINT},
+      is_head_letter = #{isHeadLetter,jdbcType=BIGINT},
+      head_letter = #{headLetter,jdbcType=VARCHAR},
+      is_date = #{isDate,jdbcType=BIGINT},
+      today = #{today,jdbcType=DATE},
+      digit = #{digit,jdbcType=BIGINT},
+      series_digit = #{seriesDigit,jdbcType=BIGINT},
+      is_son_task = #{isSonTask,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+    <select id="selectByConUserId" parameterType="com.fea.project.model.task.TaskNumModel" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_num
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+    <if test="isSonTask != null">
+	    and is_son_task = #{isSonTask,jdbcType=BIGINT}
+    </if>
+  </select>
+  
+  
+   <update id="updateByCurUserIdAndIsSonTask" parameterType="com.fea.project.model.task.TaskNumModel">
+    update t_project_task_num
+    <set>
+	    <if test="isHeadLetter == @com.fea.project.enums.task.IsHeadLetterEnum@IS_HEAD_LETTER.getStatus">
+	    	 head_letter = #{headLetter,jdbcType=VARCHAR},
+	    </if>
+	     <if test="isDate == @com.fea.project.enums.task.IsDateEnum@IS_DATE.getStatus">
+	     	today = #{today,jdbcType=DATE},
+	     </if>
+	     <if test="digit != null">
+	     	digit = #{digit,jdbcType=BIGINT},
+	     </if>
+	     <if test="seriesDigit != null">
+	     	series_digit = #{seriesDigit,jdbcType=BIGINT},
+	     </if>
+     </set> 
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+    and  is_son_task = #{isSonTask,jdbcType=BIGINT}
+  </update>
+  
+</mapper>

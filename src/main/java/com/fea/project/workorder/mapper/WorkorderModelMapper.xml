@@ -1,0 +1,1255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.workorder.dao.WorkorderModelMapper">
+<cache  eviction="LRU" flushInterval="600000" readOnly="true" size="1024"/>
+  <resultMap id="BaseResultMap" type="com.fea.project.workorder.model.WorkorderModel">
+    <id column="workorder_id" jdbcType="BIGINT" property="workorderId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="workorder_name" jdbcType="VARCHAR" property="workorderName" />
+    <result column="workorder_num" jdbcType="VARCHAR" property="workorderNum" />
+    <result column="workorder_resource_type" jdbcType="BIGINT" property="workorderResourceType" />
+    <result column="workorder_type_id" jdbcType="BIGINT" property="workorderTypeId" />
+    <result column="mould_id" jdbcType="BIGINT" property="mouldId" />
+    <result column="mould_name" jdbcType="VARCHAR" property="mouldName" />
+    <result column="wish_deal_time" jdbcType="TIMESTAMP" property="wishDealTime" />
+    <result column="deadline_time" jdbcType="TIMESTAMP" property="deadlineTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="work_hour" jdbcType="DOUBLE" property="workHour" />
+    <result column="priority" jdbcType="BIGINT" property="priority" />
+    <result column="switch_person" jdbcType="BIGINT" property="switchPerson" />
+    <result column="person_id" jdbcType="BIGINT" property="personId" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="dispatch_pool_id" jdbcType="BIGINT" property="dispatchPoolId" />
+    <result column="dispatch_id" jdbcType="BIGINT" property="dispatchId" />
+    <result column="dispatch_by" jdbcType="VARCHAR" property="dispatchBy" />
+    <result column="dispatch_time" jdbcType="TIMESTAMP" property="dispatchTime" />
+    <result column="customer_id" jdbcType="BIGINT" property="customerId" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="contact_id" jdbcType="BIGINT" property="contactId" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="business_type" jdbcType="BIGINT" property="businessType" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="business_name" jdbcType="VARCHAR" property="businessName" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_trouble_type_id" jdbcType="VARCHAR" property="productTroubleTypeId" />
+    <result column="product_trouble_sort_id" jdbcType="VARCHAR" property="productTroubleSortId" />
+    <result column="workorder_content" jdbcType="VARCHAR" property="workorderContent" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="workorder_status" jdbcType="BIGINT" property="workorderStatus" />
+    <result column="reject_reason" jdbcType="VARCHAR" property="rejectReason" />
+    <result column="workorder_progross_rate" jdbcType="DOUBLE" property="workorderProgrossRate" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    <result column="attention_status" jdbcType="BIGINT" property="attentionStatus" />
+    
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    workorder_id, task_id, task_name, workorder_name, workorder_num, workorder_resource_type, 
+    workorder_type_id,  mould_id, mould_name, wish_deal_time, deadline_time, 
+    start_time, end_time, work_hour, priority, switch_person, person_id, person_name, 
+    dispatch_pool_id,dispatch_id,dispatch_by,dispatch_time,
+    customer_id, customer_name, contact_id, contact_name, business_type, business_id, 
+    business_name, product_id, product_name, product_trouble_type_id, product_trouble_sort_id, 
+    workorder_content, remark, workorder_status, reject_reason, workorder_progross_rate, 
+    attention_status,org_id, create_id, create_by, create_time, update_id, update_by, update_time, 
+    del_status
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.workorder.model.WorkorderModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_workorder_workorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+   <resultMap id="rm" type="com.fea.project.workorder.model.vo.WorkorderModelVo">
+    <id column="workorder_id" jdbcType="BIGINT" property="workorderId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="workorder_name" jdbcType="VARCHAR" property="workorderName" />
+    <result column="workorder_num" jdbcType="VARCHAR" property="workorderNum" />
+    <result column="workorder_resource_type" jdbcType="BIGINT" property="workorderResourceType" />
+    <result column="workorder_type_id" jdbcType="BIGINT" property="workorderTypeId" />
+    <result column="mould_id" jdbcType="BIGINT" property="mouldId" />
+    <result column="mould_name" jdbcType="VARCHAR" property="mouldName" />
+    <result column="wish_deal_time" jdbcType="TIMESTAMP" property="wishDealTime" />
+    <result column="deadline_time" jdbcType="TIMESTAMP" property="deadlineTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="work_hour" jdbcType="DOUBLE" property="workHour" />
+    <result column="priority" jdbcType="BIGINT" property="priority" />
+    <result column="switch_person" jdbcType="BIGINT" property="switchPerson" />
+    <result column="person_id" jdbcType="BIGINT" property="personId" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+     <result column="dispatch_pool_id" jdbcType="BIGINT" property="dispatchPoolId" />
+     <result column="dispatch_id" jdbcType="BIGINT" property="dispatchId" />
+    <result column="dispatch_by" jdbcType="VARCHAR" property="dispatchBy" />
+    <result column="dispatch_time" jdbcType="TIMESTAMP" property="dispatchTime" />
+    <result column="customer_id" jdbcType="BIGINT" property="customerId" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="contact_id" jdbcType="BIGINT" property="contactId" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="business_type" jdbcType="BIGINT" property="businessType" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="business_name" jdbcType="VARCHAR" property="businessName" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_trouble_type_id" jdbcType="VARCHAR" property="productTroubleTypeId" />
+    <result column="product_trouble_sort_id" jdbcType="VARCHAR" property="productTroubleSortId" />
+    <result column="workorder_content" jdbcType="VARCHAR" property="workorderContent" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="workorder_status" jdbcType="BIGINT" property="workorderStatus" />
+    <result column="reject_reason" jdbcType="VARCHAR" property="rejectReason" />
+    <result column="workorder_progross_rate" jdbcType="DOUBLE" property="workorderProgrossRate" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+   	 	<association property="attentionStatus" column="workorder_id" select="com.fea.project.workorder.dao.AttentionModelMapper.selectByWorkorderId" />
+  </resultMap>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_workorder
+    where workorder_id = #{workorderId,jdbcType=BIGINT}
+    and del_status = ${@com.fea.project.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_workorder_workorder
+    where workorder_id = #{workorderId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.workorder.model.WorkorderModelExample">
+    delete from t_workorder_workorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="workorderId" parameterType="com.fea.project.workorder.model.WorkorderModel">
+    insert into t_workorder_workorder (workorder_id, task_id, task_name, 
+      workorder_name, workorder_num, workorder_resource_type, 
+      workorder_type_id, mould_id, 
+      mould_name, wish_deal_time, deadline_time, 
+      start_time, end_time, work_hour, 
+      priority, switch_person, person_id, 
+      person_name, dispatch_pool_id, dispatch_id ,dispatch_by ,dispatch_time ,customer_id , customer_name, 
+      contact_id, contact_name, business_type, 
+      business_id, business_name, product_id, 
+      product_name, product_trouble_type_id, product_trouble_sort_id, 
+      workorder_content, remark, workorder_status, 
+      reject_reason, workorder_progross_rate, attention_status, org_id,
+      create_id, create_by, create_time, 
+      update_id, update_by, update_time, 
+      del_status)
+    values (#{workorderId,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, 
+      #{workorderName,jdbcType=VARCHAR}, #{workorderNum,jdbcType=VARCHAR}, #{workorderResourceType,jdbcType=BIGINT}, 
+      #{workorderTypeId,jdbcType=BIGINT},  #{mouldId,jdbcType=BIGINT}, 
+      #{mouldName,jdbcType=VARCHAR}, #{wishDealTime,jdbcType=TIMESTAMP}, #{deadlineTime,jdbcType=TIMESTAMP}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{workHour,jdbcType=DOUBLE}, 
+      #{priority,jdbcType=BIGINT}, #{switchPerson,jdbcType=BIGINT}, #{personId,jdbcType=BIGINT}, 
+      #{personName,jdbcType=VARCHAR}, 
+      #{dispatchPoolId,jdbcType=BIGINT}, 
+      #{dispatchId,jdbcType=BIGINT}, 
+      #{dispatchBy,jdbcType=VARCHAR}, 
+      #{dispatchTime,jdbcType=TIMESTAMP}, 
+      #{customerId,jdbcType=BIGINT}, #{customerName,jdbcType=VARCHAR}, 
+      #{contactId,jdbcType=BIGINT}, #{contactName,jdbcType=VARCHAR}, #{businessType,jdbcType=BIGINT}, 
+      #{businessId,jdbcType=BIGINT}, #{businessName,jdbcType=VARCHAR}, #{productId,jdbcType=BIGINT}, 
+      #{productName,jdbcType=VARCHAR}, #{productTroubleTypeId,jdbcType=VARCHAR}, #{productTroubleSortId,jdbcType=VARCHAR}, 
+      #{workorderContent,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{workorderStatus,jdbcType=BIGINT}, 
+      #{rejectReason,jdbcType=VARCHAR}, #{workorderProgrossRate,jdbcType=DOUBLE}, #{attentionStatus,jdbcType=BIGINT}, #{orgId,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{delStatus,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyProperty="workorderId" parameterType="com.fea.project.workorder.model.WorkorderModel">
+    insert into t_workorder_workorder
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workorderId != null">
+        workorder_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="taskName != null">
+        task_name,
+      </if>
+      <if test="workorderName != null">
+        workorder_name,
+      </if>
+      <if test="workorderNum != null">
+        workorder_num,
+      </if>
+      <if test="workorderResourceType != null">
+        workorder_resource_type,
+      </if>
+      <if test="workorderTypeId != null">
+        workorder_type_id,
+      </if>
+      <if test="mouldId != null">
+        mould_id,
+      </if>
+      <if test="mouldName != null">
+        mould_name,
+      </if>
+      <if test="wishDealTime != null">
+        wish_deal_time,
+      </if>
+      <if test="deadlineTime != null">
+        deadline_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="workHour != null">
+        work_hour,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="switchPerson != null">
+        switch_person,
+      </if>
+      <if test="personId != null">
+        person_id,
+      </if>
+      <if test="personName != null">
+        person_name,
+      </if>
+      <if test="dispatchPoolId != null">
+        dispatch_pool_id,
+      </if>
+      <if test="dispatchId != null">
+        dispatch_id,
+      </if>
+      <if test="dispatchBy != null">
+        dispatch_by,
+      </if>
+      <if test="dispatchTime != null">
+        dispatch_time,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="customerName != null">
+        customer_name,
+      </if>
+      <if test="contactId != null">
+        contact_id,
+      </if>
+      <if test="contactName != null">
+        contact_name,
+      </if>
+      <if test="businessType != null">
+        business_type,
+      </if>
+      <if test="businessId != null">
+        business_id,
+      </if>
+      <if test="businessName != null">
+        business_name,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productTroubleTypeId != null">
+        product_trouble_type_id,
+      </if>
+      <if test="productTroubleSortId != null">
+        product_trouble_sort_id,
+      </if>
+      <if test="workorderContent != null">
+        workorder_content,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="workorderStatus != null">
+        workorder_status,
+      </if>
+      <if test="rejectReason != null">
+        reject_reason,
+      </if>
+      <if test="workorderProgrossRate != null">
+        workorder_progross_rate,
+      </if>
+      <if test="attentionStatus != null">
+        attention_status,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workorderId != null">
+        #{workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskName != null">
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderName != null">
+        #{workorderName,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderNum != null">
+        #{workorderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderResourceType != null">
+        #{workorderResourceType,jdbcType=BIGINT},
+      </if>
+      <if test="workorderTypeId != null">
+        #{workorderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="mouldId != null">
+        #{mouldId,jdbcType=BIGINT},
+      </if>
+      <if test="mouldName != null">
+        #{mouldName,jdbcType=VARCHAR},
+      </if>
+      <if test="wishDealTime != null">
+        #{wishDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadlineTime != null">
+        #{deadlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workHour != null">
+        #{workHour,jdbcType=DOUBLE},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="switchPerson != null">
+        #{switchPerson,jdbcType=BIGINT},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=BIGINT},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchPoolId != null">
+        #{dispatchPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="dispatchId != null">
+        #{dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="dispatchBy != null">
+        #{dispatchBy,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchTime != null">
+        #{dispatchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactId != null">
+        #{contactId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null">
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null">
+        #{businessType,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="businessName != null">
+        #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productTroubleTypeId != null">
+        #{productTroubleTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="productTroubleSortId != null">
+        #{productTroubleSortId,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderContent != null">
+        #{workorderContent,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderStatus != null">
+        #{workorderStatus,jdbcType=BIGINT},
+      </if>
+      <if test="rejectReason != null">
+        #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderProgrossRate != null">
+        #{workorderProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="attentionStatus != null">
+        #{attentionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.workorder.model.WorkorderModelExample" resultType="java.lang.Long">
+    select count(*) from t_workorder_workorder
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_workorder_workorder
+    <set>
+      <if test="record.workorderId != null">
+        workorder_id = #{record.workorderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskName != null">
+        task_name = #{record.taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workorderName != null">
+        workorder_name = #{record.workorderName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workorderNum != null">
+        workorder_num = #{record.workorderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workorderResourceType != null">
+        workorder_resource_type = #{record.workorderResourceType,jdbcType=BIGINT},
+      </if>
+      <if test="record.workorderTypeId != null">
+        workorder_type_id = #{record.workorderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mouldId != null">
+        mould_id = #{record.mouldId,jdbcType=BIGINT},
+      </if>
+      <if test="record.mouldName != null">
+        mould_name = #{record.mouldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wishDealTime != null">
+        wish_deal_time = #{record.wishDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deadlineTime != null">
+        deadline_time = #{record.deadlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.workHour != null">
+        work_hour = #{record.workHour,jdbcType=DOUBLE},
+      </if>
+      <if test="record.priority != null">
+        priority = #{record.priority,jdbcType=BIGINT},
+      </if>
+      <if test="record.switchPerson != null">
+        switch_person = #{record.switchPerson,jdbcType=BIGINT},
+      </if>
+      <if test="record.personId != null">
+        person_id = #{record.personId,jdbcType=BIGINT},
+      </if>
+      <if test="record.personName != null">
+        person_name = #{record.personName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dispatchPoolId != null">
+        dispatch_pool_id = #{record.dispatchPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dispatchId != null">
+        dispatch_id = #{record.dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="record.dispatchBy != null">
+       dispatch_by = #{record.dispatchBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dispatchTime != null">
+        dispatch_time = #{record.dispatchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.customerId != null">
+        customer_id = #{record.customerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerName != null">
+        customer_name = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactId != null">
+        contact_id = #{record.contactId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactName != null">
+        contact_name = #{record.contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessType != null">
+        business_type = #{record.businessType,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessId != null">
+        business_id = #{record.businessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessName != null">
+        business_name = #{record.businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=BIGINT},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productTroubleTypeId != null">
+        product_trouble_type_id = #{record.productTroubleTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productTroubleSortId != null">
+        product_trouble_sort_id = #{record.productTroubleSortId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workorderContent != null">
+        workorder_content = #{record.workorderContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workorderStatus != null">
+        workorder_status = #{record.workorderStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.rejectReason != null">
+        reject_reason = #{record.rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workorderProgrossRate != null">
+        workorder_progross_rate = #{record.workorderProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.attentionStatus != null">
+        attention_status = #{record.attentionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.orgId != null">
+        org_id = #{record.orgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_workorder_workorder
+    set workorder_id = #{record.workorderId,jdbcType=BIGINT},
+      task_id = #{record.taskId,jdbcType=BIGINT},
+      task_name = #{record.taskName,jdbcType=VARCHAR},
+      workorder_name = #{record.workorderName,jdbcType=VARCHAR},
+      workorder_num = #{record.workorderNum,jdbcType=VARCHAR},
+      workorder_resource_type = #{record.workorderResourceType,jdbcType=BIGINT},
+      workorder_type_id = #{record.workorderTypeId,jdbcType=BIGINT},
+      mould_id = #{record.mouldId,jdbcType=BIGINT},
+      mould_name = #{record.mouldName,jdbcType=VARCHAR},
+      wish_deal_time = #{record.wishDealTime,jdbcType=TIMESTAMP},
+      deadline_time = #{record.deadlineTime,jdbcType=TIMESTAMP},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      work_hour = #{record.workHour,jdbcType=DOUBLE},
+      priority = #{record.priority,jdbcType=BIGINT},
+      switch_person = #{record.switchPerson,jdbcType=BIGINT},
+      person_id = #{record.personId,jdbcType=BIGINT},
+      person_name = #{record.personName,jdbcType=VARCHAR},
+      dispatch_pool_id = #{record.dispatchPoolId,jdbcType=BIGINT},
+      dispatch_id = #{record.dispatchId,jdbcType=BIGINT},
+      dispatch_by = #{record.dispatchBy,jdbcType=VARCHAR},
+      dispatch_time = #{record.dispatchTime,jdbcType=TIMESTAMP},
+      customer_id = #{record.customerId,jdbcType=BIGINT},
+      customer_name = #{record.customerName,jdbcType=VARCHAR},
+      contact_id = #{record.contactId,jdbcType=BIGINT},
+      contact_name = #{record.contactName,jdbcType=VARCHAR},
+      business_type = #{record.businessType,jdbcType=BIGINT},
+      business_id = #{record.businessId,jdbcType=BIGINT},
+      business_name = #{record.businessName,jdbcType=VARCHAR},
+      product_id = #{record.productId,jdbcType=BIGINT},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_trouble_type_id = #{record.productTroubleTypeId,jdbcType=VARCHAR},
+      product_trouble_sort_id = #{record.productTroubleSortId,jdbcType=VARCHAR},
+      workorder_content = #{record.workorderContent,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      workorder_status = #{record.workorderStatus,jdbcType=BIGINT},
+      reject_reason = #{record.rejectReason,jdbcType=VARCHAR},
+      workorder_progross_rate = #{record.workorderProgrossRate,jdbcType=DOUBLE},
+      attention_status = #{record.attentionStatus,jdbcType=BIGINT},
+      org_id = #{record.orgId,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_status = #{record.delStatus,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.workorder.model.WorkorderModel">
+    update t_workorder_workorder
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskName != null">
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderName != null">
+        workorder_name = #{workorderName,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderNum != null">
+        workorder_num = #{workorderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderResourceType != null">
+        workorder_resource_type = #{workorderResourceType,jdbcType=BIGINT},
+      </if>
+      <if test="workorderTypeId != null">
+        workorder_type_id = #{workorderTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="mouldId != null">
+        mould_id = #{mouldId,jdbcType=BIGINT},
+      </if>
+      <if test="mouldName != null">
+        mould_name = #{mouldName,jdbcType=VARCHAR},
+      </if>
+      <if test="wishDealTime != null">
+        wish_deal_time = #{wishDealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadlineTime != null">
+        deadline_time = #{deadlineTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workHour != null">
+        work_hour = #{workHour,jdbcType=DOUBLE},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="switchPerson != null">
+        switch_person = #{switchPerson,jdbcType=BIGINT},
+      </if>
+      <if test="personId != null">
+        person_id = #{personId,jdbcType=BIGINT},
+      </if>
+      <if test="personName != null">
+        person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchPoolId != null">
+        dispatch_pool_id = #{dispatchPoolId,jdbcType=BIGINT},
+      </if>
+      <if test="dispatchId != null">
+        dispatch_Id = #{dispatchId,jdbcType=BIGINT},
+      </if>
+      <if test="dispatchBy != null">
+        dispatch_by = #{dispatchBy,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchTime != null">
+        dispatch_time = #{dispatchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerName != null">
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactId != null">
+        contact_id = #{contactId,jdbcType=BIGINT},
+      </if>
+      <if test="contactName != null">
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null">
+        business_type = #{businessType,jdbcType=BIGINT},
+      </if>
+      <if test="businessId != null">
+        business_id = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="businessName != null">
+        business_name = #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productTroubleTypeId != null">
+        product_trouble_type_id = #{productTroubleTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="productTroubleSortId != null">
+        product_trouble_sort_id = #{productTroubleSortId,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderContent != null">
+        workorder_content = #{workorderContent,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderStatus != null">
+        workorder_status = #{workorderStatus,jdbcType=BIGINT},
+      </if>
+      <if test="rejectReason != null">
+        reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="workorderProgrossRate != null">
+        workorder_progross_rate = #{workorderProgrossRate,jdbcType=DOUBLE},
+      </if>
+      <if test="attentionStatus != null">
+        attention_status = #{attentionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+    </set>
+    where workorder_id = #{workorderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.workorder.model.WorkorderModel">
+    update t_workorder_workorder
+    set task_id = #{taskId,jdbcType=BIGINT},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      workorder_name = #{workorderName,jdbcType=VARCHAR},
+      workorder_num = #{workorderNum,jdbcType=VARCHAR},
+      workorder_resource_type = #{workorderResourceType,jdbcType=BIGINT},
+      workorder_type_id = #{workorderTypeId,jdbcType=BIGINT},
+      mould_id = #{mouldId,jdbcType=BIGINT},
+      mould_name = #{mouldName,jdbcType=VARCHAR},
+      wish_deal_time = #{wishDealTime,jdbcType=TIMESTAMP},
+      deadline_time = #{deadlineTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      work_hour = #{workHour,jdbcType=DOUBLE},
+      priority = #{priority,jdbcType=BIGINT},
+      switch_person = #{switchPerson,jdbcType=BIGINT},
+      person_id = #{personId,jdbcType=BIGINT},
+      person_name = #{personName,jdbcType=VARCHAR},
+      dispatch_pool_id = #{dispatchPoolId,jdbcType=BIGINT},
+      dispatch_id = #{dispatchId,jdbcType=BIGINT},
+      dispatch_by = #{dispatchBy,jdbcType=VARCHAR},
+      dispatch_time = #{dispatchTime,jdbcType=TIMESTAMP},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      contact_id = #{contactId,jdbcType=BIGINT},
+      contact_name = #{contactName,jdbcType=VARCHAR},
+      business_type = #{businessType,jdbcType=BIGINT},
+      business_id = #{businessId,jdbcType=BIGINT},
+      business_name = #{businessName,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=BIGINT},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_trouble_type_id = #{productTroubleTypeId,jdbcType=VARCHAR},
+      product_trouble_sort_id = #{productTroubleSortId,jdbcType=VARCHAR},
+      workorder_content = #{workorderContent,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      workorder_status = #{workorderStatus,jdbcType=BIGINT},
+      reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      workorder_progross_rate = #{workorderProgrossRate,jdbcType=DOUBLE},
+      attention_status = #{attentionStatus,jdbcType=BIGINT},
+      org_id = #{orgId,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_status = #{delStatus,jdbcType=BIGINT}
+    where workorder_id = #{workorderId,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectAll" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_workorder
+    where org_id = #{workorderId,jdbcType=BIGINT}
+    and del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+  </select>
+  <!-- 我创建的工单 -->
+  <select id="selectListByCreateId" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_workorder
+    where create_id = ${@com.fea.project.util.UserUtil@getUserId()}
+    and (workorder_name like '%${page.keywords}%' or workorder_num like '%${page.keywords}%')
+    and del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 提交给我的工单 -->
+  <select id="selectListByPersonId" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_workorder
+    where person_id = ${@com.fea.project.util.UserUtil@getUserId()}
+    and switch_person = ${@com.fea.project.workorder.enums.SwitchPersonEnum@RECEITOR.getStatus}
+    and workorder_status !=  ${@com.fea.project.workorder.enums.WorkorderStatusEnum@UNCOMMITED.getStatus}
+    and (workorder_name like '%${page.keywords}%' or workorder_num like '%${page.keywords}%')
+    and del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 我分配的工单 -->
+   <select id="selectListByDispatchId" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_workorder
+    where dispatch_id = ${@com.fea.project.util.UserUtil@getUserId()}
+    and (workorder_name like '%${page.keywords}%' or workorder_num like '%${page.keywords}%')
+    and del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 分配给我的工单 -->
+   <select id="selectListByDispatchIdAndPersonId" resultMap="rm">
+    select 
+    <include refid="Base_Column_List" />
+    from t_workorder_workorder
+    where dispatch_id is not null
+    and person_id = ${@com.fea.project.util.UserUtil@getUserId()}
+    and (workorder_name like '%${page.keywords}%' or workorder_num like '%${page.keywords}%')
+    and del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 抄送给我的工单 -->
+   <select id="selectListByCcPersonId" resultMap="rm">
+    select 
+    tww.*
+    from t_workorder_workorder tww
+    LEFT JOIN
+    t_workorder_cc twc
+    On tww.workorder_id = twc.workorder_id
+    where twc.cc_person_id = ${@com.fea.project.util.UserUtil@getUserId()}
+    and (tww.workorder_name like '%${page.keywords}%' or tww.workorder_num like '%${page.keywords}%')
+    and tww.del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	tww.workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	tww.workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 我关注的工单 -->
+   <select id="selectListByAttentionId" resultMap="rm">
+    select 
+    tww.*
+    from t_workorder_workorder tww
+    LEFT JOIN 
+    t_workorder_attention twa
+    ON tww.workorder_id = twa.workorder_id
+    where twa.create_id = ${@com.fea.project.util.UserUtil@getUserId()}
+    and twa.attention_status = ${@com.fea.project.workorder.enums.AttentionEnum@ATTENTION.getStatus}
+    and (tww.workorder_name like '%${page.keywords}%' or tww.workorder_num like '%${page.keywords}%')
+    and tww.del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	tww.workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	tww.workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 已完成的工单 -->
+   <select id="selectListByRate" resultMap="rm">
+    select 
+    tww.*
+    from t_workorder_workorder tww
+    where (tww.create_id = ${@com.fea.project.util.UserUtil@getUserId()} 
+		    or 
+		    (tww.person_id = ${@com.fea.project.util.UserUtil@getUserId()} 
+		    	and 
+		    switch_person = ${@com.fea.project.workorder.enums.SwitchPersonEnum@LEADER.getStatus})
+		    )
+    and tww.workorder_progross_rate = 1
+    and (tww.workorder_name like '%${page.keywords}%' or tww.workorder_num like '%${page.keywords}%')
+    and tww.del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	tww.workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	tww.workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 已激活的工单 -->
+   <select id="selectListByRestart" resultMap="rm">
+    select 
+    tww.*
+    from t_workorder_workorder tww
+    where (tww.create_id = ${@com.fea.project.util.UserUtil@getUserId()} 
+		    or 
+		    (tww.person_id = ${@com.fea.project.util.UserUtil@getUserId()} 
+		    	and 
+		    switch_person = ${@com.fea.project.workorder.enums.SwitchPersonEnum@LEADER.getStatus})
+		    )
+    and tww.workorder_status = ${@com.fea.project.workorder.enums.WorkorderStatusEnum@RESTART.getStatus}
+    and (tww.workorder_name like '%${page.keywords}%' or tww.workorder_num like '%${page.keywords}%')
+    and tww.del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	tww.workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	tww.workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 已关闭的工单 -->
+   <select id="selectListByClosed" resultMap="rm">
+    select 
+    tww.*
+    from t_workorder_workorder tww
+    where (tww.create_id = ${@com.fea.project.util.UserUtil@getUserId()} 
+		    or 
+		    (tww.person_id = ${@com.fea.project.util.UserUtil@getUserId()} 
+		    	and 
+		    switch_person = ${@com.fea.project.workorder.enums.SwitchPersonEnum@LEADER.getStatus})
+		    )
+    and tww.workorder_status = ${@com.fea.project.workorder.enums.WorkorderStatusEnum@CLOSED.getStatus}
+    and (tww.workorder_name like '%${page.keywords}%' or tww.workorder_num like '%${page.keywords}%')
+    and tww.del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	tww.workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	tww.workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <!-- 已领取的工单 -->
+   <select id="selectListByDispatchPoolId" resultMap="rm">
+    select 
+    tww.*
+    from t_workorder_workorder tww
+    where (tww.create_id = ${@com.fea.project.util.UserUtil@getUserId()} 
+		    or 
+		    (tww.person_id = ${@com.fea.project.util.UserUtil@getUserId()} 
+		    	and 
+		    switch_person = ${@com.fea.project.workorder.enums.SwitchPersonEnum@LEADER.getStatus})
+		    )
+    and tww.dispatch_pool_id is not null
+    and (tww.workorder_name like '%${page.keywords}%' or tww.workorder_num like '%${page.keywords}%')
+    and tww.del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    <if test="page.model.workorderStatus != null">
+    and	tww.workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	tww.workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+  </select>
+  
+  <!-- 我参与的工单 -->
+   <select id="selectListParticipantUserId" resultMap="rm">
+    SELECT DISTINCT
+	tww.* 
+	FROM t_workorder_workorder tww
+	LEFT JOIN
+	t_workorder_procedure twp
+	on tww.workorder_id = twp.workorder_id
+	WHERE 1=1
+	and (tww.workorder_name like '%${page.keywords}%' or tww.workorder_num like '%${page.keywords}%')
+    and tww.del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+	and (twp.leader_id =  ${@com.fea.project.util.UserUtil@getUserId()} 
+		or  ${@com.fea.project.util.UserUtil@getUserId()}  in (
+		select user_id from t_workorder_participant where business_id = twp.procedure_id
+	)
+	)
+	 <if test="page.model.workorderStatus != null">
+	    and	tww.workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+	    </if>
+	    <if test="page.model.workorderResourceType != null">
+	    and	tww.workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+	    </if>
+	    <if test="page.model.workorderTypeId != null">
+	    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+	    </if>
+  </select>
+  
+  
+  <resultMap id="rm1" type="com.fea.project.workorder.model.vo.WorkorderModelVo">
+    <id column="workorder_id" jdbcType="BIGINT" property="workorderId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="workorder_name" jdbcType="VARCHAR" property="workorderName" />
+    <result column="workorder_num" jdbcType="VARCHAR" property="workorderNum" />
+    <result column="workorder_resource_type" jdbcType="BIGINT" property="workorderResourceType" />
+    <result column="workorder_type_id" jdbcType="BIGINT" property="workorderTypeId" />
+    <result column="mould_id" jdbcType="BIGINT" property="mouldId" />
+    <result column="mould_name" jdbcType="VARCHAR" property="mouldName" />
+    <result column="wish_deal_time" jdbcType="TIMESTAMP" property="wishDealTime" />
+    <result column="deadline_time" jdbcType="TIMESTAMP" property="deadlineTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="work_hour" jdbcType="DOUBLE" property="workHour" />
+    <result column="priority" jdbcType="BIGINT" property="priority" />
+    <result column="switch_person" jdbcType="BIGINT" property="switchPerson" />
+    <result column="person_id" jdbcType="BIGINT" property="personId" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+     <result column="dispatch_pool_id" jdbcType="BIGINT" property="dispatchPoolId" />
+     <result column="dispatch_id" jdbcType="BIGINT" property="dispatchId" />
+    <result column="dispatch_by" jdbcType="VARCHAR" property="dispatchBy" />
+    <result column="dispatch_time" jdbcType="TIMESTAMP" property="dispatchTime" />
+    <result column="customer_id" jdbcType="BIGINT" property="customerId" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="contact_id" jdbcType="BIGINT" property="contactId" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="business_type" jdbcType="BIGINT" property="businessType" />
+    <result column="business_id" jdbcType="BIGINT" property="businessId" />
+    <result column="business_name" jdbcType="VARCHAR" property="businessName" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_trouble_type_id" jdbcType="VARCHAR" property="productTroubleTypeId" />
+    <result column="product_trouble_sort_id" jdbcType="VARCHAR" property="productTroubleSortId" />
+    <result column="workorder_content" jdbcType="VARCHAR" property="workorderContent" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="workorder_status" jdbcType="BIGINT" property="workorderStatus" />
+    <result column="reject_reason" jdbcType="VARCHAR" property="rejectReason" />
+    <result column="workorder_progross_rate" jdbcType="DOUBLE" property="workorderProgrossRate" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+   	 	<association property="attentionStatus" column="workorder_id" select="com.fea.project.workorder.dao.AttentionModelMapper.selectByWorkorderId" />
+   	 	<association property="contactModel" column="workorder_id" select="com.fea.project.workorder.dao.ContactModelMapper.selectByWorkorderId" />
+  </resultMap>
+   <select id="selectListByPoolId" resultMap="rm1">
+    select 
+    tww.*
+    from t_workorder_workorder tww
+    where  tww.del_status = ${@com.fea.project.workorder.enums.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    and (tww.workorder_name like '%${page.keywords}%' or tww.workorder_num like '%${page.keywords}%')
+    <if test="page.model.workorderStatus != null">
+    and	tww.workorder_status = #{page.model.workorderStatus,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderResourceType != null">
+    and	tww.workorder_resource_type = #{page.model.workorderResourceType,jdbcType=BIGINT}
+    </if>
+    <if test="page.model.workorderTypeId != null">
+    and	workorder_type_id = #{page.model.workorderTypeId,jdbcType=BIGINT}
+    </if>
+    and dispatch_pool_id = #{page.model.dispatchPoolId,jdbcType=BIGINT}
+  </select>
+</mapper>

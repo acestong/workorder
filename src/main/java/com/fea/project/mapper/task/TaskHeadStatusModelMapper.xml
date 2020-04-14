@@ -1,0 +1,1118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.dao.task.TaskHeadStatusModelMapper">
+  <resultMap id="BaseResultMap" type="com.fea.project.model.task.TaskHeadStatusModel">
+    <id column="task_head_status_id" jdbcType="BIGINT" property="taskHeadStatusId" />
+    <result column="cur_user_id" jdbcType="BIGINT" property="curUserId" />
+    <result column="task_id" jdbcType="BIGINT" property="taskId" />
+    <result column="task_name" jdbcType="BIGINT" property="taskName" />
+    <result column="task_num" jdbcType="BIGINT" property="taskNum" />
+    <result column="parent_task_id" jdbcType="BIGINT" property="parentTaskId" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="project_step" jdbcType="BIGINT" property="projectStep" />
+    <result column="priority" jdbcType="BIGINT" property="priority" />
+    <result column="task_start_time" jdbcType="BIGINT" property="taskStartTime" />
+    <result column="task_end_time" jdbcType="BIGINT" property="taskEndTime" />
+    <result column="task_deadline" jdbcType="BIGINT" property="taskDeadline" />
+    <result column="task_duration" jdbcType="BIGINT" property="taskDuration" />
+    <result column="task_leader_id" jdbcType="BIGINT" property="taskLeaderId" />
+    <result column="task_leader_name" jdbcType="BIGINT" property="taskLeaderName" />
+    <result column="task_team_id" jdbcType="BIGINT" property="taskTeamId" />
+    <result column="task_team_name" jdbcType="BIGINT" property="taskTeamName" />
+    <result column="task_dispatch_method" jdbcType="BIGINT" property="taskDispatchMethod" />
+    <result column="task_dispatcher_id" jdbcType="BIGINT" property="taskDispatcherId" />
+    <result column="task_dispatch_user_id" jdbcType="BIGINT" property="taskDispatchUserId" />
+    <result column="task_participants" jdbcType="BIGINT" property="taskParticipants" />
+    <result column="task_remind_hour" jdbcType="BIGINT" property="taskRemindHour" />
+    <result column="task_content" jdbcType="BIGINT" property="taskContent" />
+    <result column="task_remark" jdbcType="BIGINT" property="taskRemark" />
+    <result column="work_task_status" jdbcType="BIGINT" property="workTaskStatus" />
+    <result column="work_task_num" jdbcType="BIGINT" property="workTaskNum" />
+    <result column="cancel_task_status" jdbcType="BIGINT" property="cancelTaskStatus" />
+    <result column="cancel_task_reason" jdbcType="BIGINT" property="cancelTaskReason" />
+    <result column="stop_task_status" jdbcType="BIGINT" property="stopTaskStatus" />
+    <result column="stop_task_reason" jdbcType="BIGINT" property="stopTaskReason" />
+    <result column="restart_task_status" jdbcType="BIGINT" property="restartTaskStatus" />
+    <result column="restart_task_reason" jdbcType="BIGINT" property="restartTaskReason" />
+    <result column="task_progross_rate" jdbcType="BIGINT" property="taskProgrossRate" />
+    <result column="task_response_id" jdbcType="BIGINT" property="taskResponseId" />
+    <result column="task_status" jdbcType="BIGINT" property="taskStatus" />
+    <result column="task_attention_status" jdbcType="BIGINT" property="taskAttentionStatus" />
+    <result column="task_question" jdbcType="BIGINT" property="taskQuestion" />
+    <result column="task_type" jdbcType="BIGINT" property="taskType" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_id" jdbcType="BIGINT" property="updateId" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+    <result column="del_status" jdbcType="BIGINT" property="delStatus" />
+    <result column="milestone_id" jdbcType="BIGINT" property="milestoneId" />
+    <result column="plan_transfer_id" jdbcType="BIGINT" property="planTransferId" />
+    <result column="task_resource_type" jdbcType="BIGINT" property="taskResourceType" />
+    <result column="resource_business_id" jdbcType="BIGINT" property="resourceBusinessId" />
+    <result column="work_order_id" jdbcType="BIGINT" property="workOrderId" />
+    <result column="customer_id" jdbcType="BIGINT" property="customerId" />
+    <result column="contact_id" jdbcType="BIGINT" property="contactId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    task_head_status_id, cur_user_id, task_id, task_name, task_num, parent_task_id, 
+    project_id, project_step, priority, task_start_time, task_end_time, task_deadline, 
+    task_duration, task_leader_id, task_leader_name, task_team_id, task_team_name, task_dispatch_method, 
+    task_dispatcher_id, task_dispatch_user_id, task_participants, task_remind_hour, task_content, 
+    task_remark, work_task_status, work_task_num, cancel_task_status, cancel_task_reason, 
+    stop_task_status, stop_task_reason, restart_task_status, restart_task_reason, task_progross_rate, 
+    task_response_id, task_status, task_attention_status, task_question, task_type, create_id, 
+    create_by, create_time, update_id, update_by, update_time, del_status,milestone_id,plan_transfer_id,task_resource_type,
+    resource_business_id,work_order_id,customer_id,contact_id
+  </sql>
+  <select id="selectByExample" parameterType="com.fea.project.model.task.TaskHeadStatusModelExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_project_task_head_status
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_head_status
+    where task_head_status_id = #{taskHeadStatusId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_project_task_head_status
+    where task_head_status_id = #{taskHeadStatusId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fea.project.model.task.TaskHeadStatusModelExample">
+    delete from t_project_task_head_status
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="taskHeadStatusId" parameterType="com.fea.project.model.task.TaskHeadStatusModel">
+    insert into t_project_task_head_status (task_head_status_id, cur_user_id, task_id, 
+      task_name, task_num, parent_task_id, 
+      project_id, project_step, priority, 
+      task_start_time, task_end_time, task_deadline, 
+      task_duration, task_leader_id, task_leader_name, 
+      task_team_id, task_team_name, task_dispatch_method, 
+      task_dispatcher_id, task_dispatch_user_id, task_participants, 
+      task_remind_hour, task_content, task_remark, 
+      work_task_status, work_task_num, cancel_task_status, 
+      cancel_task_reason, stop_task_status, stop_task_reason, 
+      restart_task_status, restart_task_reason, task_progross_rate, 
+      task_response_id, task_status, task_attention_status, 
+      task_question, task_type, create_id, 
+      create_by, create_time, update_id, 
+      update_by, update_time, del_status,milestone_id,plan_transfer_id,task_resource_type,
+      resource_business_id,work_order_id,customer_id,contact_id
+      )
+    values (#{taskHeadStatusId,jdbcType=BIGINT}, #{curUserId,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, 
+      #{taskName,jdbcType=BIGINT}, #{taskNum,jdbcType=BIGINT}, #{parentTaskId,jdbcType=BIGINT}, 
+      #{projectId,jdbcType=BIGINT}, #{projectStep,jdbcType=BIGINT}, #{priority,jdbcType=BIGINT}, 
+      #{taskStartTime,jdbcType=BIGINT}, #{taskEndTime,jdbcType=BIGINT}, #{taskDeadline,jdbcType=BIGINT}, 
+      #{taskDuration,jdbcType=BIGINT}, #{taskLeaderId,jdbcType=BIGINT}, #{taskLeaderName,jdbcType=BIGINT}, 
+      #{taskTeamId,jdbcType=BIGINT}, #{taskTeamName,jdbcType=BIGINT}, #{taskDispatchMethod,jdbcType=BIGINT}, 
+      #{taskDispatcherId,jdbcType=BIGINT}, #{taskDispatchUserId,jdbcType=BIGINT}, #{taskParticipants,jdbcType=BIGINT}, 
+      #{taskRemindHour,jdbcType=BIGINT}, #{taskContent,jdbcType=BIGINT}, #{taskRemark,jdbcType=BIGINT}, 
+      #{workTaskStatus,jdbcType=BIGINT}, #{workTaskNum,jdbcType=BIGINT}, #{cancelTaskStatus,jdbcType=BIGINT}, 
+      #{cancelTaskReason,jdbcType=BIGINT}, #{stopTaskStatus,jdbcType=BIGINT}, #{stopTaskReason,jdbcType=BIGINT}, 
+      #{restartTaskStatus,jdbcType=BIGINT}, #{restartTaskReason,jdbcType=BIGINT}, #{taskProgrossRate,jdbcType=BIGINT}, 
+      #{taskResponseId,jdbcType=BIGINT}, #{taskStatus,jdbcType=BIGINT}, #{taskAttentionStatus,jdbcType=BIGINT}, 
+      #{taskQuestion,jdbcType=BIGINT}, #{taskType,jdbcType=BIGINT}, #{createId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{updateId,jdbcType=BIGINT}, 
+      #{updateBy,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{delStatus,jdbcType=BIGINT},#{milestoneId,jdbcType=BIGINT},#{planTransferId,jdbcType=BIGINT},
+      #{taskResourceType,jdbcType=BIGINT},#{resourceBusinessId,jdbcType=BIGINT},#{workOrderId,jdbcType=BIGINT},#{customerId,jdbcType=BIGINT},{contactId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective"  keyProperty="taskHeadStatusId" parameterType="com.fea.project.model.task.TaskHeadStatusModel">
+    insert into t_project_task_head_status
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskHeadStatusId != null">
+        task_head_status_id,
+      </if>
+      <if test="curUserId != null">
+        cur_user_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="taskName != null">
+        task_name,
+      </if>
+      <if test="taskNum != null">
+        task_num,
+      </if>
+      <if test="parentTaskId != null">
+        parent_task_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectStep != null">
+        project_step,
+      </if>
+      <if test="priority != null">
+        priority,
+      </if>
+      <if test="taskStartTime != null">
+        task_start_time,
+      </if>
+      <if test="taskEndTime != null">
+        task_end_time,
+      </if>
+      <if test="taskDeadline != null">
+        task_deadline,
+      </if>
+      <if test="taskDuration != null">
+        task_duration,
+      </if>
+      <if test="taskLeaderId != null">
+        task_leader_id,
+      </if>
+      <if test="taskLeaderName != null">
+        task_leader_name,
+      </if>
+      <if test="taskTeamId != null">
+        task_team_id,
+      </if>
+      <if test="taskTeamName != null">
+        task_team_name,
+      </if>
+      <if test="taskDispatchMethod != null">
+        task_dispatch_method,
+      </if>
+      <if test="taskDispatcherId != null">
+        task_dispatcher_id,
+      </if>
+      <if test="taskDispatchUserId != null">
+        task_dispatch_user_id,
+      </if>
+      <if test="taskParticipants != null">
+        task_participants,
+      </if>
+      <if test="taskRemindHour != null">
+        task_remind_hour,
+      </if>
+      <if test="taskContent != null">
+        task_content,
+      </if>
+      <if test="taskRemark != null">
+        task_remark,
+      </if>
+      <if test="workTaskStatus != null">
+        work_task_status,
+      </if>
+      <if test="workTaskNum != null">
+        work_task_num,
+      </if>
+      <if test="cancelTaskStatus != null">
+        cancel_task_status,
+      </if>
+      <if test="cancelTaskReason != null">
+        cancel_task_reason,
+      </if>
+      <if test="stopTaskStatus != null">
+        stop_task_status,
+      </if>
+      <if test="stopTaskReason != null">
+        stop_task_reason,
+      </if>
+      <if test="restartTaskStatus != null">
+        restart_task_status,
+      </if>
+      <if test="restartTaskReason != null">
+        restart_task_reason,
+      </if>
+      <if test="taskProgrossRate != null">
+        task_progross_rate,
+      </if>
+      <if test="taskResponseId != null">
+        task_response_id,
+      </if>
+      <if test="taskStatus != null">
+        task_status,
+      </if>
+      <if test="taskAttentionStatus != null">
+        task_attention_status,
+      </if>
+      <if test="taskQuestion != null">
+        task_question,
+      </if>
+      <if test="taskType != null">
+        task_type,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delStatus != null">
+        del_status,
+      </if>
+      <if test="milestoneId != null">
+        milestone_id,
+      </if>
+      <if test="planTransferId != null">
+        plan_transfer_id,
+      </if>
+      <if test="taskResourceType != null">
+        task_resource_type,
+      </if>
+      <if test="resourceBusinessId != null">
+        resource_business_id,
+      </if>
+      <if test="workOrderId != null">
+        work_order_id,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="contactId != null">
+        contact_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskHeadStatusId != null">
+        #{taskHeadStatusId,jdbcType=BIGINT},
+      </if>
+      <if test="curUserId != null">
+        #{curUserId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskName != null">
+        #{taskName,jdbcType=BIGINT},
+      </if>
+      <if test="taskNum != null">
+        #{taskNum,jdbcType=BIGINT},
+      </if>
+      <if test="parentTaskId != null">
+        #{parentTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        #{projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="priority != null">
+        #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="taskStartTime != null">
+        #{taskStartTime,jdbcType=BIGINT},
+      </if>
+      <if test="taskEndTime != null">
+        #{taskEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="taskDeadline != null">
+        #{taskDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="taskDuration != null">
+        #{taskDuration,jdbcType=BIGINT},
+      </if>
+      <if test="taskLeaderId != null">
+        #{taskLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="taskLeaderName != null">
+        #{taskLeaderName,jdbcType=BIGINT},
+      </if>
+      <if test="taskTeamId != null">
+        #{taskTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="taskTeamName != null">
+        #{taskTeamName,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatchMethod != null">
+        #{taskDispatchMethod,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatcherId != null">
+        #{taskDispatcherId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatchUserId != null">
+        #{taskDispatchUserId,jdbcType=BIGINT},
+      </if>
+      <if test="taskParticipants != null">
+        #{taskParticipants,jdbcType=BIGINT},
+      </if>
+      <if test="taskRemindHour != null">
+        #{taskRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="taskContent != null">
+        #{taskContent,jdbcType=BIGINT},
+      </if>
+      <if test="taskRemark != null">
+        #{taskRemark,jdbcType=BIGINT},
+      </if>
+      <if test="workTaskStatus != null">
+        #{workTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="workTaskNum != null">
+        #{workTaskNum,jdbcType=BIGINT},
+      </if>
+      <if test="cancelTaskStatus != null">
+        #{cancelTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="cancelTaskReason != null">
+        #{cancelTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="stopTaskStatus != null">
+        #{stopTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="stopTaskReason != null">
+        #{stopTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="restartTaskStatus != null">
+        #{restartTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="restartTaskReason != null">
+        #{restartTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="taskProgrossRate != null">
+        #{taskProgrossRate,jdbcType=BIGINT},
+      </if>
+      <if test="taskResponseId != null">
+        #{taskResponseId,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null">
+        #{taskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="taskAttentionStatus != null">
+        #{taskAttentionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="taskQuestion != null">
+        #{taskQuestion,jdbcType=BIGINT},
+      </if>
+      <if test="taskType != null">
+        #{taskType,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="delStatus != null">
+        #{delStatus,jdbcType=BIGINT},
+      </if>
+      <if test="milestoneId != null">
+        #{milestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="planTransferId != null">
+        #{planTransferId,jdbcType=BIGINT},
+      </if>
+      <if test="taskResourceType != null">
+        #{taskResourceType,jdbcType=BIGINT},
+      </if>
+      <if test="resourceBusinessId != null">
+        #{resourceBusinessId,jdbcType=BIGINT},
+      </if>
+      <if test="workOrderId != null">
+        #{workOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="contactId != null">
+        #{contactId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fea.project.model.task.TaskHeadStatusModelExample" resultType="java.lang.Long">
+    select count(*) from t_project_task_head_status
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_project_task_head_status
+    <set>
+      <if test="record.taskHeadStatusId != null">
+        task_head_status_id = #{record.taskHeadStatusId,jdbcType=BIGINT},
+      </if>
+      <if test="record.curUserId != null">
+        cur_user_id = #{record.curUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskId != null">
+        task_id = #{record.taskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskName != null">
+        task_name = #{record.taskName,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskNum != null">
+        task_num = #{record.taskNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentTaskId != null">
+        parent_task_id = #{record.parentTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=BIGINT},
+      </if>
+      <if test="record.projectStep != null">
+        project_step = #{record.projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="record.priority != null">
+        priority = #{record.priority,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskStartTime != null">
+        task_start_time = #{record.taskStartTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskEndTime != null">
+        task_end_time = #{record.taskEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskDeadline != null">
+        task_deadline = #{record.taskDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskDuration != null">
+        task_duration = #{record.taskDuration,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskLeaderId != null">
+        task_leader_id = #{record.taskLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskLeaderName != null">
+        task_leader_name = #{record.taskLeaderName,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskTeamId != null">
+        task_team_id = #{record.taskTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskTeamName != null">
+        task_team_name = #{record.taskTeamName,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskDispatchMethod != null">
+        task_dispatch_method = #{record.taskDispatchMethod,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskDispatcherId != null">
+        task_dispatcher_id = #{record.taskDispatcherId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskDispatchUserId != null">
+        task_dispatch_user_id = #{record.taskDispatchUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskParticipants != null">
+        task_participants = #{record.taskParticipants,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskRemindHour != null">
+        task_remind_hour = #{record.taskRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskContent != null">
+        task_content = #{record.taskContent,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskRemark != null">
+        task_remark = #{record.taskRemark,jdbcType=BIGINT},
+      </if>
+      <if test="record.workTaskStatus != null">
+        work_task_status = #{record.workTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.workTaskNum != null">
+        work_task_num = #{record.workTaskNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.cancelTaskStatus != null">
+        cancel_task_status = #{record.cancelTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.cancelTaskReason != null">
+        cancel_task_reason = #{record.cancelTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="record.stopTaskStatus != null">
+        stop_task_status = #{record.stopTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.stopTaskReason != null">
+        stop_task_reason = #{record.stopTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="record.restartTaskStatus != null">
+        restart_task_status = #{record.restartTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.restartTaskReason != null">
+        restart_task_reason = #{record.restartTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskProgrossRate != null">
+        task_progross_rate = #{record.taskProgrossRate,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskResponseId != null">
+        task_response_id = #{record.taskResponseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskStatus != null">
+        task_status = #{record.taskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskAttentionStatus != null">
+        task_attention_status = #{record.taskAttentionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskQuestion != null">
+        task_question = #{record.taskQuestion,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskType != null">
+        task_type = #{record.taskType,jdbcType=BIGINT},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateId != null">
+        update_id = #{record.updateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.milestoneId != null">
+        milestone_id = #{record.milestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="record.planTransferId != null">
+        plan_transfer_id = #{record.planTransferId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskResourceType != null">
+        task_resource_type = #{record.taskResourceType,jdbcType=BIGINT},
+      </if>
+      <if test="record.resourceBusinessId != null">
+        resource_business_id = #{record.resourceBusinessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workOrderId != null">
+        work_order_id = #{record.workOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerId != null">
+        customer_id = #{record.customerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.contactId != null">
+        contact_id = #{record.contactId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_project_task_head_status
+    set task_head_status_id = #{record.taskHeadStatusId,jdbcType=BIGINT},
+      cur_user_id = #{record.curUserId,jdbcType=BIGINT},
+      task_id = #{record.taskId,jdbcType=BIGINT},
+      task_name = #{record.taskName,jdbcType=BIGINT},
+      task_num = #{record.taskNum,jdbcType=BIGINT},
+      parent_task_id = #{record.parentTaskId,jdbcType=BIGINT},
+      project_id = #{record.projectId,jdbcType=BIGINT},
+      project_step = #{record.projectStep,jdbcType=BIGINT},
+      priority = #{record.priority,jdbcType=BIGINT},
+      task_start_time = #{record.taskStartTime,jdbcType=BIGINT},
+      task_end_time = #{record.taskEndTime,jdbcType=BIGINT},
+      task_deadline = #{record.taskDeadline,jdbcType=BIGINT},
+      task_duration = #{record.taskDuration,jdbcType=BIGINT},
+      task_leader_id = #{record.taskLeaderId,jdbcType=BIGINT},
+      task_leader_name = #{record.taskLeaderName,jdbcType=BIGINT},
+      task_team_id = #{record.taskTeamId,jdbcType=BIGINT},
+      task_team_name = #{record.taskTeamName,jdbcType=BIGINT},
+      task_dispatch_method = #{record.taskDispatchMethod,jdbcType=BIGINT},
+      task_dispatcher_id = #{record.taskDispatcherId,jdbcType=BIGINT},
+      task_dispatch_user_id = #{record.taskDispatchUserId,jdbcType=BIGINT},
+      task_participants = #{record.taskParticipants,jdbcType=BIGINT},
+      task_remind_hour = #{record.taskRemindHour,jdbcType=BIGINT},
+      task_content = #{record.taskContent,jdbcType=BIGINT},
+      task_remark = #{record.taskRemark,jdbcType=BIGINT},
+      work_task_status = #{record.workTaskStatus,jdbcType=BIGINT},
+      work_task_num = #{record.workTaskNum,jdbcType=BIGINT},
+      cancel_task_status = #{record.cancelTaskStatus,jdbcType=BIGINT},
+      cancel_task_reason = #{record.cancelTaskReason,jdbcType=BIGINT},
+      stop_task_status = #{record.stopTaskStatus,jdbcType=BIGINT},
+      stop_task_reason = #{record.stopTaskReason,jdbcType=BIGINT},
+      restart_task_status = #{record.restartTaskStatus,jdbcType=BIGINT},
+      restart_task_reason = #{record.restartTaskReason,jdbcType=BIGINT},
+      task_progross_rate = #{record.taskProgrossRate,jdbcType=BIGINT},
+      task_response_id = #{record.taskResponseId,jdbcType=BIGINT},
+      task_status = #{record.taskStatus,jdbcType=BIGINT},
+      task_attention_status = #{record.taskAttentionStatus,jdbcType=BIGINT},
+      task_question = #{record.taskQuestion,jdbcType=BIGINT},
+      task_type = #{record.taskType,jdbcType=BIGINT},
+      create_id = #{record.createId,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      update_id = #{record.updateId,jdbcType=BIGINT},
+      update_by = #{record.updateBy,jdbcType=BIGINT},
+      update_time = #{record.updateTime,jdbcType=BIGINT},
+      del_status = #{record.delStatus,jdbcType=BIGINT},
+      milestone_id = #{record.milestoneId,jdbcType=BIGINT},
+      plan_transfer_id = #{record.planTransferId,jdbcType=BIGINT},
+      task_resource_type = #{record.taskResourceType,jdbcType=BIGINT},
+      resource_business_id = #{record.resourceBusinessId,jdbcType=BIGINT},
+      work_order_id = #{record.workOrderId,jdbcType=BIGINT},
+      customer_id = #{record.customerId,jdbcType=BIGINT},
+      contact_id = #{record.contactId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fea.project.model.task.TaskHeadStatusModel">
+    update t_project_task_head_status
+    <set>
+      <if test="curUserId != null">
+        cur_user_id = #{curUserId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskName != null">
+        task_name = #{taskName,jdbcType=BIGINT},
+      </if>
+      <if test="taskNum != null">
+        task_num = #{taskNum,jdbcType=BIGINT},
+      </if>
+      <if test="parentTaskId != null">
+        parent_task_id = #{parentTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        project_step = #{projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="taskStartTime != null">
+        task_start_time = #{taskStartTime,jdbcType=BIGINT},
+      </if>
+      <if test="taskEndTime != null">
+        task_end_time = #{taskEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="taskDeadline != null">
+        task_deadline = #{taskDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="taskDuration != null">
+        task_duration = #{taskDuration,jdbcType=BIGINT},
+      </if>
+      <if test="taskLeaderId != null">
+        task_leader_id = #{taskLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="taskLeaderName != null">
+        task_leader_name = #{taskLeaderName,jdbcType=BIGINT},
+      </if>
+      <if test="taskTeamId != null">
+        task_team_id = #{taskTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="taskTeamName != null">
+        task_team_name = #{taskTeamName,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatchMethod != null">
+        task_dispatch_method = #{taskDispatchMethod,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatcherId != null">
+        task_dispatcher_id = #{taskDispatcherId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatchUserId != null">
+        task_dispatch_user_id = #{taskDispatchUserId,jdbcType=BIGINT},
+      </if>
+      <if test="taskParticipants != null">
+        task_participants = #{taskParticipants,jdbcType=BIGINT},
+      </if>
+      <if test="taskRemindHour != null">
+        task_remind_hour = #{taskRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="taskContent != null">
+        task_content = #{taskContent,jdbcType=BIGINT},
+      </if>
+      <if test="taskRemark != null">
+        task_remark = #{taskRemark,jdbcType=BIGINT},
+      </if>
+      <if test="workTaskStatus != null">
+        work_task_status = #{workTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="workTaskNum != null">
+        work_task_num = #{workTaskNum,jdbcType=BIGINT},
+      </if>
+      <if test="cancelTaskStatus != null">
+        cancel_task_status = #{cancelTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="cancelTaskReason != null">
+        cancel_task_reason = #{cancelTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="stopTaskStatus != null">
+        stop_task_status = #{stopTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="stopTaskReason != null">
+        stop_task_reason = #{stopTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="restartTaskStatus != null">
+        restart_task_status = #{restartTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="restartTaskReason != null">
+        restart_task_reason = #{restartTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="taskProgrossRate != null">
+        task_progross_rate = #{taskProgrossRate,jdbcType=BIGINT},
+      </if>
+      <if test="taskResponseId != null">
+        task_response_id = #{taskResponseId,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null">
+        task_status = #{taskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="taskAttentionStatus != null">
+        task_attention_status = #{taskAttentionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="taskQuestion != null">
+        task_question = #{taskQuestion,jdbcType=BIGINT},
+      </if>
+      <if test="taskType != null">
+        task_type = #{taskType,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+      <if test="milestoneId != null">
+        milestone_id = #{milestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="planTransferId != null">
+        plan_transfer_id = #{planTransferId,jdbcType=BIGINT},
+      </if>
+      <if test="taskResourceType != null">
+        task_resource_type = #{taskResourceType,jdbcType=BIGINT},
+      </if>
+      <if test="resourceBusinessId != null">
+        resource_business_id = #{resourceBusinessId,jdbcType=BIGINT},
+      </if>
+      <if test="workOrderId != null">
+        work_order_id = #{workOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="contactId != null">
+        contact_id = #{contactId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where task_head_status_id = #{taskHeadStatusId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fea.project.model.task.TaskHeadStatusModel">
+    update t_project_task_head_status
+    set cur_user_id = #{curUserId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      task_name = #{taskName,jdbcType=BIGINT},
+      task_num = #{taskNum,jdbcType=BIGINT},
+      parent_task_id = #{parentTaskId,jdbcType=BIGINT},
+      project_id = #{projectId,jdbcType=BIGINT},
+      project_step = #{projectStep,jdbcType=BIGINT},
+      priority = #{priority,jdbcType=BIGINT},
+      task_start_time = #{taskStartTime,jdbcType=BIGINT},
+      task_end_time = #{taskEndTime,jdbcType=BIGINT},
+      task_deadline = #{taskDeadline,jdbcType=BIGINT},
+      task_duration = #{taskDuration,jdbcType=BIGINT},
+      task_leader_id = #{taskLeaderId,jdbcType=BIGINT},
+      task_leader_name = #{taskLeaderName,jdbcType=BIGINT},
+      task_team_id = #{taskTeamId,jdbcType=BIGINT},
+      task_team_name = #{taskTeamName,jdbcType=BIGINT},
+      task_dispatch_method = #{taskDispatchMethod,jdbcType=BIGINT},
+      task_dispatcher_id = #{taskDispatcherId,jdbcType=BIGINT},
+      task_dispatch_user_id = #{taskDispatchUserId,jdbcType=BIGINT},
+      task_participants = #{taskParticipants,jdbcType=BIGINT},
+      task_remind_hour = #{taskRemindHour,jdbcType=BIGINT},
+      task_content = #{taskContent,jdbcType=BIGINT},
+      task_remark = #{taskRemark,jdbcType=BIGINT},
+      work_task_status = #{workTaskStatus,jdbcType=BIGINT},
+      work_task_num = #{workTaskNum,jdbcType=BIGINT},
+      cancel_task_status = #{cancelTaskStatus,jdbcType=BIGINT},
+      cancel_task_reason = #{cancelTaskReason,jdbcType=BIGINT},
+      stop_task_status = #{stopTaskStatus,jdbcType=BIGINT},
+      stop_task_reason = #{stopTaskReason,jdbcType=BIGINT},
+      restart_task_status = #{restartTaskStatus,jdbcType=BIGINT},
+      restart_task_reason = #{restartTaskReason,jdbcType=BIGINT},
+      task_progross_rate = #{taskProgrossRate,jdbcType=BIGINT},
+      task_response_id = #{taskResponseId,jdbcType=BIGINT},
+      task_status = #{taskStatus,jdbcType=BIGINT},
+      task_attention_status = #{taskAttentionStatus,jdbcType=BIGINT},
+      task_question = #{taskQuestion,jdbcType=BIGINT},
+      task_type = #{taskType,jdbcType=BIGINT},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      del_status = #{delStatus,jdbcType=BIGINT},
+      milestone_id = #{milestoneId,jdbcType=BIGINT},
+      plan_transfer_id = #{planTransferId,jdbcType=BIGINT},
+      task_resource_type = #{taskResourceType,jdbcType=BIGINT},
+      resource_business_id = #{resourceBusinessId,jdbcType=BIGINT},
+      work_order_id = #{workOrderId,jdbcType=BIGINT},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      contact_id = #{contactId,jdbcType=BIGINT}
+    where task_head_status_id = #{taskHeadStatusId,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="selectByCurUserIdAndTaskResourceType" parameterType="com.fea.project.model.task.vo.TaskHeadModelVo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_project_task_head_status
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+    and task_resource_type = #{taskResourceType,jdbcType=BIGINT}
+  </select>
+  
+  <update id="updateByCurUserIdSelective" parameterType="com.fea.project.model.task.TaskHeadStatusModel">
+    update t_project_task_head_status
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="taskName != null">
+        task_name = #{taskName,jdbcType=BIGINT},
+      </if>
+      <if test="taskNum != null">
+        task_num = #{taskNum,jdbcType=BIGINT},
+      </if>
+      <if test="parentTaskId != null">
+        parent_task_id = #{parentTaskId,jdbcType=BIGINT},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=BIGINT},
+      </if>
+      <if test="projectStep != null">
+        project_step = #{projectStep,jdbcType=BIGINT},
+      </if>
+      <if test="priority != null">
+        priority = #{priority,jdbcType=BIGINT},
+      </if>
+      <if test="taskStartTime != null">
+        task_start_time = #{taskStartTime,jdbcType=BIGINT},
+      </if>
+      <if test="taskEndTime != null">
+        task_end_time = #{taskEndTime,jdbcType=BIGINT},
+      </if>
+      <if test="taskDeadline != null">
+        task_deadline = #{taskDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="taskDuration != null">
+        task_duration = #{taskDuration,jdbcType=BIGINT},
+      </if>
+      <if test="taskLeaderId != null">
+        task_leader_id = #{taskLeaderId,jdbcType=BIGINT},
+      </if>
+      <if test="taskLeaderName != null">
+        task_leader_name = #{taskLeaderName,jdbcType=BIGINT},
+      </if>
+      <if test="taskTeamId != null">
+        task_team_id = #{taskTeamId,jdbcType=BIGINT},
+      </if>
+      <if test="taskTeamName != null">
+        task_team_name = #{taskTeamName,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatchMethod != null">
+        task_dispatch_method = #{taskDispatchMethod,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatcherId != null">
+        task_dispatcher_id = #{taskDispatcherId,jdbcType=BIGINT},
+      </if>
+      <if test="taskDispatchUserId != null">
+        task_dispatch_user_id = #{taskDispatchUserId,jdbcType=BIGINT},
+      </if>
+      <if test="taskParticipants != null">
+        task_participants = #{taskParticipants,jdbcType=BIGINT},
+      </if>
+      <if test="taskRemindHour != null">
+        task_remind_hour = #{taskRemindHour,jdbcType=BIGINT},
+      </if>
+      <if test="taskContent != null">
+        task_content = #{taskContent,jdbcType=BIGINT},
+      </if>
+      <if test="taskRemark != null">
+        task_remark = #{taskRemark,jdbcType=BIGINT},
+      </if>
+      <if test="workTaskStatus != null">
+        work_task_status = #{workTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="workTaskNum != null">
+        work_task_num = #{workTaskNum,jdbcType=BIGINT},
+      </if>
+      <if test="cancelTaskStatus != null">
+        cancel_task_status = #{cancelTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="cancelTaskReason != null">
+        cancel_task_reason = #{cancelTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="stopTaskStatus != null">
+        stop_task_status = #{stopTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="stopTaskReason != null">
+        stop_task_reason = #{stopTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="restartTaskStatus != null">
+        restart_task_status = #{restartTaskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="restartTaskReason != null">
+        restart_task_reason = #{restartTaskReason,jdbcType=BIGINT},
+      </if>
+      <if test="taskProgrossRate != null">
+        task_progross_rate = #{taskProgrossRate,jdbcType=BIGINT},
+      </if>
+      <if test="taskResponseId != null">
+        task_response_id = #{taskResponseId,jdbcType=BIGINT},
+      </if>
+      <if test="taskStatus != null">
+        task_status = #{taskStatus,jdbcType=BIGINT},
+      </if>
+      <if test="taskAttentionStatus != null">
+        task_attention_status = #{taskAttentionStatus,jdbcType=BIGINT},
+      </if>
+      <if test="taskQuestion != null">
+        task_question = #{taskQuestion,jdbcType=BIGINT},
+      </if>
+      <if test="taskType != null">
+        task_type = #{taskType,jdbcType=BIGINT},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="delStatus != null">
+        del_status = #{delStatus,jdbcType=BIGINT},
+      </if>
+      <if test="milestoneId != null">
+        milestone_id = #{milestoneId,jdbcType=BIGINT},
+      </if>
+      <if test="planTransferId != null">
+        plan_transfer_id = #{planTransferId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceBusinessId != null">
+        resource_business_id = #{resourceBusinessId,jdbcType=BIGINT},
+      </if>
+      <if test="workOrderId != null">
+        work_order_id = #{workOrderId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="contactId != null">
+        contact_id = #{contactId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where cur_user_id = #{curUserId,jdbcType=BIGINT}
+    and task_resource_type = #{taskResourceType,jdbcType=BIGINT}
+  </update>
+</mapper>

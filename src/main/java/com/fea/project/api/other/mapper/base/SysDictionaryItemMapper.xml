@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fea.project.api.other.dao.base.SysDictionaryItemMapper">
+    <resultMap id="BaseResultMap" type="com.fea.project.api.other.model.base.SysDictionaryItemModel">
+        <id column="ITEM_ID" jdbcType="BIGINT" property="ITEMID"/>
+        <result column="DIC_ID" jdbcType="BIGINT" property="DICID"/>
+        <result column="DIC_VALUE" jdbcType="VARCHAR" property="DICVALUE"/>
+        <result column="DIC_CODE" jdbcType="VARCHAR" property="DICCODE"/>
+        <result column="DISPLAY_ORDER" jdbcType="INTEGER" property="DISPLAYORDER"/>
+        <result column="REG_ID" jdbcType="BIGINT" property="REGID"/>
+        <result column="DEL_STATE" jdbcType="INTEGER" property="DELSTATE"/>
+        <result column="IS_DISPLAY" jdbcType="INTEGER" property="ISDISPLAY"/>
+        <result column="IS_DEFAULT" jdbcType="INTEGER" property="ISDEFAULT"/>
+        <result column="CREATE_USER" jdbcType="VARCHAR" property="CREATEUSER"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="UPDATE_USER" jdbcType="VARCHAR" property="UPDATEUSER"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ITEM_ID, DIC_ID, DIC_VALUE, DIC_CODE, DISPLAY_ORDER, REG_ID, DEL_STATE, IS_DISPLAY, IS_DEFAULT,
+        CREATE_USER, CREATE_TIME, UPDATE_USER, UPDATE_TIME
+    </sql>
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * 
+        from t_sys_dictionary_item
+        where ITEM_ID = #{ITEMID,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByModel" parameterType="com.fea.project.api.other.model.base.SysDictionaryItemModel"
+            resultMap="BaseResultMap">
+        select * from t_sys_dictionary_item where 1 = 1
+        <if test="DICID != null">
+            and DIC_ID = #{DICID,jdbcType=BIGINT}
+        </if>
+        <if test="DICVALUE != null">
+            and DIC_VALUE = #{DICVALUE,jdbcType=VARCHAR}
+        </if>
+        <if test="DICCODE != null">
+            and DIC_CODE = #{DICCODE,jdbcType=VARCHAR}
+        </if>
+        <if test="DISPLAYORDER != null">
+            and DISPLAY_ORDER = #{DISPLAYORDER,jdbcType=INTEGER}
+        </if>
+        <if test="REGID != null">
+            and REG_ID = #{REGID,jdbcType=BIGINT}
+        </if>
+        <if test="DELSTATE != null">
+            and DEL_STATE = #{DELSTATE,jdbcType=INTEGER}
+        </if>
+        <if test="ISDISPLAY != null">
+            and IS_DISPLAY = #{ISDISPLAY,jdbcType=INTEGER}
+        </if>
+        <if test="ISDEFAULT != null">
+            and IS_DEFAULT = #{ISDEFAULT,jdbcType=INTEGER}
+        </if>
+        <if test="CREATEUSER != null">
+            and CREATE_USER = #{CREATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="CREATETIME != null">
+            and CREATE_TIME = #{CREATETIME,jdbcType=TIMESTAMP}
+        </if>
+        <if test="UPDATEUSER != null">
+            and UPDATE_USER = #{UPDATEUSER,jdbcType=VARCHAR}
+        </if>
+        <if test="UPDATETIME != null">
+            and UPDATE_TIME = #{UPDATETIME,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <select id="selectByShortNameAndRegId" resultMap="BaseResultMap">
+        select * from t_sys_dictionary_item
+            where DIC_ID = (select DIC_ID from t_sys_dictionary where DIC_CODE = #{dicCode, jdbcType=VARCHAR})
+            and REG_ID = #{regId,jdbcType=BIGINT}
+            and DEL_STATE = ${@com.fea.project.api.other.enums.base.DeleteStatusEnum@NOT_DELETE.getStatus()}
+    </select>
+
+</mapper>
